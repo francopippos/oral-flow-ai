@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { Upload, MessageCircle, Mic, MicOff, TrendingUp, FileText } from 'lucide-react';
+import { Upload, MessageCircle, Mic, MicOff, TrendingUp, FileText, Users, Smartphone, Cloud, User } from 'lucide-react';
 
 interface DemoModalProps {
   isOpen: boolean;
@@ -13,6 +13,34 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
   const [step, setStep] = useState(0);
   const [isRecording, setIsRecording] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
+  const [professorMode, setProfessorMode] = useState('comprensivo');
+
+  const professorModes = {
+    severo: {
+      name: "Professore Severo",
+      description: "Domande incalzanti, correzioni immediate",
+      color: "text-red-700",
+      bgColor: "bg-red-50",
+      question: "Dimmi ESATTAMENTE quando inizia il Rinascimento e perché proprio in quel momento storico.",
+      feedback: "La tua risposta è imprecisa. Il Rinascimento non ha una data di inizio univoca. Devi essere più specifico sui fattori scatenanti."
+    },
+    comprensivo: {
+      name: "Professore Comprensivo", 
+      description: "Incoraggiante, guida verso la risposta",
+      color: "text-green-700",
+      bgColor: "bg-green-50",
+      question: "Raccontami del Rinascimento, prenditi il tempo che ti serve per organizzare i pensieri.",
+      feedback: "Molto bene! Hai colto i punti principali. Potresti approfondire il ruolo dell'umanesimo?"
+    },
+    tecnico: {
+      name: "Professore Tecnico",
+      description: "Linguaggio specialistico, approfondimenti",
+      color: "text-blue-700", 
+      bgColor: "bg-blue-50",
+      question: "Analizza la correlazione tra il fenomeno dell'umanesimo quattrocentesco e le trasformazioni socio-economiche dell'epoca.",
+      feedback: "Interessante approccio metodologico. Considera anche l'impatto delle innovazioni tecniche sulla diffusione culturale."
+    }
+  };
 
   const demoSteps = [
     {
@@ -23,6 +51,16 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
           <div className="border-2 border-dashed border-oralmind-300 rounded-lg p-8 text-center">
             <Upload className="h-12 w-12 text-oralmind-500 mx-auto mb-4" />
             <p className="text-oralmind-700">Trascina qui i tuoi PDF o clicca per caricare</p>
+            <div className="mt-4 flex items-center justify-center space-x-4 text-sm text-muted-foreground">
+              <div className="flex items-center space-x-1">
+                <Cloud className="h-4 w-4" />
+                <span>Google Drive</span>
+              </div>
+              <div className="flex items-center space-x-1">
+                <Cloud className="h-4 w-4" />
+                <span>Classroom</span>
+              </div>
+            </div>
           </div>
           {uploadProgress > 0 && (
             <div className="space-y-2">
@@ -44,28 +82,54 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
       )
     },
     {
-      title: "Analisi AI",
-      subtitle: "L'intelligenza artificiale analizza i tuoi materiali",
+      title: "Configurazione AI",
+      subtitle: "Scegli il tuo professore personalizzato",
       content: (
         <div className="space-y-6">
           <div className="text-center">
-            <div className="w-20 h-20 bg-gradient-to-r from-oralmind-500 to-success-500 rounded-full flex items-center justify-center mx-auto mb-4 animate-spin">
-              <MessageCircle className="h-8 w-8 text-white" />
+            <h4 className="font-semibold mb-4">Scegli la modalità professore:</h4>
+            <div className="grid grid-cols-1 gap-3">
+              {Object.entries(professorModes).map(([key, mode]) => (
+                <button
+                  key={key}
+                  onClick={() => setProfessorMode(key)}
+                  className={`p-4 rounded-lg border-2 transition-all ${
+                    professorMode === key 
+                      ? `${mode.bgColor} border-current ${mode.color}` 
+                      : 'bg-gray-50 border-gray-200 hover:bg-gray-100'
+                  }`}
+                >
+                  <div className="flex items-center space-x-3">
+                    <User className="h-5 w-5" />
+                    <div className="text-left">
+                      <div className="font-medium">{mode.name}</div>
+                      <div className="text-sm text-muted-foreground">{mode.description}</div>
+                    </div>
+                  </div>
+                </button>
+              ))}
             </div>
-            <p className="text-oralmind-700">Elaborazione dei contenuti in corso...</p>
           </div>
+          
           <div className="bg-oralmind-50 rounded-lg p-4 space-y-2">
-            <div className="flex items-center space-x-2">
-              <div className="w-2 h-2 bg-success-500 rounded-full"></div>
-              <span className="text-sm">Identificazione argomenti principali</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <div className="w-2 h-2 bg-success-500 rounded-full"></div>
-              <span className="text-sm">Creazione mappa concettuale</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <div className="w-2 h-2 bg-oralmind-300 rounded-full animate-pulse"></div>
-              <span className="text-sm text-muted-foreground">Preparazione domande...</span>
+            <h5 className="font-medium text-oralmind-800">Funzionalità Extra:</h5>
+            <div className="grid grid-cols-2 gap-2 text-sm">
+              <div className="flex items-center space-x-2">
+                <Smartphone className="h-4 w-4 text-oralmind-600" />
+                <span>App Mobile</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Users className="h-4 w-4 text-oralmind-600" />
+                <span>Modalità Gruppo</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Cloud className="h-4 w-4 text-oralmind-600" />
+                <span>Sync Cloud</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <TrendingUp className="h-4 w-4 text-oralmind-600" />
+                <span>Analytics</span>
+              </div>
             </div>
           </div>
         </div>
@@ -73,17 +137,17 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
     },
     {
       title: "Interrogazione Simulata",
-      subtitle: "Inizia la conversazione con l'AI",
+      subtitle: `Conversazione con ${professorModes[professorMode as keyof typeof professorModes].name}`,
       content: (
         <div className="space-y-4">
           <div className="space-y-3 max-h-64 overflow-y-auto">
             <div className="flex items-start space-x-3">
-              <div className="w-8 h-8 bg-gradient-to-r from-oralmind-500 to-success-500 rounded-full flex items-center justify-center">
-                <MessageCircle className="h-4 w-4 text-white" />
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center ${professorModes[professorMode as keyof typeof professorModes].bgColor}`}>
+                <User className={`h-4 w-4 ${professorModes[professorMode as keyof typeof professorModes].color}`} />
               </div>
-              <div className="bg-oralmind-50 rounded-lg p-3 max-w-xs">
-                <p className="text-sm text-oralmind-800">
-                  "Ciao! Sono pronto per la tua interrogazione sul Rinascimento. Iniziamo con una domanda generale: quali sono le caratteristiche principali di questo periodo storico?"
+              <div className={`${professorModes[professorMode as keyof typeof professorModes].bgColor} rounded-lg p-3 max-w-xs`}>
+                <p className={`text-sm ${professorModes[professorMode as keyof typeof professorModes].color}`}>
+                  "{professorModes[professorMode as keyof typeof professorModes].question}"
                 </p>
               </div>
             </div>
@@ -100,12 +164,12 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
             
             {step >= 2 && (
               <div className="flex items-start space-x-3">
-                <div className="w-8 h-8 bg-gradient-to-r from-oralmind-500 to-success-500 rounded-full flex items-center justify-center">
-                  <TrendingUp className="h-4 w-4 text-white" />
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center ${professorModes[professorMode as keyof typeof professorModes].bgColor}`}>
+                  <TrendingUp className={`h-4 w-4 ${professorModes[professorMode as keyof typeof professorModes].color}`} />
                 </div>
-                <div className="bg-oralmind-50 rounded-lg p-3 max-w-xs">
-                  <p className="text-sm text-oralmind-800">
-                    "Ottima risposta! Hai menzionato i punti chiave. Ora approfondisci: che ruolo ha avuto l'umanesimo in questo contesto?"
+                <div className={`${professorModes[professorMode as keyof typeof professorModes].bgColor} rounded-lg p-3 max-w-xs`}>
+                  <p className={`text-sm ${professorModes[professorMode as keyof typeof professorModes].color}`}>
+                    "{professorModes[professorMode as keyof typeof professorModes].feedback}"
                   </p>
                 </div>
               </div>
@@ -129,12 +193,12 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
       )
     },
     {
-      title: "Feedback Personalizzato",
-      subtitle: "Ricevi analisi dettagliata della tua performance",
+      title: "Feedback Personalizzato", 
+      subtitle: `Analisi dettagliata da ${professorModes[professorMode as keyof typeof professorModes].name}`,
       content: (
         <div className="space-y-4">
           <div className="bg-success-50 border border-success-200 rounded-lg p-4">
-            <h4 className="font-semibold text-success-800 mb-2">✨ Ottimo lavoro!</h4>
+            <h4 className="font-semibold text-success-800 mb-2">✨ Valutazione</h4>
             <div className="space-y-2">
               <div className="flex justify-between">
                 <span className="text-sm text-success-700">Chiarezza espositiva:</span>
@@ -152,20 +216,20 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
           </div>
           
           <div className="bg-orange-50 border border-orange-200 rounded-lg p-4">
-            <h4 className="font-semibold text-orange-800 mb-2">💡 Suggerimenti per migliorare</h4>
+            <h4 className="font-semibold text-orange-800 mb-2">💡 Modalità Gruppo Disponibile</h4>
+            <p className="text-sm text-orange-700 mb-2">Esercitati con i compagni:</p>
             <ul className="text-sm text-orange-700 space-y-1">
-              <li>• Cerca di collegare meglio l'umanesimo alla produzione artistica</li>
-              <li>• Approfondisci il ruolo delle città-stato italiane</li>
-              <li>• Menziona figure chiave come Lorenzo de' Medici</li>
+              <li>• Interrogazioni a turno con peer review</li>
+              <li>• Dibattiti guidati dall'AI</li>
+              <li>• Competizioni amichevoli tra studenti</li>
             </ul>
           </div>
           
           <div className="bg-oralmind-50 border border-oralmind-200 rounded-lg p-4">
-            <h4 className="font-semibold text-oralmind-800 mb-2">📚 Materiali consigliati per approfondire</h4>
-            <ul className="text-sm text-oralmind-700 space-y-1">
-              <li>• Capitolo 3: "L'umanesimo civile" (pagina 45)</li>
-              <li>• Slide 12-15: "Arte e mecenati"</li>
-            </ul>
+            <h4 className="font-semibold text-oralmind-800 mb-2">📱 Continua su Mobile</h4>
+            <p className="text-sm text-oralmind-700">
+              Scarica l'app per esercitarti ovunque con sessioni audio-only perfette per i tuoi spostamenti.
+            </p>
           </div>
         </div>
       )
@@ -205,6 +269,7 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
     setStep(0);
     setUploadProgress(0);
     setIsRecording(false);
+    setProfessorMode('comprensivo');
     onClose();
   };
 
