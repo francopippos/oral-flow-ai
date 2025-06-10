@@ -1,8 +1,7 @@
-
 import { useState, useRef } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { Upload, MessageCircle, FileText, Download, Loader2, Mic, MicOff, Play, Stop } from 'lucide-react';
+import { Upload, MessageCircle, FileText, Download, Loader2, Mic, MicOff, Play, Square } from 'lucide-react';
 
 interface FunctionalDemoModalProps {
   isOpen: boolean;
