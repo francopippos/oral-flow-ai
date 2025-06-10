@@ -1,8 +1,8 @@
+
 import { useState, useRef } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { Upload, MessageCircle, FileText, Download, Loader2 } from 'lucide-react';
-import { Textarea } from '@/components/ui/textarea';
+import { Upload, MessageCircle, FileText, Download, Loader2, Mic, MicOff, Play, Stop } from 'lucide-react';
 
 interface FunctionalDemoModalProps {
   isOpen: boolean;
@@ -16,25 +16,45 @@ const FunctionalDemoModal = ({ isOpen, onClose }: FunctionalDemoModalProps) => {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [conversation, setConversation] = useState<Array<{role: 'ai' | 'user', message: string}>>([]);
   const [isRecording, setIsRecording] = useState(false);
-  const [userInput, setUserInput] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
   const [report, setReport] = useState('');
+  const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null);
+  const [audioChunks, setAudioChunks] = useState<Blob[]>([]);
+  const [recordedAudio, setRecordedAudio] = useState<Blob | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
 
   // API key integrata nel sistema
   const OPENAI_API_KEY = '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';
 
   const extractTextFromPDF = async (file: File): Promise<string> => {
     try {
-      // Importazione dinamica di pdf-parse
-      const pdfParse = await import('pdf-parse');
+      console.log('📄 Iniziando estrazione testo dal PDF...', file.name);
+      
+      // Importazione dinamica di pdfjs-dist
+      const pdfjsLib = await import('pdfjs-dist');
+      
+      // Configurazione worker
+      pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js`;
       
       const arrayBuffer = await file.arrayBuffer();
-      const pdf = await pdfParse.default(arrayBuffer);
+      const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
       
-      return pdf.text;
+      let fullText = '';
+      
+      for (let i = 1; i <= pdf.numPages; i++) {
+        const page = await pdf.getPage(i);
+        const textContent = await page.getTextContent();
+        const pageText = textContent.items
+          .map((item: any) => item.str)
+          .join(' ');
+        fullText += pageText + '\n';
+      }
+      
+      console.log('✅ Testo estratto con successo dal PDF');
+      return fullText;
     } catch (error) {
-      console.error('Errore nell\'estrazione del testo dal PDF:', error);
+      console.error('❌ Errore nell\'estrazione del testo dal PDF:', error);
       // Fallback: simulazione di contenuto per la demo
       return `Contenuto estratto dal PDF "${file.name}":
 
@@ -70,7 +90,7 @@ Il Professor OralMind utilizzerà esclusivamente questo contenuto per formulare 
       
       // Analisi iniziale del documento con OralMind AI
       setTimeout(async () => {
-        const initialAnalysis = await analyzeWithOralMindAI(`Analizza questo documento PDF per preparare un'interrogazione: "${extractedText}". Presenta brevemente il contenuto e dimmi quando lo studente è pronto per iniziare.`);
+        const initialAnalysis = await analyzeWithOralMindAI(`Analizza questo documento PDF per preparare un'interrogazione: "${extractedText}". Presenta brevemente il contenuto e invita lo studente a iniziare la sua esposizione registrando la sua voce.`);
         
         setIsAnalyzing(false);
         setStep(1);
@@ -78,7 +98,7 @@ Il Professor OralMind utilizzerà esclusivamente questo contenuto per formulare 
           role: 'ai',
           message: initialAnalysis
         }]);
-      }, 3000);
+      }, 2000);
     } catch (error) {
       console.error('Errore nell\'elaborazione del PDF:', error);
       setIsAnalyzing(false);
@@ -97,7 +117,7 @@ Il Professor OralMind utilizzerà esclusivamente questo contenuto per formulare 
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          model: 'gpt-4',
+          model: 'gpt-4o-mini',
           messages: [
             {
               role: 'system',
@@ -106,19 +126,22 @@ Il Professor OralMind utilizzerà esclusivamente questo contenuto per formulare 
 REGOLE FONDAMENTALI:
 1. Conosci SOLO il contenuto del documento fornito: "${fileContent}"
 2. NON puoi accedere ad altre informazioni oltre a questo documento
-3. Se lo studente chiede qualcosa NON presente nel documento, rispondi: "Mi dispiace, posso interrogarti solo sul materiale che hai caricato"
+3. Se lo studente espone qualcosa NON presente nel documento, rispondi: "Mi dispiace, posso valutarti solo sul materiale che hai caricato"
 4. Comportati come un professore esperto e paziente
 5. Fai domande progressive: dalle basi ai concetti più complessi
 6. Fornisci feedback costruttivo e incoraggiante
 7. Usa un linguaggio pedagogico chiaro e professionale
 8. Non rivelare mai di essere ChatGPT o un AI generico - sei il Professor OralMind
+9. Aiuta lo studente a migliorare indicando cosa deve essere cambiato e migliorato
+10. Valuta sempre sulla base del contenuto del PDF caricato
 
 STILE DI INTERROGAZIONE:
-- Inizia con domande generali sul documento
-- Approfondisci i dettagli importanti
-- Chiedi collegamenti tra concetti
-- Valuta la comprensione con esempi
-- Fornisci suggerimenti se lo studente è in difficoltà
+- Ascolta attentamente l'esposizione completa dello studente
+- Valuta accuratezza, completezza e comprensione
+- Fornisci feedback specifico su cosa migliorare
+- Chiedi approfondimenti sui punti poco chiari
+- Suggerisci come collegare meglio i concetti
+- Incoraggia quando lo studente è sulla strada giusta
 
 Ricorda: Sei un professore specializzato che conosce ESCLUSIVAMENTE il contenuto caricato dallo studente.`
             },
@@ -131,7 +154,7 @@ Ricorda: Sei un professore specializzato che conosce ESCLUSIVAMENTE il contenuto
               content: userMessage
             }
           ],
-          max_tokens: 400,
+          max_tokens: 600,
           temperature: 0.7,
         }),
       });
@@ -151,22 +174,101 @@ Ricorda: Sei un professore specializzato che conosce ESCLUSIVAMENTE il contenuto
     }
   };
 
-  const handleSendMessage = async () => {
-    if (!userInput.trim()) return;
+  const startRecording = async () => {
+    try {
+      console.log('🎤 Inizio registrazione...');
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const recorder = new MediaRecorder(stream);
+      
+      const chunks: Blob[] = [];
+      
+      recorder.ondataavailable = (event) => {
+        if (event.data.size > 0) {
+          chunks.push(event.data);
+        }
+      };
+      
+      recorder.onstop = async () => {
+        const audioBlob = new Blob(chunks, { type: 'audio/wav' });
+        setRecordedAudio(audioBlob);
+        setAudioChunks([]);
+        
+        // Trascrivi l'audio
+        await transcribeAudio(audioBlob);
+        
+        // Ferma lo stream
+        stream.getTracks().forEach(track => track.stop());
+      };
+      
+      recorder.start();
+      setMediaRecorder(recorder);
+      setIsRecording(true);
+      setAudioChunks(chunks);
+    } catch (error) {
+      console.error('❌ Errore nell\'avvio della registrazione:', error);
+      alert('Errore nell\'accesso al microfono. Assicurati di aver dato il permesso.');
+    }
+  };
 
-    const userMessage = userInput;
-    setUserInput('');
+  const stopRecording = () => {
+    if (mediaRecorder && isRecording) {
+      console.log('⏹️ Stop registrazione...');
+      mediaRecorder.stop();
+      setIsRecording(false);
+      setMediaRecorder(null);
+    }
+  };
+
+  const transcribeAudio = async (audioBlob: Blob) => {
     setIsProcessing(true);
+    
+    try {
+      console.log('🎯 Trascrizione audio in corso...');
+      
+      const formData = new FormData();
+      formData.append('file', audioBlob, 'recording.wav');
+      formData.append('model', 'whisper-1');
+      formData.append('language', 'it');
 
-    console.log('📤 Messaggio studente:', userMessage);
+      const response = await fetch('https://api.openai.com/v1/audio/transcriptions', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${OPENAI_API_KEY}`,
+        },
+        body: formData,
+      });
 
-    // Aggiungi messaggio utente
-    setConversation(prev => [...prev, { role: 'user', message: userMessage }]);
+      if (!response.ok) {
+        throw new Error(`Errore trascrizione: ${response.status}`);
+      }
 
-    // Elabora con OralMind AI
-    const aiResponse = await analyzeWithOralMindAI(userMessage);
-    setConversation(prev => [...prev, { role: 'ai', message: aiResponse }]);
-    setIsProcessing(false);
+      const data = await response.json();
+      const transcription = data.text;
+      
+      console.log('✅ Trascrizione completata:', transcription);
+      
+      // Aggiungi il messaggio trascritto dell'utente
+      setConversation(prev => [...prev, { role: 'user', message: transcription }]);
+      
+      // Analizza con OralMind AI
+      const aiResponse = await analyzeWithOralMindAI(transcription);
+      setConversation(prev => [...prev, { role: 'ai', message: aiResponse }]);
+      
+    } catch (error) {
+      console.error('❌ Errore nella trascrizione:', error);
+      alert('Errore nella trascrizione audio. Riprova.');
+    } finally {
+      setIsProcessing(false);
+      setRecordedAudio(null);
+    }
+  };
+
+  const playRecording = () => {
+    if (recordedAudio && audioRef.current) {
+      const audioUrl = URL.createObjectURL(recordedAudio);
+      audioRef.current.src = audioUrl;
+      audioRef.current.play();
+    }
   };
 
   const generateOralMindReport = async () => {
@@ -196,13 +298,13 @@ FORMATO DEL REPORT:
 [Elenca 3-4 aspetti positivi dell'esposizione]
 
 🔄 AREE DI MIGLIORAMENTO:
-[Elenca 2-3 aspetti da migliorare]
+[Elenca 2-3 aspetti da migliorare con indicazioni specifiche]
 
 💡 CONSIGLI PERSONALIZZATI:
-[Suggerimenti specifici per lo studio]
+[Suggerimenti specifici per migliorare lo studio e l'esposizione]
 
 📈 PROSSIMI PASSI:
-[Raccomandazioni per il proseguimento dello studio]
+[Raccomandazioni concrete per il proseguimento dello studio]
 
 🏆 COMMENTO FINALE:
 [Commento motivazionale del Professor OralMind]
@@ -235,10 +337,13 @@ Generato da OralMind - Il tuo assistente AI per l'interrogazione orale`;
     setUploadedFile(null);
     setFileContent('');
     setConversation([]);
-    setUserInput('');
     setReport('');
     setIsAnalyzing(false);
     setIsProcessing(false);
+    setIsRecording(false);
+    setMediaRecorder(null);
+    setAudioChunks([]);
+    setRecordedAudio(null);
   };
 
   const handleClose = () => {
@@ -312,6 +417,9 @@ Generato da OralMind - Il tuo assistente AI per l'interrogazione orale`;
               <p className="text-muted-foreground">
                 📚 Documento: <strong>{uploadedFile?.name}</strong>
               </p>
+              <p className="text-sm text-oralmind-600 mt-2">
+                🎤 Registra la tua voce per esporre l'argomento
+              </p>
             </div>
 
             <div className="border rounded-lg p-4 h-80 overflow-y-auto space-y-4 bg-gray-50">
@@ -326,6 +434,7 @@ Generato da OralMind - Il tuo assistente AI per l'interrogazione orale`;
                       : 'bg-white text-oralmind-800 border border-oralmind-200'
                   }`}>
                     {msg.role === 'ai' && <div className="text-xs text-oralmind-600 mb-1">🧠 Professor OralMind</div>}
+                    {msg.role === 'user' && <div className="text-xs text-success-600 mb-1">🎤 Studente</div>}
                     <div className="text-sm">{msg.message}</div>
                   </div>
                 </div>
@@ -340,26 +449,45 @@ Generato da OralMind - Il tuo assistente AI per l'interrogazione orale`;
               )}
             </div>
 
-            <div className="flex space-x-2">
-              <Textarea
-                value={userInput}
-                onChange={(e) => setUserInput(e.target.value)}
-                placeholder="💬 Scrivi la tua risposta al Professor OralMind..."
-                className="flex-1"
-                onKeyPress={(e) => {
-                  if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault();
-                    handleSendMessage();
-                  }
-                }}
-              />
-              <Button 
-                onClick={handleSendMessage}
-                disabled={!userInput.trim() || isProcessing}
-                className="px-6 bg-oralmind-500 hover:bg-oralmind-600"
-              >
-                📤 Invia
-              </Button>
+            <div className="flex flex-col space-y-3">
+              <div className="flex justify-center space-x-4">
+                {!isRecording ? (
+                  <Button 
+                    onClick={startRecording}
+                    disabled={isProcessing}
+                    className="px-6 py-3 bg-red-500 hover:bg-red-600 text-white"
+                  >
+                    <Mic className="h-5 w-5 mr-2" />
+                    🎤 Inizia Registrazione
+                  </Button>
+                ) : (
+                  <Button 
+                    onClick={stopRecording}
+                    className="px-6 py-3 bg-red-700 hover:bg-red-800 text-white animate-pulse"
+                  >
+                    <MicOff className="h-5 w-5 mr-2" />
+                    ⏹️ Termina Registrazione
+                  </Button>
+                )}
+
+                {recordedAudio && (
+                  <Button 
+                    onClick={playRecording}
+                    variant="outline"
+                    className="px-4"
+                  >
+                    <Play className="h-4 w-4 mr-2" />
+                    🔊 Riascolta
+                  </Button>
+                )}
+              </div>
+
+              {isRecording && (
+                <div className="text-center">
+                  <p className="text-red-600 font-medium">🔴 Registrazione in corso... Esponi il tuo argomento</p>
+                  <p className="text-sm text-muted-foreground">Clicca "Termina Registrazione" quando hai finito</p>
+                </div>
+              )}
             </div>
 
             <div className="flex justify-between">
@@ -374,6 +502,8 @@ Generato da OralMind - Il tuo assistente AI per l'interrogazione orale`;
                 📊 Genera Report
               </Button>
             </div>
+
+            <audio ref={audioRef} className="hidden" />
           </div>
         )}
 
