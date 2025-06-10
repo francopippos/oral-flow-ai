@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Menu, X, Brain } from 'lucide-react';
 import LoginModal from './LoginModal';
+import LanguageSelector from './LanguageSelector';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -41,8 +42,9 @@ const Header = () => {
               ))}
             </nav>
 
-            {/* CTA Button */}
+            {/* CTA Button and Language Selector */}
             <div className="hidden md:flex items-center space-x-4">
+              <LanguageSelector />
               <Button 
                 variant="outline" 
                 className="border-oralmind-200 text-oralmind-700 hover:bg-oralmind-50"
@@ -81,6 +83,7 @@ const Header = () => {
                   </a>
                 ))}
                 <div className="flex flex-col space-y-2 pt-4">
+                  <LanguageSelector />
                   <Button 
                     variant="outline" 
                     className="border-oralmind-200 text-oralmind-700"

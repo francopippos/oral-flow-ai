@@ -1,10 +1,13 @@
+
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Play, Upload, MessageCircle, TrendingUp } from 'lucide-react';
+import { ArrowRight, Play, Upload, MessageCircle, TrendingUp, Zap } from 'lucide-react';
 import DemoModal from './DemoModal';
+import FunctionalDemoModal from './FunctionalDemoModal';
 
 const Hero = () => {
   const [isDemoOpen, setIsDemoOpen] = useState(false);
+  const [isFunctionalDemoOpen, setIsFunctionalDemoOpen] = useState(false);
 
   return (
     <>
@@ -37,15 +40,26 @@ const Hero = () => {
                     Inizia Subito Gratis
                     <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                   </Button>
-                  <Button 
-                    size="lg" 
-                    variant="outline" 
-                    className="border-oralmind-200 text-oralmind-700 hover:bg-oralmind-50 group"
-                    onClick={() => setIsDemoOpen(true)}
-                  >
-                    <Play className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform" />
-                    Guarda Demo
-                  </Button>
+                  <div className="flex gap-2">
+                    <Button 
+                      size="lg" 
+                      variant="outline" 
+                      className="border-oralmind-200 text-oralmind-700 hover:bg-oralmind-50 group"
+                      onClick={() => setIsDemoOpen(true)}
+                    >
+                      <Play className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform" />
+                      Demo Visual
+                    </Button>
+                    <Button 
+                      size="lg" 
+                      variant="outline" 
+                      className="border-success-200 text-success-700 hover:bg-success-50 group"
+                      onClick={() => setIsFunctionalDemoOpen(true)}
+                    >
+                      <Zap className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform" />
+                      Demo Funzionale
+                    </Button>
+                  </div>
                 </div>
 
                 {/* Stats */}
@@ -123,6 +137,7 @@ const Hero = () => {
       </section>
 
       <DemoModal isOpen={isDemoOpen} onClose={() => setIsDemoOpen(false)} />
+      <FunctionalDemoModal isOpen={isFunctionalDemoOpen} onClose={() => setIsFunctionalDemoOpen(false)} />
     </>
   );
 };
