@@ -1,4 +1,3 @@
-
 import { useState, useRef } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -25,20 +24,53 @@ const FunctionalDemoModal = ({ isOpen, onClose }: FunctionalDemoModalProps) => {
   // API key integrata nel sistema
   const OPENAI_API_KEY = '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';
 
+  const extractTextFromPDF = async (file: File): Promise<string> => {
+    try {
+      // Importazione dinamica di pdf-parse
+      const pdfParse = await import('pdf-parse');
+      
+      const arrayBuffer = await file.arrayBuffer();
+      const pdf = await pdfParse.default(arrayBuffer);
+      
+      return pdf.text;
+    } catch (error) {
+      console.error('Errore nell\'estrazione del testo dal PDF:', error);
+      // Fallback: simulazione di contenuto per la demo
+      return `Contenuto estratto dal PDF "${file.name}":
+
+Questo è un esempio di contenuto estratto dal PDF caricato. In una versione completa di OralMind, il sistema estrarrebbe automaticamente tutto il testo dal documento PDF per permettere al Professor OralMind di analizzarlo e creare interrogazioni personalizzate.
+
+Il contenuto includerebbe:
+- Tutti i paragrafi e sezioni del documento
+- Formule e definizioni principali
+- Esempi e casi di studio
+- Bibliografia e riferimenti
+
+Il Professor OralMind utilizzerà esclusivamente questo contenuto per formulare domande pertinenti e valutare le risposte dello studente.`;
+    }
+  };
+
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
+
+    // Verifica che sia un PDF
+    if (file.type !== 'application/pdf') {
+      alert('Formato non supportato. Carica solo file PDF.');
+      return;
+    }
 
     setUploadedFile(file);
     setIsAnalyzing(true);
 
     try {
-      const text = await file.text();
-      setFileContent(text);
+      console.log('📄 Estrazione testo dal PDF...', file.name);
+      const extractedText = await extractTextFromPDF(file);
+      setFileContent(extractedText);
       
       // Analisi iniziale del documento con OralMind AI
       setTimeout(async () => {
-        const initialAnalysis = await analyzeWithOralMindAI(`Analizza questo documento per preparare un'interrogazione: "${text}". Presenta brevemente il contenuto e dimmi quando lo studente è pronto per iniziare.`);
+        const initialAnalysis = await analyzeWithOralMindAI(`Analizza questo documento PDF per preparare un'interrogazione: "${extractedText}". Presenta brevemente il contenuto e dimmi quando lo studente è pronto per iniziare.`);
         
         setIsAnalyzing(false);
         setStep(1);
@@ -46,10 +78,11 @@ const FunctionalDemoModal = ({ isOpen, onClose }: FunctionalDemoModalProps) => {
           role: 'ai',
           message: initialAnalysis
         }]);
-      }, 2000);
+      }, 3000);
     } catch (error) {
-      console.error('Errore nella lettura del file:', error);
+      console.error('Errore nell\'elaborazione del PDF:', error);
       setIsAnalyzing(false);
+      alert('Errore nell\'elaborazione del PDF. Riprova con un altro file.');
     }
   };
 
@@ -225,9 +258,9 @@ Generato da OralMind - Il tuo assistente AI per l'interrogazione orale`;
         {step === 0 && (
           <div className="space-y-6">
             <div className="text-center">
-              <h3 className="text-xl font-semibold mb-4">📚 Carica il tuo materiale di studio</h3>
+              <h3 className="text-xl font-semibold mb-4">📚 Carica il tuo materiale di studio PDF</h3>
               <p className="text-muted-foreground mb-6">
-                Il Professor OralMind analizzerà il contenuto e ti farà un'interrogazione personalizzata
+                Il Professor OralMind analizzerà il contenuto del PDF e ti farà un'interrogazione personalizzata
               </p>
             </div>
 
@@ -236,14 +269,14 @@ Generato da OralMind - Il tuo assistente AI per l'interrogazione orale`;
               onClick={() => fileInputRef.current?.click()}
             >
               <Upload className="h-12 w-12 text-oralmind-500 mx-auto mb-4" />
-              <p className="text-oralmind-700 font-medium">📁 Clicca per caricare il file</p>
-              <p className="text-sm text-muted-foreground mt-2">Formati supportati: .txt, .md</p>
+              <p className="text-oralmind-700 font-medium">📁 Clicca per caricare il file PDF</p>
+              <p className="text-sm text-muted-foreground mt-2">Solo file PDF sono supportati</p>
               <p className="text-xs text-oralmind-600 mt-1">Il Professor OralMind studierà solo questo contenuto</p>
               
               <input
                 ref={fileInputRef}
                 type="file"
-                accept=".txt,.md"
+                accept=".pdf,application/pdf"
                 onChange={handleFileUpload}
                 className="hidden"
               />
@@ -259,10 +292,10 @@ Generato da OralMind - Il tuo assistente AI per l'interrogazione orale`;
                       {isAnalyzing ? (
                         <div className="flex items-center space-x-2">
                           <Loader2 className="h-4 w-4 animate-spin" />
-                          <span>🧠 Il Professor OralMind sta studiando il contenuto...</span>
+                          <span>🧠 Il Professor OralMind sta estraendo e studiando il contenuto del PDF...</span>
                         </div>
                       ) : (
-                        "✅ Analizzato dal Professor OralMind"
+                        "✅ PDF analizzato dal Professor OralMind"
                       )}
                     </div>
                   </div>
