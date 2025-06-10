@@ -2,7 +2,7 @@
 import { useState, useRef } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { Upload, MessageCircle, Mic, MicOff, FileText, Download, Loader2 } from 'lucide-react';
+import { Upload, MessageCircle, FileText, Download, Loader2 } from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';
 
 interface FunctionalDemoModalProps {
@@ -20,8 +20,10 @@ const FunctionalDemoModal = ({ isOpen, onClose }: FunctionalDemoModalProps) => {
   const [userInput, setUserInput] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
   const [report, setReport] = useState('');
-  const [apiKey, setApiKey] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // API key integrata nel sistema
+  const OPENAI_API_KEY = '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';
 
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -34,13 +36,15 @@ const FunctionalDemoModal = ({ isOpen, onClose }: FunctionalDemoModalProps) => {
       const text = await file.text();
       setFileContent(text);
       
-      // Simula analisi AI del documento
-      setTimeout(() => {
+      // Analisi iniziale del documento con OralMind AI
+      setTimeout(async () => {
+        const initialAnalysis = await analyzeWithOralMindAI(`Analizza questo documento per preparare un'interrogazione: "${text}". Presenta brevemente il contenuto e dimmi quando lo studente è pronto per iniziare.`);
+        
         setIsAnalyzing(false);
         setStep(1);
         setConversation([{
           role: 'ai',
-          message: `Ho analizzato il documento "${file.name}". Sono pronto a farti domande sul contenuto. Dimmi quando vuoi iniziare l'interrogazione!`
+          message: initialAnalysis
         }]);
       }, 2000);
     } catch (error) {
@@ -49,16 +53,14 @@ const FunctionalDemoModal = ({ isOpen, onClose }: FunctionalDemoModalProps) => {
     }
   };
 
-  const analyzeWithAI = async (userMessage: string) => {
-    if (!apiKey) {
-      return "Per favore inserisci la tua API key di OpenAI nella sezione configurazione per utilizzare l'AI reale.";
-    }
-
+  const analyzeWithOralMindAI = async (userMessage: string) => {
     try {
+      console.log('🤖 OralMind AI sta elaborando...', { userMessage: userMessage.substring(0, 100) });
+      
       const response = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${apiKey}`,
+          'Authorization': `Bearer ${OPENAI_API_KEY}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
@@ -66,10 +68,26 @@ const FunctionalDemoModal = ({ isOpen, onClose }: FunctionalDemoModalProps) => {
           messages: [
             {
               role: 'system',
-              content: `Sei un professore che sta interrogando uno studente. Hai a disposizione questo documento di studio: "${fileContent}". 
-              Basa le tue domande e valutazioni ESCLUSIVAMENTE su questo contenuto. 
-              Fai domande specifiche sul materiale e fornisci feedback costruttivo.
-              Rispondi sempre in italiano in modo chiaro e pedagogico.`
+              content: `Sei il Professor OralMind, un assistente AI specializzato nell'interrogazione orale degli studenti.
+
+REGOLE FONDAMENTALI:
+1. Conosci SOLO il contenuto del documento fornito: "${fileContent}"
+2. NON puoi accedere ad altre informazioni oltre a questo documento
+3. Se lo studente chiede qualcosa NON presente nel documento, rispondi: "Mi dispiace, posso interrogarti solo sul materiale che hai caricato"
+4. Comportati come un professore esperto e paziente
+5. Fai domande progressive: dalle basi ai concetti più complessi
+6. Fornisci feedback costruttivo e incoraggiante
+7. Usa un linguaggio pedagogico chiaro e professionale
+8. Non rivelare mai di essere ChatGPT o un AI generico - sei il Professor OralMind
+
+STILE DI INTERROGAZIONE:
+- Inizia con domande generali sul documento
+- Approfondisci i dettagli importanti
+- Chiedi collegamenti tra concetti
+- Valuta la comprensione con esempi
+- Fornisci suggerimenti se lo studente è in difficoltà
+
+Ricorda: Sei un professore specializzato che conosce ESCLUSIVAMENTE il contenuto caricato dallo studente.`
             },
             ...conversation.map(msg => ({
               role: msg.role === 'ai' ? 'assistant' : 'user',
@@ -80,20 +98,23 @@ const FunctionalDemoModal = ({ isOpen, onClose }: FunctionalDemoModalProps) => {
               content: userMessage
             }
           ],
-          max_tokens: 300,
+          max_tokens: 400,
           temperature: 0.7,
         }),
       });
 
       if (!response.ok) {
-        throw new Error(`Errore API: ${response.status}`);
+        throw new Error(`Errore API OpenAI: ${response.status}`);
       }
 
       const data = await response.json();
-      return data.choices[0].message.content;
+      const aiResponse = data.choices[0].message.content;
+      
+      console.log('✅ Risposta OralMind AI ricevuta');
+      return aiResponse;
     } catch (error) {
-      console.error('Errore nell\'analisi AI:', error);
-      return "Mi dispiace, c'è stato un errore nell'analisi. Assicurati che la tua API key sia valida.";
+      console.error('❌ Errore OralMind AI:', error);
+      return "Mi dispiace, c'è stato un problema tecnico. Riprova tra un momento.";
     }
   };
 
@@ -104,64 +125,72 @@ const FunctionalDemoModal = ({ isOpen, onClose }: FunctionalDemoModalProps) => {
     setUserInput('');
     setIsProcessing(true);
 
+    console.log('📤 Messaggio studente:', userMessage);
+
     // Aggiungi messaggio utente
     setConversation(prev => [...prev, { role: 'user', message: userMessage }]);
 
-    // Simula o usa AI reale
-    let aiResponse;
-    if (apiKey) {
-      aiResponse = await analyzeWithAI(userMessage);
-    } else {
-      // Risposta simulata basata sul contenuto del file
-      aiResponse = `Interessante risposta! Basandomi sul documento caricato, potresti approfondire meglio il concetto che hai menzionato. Hai altri dettagli da aggiungere?`;
-    }
-
+    // Elabora con OralMind AI
+    const aiResponse = await analyzeWithOralMindAI(userMessage);
     setConversation(prev => [...prev, { role: 'ai', message: aiResponse }]);
     setIsProcessing(false);
   };
 
-  const generateReport = async () => {
+  const generateOralMindReport = async () => {
     setIsProcessing(true);
     
-    if (apiKey) {
-      const response = await analyzeWithAI(`Genera un report di valutazione completo basato su questa conversazione: ${JSON.stringify(conversation)}. Include: punti di forza, aree di miglioramento, voto e consigli specifici.`);
-      setReport(response);
-    } else {
-      // Report simulato
-      setReport(`📋 Report di Valutazione
-
-🎯 Prestazione Generale: 8/10
-
-✅ Punti di Forza:
-• Buona comprensione dei concetti principali
-• Esposizione chiara e organizzata
-• Capacità di collegamento tra argomenti
-
-🔄 Aree di Miglioramento:
-• Approfondire la terminologia specifica
-• Maggiore precisione nei dettagli cronologici
-• Ampliare gli esempi pratici
-
-💡 Consigli per il Prossimo Studio:
-• Ripassare le definizioni chiave
-• Creare mappe concettuali
-• Esercitarsi con esempi aggiuntivi
-
-📚 Materiali Consigliati:
-• Capitoli 3-5 del testo di riferimento
-• Documentari sul tema trattato`);
-    }
+    console.log('📊 Generazione report OralMind...');
     
+    const conversationSummary = conversation
+      .map(msg => `${msg.role === 'user' ? 'Studente' : 'Professor OralMind'}: ${msg.message}`)
+      .join('\n\n');
+    
+    const reportPrompt = `Genera un report di valutazione dettagliato basato su questa interrogazione orale condotta dal Professor OralMind.
+
+DOCUMENTO STUDIATO: "${uploadedFile?.name}"
+
+CONVERSAZIONE:
+${conversationSummary}
+
+FORMATO DEL REPORT:
+📋 REPORT DI VALUTAZIONE ORALMIND
+📚 Documento: [nome file]
+📅 Data: [data odierna]
+
+🎯 VALUTAZIONE GENERALE: [voto/10 con motivazione]
+
+✅ PUNTI DI FORZA:
+[Elenca 3-4 aspetti positivi dell'esposizione]
+
+🔄 AREE DI MIGLIORAMENTO:
+[Elenca 2-3 aspetti da migliorare]
+
+💡 CONSIGLI PERSONALIZZATI:
+[Suggerimenti specifici per lo studio]
+
+📈 PROSSIMI PASSI:
+[Raccomandazioni per il proseguimento dello studio]
+
+🏆 COMMENTO FINALE:
+[Commento motivazionale del Professor OralMind]
+
+---
+Generato da OralMind - Il tuo assistente AI per l'interrogazione orale`;
+
+    const report = await analyzeWithOralMindAI(reportPrompt);
+    setReport(report);
     setIsProcessing(false);
     setStep(2);
   };
 
   const downloadReport = () => {
-    const blob = new Blob([report], { type: 'text/plain' });
+    const reportContent = `${report}\n\n---\nGenerato da OralMind\nData: ${new Date().toLocaleDateString('it-IT')}\nDocumento analizzato: ${uploadedFile?.name}`;
+    
+    const blob = new Blob([reportContent], { type: 'text/plain; charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `report_orale_${new Date().toLocaleDateString()}.txt`;
+    a.download = `OralMind_Report_${new Date().toLocaleDateString('it-IT').replace(/\//g, '_')}.txt`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -189,45 +218,27 @@ const FunctionalDemoModal = ({ isOpen, onClose }: FunctionalDemoModalProps) => {
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold gradient-text">
-            Demo Funzionale OralMind
+            🧠 OralMind - Demo Funzionale
           </DialogTitle>
         </DialogHeader>
 
         {step === 0 && (
           <div className="space-y-6">
             <div className="text-center">
-              <h3 className="text-xl font-semibold mb-4">Carica il tuo materiale di studio</h3>
+              <h3 className="text-xl font-semibold mb-4">📚 Carica il tuo materiale di studio</h3>
               <p className="text-muted-foreground mb-6">
-                Carica un file di testo (.txt, .md) per iniziare l'interrogazione personalizzata
+                Il Professor OralMind analizzerà il contenuto e ti farà un'interrogazione personalizzata
               </p>
             </div>
 
-            {!apiKey && (
-              <div className="bg-orange-50 border border-orange-200 rounded-lg p-4 mb-4">
-                <h4 className="font-medium text-orange-800 mb-2">🔑 Configurazione AI (Opzionale)</h4>
-                <p className="text-sm text-orange-700 mb-3">
-                  Per un'esperienza completa, inserisci la tua API key OpenAI:
-                </p>
-                <input
-                  type="password"
-                  placeholder="sk-..."
-                  value={apiKey}
-                  onChange={(e) => setApiKey(e.target.value)}
-                  className="w-full p-2 border border-orange-300 rounded text-sm"
-                />
-                <p className="text-xs text-orange-600 mt-1">
-                  Senza API key, la demo userà risposte simulate
-                </p>
-              </div>
-            )}
-
             <div 
-              className="border-2 border-dashed border-oralmind-300 rounded-lg p-12 text-center cursor-pointer hover:border-oralmind-500 transition-colors"
+              className="border-2 border-dashed border-oralmind-300 rounded-lg p-12 text-center cursor-pointer hover:border-oralmind-500 transition-colors bg-gradient-to-br from-oralmind-50 to-success-50"
               onClick={() => fileInputRef.current?.click()}
             >
               <Upload className="h-12 w-12 text-oralmind-500 mx-auto mb-4" />
-              <p className="text-oralmind-700 font-medium">Clicca per caricare il file</p>
+              <p className="text-oralmind-700 font-medium">📁 Clicca per caricare il file</p>
               <p className="text-sm text-muted-foreground mt-2">Formati supportati: .txt, .md</p>
+              <p className="text-xs text-oralmind-600 mt-1">Il Professor OralMind studierà solo questo contenuto</p>
               
               <input
                 ref={fileInputRef}
@@ -239,19 +250,19 @@ const FunctionalDemoModal = ({ isOpen, onClose }: FunctionalDemoModalProps) => {
             </div>
 
             {uploadedFile && (
-              <div className="bg-oralmind-50 border border-oralmind-200 rounded-lg p-4">
+              <div className="bg-gradient-to-r from-oralmind-50 to-success-50 border border-oralmind-200 rounded-lg p-4">
                 <div className="flex items-center space-x-3">
                   <FileText className="h-6 w-6 text-oralmind-600" />
                   <div className="flex-1">
-                    <div className="font-medium text-oralmind-800">{uploadedFile.name}</div>
+                    <div className="font-medium text-oralmind-800">📖 {uploadedFile.name}</div>
                     <div className="text-sm text-oralmind-600">
                       {isAnalyzing ? (
                         <div className="flex items-center space-x-2">
                           <Loader2 className="h-4 w-4 animate-spin" />
-                          <span>Analizzando il contenuto...</span>
+                          <span>🧠 Il Professor OralMind sta studiando il contenuto...</span>
                         </div>
                       ) : (
-                        "✓ Caricato e analizzato"
+                        "✅ Analizzato dal Professor OralMind"
                       )}
                     </div>
                   </div>
@@ -263,33 +274,34 @@ const FunctionalDemoModal = ({ isOpen, onClose }: FunctionalDemoModalProps) => {
 
         {step === 1 && (
           <div className="space-y-4">
-            <div className="text-center">
-              <h3 className="text-xl font-semibold mb-2">Interrogazione in Corso</h3>
+            <div className="text-center bg-gradient-to-r from-oralmind-50 to-success-50 p-4 rounded-lg">
+              <h3 className="text-xl font-semibold mb-2">🎓 Interrogazione in Corso con Professor OralMind</h3>
               <p className="text-muted-foreground">
-                File analizzato: <strong>{uploadedFile?.name}</strong>
+                📚 Documento: <strong>{uploadedFile?.name}</strong>
               </p>
             </div>
 
-            <div className="border rounded-lg p-4 h-80 overflow-y-auto space-y-4">
+            <div className="border rounded-lg p-4 h-80 overflow-y-auto space-y-4 bg-gray-50">
               {conversation.map((msg, index) => (
                 <div 
                   key={index}
                   className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
-                  <div className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
+                  <div className={`max-w-xs lg:max-w-md px-4 py-3 rounded-lg shadow-sm ${
                     msg.role === 'user' 
-                      ? 'bg-success-100 text-success-800' 
-                      : 'bg-oralmind-100 text-oralmind-800'
+                      ? 'bg-success-100 text-success-800 border border-success-200' 
+                      : 'bg-white text-oralmind-800 border border-oralmind-200'
                   }`}>
-                    {msg.message}
+                    {msg.role === 'ai' && <div className="text-xs text-oralmind-600 mb-1">🧠 Professor OralMind</div>}
+                    <div className="text-sm">{msg.message}</div>
                   </div>
                 </div>
               ))}
               {isProcessing && (
                 <div className="flex justify-start">
-                  <div className="bg-oralmind-100 px-4 py-2 rounded-lg flex items-center space-x-2">
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                    <span className="text-oralmind-800">Sto elaborando...</span>
+                  <div className="bg-white px-4 py-3 rounded-lg border border-oralmind-200 flex items-center space-x-2 shadow-sm">
+                    <Loader2 className="h-4 w-4 animate-spin text-oralmind-600" />
+                    <span className="text-oralmind-800 text-sm">🧠 Professor OralMind sta elaborando...</span>
                   </div>
                 </div>
               )}
@@ -299,7 +311,7 @@ const FunctionalDemoModal = ({ isOpen, onClose }: FunctionalDemoModalProps) => {
               <Textarea
                 value={userInput}
                 onChange={(e) => setUserInput(e.target.value)}
-                placeholder="Scrivi la tua risposta..."
+                placeholder="💬 Scrivi la tua risposta al Professor OralMind..."
                 className="flex-1"
                 onKeyPress={(e) => {
                   if (e.key === 'Enter' && !e.shiftKey) {
@@ -311,22 +323,22 @@ const FunctionalDemoModal = ({ isOpen, onClose }: FunctionalDemoModalProps) => {
               <Button 
                 onClick={handleSendMessage}
                 disabled={!userInput.trim() || isProcessing}
-                className="px-6"
+                className="px-6 bg-oralmind-500 hover:bg-oralmind-600"
               >
-                Invia
+                📤 Invia
               </Button>
             </div>
 
             <div className="flex justify-between">
               <Button variant="outline" onClick={resetDemo}>
-                Ricomincia
+                🔄 Ricomincia
               </Button>
               <Button 
-                onClick={generateReport}
+                onClick={generateOralMindReport}
                 disabled={conversation.length < 4}
-                className="bg-oralmind-500 hover:bg-oralmind-600"
+                className="bg-success-500 hover:bg-success-600"
               >
-                Genera Report
+                📊 Genera Report
               </Button>
             </div>
           </div>
@@ -334,28 +346,28 @@ const FunctionalDemoModal = ({ isOpen, onClose }: FunctionalDemoModalProps) => {
 
         {step === 2 && (
           <div className="space-y-6">
-            <div className="text-center">
-              <h3 className="text-xl font-semibold mb-2">📋 Report di Valutazione</h3>
+            <div className="text-center bg-gradient-to-r from-oralmind-50 to-success-50 p-4 rounded-lg">
+              <h3 className="text-xl font-semibold mb-2">📋 Report di Valutazione OralMind</h3>
               <p className="text-muted-foreground">
-                Analisi completa della tua performance
+                Analisi completa della tua performance con il Professor OralMind
               </p>
             </div>
 
-            <div className="bg-gray-50 border rounded-lg p-6">
-              <pre className="whitespace-pre-wrap text-sm">{report}</pre>
+            <div className="bg-white border rounded-lg p-6 shadow-sm">
+              <pre className="whitespace-pre-wrap text-sm font-mono">{report}</pre>
             </div>
 
             <div className="flex justify-between">
               <Button variant="outline" onClick={resetDemo}>
-                Nuova Interrogazione
+                🔄 Nuova Interrogazione
               </Button>
               <div className="space-x-2">
                 <Button variant="outline" onClick={downloadReport}>
                   <Download className="h-4 w-4 mr-2" />
-                  Scarica Report
+                  📥 Scarica Report
                 </Button>
                 <Button onClick={handleClose} className="bg-oralmind-500 hover:bg-oralmind-600">
-                  Completa Demo
+                  ✅ Completa Demo
                 </Button>
               </div>
             </div>
