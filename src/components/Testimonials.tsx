@@ -1,7 +1,10 @@
 
 import { Star, Quote } from 'lucide-react';
+import { useTranslation } from '../hooks/useTranslation';
 
 const Testimonials = () => {
+  const { t } = useTranslation();
+
   const testimonials = [
     {
       name: "Marco Rossi",
@@ -40,11 +43,10 @@ const Testimonials = () => {
           {/* Header */}
           <div className="text-center space-y-4 mb-16 animate-fade-in">
             <h2 className="text-3xl md:text-4xl font-bold">
-              Cosa Dicono di <span className="gradient-text">OralMind</span>
+              {t('testimonials.title')} <span className="gradient-text">OralMind</span>
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Studenti e insegnanti di tutta Italia stanno già sperimentando i benefici 
-              di OralMind. Ecco alcune delle loro testimonianze.
+              {t('testimonials.description')}
             </p>
           </div>
 
@@ -92,18 +94,17 @@ const Testimonials = () => {
           <div className="text-center mt-16 animate-fade-in">
             <div className="bg-white rounded-2xl p-8 md:p-12 border border-oralmind-100 shadow-lg">
               <h3 className="text-2xl md:text-3xl font-bold mb-4">
-                Unisciti a Migliaia di <span className="gradient-text">Studenti Soddisfatti</span>
+                {t('testimonials.cta.title')} <span className="gradient-text">{t('testimonials.cta.subtitle')}</span>
               </h3>
               <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
-                Non aspettare oltre: inizia oggi stesso il tuo percorso verso un apprendimento 
-                più efficace e interrogazioni orali di successo.
+                {t('testimonials.cta.description')}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <button className="bg-gradient-to-r from-oralmind-500 to-success-500 hover:from-oralmind-600 hover:to-success-600 text-white px-8 py-4 rounded-lg font-semibold shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-                  Prova OralMind Gratis
+                  {t('testimonials.cta.tryFree')}
                 </button>
                 <button className="border-2 border-oralmind-200 text-oralmind-700 hover:bg-oralmind-50 px-8 py-4 rounded-lg font-semibold transition-all duration-300">
-                  Scopri di Più
+                  {t('testimonials.cta.learnMore')}
                 </button>
               </div>
             </div>

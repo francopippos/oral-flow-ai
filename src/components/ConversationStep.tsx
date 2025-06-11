@@ -1,6 +1,7 @@
 
 import { Button } from '@/components/ui/button';
 import { Mic, MicOff, Play, Loader2 } from 'lucide-react';
+import { useTranslation } from '../hooks/useTranslation';
 
 interface ConversationStepProps {
   uploadedFile: File | null;
@@ -29,15 +30,17 @@ const ConversationStep = ({
   onGenerateReport,
   audioRef
 }: ConversationStepProps) => {
+  const { t } = useTranslation();
+
   return (
     <div className="space-y-4">
       <div className="text-center bg-gradient-to-r from-oralmind-50 to-success-50 p-4 rounded-lg">
-        <h3 className="text-xl font-semibold mb-2">🎓 Interrogazione in Corso con Professor OralMind</h3>
+        <h3 className="text-xl font-semibold mb-2">{t('conversation.title')}</h3>
         <p className="text-muted-foreground">
-          📚 Documento: <strong>{uploadedFile?.name}</strong>
+          {t('conversation.document')} <strong>{uploadedFile?.name}</strong>
         </p>
         <p className="text-sm text-oralmind-600 mt-2">
-          🎤 Registra la tua voce per esporre l'argomento
+          {t('conversation.recordVoice')}
         </p>
       </div>
 
@@ -52,8 +55,8 @@ const ConversationStep = ({
                 ? 'bg-success-100 text-success-800 border border-success-200' 
                 : 'bg-white text-oralmind-800 border border-oralmind-200'
             }`}>
-              {msg.role === 'ai' && <div className="text-xs text-oralmind-600 mb-1">🧠 Professor OralMind</div>}
-              {msg.role === 'user' && <div className="text-xs text-success-600 mb-1">🎤 Studente</div>}
+              {msg.role === 'ai' && <div className="text-xs text-oralmind-600 mb-1">{t('conversation.professor')}</div>}
+              {msg.role === 'user' && <div className="text-xs text-success-600 mb-1">{t('conversation.student')}</div>}
               <div className="text-sm">{msg.message}</div>
             </div>
           </div>
@@ -62,7 +65,7 @@ const ConversationStep = ({
           <div className="flex justify-start">
             <div className="bg-white px-4 py-3 rounded-lg border border-oralmind-200 flex items-center space-x-2 shadow-sm">
               <Loader2 className="h-4 w-4 animate-spin text-oralmind-600" />
-              <span className="text-oralmind-800 text-sm">🧠 Professor OralMind sta elaborando...</span>
+              <span className="text-oralmind-800 text-sm">{t('conversation.processing')}</span>
             </div>
           </div>
         )}
@@ -77,7 +80,7 @@ const ConversationStep = ({
               className="px-6 py-3 bg-red-500 hover:bg-red-600 text-white"
             >
               <Mic className="h-5 w-5 mr-2" />
-              🎤 Inizia Registrazione
+              {t('conversation.startRecording')}
             </Button>
           ) : (
             <Button 
@@ -85,7 +88,7 @@ const ConversationStep = ({
               className="px-6 py-3 bg-red-700 hover:bg-red-800 text-white animate-pulse"
             >
               <MicOff className="h-5 w-5 mr-2" />
-              ⏹️ Termina Registrazione
+              {t('conversation.stopRecording')}
             </Button>
           )}
 
@@ -96,29 +99,29 @@ const ConversationStep = ({
               className="px-4"
             >
               <Play className="h-4 w-4 mr-2" />
-              🔊 Riascolta
+              {t('conversation.playback')}
             </Button>
           )}
         </div>
 
         {isRecording && (
           <div className="text-center">
-            <p className="text-red-600 font-medium">🔴 Registrazione in corso... Esponi il tuo argomento</p>
-            <p className="text-sm text-muted-foreground">Clicca "Termina Registrazione" quando hai finito</p>
+            <p className="text-red-600 font-medium">{t('conversation.recordingInProgress')}</p>
+            <p className="text-sm text-muted-foreground">{t('conversation.stopWhenDone')}</p>
           </div>
         )}
       </div>
 
       <div className="flex justify-between">
         <Button variant="outline" onClick={onReset}>
-          🔄 Ricomincia
+          {t('conversation.restart')}
         </Button>
         <Button 
           onClick={onGenerateReport}
           disabled={conversation.length < 4}
           className="bg-success-500 hover:bg-success-600"
         >
-          📊 Genera Report
+          {t('conversation.generateReport')}
         </Button>
       </div>
 

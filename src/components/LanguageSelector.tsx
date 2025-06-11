@@ -1,5 +1,4 @@
 
-import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Globe } from 'lucide-react';
 import {
@@ -8,17 +7,19 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { useTranslation, Language } from '../hooks/useTranslation';
 
 const languages = [
-  { code: 'it', name: 'Italiano', flag: '🇮🇹' },
-  { code: 'en', name: 'English', flag: '🇬🇧' },
-  { code: 'es', name: 'Español', flag: '🇪🇸' },
-  { code: 'fr', name: 'Français', flag: '🇫🇷' },
-  { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
+  { code: 'it' as Language, name: 'Italiano', flag: '🇮🇹' },
+  { code: 'en' as Language, name: 'English', flag: '🇬🇧' },
+  { code: 'es' as Language, name: 'Español', flag: '🇪🇸' },
+  { code: 'fr' as Language, name: 'Français', flag: '🇫🇷' },
+  { code: 'de' as Language, name: 'Deutsch', flag: '🇩🇪' },
 ];
 
 const LanguageSelector = () => {
-  const [selectedLanguage, setSelectedLanguage] = useState(languages[0]);
+  const { language, setLanguage, t } = useTranslation();
+  const selectedLanguage = languages.find(lang => lang.code === language) || languages[0];
 
   return (
     <DropdownMenu>
@@ -26,19 +27,19 @@ const LanguageSelector = () => {
         <Button variant="ghost" size="sm" className="flex items-center space-x-2">
           <Globe className="h-4 w-4" />
           <span className="hidden sm:inline">{selectedLanguage.flag}</span>
-          <span className="hidden md:inline">{selectedLanguage.name}</span>
+          <span className="hidden md:inline">{t(`language.${selectedLanguage.name.toLowerCase()}`)}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-48">
-        {languages.map((language) => (
+        {languages.map((lang) => (
           <DropdownMenuItem
-            key={language.code}
-            onClick={() => setSelectedLanguage(language)}
+            key={lang.code}
+            onClick={() => setLanguage(lang.code)}
             className="flex items-center space-x-3"
           >
-            <span className="text-lg">{language.flag}</span>
-            <span>{language.name}</span>
-            {selectedLanguage.code === language.code && (
+            <span className="text-lg">{lang.flag}</span>
+            <span>{t(`language.${lang.name.toLowerCase()}`)}</span>
+            {language === lang.code && (
               <span className="ml-auto text-oralmind-600">✓</span>
             )}
           </DropdownMenuItem>

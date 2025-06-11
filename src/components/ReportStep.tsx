@@ -1,6 +1,7 @@
 
 import { Button } from '@/components/ui/button';
 import { Download } from 'lucide-react';
+import { useTranslation } from '../hooks/useTranslation';
 
 interface ReportStepProps {
   report: string;
@@ -11,12 +12,14 @@ interface ReportStepProps {
 }
 
 const ReportStep = ({ report, uploadedFile, onReset, onDownloadReport, onClose }: ReportStepProps) => {
+  const { t } = useTranslation();
+
   return (
     <div className="space-y-6">
       <div className="text-center bg-gradient-to-r from-oralmind-50 to-success-50 p-4 rounded-lg">
-        <h3 className="text-xl font-semibold mb-2">📋 Report di Valutazione OralMind</h3>
+        <h3 className="text-xl font-semibold mb-2">{t('report.title')}</h3>
         <p className="text-muted-foreground">
-          Analisi completa della tua performance con il Professor OralMind
+          {t('report.description')}
         </p>
       </div>
 
@@ -26,15 +29,15 @@ const ReportStep = ({ report, uploadedFile, onReset, onDownloadReport, onClose }
 
       <div className="flex justify-between">
         <Button variant="outline" onClick={onReset}>
-          🔄 Nuova Interrogazione
+          {t('report.newInterrogation')}
         </Button>
         <div className="space-x-2">
           <Button variant="outline" onClick={onDownloadReport}>
             <Download className="h-4 w-4 mr-2" />
-            📥 Scarica Report
+            {t('report.downloadReport')}
           </Button>
           <Button onClick={onClose} className="bg-oralmind-500 hover:bg-oralmind-600">
-            ✅ Completa Demo
+            {t('report.completeDemo')}
           </Button>
         </div>
       </div>

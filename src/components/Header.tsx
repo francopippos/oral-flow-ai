@@ -4,16 +4,18 @@ import { Button } from '@/components/ui/button';
 import { Menu, X, Brain } from 'lucide-react';
 import LoginModal from './LoginModal';
 import LanguageSelector from './LanguageSelector';
+import { useTranslation } from '../hooks/useTranslation';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const { t } = useTranslation();
 
   const navItems = [
-    { name: 'Funzionalità', href: '#features' },
-    { name: 'Come Funziona', href: '#how-it-works' },
-    { name: 'Benefici', href: '#benefits' },
-    { name: 'Testimonianze', href: '#testimonials' },
+    { name: t('nav.features'), href: '#features' },
+    { name: t('nav.howItWorks'), href: '#how-it-works' },
+    { name: t('nav.benefits'), href: '#benefits' },
+    { name: t('nav.testimonials'), href: '#testimonials' },
   ];
 
   return (
@@ -50,10 +52,10 @@ const Header = () => {
                 className="border-oralmind-200 text-oralmind-700 hover:bg-oralmind-50"
                 onClick={() => setIsLoginOpen(true)}
               >
-                Accedi
+                {t('header.login')}
               </Button>
               <Button className="bg-gradient-to-r from-oralmind-500 to-success-500 hover:from-oralmind-600 hover:to-success-600 text-white shadow-lg animate-pulse-glow">
-                Prova Gratis
+                {t('header.tryFree')}
               </Button>
             </div>
 
@@ -92,10 +94,10 @@ const Header = () => {
                       setIsMenuOpen(false);
                     }}
                   >
-                    Accedi
+                    {t('header.login')}
                   </Button>
                   <Button className="bg-gradient-to-r from-oralmind-500 to-success-500 text-white">
-                    Prova Gratis
+                    {t('header.tryFree')}
                   </Button>
                 </div>
               </div>

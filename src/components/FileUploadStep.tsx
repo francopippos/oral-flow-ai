@@ -1,5 +1,6 @@
 
 import { Upload, FileText, Loader2 } from 'lucide-react';
+import { useTranslation } from '../hooks/useTranslation';
 
 interface FileUploadStepProps {
   uploadedFile: File | null;
@@ -9,12 +10,14 @@ interface FileUploadStepProps {
 }
 
 const FileUploadStep = ({ uploadedFile, isAnalyzing, onFileUpload, fileInputRef }: FileUploadStepProps) => {
+  const { t } = useTranslation();
+
   return (
     <div className="space-y-6">
       <div className="text-center">
-        <h3 className="text-xl font-semibold mb-4">📚 Carica il tuo materiale di studio PDF</h3>
+        <h3 className="text-xl font-semibold mb-4">{t('upload.title')}</h3>
         <p className="text-muted-foreground mb-6">
-          Il Professor OralMind analizzerà il contenuto del PDF e ti farà un'interrogazione personalizzata
+          {t('upload.description')}
         </p>
       </div>
 
@@ -23,9 +26,9 @@ const FileUploadStep = ({ uploadedFile, isAnalyzing, onFileUpload, fileInputRef 
         onClick={() => fileInputRef.current?.click()}
       >
         <Upload className="h-12 w-12 text-oralmind-500 mx-auto mb-4" />
-        <p className="text-oralmind-700 font-medium">📁 Clicca per caricare il file PDF</p>
-        <p className="text-sm text-muted-foreground mt-2">Solo file PDF sono supportati</p>
-        <p className="text-xs text-oralmind-600 mt-1">Il Professor OralMind studierà solo questo contenuto</p>
+        <p className="text-oralmind-700 font-medium">{t('upload.clickToUpload')}</p>
+        <p className="text-sm text-muted-foreground mt-2">{t('upload.onlyPdf')}</p>
+        <p className="text-xs text-oralmind-600 mt-1">{t('upload.professorStudy')}</p>
         
         <input
           ref={fileInputRef}
@@ -46,10 +49,10 @@ const FileUploadStep = ({ uploadedFile, isAnalyzing, onFileUpload, fileInputRef 
                 {isAnalyzing ? (
                   <div className="flex items-center space-x-2">
                     <Loader2 className="h-4 w-4 animate-spin" />
-                    <span>🧠 Il Professor OralMind sta estraendo e studiando il contenuto del PDF...</span>
+                    <span>{t('upload.analyzing')}</span>
                   </div>
                 ) : (
-                  "✅ PDF analizzato dal Professor OralMind"
+                  t('upload.analyzed')
                 )}
               </div>
             </div>
