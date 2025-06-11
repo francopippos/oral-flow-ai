@@ -5,38 +5,38 @@ const Features = () => {
   const features = [
     {
       icon: Upload,
-      title: "Upload & Go",
-      description: "Trascina i tuoi PDF e in pochi secondi l'AI li studia e li capisce meglio di te.",
+      title: "Carica i Tuoi Materiali",
+      description: "Carica PDF, slide e appunti. OralMind impara solo dai tuoi documenti, garantendo risposte personalizzate e attinenti al programma.",
       color: "from-oralmind-500 to-oralmind-600"
     },
     {
       icon: MessageCircle,
-      title: "Chat Smart",
-      description: "L'AI ti interroga come un prof vero, ma senza giudicarti. Fail safe per provare e riprovare.",
+      title: "Interrogazioni Simulate",
+      description: "Parla con l'AI come se fossi in classe. Ricevi domande mirate e feedback immediato sulla tua esposizione orale.",
       color: "from-success-500 to-success-600"
     },
     {
       icon: Brain,
-      title: "AI che Capisce",
-      description: "Non è ChatGPT random. È addestrata sui TUOI materiali per darti feedback super specifici.",
+      title: "AI Educativa Avanzata",
+      description: "Tecnologia all'avanguardia che simula l'approccio di un professore esperto, con tono incoraggiante e formativo.",
       color: "from-purple-500 to-purple-600"
     },
     {
       icon: TrendingUp,
-      title: "Feedback Preciso",
-      description: "Ti dice esattamente cosa non va e come migliorare. Niente consigli generici.",
+      title: "Feedback Dettagliato",
+      description: "Analisi di fluidità, correttezza terminologica e chiarezza espositiva con consigli personalizzati per migliorare.",
       color: "from-orange-500 to-orange-600"
     },
     {
       icon: FileText,
-      title: "Zero Distrazioni",
-      description: "Solo i tuoi contenuti, niente Wikipedia random. Focus totale sui tuoi esami.",
+      title: "Base Dati Personalizzata",
+      description: "Nessuna informazione da internet: solo i tuoi materiali come fonte di conoscenza per una preparazione mirata.",
       color: "from-blue-500 to-blue-600"
     },
     {
       icon: Mic,
-      title: "Parla & Basta",
-      description: "Registra la tua voce, l'AI capisce tutto e ti dà feedback istantaneo. Game over ansia.",
+      title: "Riconoscimento Vocale",
+      description: "Tecnologia speech-to-text avanzata per comprendere al meglio la tua esposizione e fornire correzioni precise.",
       color: "from-teal-500 to-teal-600"
     }
   ];
@@ -48,10 +48,11 @@ const Features = () => {
           {/* Header */}
           <div className="text-center space-y-4 mb-16 animate-fade-in">
             <h2 className="text-3xl md:text-4xl font-bold">
-              Features che <span className="gradient-text">Spacchettano</span>
+              Funzionalità <span className="gradient-text">Rivoluzionarie</span>
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Tutto quello che ti serve per smettere di odiare le interrogazioni e iniziare a dominarle.
+              OralMind combina intelligenza artificiale avanzata e metodologie didattiche innovative 
+              per offrirti un'esperienza di apprendimento unica e personalizzata.
             </p>
           </div>
 
