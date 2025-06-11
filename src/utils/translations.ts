@@ -9,6 +9,51 @@ export const translations = {
     'header.login': 'Accedi',
     'header.tryFree': 'Prova Gratis',
 
+    // Hero Section
+    'hero.title': 'Trasforma le tue interrogazioni orali con',
+    'hero.subtitle': 'Il primo AI tutor che ti prepara alle interrogazioni con feedback personalizzato',
+    'hero.description': 'Carica i tuoi materiali, esercitati con l\'AI e ricevi valutazioni dettagliate. Migliora la tua esposizione orale e supera ogni interrogazione con sicurezza.',
+    'hero.tryDemo': 'Prova la Demo',
+    'hero.watchVideo': 'Guarda il Video',
+    'hero.trustedBy': 'Scelto da oltre 10.000 studenti',
+
+    // Features
+    'features.title': 'Tutto quello che ti serve per eccellere',
+    'features.subtitle': 'Nelle interrogazioni orali',
+    'features.description': 'OralMind combina intelligenza artificiale avanzata con metodologie didattiche comprovate per offrirti un\'esperienza di apprendimento personalizzata e efficace.',
+    'features.aiTutor.title': 'AI Tutor Personalizzato',
+    'features.aiTutor.description': 'Un\'intelligenza artificiale che si adatta al tuo stile di apprendimento e ai tuoi materiali specifici.',
+    'features.realTime.title': 'Feedback in Tempo Reale',
+    'features.realTime.description': 'Correzioni immediate e suggerimenti per migliorare la tua esposizione orale.',
+    'features.progress.title': 'Tracking dei Progressi',
+    'features.progress.description': 'Monitora i tuoi miglioramenti e identifica le aree su cui concentrarti.',
+    'features.materials.title': 'Supporto Materiali Multipli',
+    'features.materials.description': 'Carica PDF, documenti e appunti per creare interrogazioni personalizzate.',
+
+    // How It Works
+    'howItWorks.title': 'Come Funziona',
+    'howItWorks.subtitle': 'In 3 semplici passaggi',
+    'howItWorks.description': 'OralMind rende la preparazione alle interrogazioni orali facile e efficace',
+    'howItWorks.step1.title': 'Carica i Materiali',
+    'howItWorks.step1.description': 'Carica i tuoi PDF, appunti o documenti di studio',
+    'howItWorks.step2.title': 'Pratica con l\'AI',
+    'howItWorks.step2.description': 'L\'AI ti fa domande personalizzate sui tuoi materiali',
+    'howItWorks.step3.title': 'Ricevi Feedback',
+    'howItWorks.step3.description': 'Ottieni valutazioni dettagliate e suggerimenti per migliorare',
+
+    // Benefits
+    'benefits.title': 'Perché Scegliere',
+    'benefits.subtitle': 'I Vantaggi di OralMind',
+    'benefits.description': 'Scopri come OralMind può trasformare il tuo approccio alle interrogazioni orali',
+    'benefits.confidence.title': 'Maggiore Sicurezza',
+    'benefits.confidence.description': 'Affronta le interrogazioni con sicurezza e tranquillità',
+    'benefits.performance.title': 'Migliori Voti',
+    'benefits.performance.description': 'Vedi un miglioramento tangibile nei tuoi risultati',
+    'benefits.time.title': 'Risparmio di Tempo',
+    'benefits.time.description': 'Studia in modo più efficiente e mirato',
+    'benefits.personalized.title': 'Apprendimento Personalizzato',
+    'benefits.personalized.description': 'Un\'esperienza su misura per le tue esigenze',
+
     // FileUploadStep
     'upload.title': '📚 Carica il tuo materiale di studio PDF',
     'upload.description': 'Il Professor OralMind analizzerà il contenuto del PDF e ti farà un\'interrogazione personalizzata',
@@ -40,12 +85,31 @@ export const translations = {
     'report.downloadReport': '📥 Scarica Report',
     'report.completeDemo': '✅ Completa Demo',
 
+    // DemoModal
+    'demo.title': 'Demo OralMind',
+    'demo.uploadMaterials': 'Caricamento Materiali',
+    'demo.uploadSubtitle': 'Carica i tuoi documenti di studio',
+    'demo.aiConfiguration': 'Configurazione AI',
+    'demo.aiSubtitle': 'Scegli il tuo professore personalizzato',
+    'demo.simulation': 'Interrogazione Simulata',
+    'demo.feedback': 'Feedback Personalizzato',
+    'demo.professorModes': 'Scegli la modalità professore:',
+    'demo.severe': 'Professore Severo',
+    'demo.severeDesc': 'Domande incalzanti, correzioni immediate',
+    'demo.understanding': 'Professore Comprensivo',
+    'demo.understandingDesc': 'Incoraggiante, guida verso la risposta',
+    'demo.technical': 'Professore Tecnico',
+    'demo.technicalDesc': 'Linguaggio specialistico, approfondimenti',
+    'demo.prev': 'Indietro',
+    'demo.next': 'Avanti',
+    'demo.start': 'Inizia Gratis',
+
     // LanguageSelector
-    'language.italian': 'Italiano',
+    'language.italiano': 'Italiano',
     'language.english': 'English',
-    'language.spanish': 'Español',
-    'language.french': 'Français',
-    'language.german': 'Deutsch',
+    'language.español': 'Español',
+    'language.français': 'Français',
+    'language.deutsch': 'Deutsch',
 
     // Testimonials
     'testimonials.title': 'Cosa Dicono di',
@@ -55,6 +119,26 @@ export const translations = {
     'testimonials.cta.description': 'Non aspettare oltre: inizia oggi stesso il tuo percorso verso un apprendimento più efficace e interrogazioni orali di successo.',
     'testimonials.cta.tryFree': 'Prova OralMind Gratis',
     'testimonials.cta.learnMore': 'Scopri di Più',
+
+    // Footer
+    'footer.company': 'Azienda',
+    'footer.about': 'Chi Siamo',
+    'footer.careers': 'Lavora con Noi',
+    'footer.contact': 'Contatti',
+    'footer.product': 'Prodotto',
+    'footer.features': 'Funzionalità',
+    'footer.pricing': 'Prezzi',
+    'footer.support': 'Supporto',
+    'footer.resources': 'Risorse',
+    'footer.blog': 'Blog',
+    'footer.guides': 'Guide',
+    'footer.help': 'Aiuto',
+    'footer.legal': 'Legale',
+    'footer.privacy': 'Privacy',
+    'footer.terms': 'Termini',
+    'footer.cookies': 'Cookie',
+    'footer.allRights': 'Tutti i diritti riservati.',
+    'footer.madeWith': 'Fatto con ❤️ in Italia',
   },
   en: {
     // Header
@@ -64,6 +148,51 @@ export const translations = {
     'nav.testimonials': 'Testimonials',
     'header.login': 'Login',
     'header.tryFree': 'Try Free',
+
+    // Hero Section
+    'hero.title': 'Transform your oral examinations with',
+    'hero.subtitle': 'The first AI tutor that prepares you for oral exams with personalized feedback',
+    'hero.description': 'Upload your materials, practice with AI and receive detailed evaluations. Improve your oral presentation and pass every examination with confidence.',
+    'hero.tryDemo': 'Try Demo',
+    'hero.watchVideo': 'Watch Video',
+    'hero.trustedBy': 'Trusted by over 10,000 students',
+
+    // Features
+    'features.title': 'Everything you need to excel',
+    'features.subtitle': 'In oral examinations',
+    'features.description': 'OralMind combines advanced artificial intelligence with proven teaching methodologies to offer you a personalized and effective learning experience.',
+    'features.aiTutor.title': 'Personalized AI Tutor',
+    'features.aiTutor.description': 'An artificial intelligence that adapts to your learning style and specific materials.',
+    'features.realTime.title': 'Real-Time Feedback',
+    'features.realTime.description': 'Immediate corrections and suggestions to improve your oral presentation.',
+    'features.progress.title': 'Progress Tracking',
+    'features.progress.description': 'Monitor your improvements and identify areas to focus on.',
+    'features.materials.title': 'Multiple Materials Support',
+    'features.materials.description': 'Upload PDFs, documents and notes to create personalized examinations.',
+
+    // How It Works
+    'howItWorks.title': 'How It Works',
+    'howItWorks.subtitle': 'In 3 simple steps',
+    'howItWorks.description': 'OralMind makes preparing for oral examinations easy and effective',
+    'howItWorks.step1.title': 'Upload Materials',
+    'howItWorks.step1.description': 'Upload your PDFs, notes or study documents',
+    'howItWorks.step2.title': 'Practice with AI',
+    'howItWorks.step2.description': 'AI asks you personalized questions about your materials',
+    'howItWorks.step3.title': 'Receive Feedback',
+    'howItWorks.step3.description': 'Get detailed evaluations and suggestions for improvement',
+
+    // Benefits
+    'benefits.title': 'Why Choose',
+    'benefits.subtitle': 'The Benefits of OralMind',
+    'benefits.description': 'Discover how OralMind can transform your approach to oral examinations',
+    'benefits.confidence.title': 'Greater Confidence',
+    'benefits.confidence.description': 'Face examinations with confidence and peace of mind',
+    'benefits.performance.title': 'Better Grades',
+    'benefits.performance.description': 'See tangible improvement in your results',
+    'benefits.time.title': 'Time Saving',
+    'benefits.time.description': 'Study more efficiently and targeted',
+    'benefits.personalized.title': 'Personalized Learning',
+    'benefits.personalized.description': 'A tailored experience for your needs',
 
     // FileUploadStep
     'upload.title': '📚 Upload your PDF study material',
@@ -96,12 +225,31 @@ export const translations = {
     'report.downloadReport': '📥 Download Report',
     'report.completeDemo': '✅ Complete Demo',
 
+    // DemoModal
+    'demo.title': 'OralMind Demo',
+    'demo.uploadMaterials': 'Upload Materials',
+    'demo.uploadSubtitle': 'Upload your study documents',
+    'demo.aiConfiguration': 'AI Configuration',
+    'demo.aiSubtitle': 'Choose your personalized professor',
+    'demo.simulation': 'Simulated Examination',
+    'demo.feedback': 'Personalized Feedback',
+    'demo.professorModes': 'Choose professor mode:',
+    'demo.severe': 'Strict Professor',
+    'demo.severeDesc': 'Pressing questions, immediate corrections',
+    'demo.understanding': 'Understanding Professor',
+    'demo.understandingDesc': 'Encouraging, guides towards the answer',
+    'demo.technical': 'Technical Professor',
+    'demo.technicalDesc': 'Specialized language, in-depth analysis',
+    'demo.prev': 'Previous',
+    'demo.next': 'Next',
+    'demo.start': 'Start Free',
+
     // LanguageSelector
-    'language.italian': 'Italiano',
+    'language.italiano': 'Italiano',
     'language.english': 'English',
-    'language.spanish': 'Español',
-    'language.french': 'Français',
-    'language.german': 'Deutsch',
+    'language.español': 'Español',
+    'language.français': 'Français',
+    'language.deutsch': 'Deutsch',
 
     // Testimonials
     'testimonials.title': 'What They Say About',
@@ -111,6 +259,26 @@ export const translations = {
     'testimonials.cta.description': 'Don\'t wait any longer: start your journey today towards more effective learning and successful oral examinations.',
     'testimonials.cta.tryFree': 'Try OralMind Free',
     'testimonials.cta.learnMore': 'Learn More',
+
+    // Footer
+    'footer.company': 'Company',
+    'footer.about': 'About Us',
+    'footer.careers': 'Careers',
+    'footer.contact': 'Contact',
+    'footer.product': 'Product',
+    'footer.features': 'Features',
+    'footer.pricing': 'Pricing',
+    'footer.support': 'Support',
+    'footer.resources': 'Resources',
+    'footer.blog': 'Blog',
+    'footer.guides': 'Guides',
+    'footer.help': 'Help',
+    'footer.legal': 'Legal',
+    'footer.privacy': 'Privacy',
+    'footer.terms': 'Terms',
+    'footer.cookies': 'Cookies',
+    'footer.allRights': 'All rights reserved.',
+    'footer.madeWith': 'Made with ❤️ in Italy',
   },
   es: {
     // Header
@@ -120,6 +288,51 @@ export const translations = {
     'nav.testimonials': 'Testimonios',
     'header.login': 'Iniciar Sesión',
     'header.tryFree': 'Prueba Gratis',
+
+    // Hero Section
+    'hero.title': 'Transforma tus exámenes orales con',
+    'hero.subtitle': 'El primer tutor IA que te prepara para exámenes orales con retroalimentación personalizada',
+    'hero.description': 'Sube tus materiales, practica con IA y recibe evaluaciones detalladas. Mejora tu presentación oral y aprueba cada examen con confianza.',
+    'hero.tryDemo': 'Prueba la Demo',
+    'hero.watchVideo': 'Ver Video',
+    'hero.trustedBy': 'Elegido por más de 10,000 estudiantes',
+
+    // Features
+    'features.title': 'Todo lo que necesitas para sobresalir',
+    'features.subtitle': 'En exámenes orales',
+    'features.description': 'OralMind combina inteligencia artificial avanzada con metodologías didácticas probadas para ofrecerte una experiencia de aprendizaje personalizada y efectiva.',
+    'features.aiTutor.title': 'Tutor IA Personalizado',
+    'features.aiTutor.description': 'Una inteligencia artificial que se adapta a tu estilo de aprendizaje y materiales específicos.',
+    'features.realTime.title': 'Retroalimentación en Tiempo Real',
+    'features.realTime.description': 'Correcciones inmediatas y sugerencias para mejorar tu presentación oral.',
+    'features.progress.title': 'Seguimiento del Progreso',
+    'features.progress.description': 'Monitorea tus mejoras e identifica áreas en las que concentrarte.',
+    'features.materials.title': 'Soporte de Múltiples Materiales',
+    'features.materials.description': 'Sube PDFs, documentos y notas para crear exámenes personalizados.',
+
+    // How It Works
+    'howItWorks.title': 'Cómo Funciona',
+    'howItWorks.subtitle': 'En 3 pasos simples',
+    'howItWorks.description': 'OralMind hace que la preparación para exámenes orales sea fácil y efectiva',
+    'howItWorks.step1.title': 'Subir Materiales',
+    'howItWorks.step1.description': 'Sube tus PDFs, notas o documentos de estudio',
+    'howItWorks.step2.title': 'Practicar con IA',
+    'howItWorks.step2.description': 'La IA te hace preguntas personalizadas sobre tus materiales',
+    'howItWorks.step3.title': 'Recibir Retroalimentación',
+    'howItWorks.step3.description': 'Obtén evaluaciones detalladas y sugerencias para mejorar',
+
+    // Benefits
+    'benefits.title': 'Por Qué Elegir',
+    'benefits.subtitle': 'Los Beneficios de OralMind',
+    'benefits.description': 'Descubre cómo OralMind puede transformar tu enfoque a los exámenes orales',
+    'benefits.confidence.title': 'Mayor Confianza',
+    'benefits.confidence.description': 'Enfrenta los exámenes con confianza y tranquilidad',
+    'benefits.performance.title': 'Mejores Calificaciones',
+    'benefits.performance.description': 'Ve mejoras tangibles en tus resultados',
+    'benefits.time.title': 'Ahorro de Tiempo',
+    'benefits.time.description': 'Estudia de manera más eficiente y enfocada',
+    'benefits.personalized.title': 'Aprendizaje Personalizado',
+    'benefits.personalized.description': 'Una experiencia adaptada a tus necesidades',
 
     // FileUploadStep
     'upload.title': '📚 Sube tu material de estudio PDF',
@@ -152,12 +365,31 @@ export const translations = {
     'report.downloadReport': '📥 Descargar Informe',
     'report.completeDemo': '✅ Completar Demo',
 
+    // DemoModal
+    'demo.title': 'Demo OralMind',
+    'demo.uploadMaterials': 'Subir Materiales',
+    'demo.uploadSubtitle': 'Sube tus documentos de estudio',
+    'demo.aiConfiguration': 'Configuración IA',
+    'demo.aiSubtitle': 'Elige tu profesor personalizado',
+    'demo.simulation': 'Examen Simulado',
+    'demo.feedback': 'Retroalimentación Personalizada',
+    'demo.professorModes': 'Elige modo profesor:',
+    'demo.severe': 'Profesor Estricto',
+    'demo.severeDesc': 'Preguntas incisivas, correcciones inmediatas',
+    'demo.understanding': 'Profesor Comprensivo',
+    'demo.understandingDesc': 'Alentador, guía hacia la respuesta',
+    'demo.technical': 'Profesor Técnico',
+    'demo.technicalDesc': 'Lenguaje especializado, análisis profundo',
+    'demo.prev': 'Anterior',
+    'demo.next': 'Siguiente',
+    'demo.start': 'Comenzar Gratis',
+
     // LanguageSelector
-    'language.italian': 'Italiano',
+    'language.italiano': 'Italiano',
     'language.english': 'English',
-    'language.spanish': 'Español',
-    'language.french': 'Français',
-    'language.german': 'Deutsch',
+    'language.español': 'Español',
+    'language.français': 'Français',
+    'language.deutsch': 'Deutsch',
 
     // Testimonials
     'testimonials.title': 'Qué Dicen de',
@@ -167,6 +399,26 @@ export const translations = {
     'testimonials.cta.description': 'No esperes más: comienza hoy tu camino hacia un aprendizaje más efectivo y exámenes orales exitosos.',
     'testimonials.cta.tryFree': 'Prueba OralMind Gratis',
     'testimonials.cta.learnMore': 'Saber Más',
+
+    // Footer
+    'footer.company': 'Empresa',
+    'footer.about': 'Acerca de',
+    'footer.careers': 'Carreras',
+    'footer.contact': 'Contacto',
+    'footer.product': 'Producto',
+    'footer.features': 'Características',
+    'footer.pricing': 'Precios',
+    'footer.support': 'Soporte',
+    'footer.resources': 'Recursos',
+    'footer.blog': 'Blog',
+    'footer.guides': 'Guías',
+    'footer.help': 'Ayuda',
+    'footer.legal': 'Legal',
+    'footer.privacy': 'Privacidad',
+    'footer.terms': 'Términos',
+    'footer.cookies': 'Cookies',
+    'footer.allRights': 'Todos los derechos reservados.',
+    'footer.madeWith': 'Hecho con ❤️ en Italia',
   },
   fr: {
     // Header
@@ -176,6 +428,51 @@ export const translations = {
     'nav.testimonials': 'Témoignages',
     'header.login': 'Se Connecter',
     'header.tryFree': 'Essai Gratuit',
+
+    // Hero Section
+    'hero.title': 'Transformez vos examens oraux avec',
+    'hero.subtitle': 'Le premier tuteur IA qui vous prépare aux examens oraux avec des commentaires personnalisés',
+    'hero.description': 'Téléchargez vos matériaux, pratiquez avec l\'IA et recevez des évaluations détaillées. Améliorez votre présentation orale et réussissez chaque examen avec confiance.',
+    'hero.tryDemo': 'Essayer la Démo',
+    'hero.watchVideo': 'Voir la Vidéo',
+    'hero.trustedBy': 'Choisi par plus de 10 000 étudiants',
+
+    // Features
+    'features.title': 'Tout ce dont vous avez besoin pour exceller',
+    'features.subtitle': 'Dans les examens oraux',
+    'features.description': 'OralMind combine l\'intelligence artificielle avancée avec des méthodologies d\'enseignement éprouvées pour vous offrir une expérience d\'apprentissage personnalisée et efficace.',
+    'features.aiTutor.title': 'Tuteur IA Personnalisé',
+    'features.aiTutor.description': 'Une intelligence artificielle qui s\'adapte à votre style d\'apprentissage et à vos matériaux spécifiques.',
+    'features.realTime.title': 'Commentaires en Temps Réel',
+    'features.realTime.description': 'Corrections immédiates et suggestions pour améliorer votre présentation orale.',
+    'features.progress.title': 'Suivi des Progrès',
+    'features.progress.description': 'Surveillez vos améliorations et identifiez les domaines sur lesquels vous concentrer.',
+    'features.materials.title': 'Support de Matériaux Multiples',
+    'features.materials.description': 'Téléchargez des PDFs, documents et notes pour créer des examens personnalisés.',
+
+    // How It Works
+    'howItWorks.title': 'Comment Ça Marche',
+    'howItWorks.subtitle': 'En 3 étapes simples',
+    'howItWorks.description': 'OralMind rend la préparation aux examens oraux facile et efficace',
+    'howItWorks.step1.title': 'Télécharger les Matériaux',
+    'howItWorks.step1.description': 'Téléchargez vos PDFs, notes ou documents d\'étude',
+    'howItWorks.step2.title': 'Pratiquer avec l\'IA',
+    'howItWorks.step2.description': 'L\'IA vous pose des questions personnalisées sur vos matériaux',
+    'howItWorks.step3.title': 'Recevoir des Commentaires',
+    'howItWorks.step3.description': 'Obtenez des évaluations détaillées et des suggestions d\'amélioration',
+
+    // Benefits
+    'benefits.title': 'Pourquoi Choisir',
+    'benefits.subtitle': 'Les Avantages d\'OralMind',
+    'benefits.description': 'Découvrez comment OralMind peut transformer votre approche des examens oraux',
+    'benefits.confidence.title': 'Plus de Confiance',
+    'benefits.confidence.description': 'Affrontez les examens avec confiance et sérénité',
+    'benefits.performance.title': 'Meilleures Notes',
+    'benefits.performance.description': 'Voyez une amélioration tangible de vos résultats',
+    'benefits.time.title': 'Gain de Temps',
+    'benefits.time.description': 'Étudiez de manière plus efficace et ciblée',
+    'benefits.personalized.title': 'Apprentissage Personnalisé',
+    'benefits.personalized.description': 'Une expérience adaptée à vos besoins',
 
     // FileUploadStep
     'upload.title': '📚 Téléchargez votre matériel d\'étude PDF',
@@ -208,12 +505,31 @@ export const translations = {
     'report.downloadReport': '📥 Télécharger le Rapport',
     'report.completeDemo': '✅ Terminer la Démo',
 
+    // DemoModal
+    'demo.title': 'Démo OralMind',
+    'demo.uploadMaterials': 'Télécharger les Matériaux',
+    'demo.uploadSubtitle': 'Téléchargez vos documents d\'étude',
+    'demo.aiConfiguration': 'Configuration IA',
+    'demo.aiSubtitle': 'Choisissez votre professeur personnalisé',
+    'demo.simulation': 'Examen Simulé',
+    'demo.feedback': 'Commentaires Personnalisés',
+    'demo.professorModes': 'Choisissez le mode professeur:',
+    'demo.severe': 'Professeur Strict',
+    'demo.severeDesc': 'Questions pressantes, corrections immédiates',
+    'demo.understanding': 'Professeur Compréhensif',
+    'demo.understandingDesc': 'Encourageant, guide vers la réponse',
+    'demo.technical': 'Professeur Technique',
+    'demo.technicalDesc': 'Langage spécialisé, analyse approfondie',
+    'demo.prev': 'Précédent',
+    'demo.next': 'Suivant',
+    'demo.start': 'Commencer Gratuitement',
+
     // LanguageSelector
-    'language.italian': 'Italiano',
+    'language.italiano': 'Italiano',
     'language.english': 'English',
-    'language.spanish': 'Español',
-    'language.french': 'Français',
-    'language.german': 'Deutsch',
+    'language.español': 'Español',
+    'language.français': 'Français',
+    'language.deutsch': 'Deutsch',
 
     // Testimonials
     'testimonials.title': 'Ce Qu\'Ils Disent de',
@@ -223,6 +539,26 @@ export const translations = {
     'testimonials.cta.description': 'N\'attendez plus : commencez dès aujourd\'hui votre parcours vers un apprentissage plus efficace et des examens oraux réussis.',
     'testimonials.cta.tryFree': 'Essayez OralMind Gratuitement',
     'testimonials.cta.learnMore': 'En Savoir Plus',
+
+    // Footer
+    'footer.company': 'Entreprise',
+    'footer.about': 'À Propos',
+    'footer.careers': 'Carrières',
+    'footer.contact': 'Contact',
+    'footer.product': 'Produit',
+    'footer.features': 'Fonctionnalités',
+    'footer.pricing': 'Tarifs',
+    'footer.support': 'Support',
+    'footer.resources': 'Ressources',
+    'footer.blog': 'Blog',
+    'footer.guides': 'Guides',
+    'footer.help': 'Aide',
+    'footer.legal': 'Légal',
+    'footer.privacy': 'Confidentialité',
+    'footer.terms': 'Conditions',
+    'footer.cookies': 'Cookies',
+    'footer.allRights': 'Tous droits réservés.',
+    'footer.madeWith': 'Fait avec ❤️ en Italie',
   },
   de: {
     // Header
@@ -232,6 +568,51 @@ export const translations = {
     'nav.testimonials': 'Erfahrungsberichte',
     'header.login': 'Anmelden',
     'header.tryFree': 'Kostenlos Testen',
+
+    // Hero Section
+    'hero.title': 'Transformieren Sie Ihre mündlichen Prüfungen mit',
+    'hero.subtitle': 'Der erste KI-Tutor, der Sie mit personalisiertem Feedback auf mündliche Prüfungen vorbereitet',
+    'hero.description': 'Laden Sie Ihre Materialien hoch, üben Sie mit KI und erhalten Sie detaillierte Bewertungen. Verbessern Sie Ihre mündliche Präsentation und bestehen Sie jede Prüfung mit Vertrauen.',
+    'hero.tryDemo': 'Demo Testen',
+    'hero.watchVideo': 'Video Ansehen',
+    'hero.trustedBy': 'Vertraut von über 10.000 Studenten',
+
+    // Features
+    'features.title': 'Alles was Sie brauchen, um zu glänzen',
+    'features.subtitle': 'Bei mündlichen Prüfungen',
+    'features.description': 'OralMind kombiniert fortschrittliche künstliche Intelligenz mit bewährten Lehrmethoden, um Ihnen eine personalisierte und effektive Lernerfahrung zu bieten.',
+    'features.aiTutor.title': 'Personalisierter KI-Tutor',
+    'features.aiTutor.description': 'Eine künstliche Intelligenz, die sich an Ihren Lernstil und spezifische Materialien anpasst.',
+    'features.realTime.title': 'Echtzeit-Feedback',
+    'features.realTime.description': 'Sofortige Korrekturen und Vorschläge zur Verbesserung Ihrer mündlichen Präsentation.',
+    'features.progress.title': 'Fortschrittsverfolgung',
+    'features.progress.description': 'Überwachen Sie Ihre Verbesserungen und identifizieren Sie Bereiche, auf die Sie sich konzentrieren sollten.',
+    'features.materials.title': 'Unterstützung Mehrerer Materialien',
+    'features.materials.description': 'Laden Sie PDFs, Dokumente und Notizen hoch, um personalisierte Prüfungen zu erstellen.',
+
+    // How It Works
+    'howItWorks.title': 'Wie es Funktioniert',
+    'howItWorks.subtitle': 'In 3 einfachen Schritten',
+    'howItWorks.description': 'OralMind macht die Vorbereitung auf mündliche Prüfungen einfach und effektiv',
+    'howItWorks.step1.title': 'Materialien Hochladen',
+    'howItWorks.step1.description': 'Laden Sie Ihre PDFs, Notizen oder Studiendokumente hoch',
+    'howItWorks.step2.title': 'Mit KI Üben',
+    'howItWorks.step2.description': 'KI stellt Ihnen personalisierte Fragen zu Ihren Materialien',
+    'howItWorks.step3.title': 'Feedback Erhalten',
+    'howItWorks.step3.description': 'Erhalten Sie detaillierte Bewertungen und Verbesserungsvorschläge',
+
+    // Benefits
+    'benefits.title': 'Warum Wählen',
+    'benefits.subtitle': 'Die Vorteile von OralMind',
+    'benefits.description': 'Entdecken Sie, wie OralMind Ihren Ansatz bei mündlichen Prüfungen transformieren kann',
+    'benefits.confidence.title': 'Mehr Vertrauen',
+    'benefits.confidence.description': 'Gehen Sie mit Vertrauen und Gelassenheit in Prüfungen',
+    'benefits.performance.title': 'Bessere Noten',
+    'benefits.performance.description': 'Sehen Sie greifbare Verbesserungen in Ihren Ergebnissen',
+    'benefits.time.title': 'Zeitersparnis',
+    'benefits.time.description': 'Studieren Sie effizienter und gezielter',
+    'benefits.personalized.title': 'Personalisiertes Lernen',
+    'benefits.personalized.description': 'Eine maßgeschneiderte Erfahrung für Ihre Bedürfnisse',
 
     // FileUploadStep
     'upload.title': '📚 Laden Sie Ihr PDF-Studienmaterial hoch',
@@ -264,12 +645,31 @@ export const translations = {
     'report.downloadReport': '📥 Bericht Herunterladen',
     'report.completeDemo': '✅ Demo Abschließen',
 
+    // DemoModal
+    'demo.title': 'OralMind Demo',
+    'demo.uploadMaterials': 'Materialien Hochladen',
+    'demo.uploadSubtitle': 'Laden Sie Ihre Studiendokumente hoch',
+    'demo.aiConfiguration': 'KI-Konfiguration',
+    'demo.aiSubtitle': 'Wählen Sie Ihren personalisierten Professor',
+    'demo.simulation': 'Simulierte Prüfung',
+    'demo.feedback': 'Personalisiertes Feedback',
+    'demo.professorModes': 'Wählen Sie Professormodus:',
+    'demo.severe': 'Strenger Professor',
+    'demo.severeDesc': 'Drängende Fragen, sofortige Korrekturen',
+    'demo.understanding': 'Verständnisvoller Professor',
+    'demo.understandingDesc': 'Ermutigend, führt zur Antwort',
+    'demo.technical': 'Technischer Professor',
+    'demo.technicalDesc': 'Fachsprache, tiefgreifende Analyse',
+    'demo.prev': 'Zurück',
+    'demo.next': 'Weiter',
+    'demo.start': 'Kostenlos Starten',
+
     // LanguageSelector
-    'language.italian': 'Italiano',
+    'language.italiano': 'Italiano',
     'language.english': 'English',
-    'language.spanish': 'Español',
-    'language.french': 'Français',
-    'language.german': 'Deutsch',
+    'language.español': 'Español',
+    'language.français': 'Français',
+    'language.deutsch': 'Deutsch',
 
     // Testimonials
     'testimonials.title': 'Was Sie über',
@@ -279,5 +679,25 @@ export const translations = {
     'testimonials.cta.description': 'Warten Sie nicht länger: beginnen Sie heute Ihren Weg zu effektiverem Lernen und erfolgreichen mündlichen Prüfungen.',
     'testimonials.cta.tryFree': 'OralMind Kostenlos Testen',
     'testimonials.cta.learnMore': 'Mehr Erfahren',
+
+    // Footer
+    'footer.company': 'Unternehmen',
+    'footer.about': 'Über Uns',
+    'footer.careers': 'Karriere',
+    'footer.contact': 'Kontakt',
+    'footer.product': 'Produkt',
+    'footer.features': 'Funktionen',
+    'footer.pricing': 'Preise',
+    'footer.support': 'Support',
+    'footer.resources': 'Ressourcen',
+    'footer.blog': 'Blog',
+    'footer.guides': 'Leitfäden',
+    'footer.help': 'Hilfe',
+    'footer.legal': 'Rechtliches',
+    'footer.privacy': 'Datenschutz',
+    'footer.terms': 'Bedingungen',
+    'footer.cookies': 'Cookies',
+    'footer.allRights': 'Alle Rechte vorbehalten.',
+    'footer.madeWith': 'Mit ❤️ in Italien gemacht',
   },
 };

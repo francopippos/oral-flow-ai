@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Upload, MessageCircle, Mic, MicOff, TrendingUp, FileText, Users, Smartphone, Cloud, User } from 'lucide-react';
+import { useTranslation } from '../hooks/useTranslation';
 
 interface DemoModalProps {
   isOpen: boolean;
@@ -10,6 +11,7 @@ interface DemoModalProps {
 }
 
 const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
+  const { t } = useTranslation();
   const [step, setStep] = useState(0);
   const [isRecording, setIsRecording] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -17,24 +19,24 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
 
   const professorModes = {
     severo: {
-      name: "Professore Severo",
-      description: "Domande incalzanti, correzioni immediate",
+      name: t('demo.severe'),
+      description: t('demo.severeDesc'),
       color: "text-red-700",
       bgColor: "bg-red-50",
       question: "Dimmi ESATTAMENTE quando inizia il Rinascimento e perché proprio in quel momento storico.",
       feedback: "La tua risposta è imprecisa. Il Rinascimento non ha una data di inizio univoca. Devi essere più specifico sui fattori scatenanti."
     },
     comprensivo: {
-      name: "Professore Comprensivo", 
-      description: "Incoraggiante, guida verso la risposta",
+      name: t('demo.understanding'),
+      description: t('demo.understandingDesc'),
       color: "text-green-700",
       bgColor: "bg-green-50",
       question: "Raccontami del Rinascimento, prenditi il tempo che ti serve per organizzare i pensieri.",
       feedback: "Molto bene! Hai colto i punti principali. Potresti approfondire il ruolo dell'umanesimo?"
     },
     tecnico: {
-      name: "Professore Tecnico",
-      description: "Linguaggio specialistico, approfondimenti",
+      name: t('demo.technical'),
+      description: t('demo.technicalDesc'),
       color: "text-blue-700", 
       bgColor: "bg-blue-50",
       question: "Analizza la correlazione tra il fenomeno dell'umanesimo quattrocentesco e le trasformazioni socio-economiche dell'epoca.",
@@ -44,8 +46,8 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
 
   const demoSteps = [
     {
-      title: "Caricamento Materiali",
-      subtitle: "Carica i tuoi documenti di studio",
+      title: t('demo.uploadMaterials'),
+      subtitle: t('demo.uploadSubtitle'),
       content: (
         <div className="space-y-4">
           <div className="border-2 border-dashed border-oralmind-300 rounded-lg p-8 text-center">
@@ -82,12 +84,12 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
       )
     },
     {
-      title: "Configurazione AI",
-      subtitle: "Scegli il tuo professore personalizzato",
+      title: t('demo.aiConfiguration'),
+      subtitle: t('demo.aiSubtitle'),
       content: (
         <div className="space-y-6">
           <div className="text-center">
-            <h4 className="font-semibold mb-4">Scegli la modalità professore:</h4>
+            <h4 className="font-semibold mb-4">{t('demo.professorModes')}</h4>
             <div className="grid grid-cols-1 gap-3">
               {Object.entries(professorModes).map(([key, mode]) => (
                 <button
@@ -136,7 +138,7 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
       )
     },
     {
-      title: "Interrogazione Simulata",
+      title: t('demo.simulation'),
       subtitle: `Conversazione con ${professorModes[professorMode as keyof typeof professorModes].name}`,
       content: (
         <div className="space-y-4">
@@ -193,7 +195,7 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
       )
     },
     {
-      title: "Feedback Personalizzato", 
+      title: t('demo.feedback'),
       subtitle: `Analisi dettagliata da ${professorModes[professorMode as keyof typeof professorModes].name}`,
       content: (
         <div className="space-y-4">
@@ -278,7 +280,7 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
       <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold gradient-text">
-            Demo OralMind
+            {t('demo.title')}
           </DialogTitle>
         </DialogHeader>
         
@@ -314,17 +316,17 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
               onClick={handlePrev}
               disabled={step === 0}
             >
-              Indietro
+              {t('demo.prev')}
             </Button>
             
             <div className="space-x-2">
               {step < demoSteps.length - 1 ? (
                 <Button onClick={handleNext}>
-                  Avanti
+                  {t('demo.next')}
                 </Button>
               ) : (
                 <Button onClick={handleClose} className="bg-oralmind-500 hover:bg-oralmind-600">
-                  Inizia Gratis
+                  {t('demo.start')}
                 </Button>
               )}
             </div>
