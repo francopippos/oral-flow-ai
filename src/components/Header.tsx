@@ -3,19 +3,16 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Menu, X, Brain } from 'lucide-react';
 import LoginModal from './LoginModal';
-import LanguageSelector from './LanguageSelector';
-import { useTranslation } from '../hooks/useTranslation';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
-  const { t } = useTranslation();
 
   const navItems = [
-    { name: t('nav.features'), href: '#features' },
-    { name: t('nav.howItWorks'), href: '#how-it-works' },
-    { name: t('nav.benefits'), href: '#benefits' },
-    { name: t('nav.testimonials'), href: '#testimonials' },
+    { name: 'Funzionalità', href: '#features' },
+    { name: 'Come Funziona', href: '#how-it-works' },
+    { name: 'Vantaggi', href: '#benefits' },
+    { name: 'Recensioni', href: '#testimonials' },
   ];
 
   return (
@@ -44,18 +41,17 @@ const Header = () => {
               ))}
             </nav>
 
-            {/* CTA Button and Language Selector */}
+            {/* CTA Buttons */}
             <div className="hidden md:flex items-center space-x-4">
-              <LanguageSelector />
               <Button 
                 variant="outline" 
                 className="border-oralmind-200 text-oralmind-700 hover:bg-oralmind-50"
                 onClick={() => setIsLoginOpen(true)}
               >
-                {t('header.login')}
+                Accedi
               </Button>
               <Button className="bg-gradient-to-r from-oralmind-500 to-success-500 hover:from-oralmind-600 hover:to-success-600 text-white shadow-lg animate-pulse-glow">
-                {t('header.tryFree')}
+                Inizia Gratis
               </Button>
             </div>
 
@@ -85,7 +81,6 @@ const Header = () => {
                   </a>
                 ))}
                 <div className="flex flex-col space-y-2 pt-4">
-                  <LanguageSelector />
                   <Button 
                     variant="outline" 
                     className="border-oralmind-200 text-oralmind-700"
@@ -94,10 +89,10 @@ const Header = () => {
                       setIsMenuOpen(false);
                     }}
                   >
-                    {t('header.login')}
+                    Accedi
                   </Button>
                   <Button className="bg-gradient-to-r from-oralmind-500 to-success-500 text-white">
-                    {t('header.tryFree')}
+                    Inizia Gratis
                   </Button>
                 </div>
               </div>

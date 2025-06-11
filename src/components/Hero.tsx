@@ -17,16 +17,15 @@ const Hero = () => {
               <div className="space-y-8 animate-slide-in-left">
                 <div className="space-y-4">
                   <div className="inline-flex items-center px-4 py-2 bg-oralmind-100 text-oralmind-700 rounded-full text-sm font-medium">
-                    🚀 Rivoluziona il tuo metodo di studio
+                    🚀 Game changer per i tuoi esami
                   </div>
                   <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-                    Trasforma le tue{' '}
-                    <span className="gradient-text">interrogazioni</span>{' '}
-                    con l'AI
+                    AI che ti prepara alle{' '}
+                    <span className="gradient-text">interrogazioni</span>
                   </h1>
                   <p className="text-xl text-muted-foreground leading-relaxed">
-                    OralMind è l'intelligenza artificiale che ti aiuta a migliorare le tue capacità di esposizione orale, 
-                    utilizzando esclusivamente i tuoi materiali di studio. Preparati alle interrogazioni come mai prima d'ora.
+                    Carica i tuoi PDF, chatta con l'AI e migliora subito la tua esposizione orale. 
+                    Niente stress, solo risultati migliori.
                   </p>
                 </div>
 
@@ -35,7 +34,7 @@ const Hero = () => {
                     size="lg" 
                     className="bg-gradient-to-r from-oralmind-500 to-success-500 hover:from-oralmind-600 hover:to-success-600 text-white shadow-xl group"
                   >
-                    Inizia Subito Gratis
+                    Prova Subito Gratis
                     <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                   </Button>
                   <Button 
@@ -45,7 +44,7 @@ const Hero = () => {
                     onClick={() => setIsDemoOpen(true)}
                   >
                     <Play className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform" />
-                    Guarda la Demo
+                    Vedi Demo
                   </Button>
                 </div>
 
@@ -53,15 +52,15 @@ const Hero = () => {
                 <div className="grid grid-cols-3 gap-6 pt-8">
                   <div className="text-center">
                     <div className="text-2xl font-bold text-oralmind-600">98%</div>
-                    <div className="text-sm text-muted-foreground">Studenti Soddisfatti</div>
+                    <div className="text-sm text-muted-foreground">Love it</div>
                   </div>
                   <div className="text-center">
                     <div className="text-2xl font-bold text-success-600">+40%</div>
-                    <div className="text-sm text-muted-foreground">Miglioramento Orale</div>
+                    <div className="text-sm text-muted-foreground">Voti Migliori</div>
                   </div>
                   <div className="text-center">
                     <div className="text-2xl font-bold text-oralmind-600">24/7</div>
-                    <div className="text-sm text-muted-foreground">Sempre Disponibile</div>
+                    <div className="text-sm text-muted-foreground">Always On</div>
                   </div>
                 </div>
               </div>
@@ -74,8 +73,8 @@ const Hero = () => {
                     <div className="flex items-center space-x-3 p-4 bg-oralmind-50 rounded-lg">
                       <Upload className="h-6 w-6 text-oralmind-600" />
                       <div>
-                        <div className="font-medium text-oralmind-800">Storia_Rinascimento.pdf</div>
-                        <div className="text-sm text-oralmind-600">Caricato con successo ✓</div>
+                        <div className="font-medium text-oralmind-800">Storia_Roma.pdf</div>
+                        <div className="text-sm text-oralmind-600">Upload completato ✓</div>
                       </div>
                     </div>
 
@@ -87,7 +86,7 @@ const Hero = () => {
                         </div>
                         <div className="bg-oralmind-50 rounded-lg p-3 max-w-xs">
                           <p className="text-sm text-oralmind-800">
-                            "Parlami delle caratteristiche principali del Rinascimento italiano"
+                            "Dimmi tutto sulla caduta dell'Impero Romano"
                           </p>
                         </div>
                       </div>
@@ -95,7 +94,7 @@ const Hero = () => {
                       <div className="flex justify-end">
                         <div className="bg-success-50 rounded-lg p-3 max-w-xs">
                           <p className="text-sm text-success-800">
-                            "Il Rinascimento italiano si caratterizza per..."
+                            "La caduta dell'Impero Romano..."
                           </p>
                         </div>
                       </div>
@@ -106,7 +105,7 @@ const Hero = () => {
                         </div>
                         <div className="bg-oralmind-50 rounded-lg p-3 max-w-xs">
                           <p className="text-sm text-oralmind-800">
-                            "Ottima esposizione! Potresti approfondire il concetto di umanesimo?"
+                            "Top! Ora spiegami le cause economiche"
                           </p>
                         </div>
                       </div>
