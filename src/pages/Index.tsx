@@ -22,10 +22,7 @@ const Index = () => {
       <div className="min-h-screen bg-background">
         <Header />
         <main>
-          <Hero 
-            onDemoClick={() => setIsDemoOpen(true)}
-            onFunctionalDemoClick={() => setIsFunctionalDemoOpen(true)}
-          />
+          <Hero />
           <Features />
           <HowItWorks />
           <Benefits />
