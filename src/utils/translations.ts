@@ -29,6 +29,10 @@ export const translations = {
     'features.progress.description': 'Monitora i tuoi miglioramenti e identifica le aree su cui concentrarti.',
     'features.materials.title': 'Supporto Materiali Multipli',
     'features.materials.description': 'Carica PDF, documenti e appunti per creare interrogazioni personalizzate.',
+    'features.adaptive.title': 'Apprendimento Adattivo',
+    'features.adaptive.description': 'L\'AI si adatta al tuo livello e velocità di apprendimento.',
+    'features.analytics.title': 'Analytics Dettagliati',
+    'features.analytics.description': 'Visualizza statistiche complete sui tuoi progressi e performance.',
 
     // How It Works
     'howItWorks.title': 'Come Funziona',
@@ -53,6 +57,10 @@ export const translations = {
     'benefits.time.description': 'Studia in modo più efficiente e mirato',
     'benefits.personalized.title': 'Apprendimento Personalizzato',
     'benefits.personalized.description': 'Un\'esperienza su misura per le tue esigenze',
+    'benefits.available.title': 'Disponibile 24/7',
+    'benefits.available.description': 'Pratica quando vuoi, ovunque ti trovi',
+    'benefits.progress.title': 'Monitoraggio Continuo',
+    'benefits.progress.description': 'Tieni traccia dei tuoi miglioramenti nel tempo',
 
     // FileUploadStep
     'upload.title': '📚 Carica il tuo materiale di studio PDF',
@@ -139,6 +147,19 @@ export const translations = {
     'footer.cookies': 'Cookie',
     'footer.allRights': 'Tutti i diritti riservati.',
     'footer.madeWith': 'Fatto con ❤️ in Italia',
+
+    // Common
+    'common.loading': 'Caricamento...',
+    'common.error': 'Errore',
+    'common.success': 'Successo',
+    'common.cancel': 'Annulla',
+    'common.save': 'Salva',
+    'common.close': 'Chiudi',
+    'common.back': 'Indietro',
+    'common.next': 'Avanti',
+    'common.previous': 'Precedente',
+    'common.continue': 'Continua',
+    'common.finish': 'Termina',
   },
   en: {
     // Header
@@ -169,6 +190,10 @@ export const translations = {
     'features.progress.description': 'Monitor your improvements and identify areas to focus on.',
     'features.materials.title': 'Multiple Materials Support',
     'features.materials.description': 'Upload PDFs, documents and notes to create personalized examinations.',
+    'features.adaptive.title': 'Adaptive Learning',
+    'features.adaptive.description': 'AI adapts to your learning level and pace.',
+    'features.analytics.title': 'Detailed Analytics',
+    'features.analytics.description': 'View comprehensive statistics on your progress and performance.',
 
     // How It Works
     'howItWorks.title': 'How It Works',
@@ -193,6 +218,10 @@ export const translations = {
     'benefits.time.description': 'Study more efficiently and targeted',
     'benefits.personalized.title': 'Personalized Learning',
     'benefits.personalized.description': 'A tailored experience for your needs',
+    'benefits.available.title': 'Available 24/7',
+    'benefits.available.description': 'Practice whenever you want, wherever you are',
+    'benefits.progress.title': 'Continuous Monitoring',
+    'benefits.progress.description': 'Track your improvements over time',
 
     // FileUploadStep
     'upload.title': '📚 Upload your PDF study material',
@@ -279,6 +308,19 @@ export const translations = {
     'footer.cookies': 'Cookies',
     'footer.allRights': 'All rights reserved.',
     'footer.madeWith': 'Made with ❤️ in Italy',
+
+    // Common
+    'common.loading': 'Loading...',
+    'common.error': 'Error',
+    'common.success': 'Success',
+    'common.cancel': 'Cancel',
+    'common.save': 'Save',
+    'common.close': 'Close',
+    'common.back': 'Back',
+    'common.next': 'Next',
+    'common.previous': 'Previous',
+    'common.continue': 'Continue',
+    'common.finish': 'Finish',
   },
   es: {
     // Header
@@ -309,6 +351,10 @@ export const translations = {
     'features.progress.description': 'Monitorea tus mejoras e identifica áreas en las que concentrarte.',
     'features.materials.title': 'Soporte de Múltiples Materiales',
     'features.materials.description': 'Sube PDFs, documentos y notas para crear exámenes personalizados.',
+    'features.adaptive.title': 'Aprendizaje Adaptativo',
+    'features.adaptive.description': 'La IA se adapta a tu nivel y ritmo de aprendizaje.',
+    'features.analytics.title': 'Análisis Detallados',
+    'features.analytics.description': 'Ve estadísticas completas sobre tu progreso y rendimiento.',
 
     // How It Works
     'howItWorks.title': 'Cómo Funciona',
@@ -333,6 +379,10 @@ export const translations = {
     'benefits.time.description': 'Estudia de manera más eficiente y enfocada',
     'benefits.personalized.title': 'Aprendizaje Personalizado',
     'benefits.personalized.description': 'Una experiencia adaptada a tus necesidades',
+    'benefits.available.title': 'Disponible 24/7',
+    'benefits.available.description': 'Practica cuando quieras, donde te encuentres',
+    'benefits.progress.title': 'Monitoreo Continuo',
+    'benefits.progress.description': 'Rastrea tus mejoras a lo largo del tiempo',
 
     // FileUploadStep
     'upload.title': '📚 Sube tu material de estudio PDF',
@@ -419,6 +469,19 @@ export const translations = {
     'footer.cookies': 'Cookies',
     'footer.allRights': 'Todos los derechos reservados.',
     'footer.madeWith': 'Hecho con ❤️ en Italia',
+
+    // Common
+    'common.loading': 'Cargando...',
+    'common.error': 'Error',
+    'common.success': 'Éxito',
+    'common.cancel': 'Cancelar',
+    'common.save': 'Guardar',
+    'common.close': 'Cerrar',
+    'common.back': 'Atrás',
+    'common.next': 'Siguiente',
+    'common.previous': 'Anterior',
+    'common.continue': 'Continuar',
+    'common.finish': 'Finalizar',
   },
   fr: {
     // Header
@@ -449,6 +512,10 @@ export const translations = {
     'features.progress.description': 'Surveillez vos améliorations et identifiez les domaines sur lesquels vous concentrer.',
     'features.materials.title': 'Support de Matériaux Multiples',
     'features.materials.description': 'Téléchargez des PDFs, documents et notes pour créer des examens personnalisés.',
+    'features.adaptive.title': 'Apprentissage Adaptatif',
+    'features.adaptive.description': 'L\'IA s\'adapte à votre niveau et rythme d\'apprentissage.',
+    'features.analytics.title': 'Analyses Détaillées',
+    'features.analytics.description': 'Visualisez des statistiques complètes sur votre progrès et performance.',
 
     // How It Works
     'howItWorks.title': 'Comment Ça Marche',
@@ -473,6 +540,10 @@ export const translations = {
     'benefits.time.description': 'Étudiez de manière plus efficace et ciblée',
     'benefits.personalized.title': 'Apprentissage Personnalisé',
     'benefits.personalized.description': 'Une expérience adaptée à vos besoins',
+    'benefits.available.title': 'Disponible 24/7',
+    'benefits.available.description': 'Pratiquez quand vous voulez, où vous êtes',
+    'benefits.progress.title': 'Surveillance Continue',
+    'benefits.progress.description': 'Suivez vos améliorations au fil du temps',
 
     // FileUploadStep
     'upload.title': '📚 Téléchargez votre matériel d\'étude PDF',
@@ -559,6 +630,19 @@ export const translations = {
     'footer.cookies': 'Cookies',
     'footer.allRights': 'Tous droits réservés.',
     'footer.madeWith': 'Fait avec ❤️ en Italie',
+
+    // Common
+    'common.loading': 'Chargement...',
+    'common.error': 'Erreur',
+    'common.success': 'Succès',
+    'common.cancel': 'Annuler',
+    'common.save': 'Sauvegarder',
+    'common.close': 'Fermer',
+    'common.back': 'Retour',
+    'common.next': 'Suivant',
+    'common.previous': 'Précédent',
+    'common.continue': 'Continuer',
+    'common.finish': 'Terminer',
   },
   de: {
     // Header
@@ -589,6 +673,10 @@ export const translations = {
     'features.progress.description': 'Überwachen Sie Ihre Verbesserungen und identifizieren Sie Bereiche, auf die Sie sich konzentrieren sollten.',
     'features.materials.title': 'Unterstützung Mehrerer Materialien',
     'features.materials.description': 'Laden Sie PDFs, Dokumente und Notizen hoch, um personalisierte Prüfungen zu erstellen.',
+    'features.adaptive.title': 'Adaptives Lernen',
+    'features.adaptive.description': 'KI passt sich Ihrem Lernniveau und -tempo an.',
+    'features.analytics.title': 'Detaillierte Analysen',
+    'features.analytics.description': 'Sehen Sie umfassende Statistiken über Ihren Fortschritt und Ihre Leistung.',
 
     // How It Works
     'howItWorks.title': 'Wie es Funktioniert',
@@ -613,6 +701,10 @@ export const translations = {
     'benefits.time.description': 'Studieren Sie effizienter und gezielter',
     'benefits.personalized.title': 'Personalisiertes Lernen',
     'benefits.personalized.description': 'Eine maßgeschneiderte Erfahrung für Ihre Bedürfnisse',
+    'benefits.available.title': 'Verfügbar 24/7',
+    'benefits.available.description': 'Üben Sie wann Sie wollen, wo Sie sind',
+    'benefits.progress.title': 'Kontinuierliche Überwachung',
+    'benefits.progress.description': 'Verfolgen Sie Ihre Verbesserungen über die Zeit',
 
     // FileUploadStep
     'upload.title': '📚 Laden Sie Ihr PDF-Studienmaterial hoch',
@@ -699,5 +791,18 @@ export const translations = {
     'footer.cookies': 'Cookies',
     'footer.allRights': 'Alle Rechte vorbehalten.',
     'footer.madeWith': 'Mit ❤️ in Italien gemacht',
+
+    // Common
+    'common.loading': 'Wird geladen...',
+    'common.error': 'Fehler',
+    'common.success': 'Erfolg',
+    'common.cancel': 'Abbrechen',
+    'common.save': 'Speichern',
+    'common.close': 'Schließen',
+    'common.back': 'Zurück',
+    'common.next': 'Weiter',
+    'common.previous': 'Vorherige',
+    'common.continue': 'Weiter',
+    'common.finish': 'Beenden',
   },
 };
