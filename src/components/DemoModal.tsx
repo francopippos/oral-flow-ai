@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { Upload, MessageCircle, Mic, MicOff, TrendingUp, FileText, Users, Smartphone, Cloud, User } from 'lucide-react';
+import { Upload, MessageCircle, Mic, MicOff, TrendingUp, FileText, Users, Smartphone, Cloud, User, Play, Pause } from 'lucide-react';
 import { useTranslation } from '../hooks/useTranslation';
 
 interface DemoModalProps {
@@ -16,6 +16,9 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
   const [isRecording, setIsRecording] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [professorMode, setProfessorMode] = useState('comprensivo');
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [aiTypingStep, setAiTypingStep] = useState(0);
+  const [userTypingStep, setUserTypingStep] = useState(0);
 
   const professorModes = {
     severo: {
@@ -32,7 +35,7 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
       color: "text-green-700",
       bgColor: "bg-green-50",
       question: "Raccontami del Rinascimento, prenditi il tempo che ti serve per organizzare i pensieri.",
-      feedback: "Molto bene! Hai colto i punti principali. Potresti approfondire il ruolo dell'umanesimo?"
+      feedback: "Molto bene! Hai colto i punti principali. Potresti approfondire il ruolo dell'umanesimo? L'AI ha notato che hai usato terminologia appropriata e la tua esposizione è stata chiara e ben strutturata."
     },
     tecnico: {
       name: t('demo.technical'),
@@ -72,12 +75,18 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
                   <div className="font-medium">Storia_Rinascimento.pdf</div>
                   <div className="w-full bg-gray-200 rounded-full h-2 mt-1">
                     <div 
-                      className="bg-oralmind-500 h-2 rounded-full transition-all duration-500"
+                      className="bg-oralmind-500 h-2 rounded-full transition-all duration-1000"
                       style={{ width: `${uploadProgress}%` }}
                     ></div>
                   </div>
                 </div>
               </div>
+              {uploadProgress === 100 && (
+                <div className="text-center p-4 bg-success-50 rounded-lg">
+                  <p className="text-success-700 font-medium">✅ File analizzato con successo!</p>
+                  <p className="text-sm text-success-600 mt-1">L'AI ha identificato 15 concetti chiave del Rinascimento</p>
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -114,23 +123,19 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
           </div>
           
           <div className="bg-oralmind-50 rounded-lg p-4 space-y-2">
-            <h5 className="font-medium text-oralmind-800">Funzionalità Extra:</h5>
-            <div className="grid grid-cols-2 gap-2 text-sm">
+            <h5 className="font-medium text-oralmind-800">🎯 Personalizzazione AI Avanzata:</h5>
+            <div className="grid grid-cols-1 gap-2 text-sm">
               <div className="flex items-center space-x-2">
-                <Smartphone className="h-4 w-4 text-oralmind-600" />
-                <span>App Mobile</span>
+                <TrendingUp className="h-4 w-4 text-oralmind-600" />
+                <span>Adattamento al livello di studio</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <MessageCircle className="h-4 w-4 text-oralmind-600" />
+                <span>Domande progressive e intelligenti</span>
               </div>
               <div className="flex items-center space-x-2">
                 <Users className="h-4 w-4 text-oralmind-600" />
-                <span>Modalità Gruppo</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Cloud className="h-4 w-4 text-oralmind-600" />
-                <span>Sync Cloud</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <TrendingUp className="h-4 w-4 text-oralmind-600" />
-                <span>Analytics</span>
+                <span>Feedback personalizzato dettagliato</span>
               </div>
             </div>
           </div>
@@ -139,40 +144,79 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
     },
     {
       title: t('demo.simulation'),
-      subtitle: `Conversazione con ${professorModes[professorMode as keyof typeof professorModes].name}`,
+      subtitle: `Conversazione interattiva con Professor ${professorModes[professorMode as keyof typeof professorModes].name}`,
       content: (
         <div className="space-y-4">
-          <div className="space-y-3 max-h-64 overflow-y-auto">
-            <div className="flex items-start space-x-3">
+          <div className="flex justify-between items-center mb-4">
+            <h5 className="font-medium text-oralmind-800">Simulazione Conversazione AI</h5>
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={() => setIsAutoPlaying(!isAutoPlaying)}
+              className="flex items-center space-x-2"
+            >
+              {isAutoPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
+              <span>{isAutoPlaying ? 'Pausa' : 'Play'}</span>
+            </Button>
+          </div>
+          
+          <div className="space-y-4 max-h-80 overflow-y-auto border rounded-lg p-4 bg-gray-50">
+            {/* Prima domanda dell'AI */}
+            <div className="flex items-start space-x-3 animate-fade-in">
               <div className={`w-8 h-8 rounded-full flex items-center justify-center ${professorModes[professorMode as keyof typeof professorModes].bgColor}`}>
                 <User className={`h-4 w-4 ${professorModes[professorMode as keyof typeof professorModes].color}`} />
               </div>
-              <div className={`${professorModes[professorMode as keyof typeof professorModes].bgColor} rounded-lg p-3 max-w-xs`}>
+              <div className={`${professorModes[professorMode as keyof typeof professorModes].bgColor} rounded-lg p-3 max-w-sm`}>
                 <p className={`text-sm ${professorModes[professorMode as keyof typeof professorModes].color}`}>
                   "{professorModes[professorMode as keyof typeof professorModes].question}"
                 </p>
+                {aiTypingStep >= 1 && (
+                  <div className="mt-2 text-xs text-gray-600">
+                    💡 L'AI ha preparato questa domanda basandosi sui contenuti del tuo PDF
+                  </div>
+                )}
               </div>
             </div>
             
-            {step >= 2 && (
-              <div className="flex justify-end">
-                <div className="bg-success-50 rounded-lg p-3 max-w-xs">
+            {/* Risposta dello studente */}
+            {step >= 2 && userTypingStep >= 1 && (
+              <div className="flex justify-end animate-fade-in">
+                <div className="bg-success-50 rounded-lg p-3 max-w-sm">
                   <p className="text-sm text-success-800">
-                    "Il Rinascimento è caratterizzato da una rinascita culturale e artistica che inizia in Italia nel XIV secolo..."
+                    "Il Rinascimento è un movimento culturale che nasce in Italia nel XIV secolo, caratterizzato dalla rinascita dell'interesse per l'arte classica, l'umanesimo e le scienze..."
                   </p>
+                  <div className="mt-2 flex items-center space-x-2 text-xs text-success-600">
+                    <Mic className="h-3 w-3" />
+                    <span>Trascrizione vocale completata</span>
+                  </div>
                 </div>
               </div>
             )}
             
-            {step >= 2 && (
-              <div className="flex items-start space-x-3">
+            {/* Feedback dettagliato dell'AI */}
+            {step >= 2 && aiTypingStep >= 2 && (
+              <div className="flex items-start space-x-3 animate-fade-in">
                 <div className={`w-8 h-8 rounded-full flex items-center justify-center ${professorModes[professorMode as keyof typeof professorModes].bgColor}`}>
                   <TrendingUp className={`h-4 w-4 ${professorModes[professorMode as keyof typeof professorModes].color}`} />
                 </div>
-                <div className={`${professorModes[professorMode as keyof typeof professorModes].bgColor} rounded-lg p-3 max-w-xs`}>
+                <div className={`${professorModes[professorMode as keyof typeof professorModes].bgColor} rounded-lg p-3 max-w-sm`}>
                   <p className={`text-sm ${professorModes[professorMode as keyof typeof professorModes].color}`}>
                     "{professorModes[professorMode as keyof typeof professorModes].feedback}"
                   </p>
+                  <div className="mt-3 space-y-1">
+                    <div className="flex justify-between text-xs">
+                      <span>Chiarezza:</span>
+                      <span className="font-semibold">9/10</span>
+                    </div>
+                    <div className="flex justify-between text-xs">
+                      <span>Precisione:</span>
+                      <span className="font-semibold">8/10</span>
+                    </div>
+                    <div className="flex justify-between text-xs">
+                      <span>Completezza:</span>
+                      <span className="font-semibold">7/10</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             )}
@@ -187,83 +231,177 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
             >
               {isRecording ? <MicOff className="h-4 w-4" /> : <Mic className="h-4 w-4" />}
             </Button>
-            <span className="text-sm text-muted-foreground">
-              {isRecording ? "Registrazione in corso..." : "Clicca per rispondere"}
-            </span>
+            <div className="flex-1">
+              <span className="text-sm text-muted-foreground">
+                {isRecording ? "🔴 Registrazione in corso... L'AI sta ascoltando" : "🎤 Clicca per rispondere vocalmente alla domanda"}
+              </span>
+              {!isRecording && (
+                <div className="text-xs text-gray-500 mt-1">
+                  Supporta oltre 30 lingue • Trascrizione in tempo reale • Analisi automatica
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )
     },
     {
       title: t('demo.feedback'),
-      subtitle: `Analisi dettagliata da ${professorModes[professorMode as keyof typeof professorModes].name}`,
+      subtitle: `Report completo di valutazione da Professor ${professorModes[professorMode as keyof typeof professorModes].name}`,
       content: (
         <div className="space-y-4">
           <div className="bg-success-50 border border-success-200 rounded-lg p-4">
-            <h4 className="font-semibold text-success-800 mb-2">✨ Valutazione</h4>
-            <div className="space-y-2">
-              <div className="flex justify-between">
+            <h4 className="font-semibold text-success-800 mb-3 flex items-center">
+              <TrendingUp className="h-5 w-5 mr-2" />
+              📊 Valutazione Dettagliata AI
+            </h4>
+            <div className="space-y-3">
+              <div className="flex justify-between items-center">
                 <span className="text-sm text-success-700">Chiarezza espositiva:</span>
-                <span className="text-sm font-medium text-success-800">9/10</span>
+                <div className="flex items-center space-x-2">
+                  <div className="w-24 bg-success-200 rounded-full h-2">
+                    <div className="bg-success-600 h-2 rounded-full" style={{width: '90%'}}></div>
+                  </div>
+                  <span className="text-sm font-bold text-success-800">9/10</span>
+                </div>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between items-center">
                 <span className="text-sm text-success-700">Correttezza terminologica:</span>
-                <span className="text-sm font-medium text-success-800">8/10</span>
+                <div className="flex items-center space-x-2">
+                  <div className="w-24 bg-success-200 rounded-full h-2">
+                    <div className="bg-success-600 h-2 rounded-full" style={{width: '80%'}}></div>
+                  </div>
+                  <span className="text-sm font-bold text-success-800">8/10</span>
+                </div>
               </div>
-              <div className="flex justify-between">
-                <span className="text-sm text-success-700">Completezza:</span>
-                <span className="text-sm font-medium text-success-800">7/10</span>
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-success-700">Completezza della risposta:</span>
+                <div className="flex items-center space-x-2">
+                  <div className="w-24 bg-success-200 rounded-full h-2">
+                    <div className="bg-success-600 h-2 rounded-full" style={{width: '70%'}}></div>
+                  </div>
+                  <span className="text-sm font-bold text-success-800">7/10</span>
+                </div>
               </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-success-700">Fluidità comunicativa:</span>
+                <div className="flex items-center space-x-2">
+                  <div className="w-24 bg-success-200 rounded-full h-2">
+                    <div className="bg-success-600 h-2 rounded-full" style={{width: '85%'}}></div>
+                  </div>
+                  <span className="text-sm font-bold text-success-800">8.5/10</span>
+                </div>
+              </div>
+            </div>
+            <div className="mt-3 p-3 bg-success-100 rounded-lg">
+              <p className="text-sm text-success-800 font-medium">💡 Suggerimenti AI personalizzati:</p>
+              <ul className="text-sm text-success-700 mt-1 space-y-1">
+                <li>• Eccellente uso di esempi concreti</li>
+                <li>• Potresti collegare meglio i concetti tra loro</li>
+                <li>• Prova ad approfondire le cause economiche</li>
+              </ul>
             </div>
           </div>
           
           <div className="bg-orange-50 border border-orange-200 rounded-lg p-4">
-            <h4 className="font-semibold text-orange-800 mb-2">💡 Modalità Gruppo Disponibile</h4>
-            <p className="text-sm text-orange-700 mb-2">Esercitati con i compagni:</p>
-            <ul className="text-sm text-orange-700 space-y-1">
-              <li>• Interrogazioni a turno con peer review</li>
-              <li>• Dibattiti guidati dall'AI</li>
-              <li>• Competizioni amichevoli tra studenti</li>
-            </ul>
+            <h4 className="font-semibold text-orange-800 mb-2 flex items-center">
+              <Users className="h-5 w-5 mr-2" />
+              👥 Funzionalità Avanzate
+            </h4>
+            <div className="grid grid-cols-2 gap-3 text-sm">
+              <div className="flex items-center space-x-2 text-orange-700">
+                <Users className="h-4 w-4" />
+                <span>Interrogazioni di gruppo</span>
+              </div>
+              <div className="flex items-center space-x-2 text-orange-700">
+                <MessageCircle className="h-4 w-4" />
+                <span>Dibattiti guidati dall'AI</span>
+              </div>
+              <div className="flex items-center space-x-2 text-orange-700">
+                <TrendingUp className="h-4 w-4" />
+                <span>Tracciamento progressi</span>
+              </div>
+              <div className="flex items-center space-x-2 text-orange-700">
+                <FileText className="h-4 w-4" />
+                <span>Report esportabili</span>
+              </div>
+            </div>
           </div>
           
           <div className="bg-oralmind-50 border border-oralmind-200 rounded-lg p-4">
-            <h4 className="font-semibold text-oralmind-800 mb-2">📱 Continua su Mobile</h4>
-            <p className="text-sm text-oralmind-700">
-              Scarica l'app per esercitarti ovunque con sessioni audio-only perfette per i tuoi spostamenti.
+            <h4 className="font-semibold text-oralmind-800 mb-2 flex items-center">
+              <Smartphone className="h-5 w-5 mr-2" />
+              📱 Accesso Multi-Piattaforma
+            </h4>
+            <p className="text-sm text-oralmind-700 mb-2">
+              Studia ovunque con l'app mobile ottimizzata per sessioni di allenamento vocale anche offline.
             </p>
+            <div className="flex items-center space-x-4 text-xs text-oralmind-600">
+              <span>💻 Web App</span>
+              <span>📱 iOS & Android</span>
+              <span>☁️ Sync Cloud</span>
+              <span>🔄 Backup automatico</span>
+            </div>
           </div>
         </div>
       )
     }
   ];
 
+  // Gestione automatica dei passaggi nella demo
   useEffect(() => {
-    if (isOpen && step === 0) {
-      const timer = setTimeout(() => {
-        setUploadProgress(100);
-        setTimeout(() => setStep(1), 500);
-      }, 1000);
-      return () => clearTimeout(timer);
-    }
-  }, [isOpen, step]);
+    if (!isOpen || !isAutoPlaying) return;
 
-  useEffect(() => {
-    if (step === 1) {
-      const timer = setTimeout(() => setStep(2), 3000);
-      return () => clearTimeout(timer);
+    if (step === 0) {
+      // Simulazione caricamento file
+      const uploadTimer = setTimeout(() => {
+        setUploadProgress(30);
+        setTimeout(() => setUploadProgress(65), 800);
+        setTimeout(() => setUploadProgress(100), 1500);
+        setTimeout(() => setStep(1), 2500);
+      }, 1000);
+      return () => clearTimeout(uploadTimer);
     }
-  }, [step]);
+
+    if (step === 1) {
+      // Configurazione AI - più tempo per leggere
+      const configTimer = setTimeout(() => setStep(2), 4000);
+      return () => clearTimeout(configTimer);
+    }
+
+    if (step === 2) {
+      // Simulazione conversazione graduale
+      const conversationTimer1 = setTimeout(() => setAiTypingStep(1), 1000);
+      const conversationTimer2 = setTimeout(() => setUserTypingStep(1), 4000);
+      const conversationTimer3 = setTimeout(() => setAiTypingStep(2), 7000);
+      const conversationTimer4 = setTimeout(() => setStep(3), 12000);
+      
+      return () => {
+        clearTimeout(conversationTimer1);
+        clearTimeout(conversationTimer2);
+        clearTimeout(conversationTimer3);
+        clearTimeout(conversationTimer4);
+      };
+    }
+  }, [isOpen, step, isAutoPlaying]);
 
   const handleNext = () => {
     if (step < demoSteps.length - 1) {
       setStep(step + 1);
+      if (step === 1) {
+        setAiTypingStep(0);
+        setUserTypingStep(0);
+      }
     }
   };
 
   const handlePrev = () => {
     if (step > 0) {
       setStep(step - 1);
+      if (step === 2) {
+        setAiTypingStep(0);
+        setUserTypingStep(0);
+      }
     }
   };
 
@@ -272,61 +410,84 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
     setUploadProgress(0);
     setIsRecording(false);
     setProfessorMode('comprensivo');
+    setIsAutoPlaying(true);
+    setAiTypingStep(0);
+    setUserTypingStep(0);
     onClose();
   };
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
+      <DialogContent className="max-w-4xl max-h-[85vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold gradient-text">
-            {t('demo.title')}
+            {t('demo.title')} - Esperienza AI Completa
           </DialogTitle>
         </DialogHeader>
         
         <div className="space-y-6">
-          {/* Progress indicator */}
+          {/* Progress indicator migliorato */}
           <div className="flex items-center space-x-2">
-            {demoSteps.map((_, index) => (
-              <div
-                key={index}
-                className={`h-2 flex-1 rounded-full ${
-                  index <= step ? 'bg-oralmind-500' : 'bg-gray-200'
-                }`}
-              />
+            {demoSteps.map((stepItem, index) => (
+              <div key={index} className="flex items-center flex-1">
+                <div
+                  className={`h-3 w-3 rounded-full ${
+                    index <= step ? 'bg-oralmind-500' : 'bg-gray-200'
+                  } transition-colors duration-300`}
+                />
+                {index < demoSteps.length - 1 && (
+                  <div className={`h-0.5 flex-1 ${
+                    index < step ? 'bg-oralmind-500' : 'bg-gray-200'
+                  } transition-colors duration-300`} />
+                )}
+              </div>
             ))}
           </div>
           
+          {/* Step counter */}
+          <div className="text-center text-sm text-muted-foreground">
+            Passaggio {step + 1} di {demoSteps.length}
+          </div>
+          
           {/* Current step */}
-          <div className="space-y-4">
+          <div className="space-y-6">
             <div className="text-center space-y-2">
               <h3 className="text-xl font-semibold">{demoSteps[step].title}</h3>
               <p className="text-muted-foreground">{demoSteps[step].subtitle}</p>
             </div>
             
-            <div className="min-h-[300px]">
+            <div className="min-h-[400px]">
               {demoSteps[step].content}
             </div>
           </div>
           
-          {/* Navigation */}
-          <div className="flex justify-between">
+          {/* Navigation migliorata */}
+          <div className="flex justify-between items-center pt-4 border-t">
             <Button
               variant="outline"
               onClick={handlePrev}
               disabled={step === 0}
+              className="flex items-center space-x-2"
             >
-              {t('demo.prev')}
+              <span>← {t('demo.prev')}</span>
             </Button>
+            
+            <div className="text-center">
+              {step === 2 && (
+                <div className="text-sm text-muted-foreground">
+                  {isAutoPlaying ? "Demo automatica attiva" : "Demo in pausa"}
+                </div>
+              )}
+            </div>
             
             <div className="space-x-2">
               {step < demoSteps.length - 1 ? (
-                <Button onClick={handleNext}>
-                  {t('demo.next')}
+                <Button onClick={handleNext} className="flex items-center space-x-2">
+                  <span>{t('demo.next')} →</span>
                 </Button>
               ) : (
-                <Button onClick={handleClose} className="bg-oralmind-500 hover:bg-oralmind-600">
-                  {t('demo.start')}
+                <Button onClick={handleClose} className="bg-oralmind-500 hover:bg-oralmind-600 flex items-center space-x-2">
+                  <span>{t('demo.start')}</span>
                 </Button>
               )}
             </div>

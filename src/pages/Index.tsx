@@ -8,13 +8,11 @@ import Benefits from '../components/Benefits';
 import Testimonials from '../components/Testimonials';
 import Footer from '../components/Footer';
 import DemoModal from '../components/DemoModal';
-import FunctionalDemoModal from '../components/FunctionalDemoModal';
 import LoginModal from '../components/LoginModal';
 import { TranslationProvider } from '../components/TranslationProvider';
 
 const Index = () => {
   const [isDemoOpen, setIsDemoOpen] = useState(false);
-  const [isFunctionalDemoOpen, setIsFunctionalDemoOpen] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
 
   return (
@@ -33,11 +31,6 @@ const Index = () => {
         <DemoModal 
           isOpen={isDemoOpen} 
           onClose={() => setIsDemoOpen(false)} 
-        />
-        
-        <FunctionalDemoModal 
-          isOpen={isFunctionalDemoOpen} 
-          onClose={() => setIsFunctionalDemoOpen(false)} 
         />
         
         <LoginModal 
