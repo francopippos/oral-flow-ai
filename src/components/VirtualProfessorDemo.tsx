@@ -121,9 +121,14 @@ const VirtualProfessorDemo = ({ isOpen, onClose }: VirtualProfessorDemoProps) =>
     try {
       // Step 6: Semantic retrieval
       const relevantChunks = await findRelevantChunks(question, chunks, embeddings);
-      
-      // Step 7: Get professor response
-      const professorResponse = await askProfessor(question, relevantChunks);
+
+      // Step 7: Get professor response — passa TUTTI i chunk e embeddings per forzare matching massimo
+      const professorResponse = await askProfessor(
+        question,
+        relevantChunks,
+        chunks,
+        embeddings
+      );
 
       setMessages(prev => [...prev, {
         role: 'professor',

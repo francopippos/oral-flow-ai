@@ -6,11 +6,11 @@ export const askProfessor = async (
   allEmbeddings?: number[][]
 ): Promise<string> => {
   try {
-    console.log('👨‍🏫 [AI PROFESSOR] Elaborazione... Chunks rilevanti:', relevantChunks.length);
+    console.log('👨‍🏫 [AI PROFESSOR] Matching massimo SEMPRE attivo. Chunks rilevanti:', relevantChunks.length);
 
-    // Se viene fornita anche la lista completa dei chunk e embeddings, usiamo il matching preciso
+    // Matching severo SEMPRE
     if (allChunks && allEmbeddings) {
-      // Ricrea embed domanda come nel sistema di matching (copiato da embeddingUtils)
+      // Ricrea embed domanda come nel sistema di matching
       const generateDeterministicEmbedding = (text: string): number[] => {
         const embedding = new Array(1536).fill(0);
         const words = text.toLowerCase().split(/\s+/);
@@ -43,46 +43,33 @@ export const askProfessor = async (
       }));
 
       similars.sort((a, b) => b.similarity - a.similarity);
-      // Filtro SOLO chunk col matching > 0.7 (regolabile)
+
+      // Solo chunk SEVERAMENTE simili
       const STRONG_THRESHOLD = 0.7;
       const bestMatches = similars.filter(s => s.similarity >= STRONG_THRESHOLD);
 
       if (bestMatches.length === 0) {
-        // Niente corrispondenza significativa
-        console.log(
-          '[AI PROFESSOR] Nessun chunk supera la soglia di similarità.',
-          similars.slice(0, 5).map(s => s.similarity)
-        );
-        return `Non ho trovato informazioni sufficientemente rilevanti nel materiale che hai fornito per rispondere a questa domanda.\n
-Ti suggerisco di riformulare la domanda o caricare un documento che contenga maggiori dettagli sull'argomento richiesto.`;
+        console.log('[AI PROFESSOR] Nessun chunk supera la soglia di severità.', similars.slice(0, 5).map(s => s.similarity));
+        return `
+Non ho trovato nessuna informazione chiaramente collegata alla tua domanda nel materiale che mi hai fornito. 
+Prova a riformulare la domanda o ad arricchire il documento con parti più dettagliate sull'argomento.
+        `.trim();
       }
 
-      // Restituisci risposta SOLO su questi estratti sopra soglia
-      let txt = `Risposta basata esclusivamente sul materiale caricato. Ho trovato ${bestMatches.length} estratto/i pertinente/i:\n\n`;
+      // SOLO estratti nettamente in topic
+      let txt = `Risposta basata SOLO su informazioni trovate nel tuo PDF (matching ≥0.7). Estratti pertinenti:\n\n`;
       bestMatches.forEach((match, i) => {
-        txt += `Estratto dal PDF n.${i+1}:\n"${match.chunk.trim().slice(0, 420)}"${match.chunk.length>430?'...':''}\n\n`;
+        txt += `Estratto ${i + 1} (similarità ${match.similarity.toFixed(2)}):\n"${match.chunk.trim().slice(0, 420)}"${match.chunk.length > 430 ? '...' : ''}\n\n`;
       });
-      txt += `Se desideri approfondimenti su questi punti, chiedi pure! Ricorda che la mia risposta si basa SOLO sul materiale caricato.`;
+      txt += `\nVuoi approfondire uno di questi punti? Ricorda: rispondo soltanto con materiale tratto dal tuo documento.`;
       return txt;
     }
 
-    // Flusso DEMO STANDARD (fallback vecchia versione)
-    if (relevantChunks && relevantChunks.length > 0) {
-      const contextPreview = relevantChunks.map((chunk, i) => 
-        `Estratto [${i + 1}]:\n${chunk.trim()}`
-      ).join('\n\n---\n\n');
-      let answer = `Dopo aver consultato il materiale fornito, posso offrirti questa risposta basata esclusivamente sul tuo documento:\n\n`;
-      answer += contextPreview;
-      answer += `\n\n👉 Se hai bisogno di chiarimenti sui punti appena citati, chiedimi pure ulteriori dettagli. La mia risposta si basa SOLO sui contenuti che mi hai fornito.`;
-      await new Promise(resolve => setTimeout(resolve, 800 + Math.random() * 1200));
-      console.log('✅ Risposta AI dai chunk.');
-      return answer;
-    }
+    // Fallback se proprio manca tutto
+    return `Non sono riuscito a trovare nel documento informazioni abbastanza collegate alla domanda. Per favore, prova a specificare meglio la richiesta o fornisci un materiale più dettagliato.`;
 
-    // Nessun matching
-    return `Non ho trovato informazioni rilevanti e coerenti nel documento fornito per rispondere a questa domanda. Ti consiglio di riformulare la domanda o caricare un materiale più pertinente.`;
   } catch (error) {
     console.error('❌ Errore Professore AI:', error);
-    return "C'è stato un problema tecnico nell'elaborazione della domanda. Come professore AI, preferisco non fornire risposte incerte. Puoi ripetere la domanda o ricaricare il documento?";
+    return "C'è stato un problema tecnico nell'elaborazione della domanda. Puoi riprovare o ricaricare il documento?";
   }
 };
