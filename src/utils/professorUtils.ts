@@ -1,3 +1,4 @@
+
 export const askProfessor = async (
   question: string,
   relevantChunks: string[]
@@ -23,100 +24,124 @@ export const askProfessor = async (
 function generateProfessorResponse(question: string, context: string): string {
   const questionLower = question.toLowerCase();
 
-  // RISPOSTA SU BRANCH AND BOUND DIVISA IN BOX
+  // RISPOSTA SUL BRANCH AND BOUND CON SPIEGAZIONE CHIARA
   if (questionLower.includes('branch') && questionLower.includes('bound')) {
     return `
-<div class="border-l-4 border-oralmind-500 bg-oralmind-50 p-4 mb-4">
-  <span class="text-oralmind-600 font-semibold">"Definizione Accademica"</span>
-  <br />
-  <span>
-    Il Branch and Bound è un algoritmo di ottimizzazione combinatoria che utilizza una strategia di ricerca sistematica per esplorare lo spazio delle soluzioni. È particolarmente efficace per problemi di programmazione lineare intera e problemi di ottimizzazione discreta.
-  </span>
-</div>
-<div class="border-l-4 border-success-400 bg-success-50 p-4 mb-4">
-  <span class="text-success-600 font-semibold">"Meccanismo di Funzionamento"</span>
-  <br />
-  <ol class="list-decimal ml-4 mt-2">
-    <li>
-      <span class="font-semibold">Branching:</span> il problema viene suddiviso ricorsivamente in sottoproblemi più piccoli, creando un albero di ricerca.
-    </li>
-    <li>
-      <span class="font-semibold">Bounding:</span> per ogni nodo dell'albero, si calcolano limiti superiori e/o inferiori della funzione obiettivo.
-    </li>
-    <li>
-      <span class="font-semibold">Pruning:</span> si eliminano i rami che non possono contenere la soluzione ottimale.
-    </li>
-  </ol>
-</div>
-<div class="border-l-4 border-yellow-400 bg-yellow-50 p-4 mb-4">
-  <span class="text-yellow-700 font-semibold">"Vantaggi"</span>
-  <ul class="list-disc ml-4 mt-2">
-    <li>Garantisce di trovare la soluzione ottima globale</li>
-    <li>Riduce significativamente lo spazio di ricerca rispetto all'enumerazione completa</li>
-    <li>Applicabile a molti problemi NP-hard</li>
-  </ul>
-</div>
-<div class="border-l-4 border-oralmind-400 bg-oralmind-100 p-4">
-  <span class="text-oralmind-700 font-semibold">"Domande di Approfondimento"</span>
-  <ul class="list-disc ml-4 mt-2">
-    <li>Come si determina una buona strategia di branching?</li>
-    <li>Quali tecniche di bounding conosce?</li>
-    <li>Può fare un esempio pratico di applicazione?</li>
-  </ul>
-</div>
+**Cos'è il Branch and Bound?**
+
+Il Branch and Bound è un algoritmo fondamentale nell'ottimizzazione combinatoria. Immaginiamo di dover trovare la soluzione migliore in un problema molto complesso, come organizzare il percorso più efficiente per visitare diverse città.
+
+**Come funziona in pratica:**
+
+1. **Branching (Ramificazione):** 
+   - Partiamo dal problema principale e lo dividiamo in sottoproblemi più piccoli
+   - È come costruire un albero: dal tronco principale si creano rami sempre più piccoli
+   - Ogni ramo rappresenta una possibile direzione nella ricerca della soluzione
+
+2. **Bounding (Limitazione):**
+   - Per ogni sottoproblema, calcoliamo i limiti: "quanto può essere buona la soluzione migliore in questo ramo?"
+   - Se già sappiamo che un ramo non può darci una soluzione migliore di quella che abbiamo già trovato, lo scartiamo
+
+3. **Pruning (Potatura):**
+   - Eliminiamo i rami "inutili" - quelli che sicuramente non contengono la soluzione ottimale
+   - È come potare un albero: tagliamo i rami che non servono
+
+**Perché è così importante?**
+
+- **Efficienza:** Invece di provare tutte le possibili combinazioni (che potrebbero essere milioni), esaminiamo solo quelle promettenti
+- **Garanzia:** Ci assicura di trovare la soluzione veramente migliore, non solo una buona approssimazione
+- **Versatilità:** Si applica a molti problemi reali: logistica, pianificazione, ottimizzazione di risorse
+
+**Esempio pratico:**
+Immaginiamo di dover assegnare 5 compiti a 5 persone. Invece di provare tutte le 120 possibili combinazioni, il Branch and Bound ci permette di scartare intere famiglie di soluzioni non ottimali, riducendo drasticamente il lavoro di calcolo.
+
+**Domande di riflessione:**
+- Riesci a pensare ad altri problemi dove questo approccio potrebbe essere utile?
+- Quali potrebbero essere i limiti di questo metodo per problemi molto grandi?
     `;
   }
   
   if (questionLower.includes('complessità') || questionLower.includes('np')) {
-    return `Eccellente argomento sulla teoria della complessità computazionale!
+    return `**La Teoria della Complessità Computazionale**
 
-Le Classi Fondamentali:
-- P: Problemi risolvibili in tempo polinomiale da una macchina di Turing deterministica
-- NP: Problemi per cui una soluzione può essere verificata in tempo polinomiale
-- NP-completi: I problemi più difficili in NP, ai quali tutti i problemi NP si riducono
+Questa è una delle aree più affascinanti dell'informatica teorica!
 
-Il Problema P vs NP:
-Questa è una delle domande più importanti dell'informatica teorica. Se P = NP, significherebbe che ogni problema la cui soluzione può essere verificata rapidamente, può anche essere risolto rapidamente.
+**Le Classi Fondamentali:**
 
-Implicazioni Pratiche:
-La distinzione è cruciale per comprendere quali problemi possono essere risolti efficientemente e quali richiedono approssimazioni o euristiche.
+**Classe P:** Problemi che possiamo risolvere "velocemente"
+- Algoritmi che funzionano in tempo polinomiale
+- Esempio: ordinare una lista, trovare il percorso più breve in un grafo
 
-Approfondimento: Può spiegarmi la differenza tra riducibilità polinomiale e completezza NP?`;
+**Classe NP:** Problemi dove possiamo verificare "velocemente" se una soluzione è corretta
+- Anche se trovare la soluzione può essere difficile
+- Esempio: dato un puzzle Sudoku completato, è facile verificare se è corretto
+
+**Il Grande Mistero: P = NP?**
+Questa è una delle domande da un milione di dollari (letteralmente!) dell'informatica.
+
+Se P = NP, significherebbe che ogni problema la cui soluzione possiamo verificare rapidamente, può anche essere risolto rapidamente. Le implicazioni sarebbero enormi per la crittografia, l'ottimizzazione, e molti altri campi.
+
+**Implicazioni Pratiche:**
+Quando affrontiamo un problema NP-completo, sappiamo che probabilmente dovremo accontentarci di soluzioni approssimate o usare euristiche invece che trovare sempre la soluzione perfetta.
+
+**Domanda per te:** Cosa pensi che succederebbe alla sicurezza informatica se domani qualcuno dimostrasse che P = NP?`;
   }
   
   if (questionLower.includes('ottimizzazione') || questionLower.includes('algoritm')) {
-    return `Perfetto! Gli algoritmi di ottimizzazione sono il cuore dell'informatica applicata.
+    return `**Gli Algoritmi di Ottimizzazione: Il Cuore dell'Informatica Applicata**
 
-Classificazione Principale:
-1. Ottimizzazione Continua: Programmazione lineare, non lineare
-2. Ottimizzazione Discreta: Problemi combinatori, grafi
-3. Ottimizzazione Stocastica: Algoritmi genetici, simulated annealing
+L'ottimizzazione è ovunque intorno a noi!
 
-Criteri di Valutazione:
-- Correttezza: L'algoritmo trova la soluzione ottima?
-- Efficienza: Qual è la complessità temporale e spaziale?
-- Robustezza: Come si comporta su istanze diverse del problema?
+**I Tre Grandi Gruppi:**
 
-Applicazioni Reali:
-Logistica, pianificazione, machine learning, bioinformatica, finanza quantitativa.
+1. **Ottimizzazione Continua:**
+   - Lavoriamo con numeri reali e funzioni continue
+   - Esempi: minimizzare i costi di produzione, ottimizzare traiettorie
 
-Domanda Critica: Quando è preferibile un algoritmo approssimato rispetto a uno esatto?`;
+2. **Ottimizzazione Discreta:**
+   - Lavoriamo con scelte discrete (sì/no, quale strada prendere)
+   - Esempi: problemi di scheduling, assegnazione di risorse
+
+3. **Ottimizzazione Stocastica:**
+   - Quando c'è incertezza e casualità
+   - Esempi: algoritmi genetici, simulated annealing
+
+**Come Valutare un Algoritmo di Ottimizzazione:**
+
+- **Correttezza:** Trova davvero la soluzione migliore?
+- **Velocità:** Quanto tempo impiega?
+- **Robustezza:** Funziona bene su problemi diversi?
+
+**Applicazioni nel Mondo Reale:**
+- **Logistica:** Ottimizzare i percorsi di consegna (come fa Amazon)
+- **Finanza:** Costruire portafogli di investimento ottimali
+- **Medicina:** Pianificare trattamenti radioterapici
+- **Trasporti:** Ottimizzare gli orari dei mezzi pubblici
+
+**La Grande Domanda:**
+A volte è meglio avere una soluzione "abbastanza buona" in tempi ragionevoli, piuttosto che la soluzione perfetta dopo ore di calcolo. Quando pensi che questo compromesso sia accettabile?`;
   }
   
   // Risposta generica ma professionale
-  return `Come professore universitario, apprezzo la sua domanda. 
+  return `Come professore universitario, apprezzo molto la tua domanda.
 
-Analisi del Quesito:
-La sua richiesta tocca concetti fondamentali che richiedono una trattazione rigorosa basata sul materiale di studio.
+**Analisi del Quesito:**
+La tua richiesta tocca concetti fondamentali che meritano una trattazione accurata e basata sui principi teorici consolidati.
 
-Approccio Metodologico:
-Per fornire una risposta completa e accurata, dovrei analizzare più approfonditamente il contesto specifico del documento che ha caricato. 
+**Il Mio Approccio Pedagogico:**
+Per offrirti una risposta veramente utile, dovrei poter analizzare più nel dettaglio il materiale specifico del tuo corso e il contesto della domanda.
 
-Invito all'Approfondimento:
-Le consiglio di formulare la domanda in modo più specifico, citando eventuali definizioni o teoremi del materiale di studio. Questo mi permetterà di fornire una spiegazione più mirata e pedagogicamente efficace.
+**Suggerimento per Approfondire:**
+Ti consiglio di riformulare la domanda in modo più specifico. Per esempio:
+- Su quale argomento specifico hai dei dubbi?
+- C'è una definizione o un teorema particolare che non è chiaro?
+- Stai cercando esempi pratici di applicazione?
 
-Riflessione Critica:
-Quali aspetti specifici dell'argomento trova più difficili da comprendere? Su cosa vorrebbe che ci concentrassimo maggiormente?
+**La Mia Filosofia:**
+Come professore, il mio obiettivo non è solo darti una risposta, ma guidarti verso una comprensione profonda che ti permetta di affrontare autonomamente problemi simili.
 
-Come professore, il mio obiettivo è guidarla verso una comprensione profonda e duratura della materia.`;
+**Prossimi Passi:**
+Prova a essere più specifico nella tua prossima domanda, e potrò offrirti una spiegazione mirata e pedagogicamente efficace.
+
+Cosa specificamente vorresti approfondire?`;
 }
