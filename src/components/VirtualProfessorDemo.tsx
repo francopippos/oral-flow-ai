@@ -8,6 +8,7 @@ import { createEmbeddings, findRelevantChunks } from '../utils/embeddingUtils';
 import { askProfessor } from '../utils/professorUtils';
 import { useAudioRecording } from '../hooks/useAudioRecording';
 import { transcribeAudio } from '../utils/aiUtils';
+import { askOpenAIPdfProfessor } from '../utils/openaiRagUtils';
 
 interface VirtualProfessorDemoProps {
   isOpen: boolean;
@@ -34,6 +35,9 @@ const VirtualProfessorDemo = ({ isOpen, onClose }: VirtualProfessorDemoProps) =>
   const { isRecording, startRecording, stopRecording, recordedAudio, resetRecording } = useAudioRecording();
   const [transcriptionStatus, setTranscriptionStatus] = useState<"" | "in_progress" | "done" | "error">("");
   const [lastTranscription, setLastTranscription] = useState<string>("");
+
+  const [apiKey, setApiKey] = useState<string>(() => localStorage.getItem("openai-demo-key") || "");
+  const [isApiKeyModal, setIsApiKeyModal] = useState(false);
 
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0];
@@ -109,39 +113,43 @@ const VirtualProfessorDemo = ({ isOpen, onClose }: VirtualProfessorDemoProps) =>
   const askQuestion = async (question: string) => {
     if (!question.trim() || chunks.length === 0) return;
 
-    // Add user message
-    setMessages(prev => [...prev, {
-      role: 'user',
-      content: question,
-      timestamp: new Date()
-    }]);
-
+    setMessages(prev => [
+      ...prev,
+      { role: 'user', content: question, timestamp: new Date()}
+    ]);
     setIsProcessing(true);
 
     try {
-      // Step 6: Semantic retrieval
+      // Trova i chunk più rilevanti (già slicing top-3)
       const relevantChunks = await findRelevantChunks(question, chunks, embeddings);
 
-      // Step 7: Get professor response — passa TUTTI i chunk e embeddings per forzare matching massimo
-      const professorResponse = await askProfessor(
-        question,
-        relevantChunks,
-        chunks,
-        embeddings
-      );
+      let professorResponse = "";
+      // ➜ Se c'è l'API Key, usa OpenAI per generare risposta con RAG
+      if (apiKey.trim().length > 12) {
+        professorResponse = await askOpenAIPdfProfessor(apiKey, question, relevantChunks);
+      } else {
+        professorResponse = await askProfessor(
+          question,
+          relevantChunks,
+          chunks,
+          embeddings
+        );
+      }
 
-      setMessages(prev => [...prev, {
-        role: 'professor',
-        content: professorResponse,
-        timestamp: new Date()
-      }]);
+      setMessages(prev => [
+        ...prev,
+        { role: 'professor', content: professorResponse, timestamp: new Date()}
+      ]);
     } catch (error) {
       console.error('Errore nella risposta del professore:', error);
-      setMessages(prev => [...prev, {
-        role: 'professor',
-        content: 'Mi dispiace, c\'è stato un problema tecnico. Potresti ripetere la domanda?',
-        timestamp: new Date()
-      }]);
+      setMessages(prev => [
+        ...prev,
+        {
+          role: 'professor',
+          content: 'Mi dispiace, c\'è stato un problema tecnico. Potresti ripetere la domanda?',
+          timestamp: new Date()
+        }
+      ]);
     } finally {
       setIsProcessing(false);
     }
@@ -160,14 +168,54 @@ const VirtualProfessorDemo = ({ isOpen, onClose }: VirtualProfessorDemoProps) =>
     onClose();
   };
 
+  const handleSaveApiKey = () => {
+    localStorage.setItem("openai-demo-key", apiKey);
+    setIsApiKeyModal(false);
+  };
+
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+        {/* MODAL PER API KEY */}
+        {isApiKeyModal && (
+          <div className="fixed inset-0 bg-black/40 flex justify-center items-center z-50">
+            <div className="bg-white rounded-lg shadow-lg p-8 min-w-[340px] flex flex-col gap-3">
+              <h2 className="font-bold text-lg mb-2">Inserisci la tua OpenAI API Key</h2>
+              <input
+                type="password"
+                value={apiKey}
+                onChange={e => setApiKey(e.target.value)}
+                className="border rounded px-3 py-2"
+                placeholder="sk-..."
+                autoFocus
+              />
+              <div className="flex gap-3 mt-2">
+                <Button onClick={handleSaveApiKey} className="bg-oralmind-500">Salva</Button>
+                <Button onClick={()=>setIsApiKeyModal(false)} variant="secondary">Annulla</Button>
+              </div>
+              <p className="text-xs text-muted-foreground mt-2">La key resta solo sul tuo browser e non viene inviata altrove.</p>
+              <a 
+                href="https://platform.openai.com/api-keys"
+                target="_blank" rel="noopener noreferrer"
+                className="text-xs text-blue-700 underline"
+              >Ottieni una API Key</a>
+            </div>
+          </div>
+        )}
+
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold gradient-text flex items-center">
-            <BookOpen className="mr-3 h-6 w-6" />
-            Professore Universitario Virtuale
-          </DialogTitle>
+          <div className="flex justify-between items-start">
+            <DialogTitle className="text-2xl font-bold gradient-text flex items-center">
+              <BookOpen className="mr-3 h-6 w-6" />
+              Professore Universitario Virtuale
+            </DialogTitle>
+            <Button
+              size="sm"
+              className="bg-blue-200 hover:bg-blue-300 text-blue-900 ml-6"
+              onClick={() => setIsApiKeyModal(true)}
+              variant="outline"
+            >API Key OpenAI</Button>
+          </div>
           <p className="text-muted-foreground">
             Carica un documento PDF e interroga il professore AI con tecnologia RAG
           </p>
