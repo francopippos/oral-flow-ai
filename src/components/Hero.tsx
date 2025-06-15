@@ -1,13 +1,11 @@
 
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Play, Upload, MessageCircle, TrendingUp, GraduationCap } from 'lucide-react';
+import { ArrowRight, Play, Upload, MessageCircle, TrendingUp } from 'lucide-react';
 import DemoModal from './DemoModal';
-import UniversityProfessorDemo from './UniversityProfessorDemo';
 
 const Hero = () => {
   const [isDemoOpen, setIsDemoOpen] = useState(false);
-  const [isProfessorDemoOpen, setIsProfessorDemoOpen] = useState(false);
 
   return (
     <>
@@ -48,19 +46,6 @@ const Hero = () => {
                   >
                     <Play className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform" />
                     Guarda la Demo
-                  </Button>
-                </div>
-
-                {/* Nuovo bottone per la demo del Professore Universitario */}
-                <div className="pt-4">
-                  <Button 
-                    size="lg"
-                    variant="outline"
-                    className="w-full border-2 border-oralmind-400 text-oralmind-700 hover:bg-oralmind-100 group"
-                    onClick={() => setIsProfessorDemoOpen(true)}
-                  >
-                    <GraduationCap className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform" />
-                    🎓 Prova la Demo: Professore Universitario Virtuale
                   </Button>
                 </div>
 
@@ -139,10 +124,6 @@ const Hero = () => {
       </section>
 
       <DemoModal isOpen={isDemoOpen} onClose={() => setIsDemoOpen(false)} />
-      <UniversityProfessorDemo 
-        isOpen={isProfessorDemoOpen} 
-        onClose={() => setIsProfessorDemoOpen(false)} 
-      />
     </>
   );
 };
