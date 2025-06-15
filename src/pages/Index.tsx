@@ -7,12 +7,10 @@ import HowItWorks from '../components/HowItWorks';
 import Benefits from '../components/Benefits';
 import Testimonials from '../components/Testimonials';
 import Footer from '../components/Footer';
-import DemoModal from '../components/DemoModal';
 import LoginModal from '../components/LoginModal';
 import { TranslationProvider } from '../components/TranslationProvider';
 
 const Index = () => {
-  const [isDemoOpen, setIsDemoOpen] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
 
   return (
@@ -27,11 +25,6 @@ const Index = () => {
           <Testimonials />
         </main>
         <Footer />
-        
-        <DemoModal 
-          isOpen={isDemoOpen} 
-          onClose={() => setIsDemoOpen(false)} 
-        />
         
         <LoginModal 
           isOpen={isLoginOpen} 
