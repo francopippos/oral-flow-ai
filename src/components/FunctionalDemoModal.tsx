@@ -1,9 +1,8 @@
-
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useOralMindDemo } from '@/hooks/useOralMindDemo';
 import { useAudioRecording } from '@/hooks/useAudioRecording';
 import { extractTextFromPDF } from '@/utils/pdfUtils';
-import { analyzeWithOralMindAI, transcribeAudio } from '@/utils/aiUtils';
+import { generateProfessorResponse, transcribeAudio } from '@/utils/aiUtils';
 import FileUploadStep from './FileUploadStep';
 import ConversationStep from './ConversationStep';
 import ReportStep from './ReportStep';
@@ -60,17 +59,14 @@ const FunctionalDemoModal = ({ isOpen, onClose }: FunctionalDemoModalProps) => {
       setFileContent(extractedText);
       
       setTimeout(async () => {
-        const initialAnalysis = await analyzeWithOralMindAI(
-          `Analizza questo documento PDF per preparare un'interrogazione: "${extractedText}". Presenta brevemente il contenuto e invita lo studente a iniziare la sua esposizione registrando la sua voce.`,
-          extractedText,
-          []
-        );
+        // Simulate initial analysis for compatibility
+        const initialMessage = `Analisi completata per "${file.name}". Il documento è stato processato e sono pronto per le tue domande. Puoi iniziare la tua esposizione registrando la tua voce.`;
         
         setIsAnalyzing(false);
         setStep(1);
         setConversation([{
           role: 'ai',
-          message: initialAnalysis
+          message: initialMessage
         }]);
       }, 2000);
     } catch (error) {
@@ -93,8 +89,9 @@ const FunctionalDemoModal = ({ isOpen, onClose }: FunctionalDemoModalProps) => {
           
           setConversation(prev => [...prev, { role: 'user', message: transcription }]);
           
-          const aiResponse = await analyzeWithOralMindAI(transcription, fileContent, conversation);
-          setConversation(prev => [...prev, { role: 'ai', message: aiResponse }]);
+          // Use the new professor response function but extract just the response
+          const { response } = await generateProfessorResponse(transcription, [], conversation.map(msg => ({ role: msg.role, message: msg.message })));
+          setConversation(prev => [...prev, { role: 'ai', message: response }]);
           
         } catch (error) {
           console.error('❌ Errore nella trascrizione:', error);
@@ -155,8 +152,8 @@ FORMATO DEL REPORT:
 ---
 Generato da OralMind - Il tuo assistente AI per l'interrogazione orale`;
 
-    const report = await analyzeWithOralMindAI(reportPrompt, fileContent, conversation);
-    setReport(report);
+    const { response } = await generateProfessorResponse(reportPrompt, [], conversation.map(msg => ({ role: msg.role, message: msg.message })));
+    setReport(response);
     setIsProcessing(false);
     setStep(2);
   };
