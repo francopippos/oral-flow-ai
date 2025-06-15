@@ -1,10 +1,7 @@
 
 import { Star, Quote } from 'lucide-react';
-import { useTranslation } from '../hooks/useTranslation';
 
 const Testimonials = () => {
-  const { t } = useTranslation();
-
   const testimonials = [
     {
       name: "Marco Rossi",
@@ -43,10 +40,10 @@ const Testimonials = () => {
           {/* Header */}
           <div className="text-center space-y-4 mb-16 animate-fade-in">
             <h2 className="text-3xl md:text-4xl font-bold">
-              {t('testimonials.title')} <span className="gradient-text">OralMind</span>
+              Cosa dicono di <span className="gradient-text">OralMind</span>
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              {t('testimonials.description')}
+              Scopri come studenti e professori stanno trasformando il loro approccio alle interrogazioni orali con l'aiuto dell'intelligenza artificiale di OralMind
             </p>
           </div>
 
