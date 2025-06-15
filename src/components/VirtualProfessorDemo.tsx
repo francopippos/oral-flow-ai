@@ -32,6 +32,8 @@ const VirtualProfessorDemo = ({ isOpen, onClose }: VirtualProfessorDemoProps) =>
   const fileInputRef = useRef<HTMLInputElement>(null);
   
   const { isRecording, startRecording, stopRecording, recordedAudio, resetRecording } = useAudioRecording();
+  const [transcriptionStatus, setTranscriptionStatus] = useState<"" | "in_progress" | "done" | "error">("");
+  const [lastTranscription, setLastTranscription] = useState<string>("");
 
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0];
@@ -70,29 +72,33 @@ const VirtualProfessorDemo = ({ isOpen, onClose }: VirtualProfessorDemoProps) =>
     }
   };
 
-  // *** FIX: Microfono — nuovo flusso più robusto per la registrazione ***
+  // *** Microfono — flusso robusto e user feedback ***
   const handleVoiceRecording = async () => {
     if (isRecording) {
       stopRecording();
     } else {
-      // Resetto registrazione eventuale precedente PRIMA di riavviare
       resetRecording();
       setTimeout(() => {
         startRecording();
       }, 150);
     }
+    setTranscriptionStatus(""); // reset ogni volta
+    setLastTranscription("");
   };
 
   const processVoiceQuestion = async () => {
     if (!recordedAudio) return;
-
+    setTranscriptionStatus("in_progress");
     setIsProcessing(true);
     try {
       const transcription = await transcribeAudio(recordedAudio);
+      setLastTranscription(transcription);
       setCurrentQuestion(transcription);
+      setTranscriptionStatus("done");
       await askQuestion(transcription);
     } catch (error) {
       console.error('Errore nella trascrizione:', error);
+      setTranscriptionStatus("error");
       alert('Errore nella trascrizione audio');
     } finally {
       setIsProcessing(false);
@@ -303,6 +309,17 @@ const VirtualProfessorDemo = ({ isOpen, onClose }: VirtualProfessorDemoProps) =>
                         : "🎤 Clicca per registrare la tua domanda vocale"
                       }
                     </p>
+                    {transcriptionStatus === "in_progress" && (
+                      <p className="text-xs text-oralmind-600 mt-1 animate-pulse">Trascrizione della voce in corso...</p>
+                    )}
+                    {lastTranscription && transcriptionStatus === "done" && (
+                      <p className="text-xs text-success-700 mt-1">
+                        Testo trascritto: "<span className="italic">{lastTranscription}</span>"
+                      </p>
+                    )}
+                    {transcriptionStatus === "error" && (
+                      <p className="text-xs text-destructive mt-1">❌ Errore nella trascrizione audio</p>
+                    )}
                   </div>
                   
                   {recordedAudio && !isRecording && (
