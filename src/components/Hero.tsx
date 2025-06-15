@@ -1,11 +1,13 @@
 
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Play, Upload, MessageCircle, TrendingUp } from 'lucide-react';
+import { ArrowRight, Play, Upload, MessageCircle, TrendingUp, BookOpen } from 'lucide-react';
 import DemoModal from './DemoModal';
+import VirtualProfessorDemo from './VirtualProfessorDemo';
 
 const Hero = () => {
   const [isDemoOpen, setIsDemoOpen] = useState(false);
+  const [isProfessorDemoOpen, setIsProfessorDemoOpen] = useState(false);
 
   return (
     <>
@@ -47,6 +49,21 @@ const Hero = () => {
                     <Play className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform" />
                     Guarda la Demo
                   </Button>
+                </div>
+
+                {/* New Professor Demo Button */}
+                <div className="pt-4">
+                  <Button 
+                    size="lg" 
+                    className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-xl group w-full sm:w-auto"
+                    onClick={() => setIsProfessorDemoOpen(true)}
+                  >
+                    <BookOpen className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform" />
+                    Metti alla prova il Professore
+                  </Button>
+                  <p className="text-sm text-muted-foreground mt-2">
+                    🎓 Carica un PDF e interroga il Professore Virtuale con tecnologia RAG
+                  </p>
                 </div>
 
                 {/* Stats */}
@@ -124,6 +141,7 @@ const Hero = () => {
       </section>
 
       <DemoModal isOpen={isDemoOpen} onClose={() => setIsDemoOpen(false)} />
+      <VirtualProfessorDemo isOpen={isProfessorDemoOpen} onClose={() => setIsProfessorDemoOpen(false)} />
     </>
   );
 };
