@@ -1,4 +1,3 @@
-
 import { useState, useRef } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -71,12 +70,16 @@ const VirtualProfessorDemo = ({ isOpen, onClose }: VirtualProfessorDemoProps) =>
     }
   };
 
+  // *** FIX: Microfono — nuovo flusso più robusto per la registrazione ***
   const handleVoiceRecording = async () => {
     if (isRecording) {
       stopRecording();
     } else {
+      // Resetto registrazione eventuale precedente PRIMA di riavviare
       resetRecording();
-      await startRecording();
+      setTimeout(() => {
+        startRecording();
+      }, 150);
     }
   };
 

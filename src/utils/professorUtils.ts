@@ -1,20 +1,17 @@
-
 export const askProfessor = async (
   question: string,
   relevantChunks: string[]
 ): Promise<string> => {
   try {
     console.log('👨‍🏫 Il Professore Virtuale sta elaborando la risposta...');
-    
     const context = relevantChunks.join('\n\n---\n\n');
-    
+
     // Simulazione di risposta intelligente del professore
-    // In produzione, qui useremmo una vera API AI
     const professorResponse = generateProfessorResponse(question, context);
-    
+
     // Simula il tempo di elaborazione
     await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 2000));
-    
+
     console.log('✅ Risposta del Professore Virtuale completata');
     return professorResponse;
   } catch (error) {
@@ -25,26 +22,42 @@ export const askProfessor = async (
 
 function generateProfessorResponse(question: string, context: string): string {
   const questionLower = question.toLowerCase();
-  
-  // Risposte specifiche basate su parole chiave
+
+  // RISPOSTA SU BRANCH AND BOUND DIVISA IN SEZIONI
   if (questionLower.includes('branch') && questionLower.includes('bound')) {
-    return `Ottima domanda sul Branch and Bound! 
+    return (
+`### 🏷️ Definizione Accademica
 
-**Definizione Accademica:**
-Il Branch and Bound è un algoritmo di ottimizzazione combinatoria che utilizza una strategia di ricerca sistematica per esplorare lo spazio delle soluzioni. È particolarmente efficace per problemi di programmazione lineare intera e problemi di ottimizzazione discreta.
+Il **Branch and Bound** è un algoritmo di ottimizzazione combinatoria che utilizza una strategia di ricerca sistematica per esplorare lo spazio delle soluzioni. È particolarmente efficace per problemi di programmazione lineare intera e ottimizzazione discreta.
 
-**Meccanismo di Funzionamento:**
-1. **Branching**: Il problema viene suddiviso ricorsivamente in sottoproblemi più piccoli, creando un albero di ricerca
-2. **Bounding**: Per ogni nodo dell'albero, si calcolano limiti superiori e/o inferiori della funzione obiettivo
-3. **Pruning**: Si eliminano i rami che non possono contenere la soluzione ottimale
+---
 
-**Vantaggi:**
-- Garantisce di trovare la soluzione ottima globale
+### ⚙️ Meccanismo di Funzionamento
+
+1. **Branching**  
+   Il problema viene suddiviso ricorsivamente in sottoproblemi più piccoli, creando un albero di ricerca.
+2. **Bounding**  
+   Per ogni nodo dell'albero, si calcolano limiti superiori e/o inferiori della funzione obiettivo.
+3. **Pruning**  
+   Si eliminano i rami che non possono contenere la soluzione ottimale.
+
+---
+
+### ⭐ Vantaggi
+
+- Garantisce di trovare la **soluzione ottima globale**
 - Riduce significativamente lo spazio di ricerca rispetto all'enumerazione completa
-- Applicabile a molti problemi NP-hard
+- Applicabile a molti problemi **NP-hard**
 
-**Domande di Approfondimento:**
-Come si determina una buona strategia di branching? Quali tecniche di bounding conosce? Può fare un esempio pratico di applicazione?`;
+---
+
+### ❓ Domande di Approfondimento
+
+- Come si determina una buona strategia di branching?
+- Quali tecniche di bounding conosce?
+- Può fare un esempio pratico di applicazione?
+`
+    );
   }
   
   if (questionLower.includes('complessità') || questionLower.includes('np')) {
