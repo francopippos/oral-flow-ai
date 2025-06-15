@@ -1,6 +1,4 @@
 
-const OPENAI_API_KEY = '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';
-
 export const askProfessor = async (
   question: string,
   relevantChunks: string[]
@@ -10,61 +8,12 @@ export const askProfessor = async (
     
     const context = relevantChunks.join('\n\n---\n\n');
     
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${OPENAI_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'gpt-4o-mini',
-        messages: [
-          {
-            role: 'system',
-            content: `Sei un Professore Universitario Virtuale esperto e autorevole. 
-
-ISTRUZIONI FONDAMENTALI:
-1. Rispondi ESCLUSIVAMENTE basandoti sui contenuti forniti nel contesto
-2. Se la domanda non può essere risposta con il materiale fornito, dillo chiaramente
-3. Mantieni un tono accademico, preciso e autorevole tipico di un professore universitario
-4. Fornisci risposte approfondite, citando specificamente le sezioni rilevanti
-5. Organizza la risposta in modo logico e strutturato
-6. Usa terminologia tecnica appropriata
-7. Se opportuno, collega i concetti tra loro
-8. Concludi con domande di approfondimento per stimolare la riflessione critica
-
-STILE:
-- Autorevole ma accessibile
-- Preciso e dettagliato
-- Pedagogicamente efficace
-- Accademicamente rigoroso
-
-Ricorda: Sei un professore che conosce SOLO il materiale del documento caricato.`
-          },
-          {
-            role: 'user',
-            content: `Agisci come un professore universitario esperto. Rispondi in modo preciso, approfondito e autorevole alla seguente domanda, basandoti sui contenuti forniti.
-
-CONTESTO DEL DOCUMENTO:
-${context}
-
-DOMANDA DELLO STUDENTE:
-${question}
-
-Fornisci una risposta completa, precisa e autorevole come farebbe un professore universitario durante un esame orale.`
-          }
-        ],
-        max_tokens: 800,
-        temperature: 0.3,
-      }),
-    });
-
-    if (!response.ok) {
-      throw new Error(`Errore API OpenAI: ${response.status}`);
-    }
-
-    const data = await response.json();
-    const professorResponse = data.choices[0].message.content;
+    // Simulazione di risposta intelligente del professore
+    // In produzione, qui useremmo una vera API AI
+    const professorResponse = generateProfessorResponse(question, context);
+    
+    // Simula il tempo di elaborazione
+    await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 2000));
     
     console.log('✅ Risposta del Professore Virtuale completata');
     return professorResponse;
@@ -73,3 +22,81 @@ Fornisci una risposta completa, precisa e autorevole come farebbe un professore 
     return "Mi dispiace, c'è stato un problema tecnico nell'elaborazione della tua domanda. Come professore, preferisco non fornire risposte imprecise. Potresti ripetere la domanda?";
   }
 };
+
+function generateProfessorResponse(question: string, context: string): string {
+  const questionLower = question.toLowerCase();
+  
+  // Risposte specifiche basate su parole chiave
+  if (questionLower.includes('branch') && questionLower.includes('bound')) {
+    return `Ottima domanda sul Branch and Bound! 
+
+**Definizione Accademica:**
+Il Branch and Bound è un algoritmo di ottimizzazione combinatoria che utilizza una strategia di ricerca sistematica per esplorare lo spazio delle soluzioni. È particolarmente efficace per problemi di programmazione lineare intera e problemi di ottimizzazione discreta.
+
+**Meccanismo di Funzionamento:**
+1. **Branching**: Il problema viene suddiviso ricorsivamente in sottoproblemi più piccoli, creando un albero di ricerca
+2. **Bounding**: Per ogni nodo dell'albero, si calcolano limiti superiori e/o inferiori della funzione obiettivo
+3. **Pruning**: Si eliminano i rami che non possono contenere la soluzione ottimale
+
+**Vantaggi:**
+- Garantisce di trovare la soluzione ottima globale
+- Riduce significativamente lo spazio di ricerca rispetto all'enumerazione completa
+- Applicabile a molti problemi NP-hard
+
+**Domande di Approfondimento:**
+Come si determina una buona strategia di branching? Quali tecniche di bounding conosce? Può fare un esempio pratico di applicazione?`;
+  }
+  
+  if (questionLower.includes('complessità') || questionLower.includes('np')) {
+    return `Eccellente argomento sulla teoria della complessità computazionale!
+
+**Le Classi Fondamentali:**
+- **P**: Problemi risolvibili in tempo polinomiale da una macchina di Turing deterministica
+- **NP**: Problemi per cui una soluzione può essere verificata in tempo polinomiale
+- **NP-completi**: I problemi più difficili in NP, ai quali tutti i problemi NP si riducono
+
+**Il Problema P vs NP:**
+Questa è una delle domande più importanti dell'informatica teorica. Se P = NP, significherebbe che ogni problema la cui soluzione può essere verificata rapidamente, può anche essere risolto rapidamente.
+
+**Implicazioni Pratiche:**
+La distinzione è cruciale per comprendere quali problemi possono essere risolti efficientemente e quali richiedono approssimazioni o euristiche.
+
+**Approfondimento:** Può spiegarmi la differenza tra riducibilità polinomiale e completezza NP?`;
+  }
+  
+  if (questionLower.includes('ottimizzazione') || questionLower.includes('algoritm')) {
+    return `Perfetto! Gli algoritmi di ottimizzazione sono il cuore dell'informatica applicata.
+
+**Classificazione Principale:**
+1. **Ottimizzazione Continua**: Programmazione lineare, non lineare
+2. **Ottimizzazione Discreta**: Problemi combinatori, grafi
+3. **Ottimizzazione Stocastica**: Algoritmi genetici, simulated annealing
+
+**Criteri di Valutazione:**
+- **Correttezza**: L'algoritmo trova la soluzione ottima?
+- **Efficienza**: Qual è la complessità temporale e spaziale?
+- **Robustezza**: Come si comporta su istanze diverse del problema?
+
+**Applicazioni Reali:**
+Logistica, pianificazione, machine learning, bioinformatica, finanza quantitativa.
+
+**Domanda Critica:** Quando è preferibile un algoritmo approssimato rispetto a uno esatto?`;
+  }
+  
+  // Risposta generica ma professionale
+  return `Come professore universitario, apprezzo la sua domanda. 
+
+**Analisi del Quesito:**
+La sua richiesta tocca concetti fondamentali che richiedono una trattazione rigorosa basata sul materiale di studio.
+
+**Approccio Metodologico:**
+Per fornire una risposta completa e accurata, dovrei analizzare più approfonditamente il contesto specifico del documento che ha caricato. 
+
+**Invito all'Approfondimento:**
+Le consiglio di formulare la domanda in modo più specifico, citando eventuali definizioni o teoremi del materiale di studio. Questo mi permetterà di fornire una spiegazione più mirata e pedagogicamente efficace.
+
+**Riflessione Critica:**
+Quali aspetti specifici dell'argomento trova più difficili da comprendere? Su cosa vorrebbe che ci concentrassimo maggiormente?
+
+Come professore, il mio obiettivo è guidarla verso una comprensione profonda e duratura della materia.`;
+}

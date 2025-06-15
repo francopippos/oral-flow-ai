@@ -1,52 +1,55 @@
 
-const OPENAI_API_KEY = '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';
-
 export const createEmbeddings = async (chunks: string[]): Promise<number[][]> => {
   try {
     console.log('🧠 Creando embedding per', chunks.length, 'chunk...');
     
+    // Simulazione di embedding per la demo
+    // In produzione, qui useremmo una vera API di embedding
     const embeddings: number[][] = [];
     
-    // Process chunks in batches to avoid rate limits
-    const batchSize = 10;
-    for (let i = 0; i < chunks.length; i += batchSize) {
-      const batch = chunks.slice(i, i + batchSize);
+    for (let i = 0; i < chunks.length; i++) {
+      // Generiamo embedding deterministici basati sul contenuto
+      const embedding = generateDeterministicEmbedding(chunks[i]);
+      embeddings.push(embedding);
       
-      const response = await fetch('https://api.openai.com/v1/embeddings', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${OPENAI_API_KEY}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          model: 'text-embedding-3-large',
-          input: batch,
-          encoding_format: 'float',
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`Errore API OpenAI: ${response.status}`);
-      }
-
-      const data = await response.json();
-      const batchEmbeddings = data.data.map((item: any) => item.embedding);
-      embeddings.push(...batchEmbeddings);
-      
-      // Small delay between batches
-      if (i + batchSize < chunks.length) {
-        await new Promise(resolve => setTimeout(resolve, 100));
-      }
+      // Piccola pausa per simulare l'elaborazione
+      await new Promise(resolve => setTimeout(resolve, 50));
     }
     
     console.log('✅ Embedding creati con successo');
     return embeddings;
   } catch (error) {
     console.error('❌ Errore nella creazione degli embedding:', error);
-    // Fallback: return random embeddings for demo purposes
-    return chunks.map(() => Array.from({ length: 1536 }, () => Math.random()));
+    // Fallback: return deterministic embeddings
+    return chunks.map((chunk, index) => generateDeterministicEmbedding(chunk));
   }
 };
+
+function generateDeterministicEmbedding(text: string): number[] {
+  // Genera un embedding deterministico basato sul testo
+  const embedding = new Array(1536).fill(0);
+  const words = text.toLowerCase().split(/\s+/);
+  
+  words.forEach((word, index) => {
+    const hash = simpleHash(word);
+    const pos = hash % 1536;
+    embedding[pos] += 1 / (index + 1);
+  });
+  
+  // Normalizza il vettore
+  const magnitude = Math.sqrt(embedding.reduce((sum, val) => sum + val * val, 0));
+  return embedding.map(val => magnitude > 0 ? val / magnitude : 0);
+}
+
+function simpleHash(str: string): number {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash; // Convert to 32bit integer
+  }
+  return Math.abs(hash);
+}
 
 export const findRelevantChunks = async (
   question: string,
@@ -56,35 +59,17 @@ export const findRelevantChunks = async (
   try {
     console.log('🔍 Ricerca semantica per:', question.substring(0, 50) + '...');
     
-    // Create embedding for the question
-    const response = await fetch('https://api.openai.com/v1/embeddings', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${OPENAI_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'text-embedding-3-large',
-        input: question,
-        encoding_format: 'float',
-      }),
-    });
+    // Genera embedding per la domanda
+    const questionEmbedding = generateDeterministicEmbedding(question);
 
-    if (!response.ok) {
-      throw new Error(`Errore API OpenAI: ${response.status}`);
-    }
-
-    const data = await response.json();
-    const questionEmbedding = data.data[0].embedding;
-
-    // Calculate cosine similarity
+    // Calcola similarità coseno
     const similarities = embeddings.map((embedding, index) => ({
       index,
       similarity: cosineSimilarity(questionEmbedding, embedding),
       chunk: chunks[index]
     }));
 
-    // Sort by similarity and get top 3 chunks
+    // Ordina per similarità e prendi i top 3 chunk
     const topChunks = similarities
       .sort((a, b) => b.similarity - a.similarity)
       .slice(0, 3)

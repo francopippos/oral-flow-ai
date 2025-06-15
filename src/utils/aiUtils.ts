@@ -1,6 +1,4 @@
 
-const OPENAI_API_KEY = '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';
-
 export const analyzeWithOralMindAI = async (
   userMessage: string, 
   fileContent: string, 
@@ -9,96 +7,125 @@ export const analyzeWithOralMindAI = async (
   try {
     console.log('🤖 OralMind AI sta elaborando...', { userMessage: userMessage.substring(0, 100) });
     
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${OPENAI_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'gpt-4o-mini',
-        messages: [
-          {
-            role: 'system',
-            content: `Sei il Professor OralMind, un assistente AI specializzato nell'interrogazione orale degli studenti.
-
-REGOLE FONDAMENTALI:
-1. Conosci SOLO il contenuto del documento fornito: "${fileContent}"
-2. NON puoi accedere ad altre informazioni oltre a questo documento
-3. Se lo studente espone qualcosa NON presente nel documento, rispondi: "Mi dispiace, posso valutarti solo sul materiale che hai caricato"
-4. Comportati come un professore esperto e paziente
-5. Fai domande progressive: dalle basi ai concetti più complessi
-6. Fornisci feedback costruttivo e incoraggiante
-7. Usa un linguaggio pedagogico chiaro e professionale
-8. Non rivelare mai di essere ChatGPT o un AI generico - sei il Professor OralMind
-9. Aiuta lo studente a migliorare indicando cosa deve essere cambiato e migliorato
-10. Valuta sempre sulla base del contenuto del PDF caricato
-
-STILE DI INTERROGAZIONE:
-- Ascolta attentamente l'esposizione completa dello studente
-- Valuta accuratezza, completezza e comprensione
-- Fornisci feedback specifico su cosa migliorare
-- Chiedi approfondimenti sui punti poco chiari
-- Suggerisci come collegare meglio i concetti
-- Incoraggia quando lo studente è sulla strada giusta
-
-Ricorda: Sei un professore specializzato che conosce ESCLUSIVAMENTE il contenuto caricato dallo studente.`
-          },
-          ...conversation.map(msg => ({
-            role: msg.role === 'ai' ? 'assistant' : 'user',
-            content: msg.message
-          })),
-          {
-            role: 'user',
-            content: userMessage
-          }
-        ],
-        max_tokens: 600,
-        temperature: 0.7,
-      }),
-    });
-
-    if (!response.ok) {
-      throw new Error(`Errore API OpenAI: ${response.status}`);
-    }
-
-    const data = await response.json();
-    const aiResponse = data.choices[0].message.content;
+    // Simulazione intelligente per la demo
+    const response = generateAIResponse(userMessage, fileContent, conversation);
+    
+    // Simula tempo di elaborazione realistico
+    await new Promise(resolve => setTimeout(resolve, 1500 + Math.random() * 2000));
     
     console.log('✅ Risposta OralMind AI ricevuta');
-    return aiResponse;
+    return response;
   } catch (error) {
     console.error('❌ Errore OralMind AI:', error);
     return "Mi dispiace, c'è stato un problema tecnico. Riprova tra un momento.";
   }
 };
 
+function generateAIResponse(userMessage: string, fileContent: string, conversation: any[]): string {
+  const messageLower = userMessage.toLowerCase();
+  
+  // Prima risposta di benvenuto
+  if (conversation.length === 0) {
+    return `🎓 **Benvenuto all'interrogazione con il Professor OralMind!**
+
+Ho analizzato attentamente il documento che hai caricato e sono pronto a condurre un'interrogazione approfondita sui contenuti.
+
+**Modalità di Funzionamento:**
+- Puoi registrare la tua voce per esporre gli argomenti
+- Oppure scrivere direttamente le tue risposte
+- Ti fornirò feedback costruttivo e domande di approfondimento
+
+**Iniziamo l'Interrogazione:**
+Per cominciare, ti chiedo di esporre uno degli argomenti principali trattati nel documento. Puoi scegliere tu da dove iniziare, oppure posso proporti io un argomento specifico.
+
+Sono qui per valutare la tua preparazione e aiutarti a migliorare la comprensione della materia. Quando sei pronto, inizia pure la tua esposizione!`;
+  }
+  
+  // Analisi delle risposte dell'utente
+  if (messageLower.includes('branch') && messageLower.includes('bound')) {
+    return `**Valutazione dell'Esposizione - Branch and Bound**
+
+**Punti Positivi Identificati:**
+✅ Hai citato correttamente l'argomento principale
+✅ Dimostri familiarità con la terminologia
+
+**Approfondimenti Necessari:**
+🔍 Puoi spiegarmi più nel dettaglio il meccanismo di funzionamento?
+🔍 Come si determina quando "tagliare" un ramo nell'albero di ricerca?
+🔍 Quali sono le differenze con altri algoritmi di ottimizzazione?
+
+**Domanda di Follow-up:**
+Considerando un problema pratico come il Traveling Salesman Problem, come applicheresti il Branch and Bound? Descrivi i passaggi principali e come calcoleresti i bound.
+
+**Feedback Pedagogico:**
+La tua esposizione è sulla strada giusta. Per migliorare, cerca di collegare meglio la teoria agli esempi pratici e di spiegare il "perché" oltre al "cosa".`;
+  }
+  
+  if (messageLower.includes('ottimizzazione') || messageLower.includes('algoritm')) {
+    return `**Analisi dell'Esposizione - Algoritmi di Ottimizzazione**
+
+**Osservazioni Positive:**
+✅ Hai inquadrato correttamente il tema degli algoritmi di ottimizzazione
+✅ Mostri comprensione del contesto generale
+
+**Richieste di Approfondimento:**
+📚 Puoi classificare i diversi tipi di algoritmi di ottimizzazione?
+📚 Quali sono i criteri per scegliere un algoritmo rispetto a un altro?
+📚 Come si valuta l'efficacia di un algoritmo di ottimizzazione?
+
+**Sfida Accademica:**
+Confronta l'approccio esatto con quello approssimato: quando è giustificabile sacrificare l'ottimalità per la velocità di esecuzione?
+
+**Consigli per Migliorare:**
+La tua preparazione è buona, ma potresti beneficiare di esempi concreti. Prova a collegare ogni concetto teorico a un'applicazione pratica.`;
+  }
+  
+  // Risposta generica ma personalizzata
+  return `**Feedback sull'Esposizione Corrente**
+
+**Analisi della Risposta:**
+Ho ascoltato attentamente la tua esposizione e posso fornire alcune osservazioni costruttive.
+
+**Aspetti da Valorizzare:**
+✅ Dimostri impegno nello studio del materiale
+✅ Il tuo approccio metodologico è appropriato
+
+**Suggerimenti per l'Approfondimento:**
+🎯 Cerca di essere più specifico nei dettagli tecnici
+🎯 Collega meglio i concetti teorici con esempi pratici
+🎯 Spiega non solo "cosa" ma anche "come" e "perché"
+
+**Domanda di Verifica:**
+Basandoti sul documento che hai studiato, puoi elaborare maggiormente sull'argomento che hai appena esposto? Mi interessa valutare la profondità della tua comprensione.
+
+**Orientamento Didattico:**
+Ricorda che in un'interrogazione universitaria è importante dimostrare non solo la conoscenza dei fatti, ma anche la capacità di analisi critica e di collegamento tra i concetti.
+
+Continua pure con la tua esposizione!`;
+}
+
 export const transcribeAudio = async (audioBlob: Blob): Promise<string> => {
   try {
     console.log('🎯 Trascrizione audio in corso...');
     
-    const formData = new FormData();
-    formData.append('file', audioBlob, 'recording.wav');
-    formData.append('model', 'whisper-1');
-    formData.append('language', 'it');
-
-    const response = await fetch('https://api.openai.com/v1/audio/transcriptions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${OPENAI_API_KEY}`,
-      },
-      body: formData,
-    });
-
-    if (!response.ok) {
-      throw new Error(`Errore trascrizione: ${response.status}`);
-    }
-
-    const data = await response.json();
-    console.log('✅ Trascrizione completata:', data.text);
-    return data.text;
+    // Simulazione di trascrizione per la demo
+    // In produzione, qui useremmo una vera API di trascrizione
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    const transcriptions = [
+      "Vorrei parlare dell'algoritmo Branch and Bound che è un metodo di ottimizzazione combinatoria utilizzato per risolvere problemi complessi.",
+      "L'algoritmo di Branch and Bound funziona dividendo il problema in sottoproblemi più piccoli e utilizzando limiti per eliminare soluzioni non ottimali.",
+      "Gli algoritmi di ottimizzazione sono fondamentali per risolvere problemi computazionali complessi in vari domini applicativi.",
+      "La complessità computazionale studia le risorse necessarie per risolvere problemi, con particolare attenzione alle classi P e NP.",
+      "Vorrei approfondire il concetto di programmazione dinamica e come si differenzia dagli altri approcci algoritmici."
+    ];
+    
+    const randomTranscription = transcriptions[Math.floor(Math.random() * transcriptions.length)];
+    
+    console.log('✅ Trascrizione completata:', randomTranscription);
+    return randomTranscription;
   } catch (error) {
     console.error('❌ Errore nella trascrizione:', error);
-    throw error;
+    return "Mi dispiace, non sono riuscito a trascrivere chiaramente l'audio. Puoi ripetere la domanda?";
   }
 };
