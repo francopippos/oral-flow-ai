@@ -6,10 +6,8 @@ export const extractTextFromPDF = async (file: File): Promise<string> => {
     // Importazione dinamica di pdfjs-dist
     const pdfjsLib = await import('pdfjs-dist');
     
-    // Configurazione worker - disabilitiamo il worker per ora
-    pdfjsLib.GlobalWorkerOptions.workerSrc = null;
-    // Alternativamente, usa questa configurazione se la precedente non funziona:
-    // pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    // Configurazione worker più semplice - usa il worker integrato
+    pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js`;
     
     const arrayBuffer = await file.arrayBuffer();
     const pdf = await pdfjsLib.getDocument({ 
@@ -47,7 +45,7 @@ export const extractTextFromPDF = async (file: File): Promise<string> => {
       .replace(/\s+/g, ' ') // Normalizza spazi
       .trim();
     
-    if (!fullText || fullText.length < 50) {
+    if (!fullText || fullText.length < 10) {
       throw new Error('Il PDF sembra vuoto o non contiene testo estraibile. Assicurati che non sia un PDF scannerizzato o protetto.');
     }
     
@@ -59,10 +57,13 @@ export const extractTextFromPDF = async (file: File): Promise<string> => {
     console.error('❌ Errore nell\'estrazione REALE dal PDF:', error);
     
     // Messaggi di errore più specifici
-    if (error.toString().includes('Invalid PDF')) {
+    const errorMessage = error.toString();
+    if (errorMessage.includes('Invalid PDF')) {
       throw new Error('Il file PDF sembra corrotto o non valido.');
-    } else if (error.toString().includes('password')) {
+    } else if (errorMessage.includes('password')) {
       throw new Error('Il PDF è protetto da password e non può essere elaborato.');
+    } else if (errorMessage.includes('worker')) {
+      throw new Error('Errore nel caricamento del sistema PDF. Riprova tra qualche secondo.');
     } else {
       throw new Error(`Impossibile estrarre il testo dal PDF: ${error}. Prova con un altro file PDF.`);
     }
