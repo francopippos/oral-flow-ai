@@ -1,4 +1,3 @@
-
 import { Brain, BookOpen, MessageCircle, Mic, MicOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -24,6 +23,7 @@ interface ProfessorChatStepProps {
   onProcessVoiceQuestion: () => void;
   setCurrentQuestion: (value: string) => void;
   onAskQuestion: (question: string) => void;
+  hasApiKey?: boolean;
 }
 
 const ProfessorChatStep = ({
@@ -42,19 +42,21 @@ const ProfessorChatStep = ({
   onProcessVoiceQuestion,
   setCurrentQuestion,
   onAskQuestion,
+  hasApiKey
 }: ProfessorChatStepProps) => {
   return (
     <div className="space-y-4">
       <div className="bg-gradient-to-r from-oralmind-50 to-success-50 rounded-lg p-4">
         <div className="flex items-center space-x-3 mb-2">
           <Brain className="h-6 w-6 text-oralmind-600" />
-          <h3 className="font-semibold text-oralmind-800">Professore Virtuale Attivo</h3>
+          <h3 className="font-semibold text-oralmind-800">Sistema RAG Attivo</h3>
+          {hasApiKey && <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">OpenAI GPT</span>}
         </div>
         <p className="text-sm text-oralmind-700">
-          Documento analizzato: <strong>{file?.name}</strong>
+          📚 <strong>{file?.name}</strong> • {chunks.length} chunk • Embedding ML ready
         </p>
-        <p className="text-sm text-oralmind-600">
-          {chunks.length} sezioni semantiche • Embedding vettoriali pronti
+        <p className="text-xs text-oralmind-600">
+          {hasApiKey ? "🤖 Risposte generate da OpenAI GPT" : "📖 Modalità estratti diretti (configura API Key per GPT)"}
         </p>
       </div>
       {/* Chat Messages */}

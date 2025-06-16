@@ -1,55 +1,54 @@
 
+import { pipeline, Pipeline } from '@huggingface/transformers';
+
+let embeddingPipeline: Pipeline | null = null;
+
+const initializeEmbeddingModel = async () => {
+  if (!embeddingPipeline) {
+    console.log('🧠 Inizializzando modello embedding...');
+    embeddingPipeline = await pipeline(
+      'feature-extraction',
+      'Xenova/all-MiniLM-L6-v2',
+      { 
+        quantized: true,
+        progress_callback: (progress: any) => {
+          if (progress.status === 'downloading') {
+            console.log(`📥 Download modello: ${Math.round(progress.progress || 0)}%`);
+          }
+        }
+      }
+    );
+    console.log('✅ Modello embedding pronto');
+  }
+  return embeddingPipeline;
+};
+
 export const createEmbeddings = async (chunks: string[]): Promise<number[][]> => {
   try {
-    console.log('🧠 Creando embedding per', chunks.length, 'chunk...');
+    console.log('🧠 Creando embedding REALI per', chunks.length, 'chunk...');
     
-    // Simulazione di embedding per la demo
-    // In produzione, qui useremmo una vera API di embedding
+    const model = await initializeEmbeddingModel();
     const embeddings: number[][] = [];
     
     for (let i = 0; i < chunks.length; i++) {
-      // Generiamo embedding deterministici basati sul contenuto
-      const embedding = generateDeterministicEmbedding(chunks[i]);
+      console.log(`📊 Processando chunk ${i + 1}/${chunks.length}`);
+      
+      // Genera embedding reale usando il modello HuggingFace
+      const output = await model(chunks[i], { pooling: 'mean', normalize: true });
+      const embedding = Array.from(output.data) as number[];
       embeddings.push(embedding);
       
-      // Piccola pausa per simulare l'elaborazione
-      await new Promise(resolve => setTimeout(resolve, 50));
+      // Piccola pausa per non sovraccaricare
+      await new Promise(resolve => setTimeout(resolve, 100));
     }
     
-    console.log('✅ Embedding creati con successo');
+    console.log('✅ Embedding REALI creati con successo');
     return embeddings;
   } catch (error) {
-    console.error('❌ Errore nella creazione degli embedding:', error);
-    // Fallback: return deterministic embeddings
-    return chunks.map((chunk, index) => generateDeterministicEmbedding(chunk));
+    console.error('❌ Errore nella creazione degli embedding reali:', error);
+    throw new Error('Impossibile creare gli embedding: ' + error);
   }
 };
-
-function generateDeterministicEmbedding(text: string): number[] {
-  // Genera un embedding deterministico basato sul testo
-  const embedding = new Array(1536).fill(0);
-  const words = text.toLowerCase().split(/\s+/);
-  
-  words.forEach((word, index) => {
-    const hash = simpleHash(word);
-    const pos = hash % 1536;
-    embedding[pos] += 1 / (index + 1);
-  });
-  
-  // Normalizza il vettore
-  const magnitude = Math.sqrt(embedding.reduce((sum, val) => sum + val * val, 0));
-  return embedding.map(val => magnitude > 0 ? val / magnitude : 0);
-}
-
-function simpleHash(str: string): number {
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) {
-    const char = str.charCodeAt(i);
-    hash = ((hash << 5) - hash) + char;
-    hash = hash & hash; // Convert to 32bit integer
-  }
-  return Math.abs(hash);
-}
 
 export const findRelevantChunks = async (
   question: string,
@@ -57,36 +56,51 @@ export const findRelevantChunks = async (
   embeddings: number[][]
 ): Promise<string[]> => {
   try {
-    console.log('🔍 Ricerca semantica per:', question.substring(0, 50) + '...');
+    console.log('🔍 Ricerca semantica REALE per:', question.substring(0, 50) + '...');
     
-    // Genera embedding per la domanda
-    const questionEmbedding = generateDeterministicEmbedding(question);
+    const model = await initializeEmbeddingModel();
+    
+    // Genera embedding REALE per la domanda
+    const questionOutput = await model(question, { pooling: 'mean', normalize: true });
+    const questionEmbedding = Array.from(questionOutput.data) as number[];
 
-    // Calcola similarità coseno
+    // Calcola similarità coseno REALE
     const similarities = embeddings.map((embedding, index) => ({
       index,
       similarity: cosineSimilarity(questionEmbedding, embedding),
       chunk: chunks[index]
     }));
 
-    // Ordina per similarità e prendi i top 3 chunk
+    // Ordina per similarità e prendi i top 3-5 chunk più rilevanti
     const topChunks = similarities
       .sort((a, b) => b.similarity - a.similarity)
-      .slice(0, 3)
-      .map(item => item.chunk);
+      .slice(0, 4) // Prendiamo i 4 chunk più rilevanti
+      .filter(item => item.similarity > 0.3) // Solo chunk con similarità decente
+      .map(item => {
+        console.log(`📋 Chunk rilevante (similarità: ${item.similarity.toFixed(3)}): ${item.chunk.substring(0, 100)}...`);
+        return item.chunk;
+      });
 
-    console.log('✅ Trovati', topChunks.length, 'chunk rilevanti');
+    console.log('✅ Trovati', topChunks.length, 'chunk REALMENTE rilevanti');
     return topChunks;
   } catch (error) {
-    console.error('❌ Errore nella ricerca semantica:', error);
-    // Fallback: return first few chunks
-    return chunks.slice(0, 3);
+    console.error('❌ Errore nella ricerca semantica reale:', error);
+    throw new Error('Impossibile trovare chunk rilevanti: ' + error);
   }
 };
 
 function cosineSimilarity(a: number[], b: number[]): number {
+  if (a.length !== b.length) {
+    throw new Error('I vettori devono avere la stessa lunghezza');
+  }
+  
   const dotProduct = a.reduce((sum, val, i) => sum + val * b[i], 0);
   const magnitudeA = Math.sqrt(a.reduce((sum, val) => sum + val * val, 0));
   const magnitudeB = Math.sqrt(b.reduce((sum, val) => sum + val * val, 0));
+  
+  if (magnitudeA === 0 || magnitudeB === 0) {
+    return 0;
+  }
+  
   return dotProduct / (magnitudeA * magnitudeB);
 }
