@@ -46,7 +46,7 @@ const VirtualProfessorDemo = ({ isOpen, onClose }: VirtualProfessorDemoProps) =>
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0];
     if (!selectedFile || selectedFile.type !== "application/pdf") {
-      alert("Per favore carica un file PDF");
+      alert("Per favore carica un file PDF valido");
       return;
     }
     
@@ -56,48 +56,53 @@ const VirtualProfessorDemo = ({ isOpen, onClose }: VirtualProfessorDemoProps) =>
     
     try {
       // 1. Estrazione REALE del testo
+      console.log('🚀 Iniziando elaborazione completa del PDF...');
       const text = await extractTextFromPDF(selectedFile);
       setExtractedText(text);
+      console.log('✅ Testo estratto con successo');
       
       // 2. Chunking semantico REALE
       setProcessingStep("Suddivisione in chunk semantici...");
       const textChunks = await createTextChunks(text);
       setChunks(textChunks);
+      console.log('✅ Chunk creati:', textChunks.length);
       
       // 3. Creazione embedding REALI
       setProcessingStep("Creazione embedding vettoriali...");
       const chunkEmbeddings = await createEmbeddings(textChunks);
       setEmbeddings(chunkEmbeddings);
+      console.log('✅ Embedding creati:', chunkEmbeddings.length);
       
       // 4. Passa al passo successivo
       setStep(1);
       setMessages([
         {
           role: "professor",
-          content: `✅ Perfetto! Ho analizzato completamente il documento "${selectedFile.name}":
+          content: `🎓 **Perfetto! Il documento è stato elaborato con successo!**
 
 📊 **Statistiche elaborazione:**
-- Testo estratto: ${Math.round(text.length / 1000)}k caratteri
-- Chunk semantici creati: ${textChunks.length}
-- Embedding vettoriali: ${chunkEmbeddings.length} × 384 dimensioni
+- **Testo estratto:** ${Math.round(text.length / 1000)}k caratteri
+- **File:** "${selectedFile.name}"
+- **Chunk semantici:** ${textChunks.length} sezioni
+- **Embedding vettoriali:** ${chunkEmbeddings.length} × 384 dimensioni
 
-🧠 **Sistema RAG attivo:**
-Il documento è stato processato con embedding ML reali. Ogni tua domanda verrà abbinata semanticamente ai contenuti più rilevanti del PDF, garantendo risposte precise e contestualizzate.
+🧠 **Sistema RAG attivato con successo:**
+Il tuo documento è ora processato e pronto per rispondere alle tue domande in modo preciso e contestualizzato.
 
-💡 **Cosa posso fare:**
+💡 **Cosa posso fare per te:**
 - Spiegare concetti specifici dal documento
-- Rispondere a domande dettagliate sui contenuti
+- Rispondere a domande dettagliate sui contenuti  
 - Fornire sintesi di sezioni particolari
 - Collegare informazioni tra diverse parti del testo
 
-Fai pure la tua prima domanda!`,
+**Fai pure la tua prima domanda sul documento!** 🎯`,
           timestamp: new Date(),
         },
       ]);
       
     } catch (error) {
       console.error("❌ Errore nell'elaborazione del file:", error);
-      alert(`Errore nell'elaborazione del PDF: ${error}.\n\nAssicurati che il PDF contenga testo leggibile e non sia protetto da password.`);
+      alert(`❌ Errore nell'elaborazione del PDF:\n\n${error}\n\nSuggerimenti:\n• Assicurati che il PDF contenga testo (non solo immagini)\n• Verifica che il file non sia protetto da password\n• Prova con un PDF diverso`);
       setFile(null);
     } finally {
       setIsProcessing(false);
@@ -150,6 +155,8 @@ Fai pure la tua prima domanda!`,
     setIsProcessing(true);
 
     try {
+      console.log('🔍 Elaborando domanda con RAG completo...');
+      
       // 1. Trova chunk REALMENTE rilevanti
       const relevantChunks = await findRelevantChunks(question, chunks, embeddings);
       
@@ -158,7 +165,7 @@ Fai pure la tua prima domanda!`,
           ...prev,
           {
             role: "professor",
-            content: "❌ Non ho trovato informazioni rilevanti nel documento per rispondere alla tua domanda. Prova a riformulare la domanda o assicurati che l'argomento sia trattato nel PDF caricato.",
+            content: "🔍 **Non ho trovato informazioni direttamente rilevanti nel documento per questa domanda.**\n\nSuggerimenti:\n• Prova a riformulare la domanda\n• Usa parole chiave più specifiche\n• Assicurati che l'argomento sia trattato nel PDF\n\nPosso comunque cercare di aiutarti con informazioni generali se vuoi riprovare! 💡",
             timestamp: new Date(),
           },
         ]);
@@ -167,16 +174,22 @@ Fai pure la tua prima domanda!`,
 
       let professorResponse = "";
       
-      // 2. Usa OpenAI se disponibile, altrimenti fallback
+      // 2. Usa OpenAI se disponibile, altrimenti fallback intelligente
       if (apiKey.trim().length > 20) {
+        console.log('🤖 Generando risposta con OpenAI GPT...');
         professorResponse = await askOpenAIPdfProfessor(apiKey, question, relevantChunks);
       } else {
-        // Fallback con estratti diretti
-        professorResponse = `📚 **Informazioni trovate nel documento:**
+        // Fallback migliorato con estratti formattati
+        console.log('📚 Modalità estratti diretti (senza GPT)');
+        professorResponse = `📚 **Informazioni trovate nel documento relativi alla tua domanda:**
 
-${relevantChunks.map((chunk, i) => `**Estratto ${i + 1}:**\n${chunk}`).join('\n\n---\n\n')}
+${relevantChunks.map((chunk, i) => `**📄 Estratto ${i + 1}:**
+${chunk.trim()}
+`).join('\n---\n\n')}
 
-💡 *Per risposte più elaborate e contestualizzate, configura la tua API Key OpenAI.*`;
+💡 *Per risposte più elaborate e contestualizzate, configura la tua API Key OpenAI nelle impostazioni.*
+
+🎯 **Vuoi approfondire qualche aspetto specifico di questi estratti?**`;
       }
 
       setMessages((prev) => [
@@ -190,7 +203,7 @@ ${relevantChunks.map((chunk, i) => `**Estratto ${i + 1}:**\n${chunk}`).join('\n\
         ...prev,
         {
           role: "professor",
-          content: `❌ Si è verificato un errore nell'elaborazione della domanda: ${error}. Riprova o verifica la tua API Key se configurata.`,
+          content: `❌ **Si è verificato un errore nell'elaborazione della domanda.**\n\nDettagli: ${error}\n\n🔄 **Cosa puoi fare:**\n• Riprova con la stessa domanda\n• Verifica la tua API Key se configurata\n• Prova a riformulare la domanda`,
           timestamp: new Date(),
         },
       ]);

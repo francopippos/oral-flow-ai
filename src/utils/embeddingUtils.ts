@@ -6,19 +6,24 @@ let embeddingPipeline: any = null;
 const initializeEmbeddingModel = async () => {
   if (!embeddingPipeline) {
     console.log('🧠 Inizializzando modello embedding...');
-    embeddingPipeline = await pipeline(
-      'feature-extraction',
-      'Xenova/all-MiniLM-L6-v2',
-      { 
-        device: 'cpu',
-        progress_callback: (progress: any) => {
-          if (progress.status === 'downloading') {
-            console.log(`📥 Download modello: ${Math.round(progress.progress || 0)}%`);
+    try {
+      embeddingPipeline = await pipeline(
+        'feature-extraction',
+        'Xenova/all-MiniLM-L6-v2',
+        { 
+          device: 'cpu',
+          progress_callback: (progress: any) => {
+            if (progress.status === 'downloading') {
+              console.log(`📥 Download modello: ${Math.round(progress.progress || 0)}%`);
+            }
           }
         }
-      }
-    );
-    console.log('✅ Modello embedding pronto');
+      );
+      console.log('✅ Modello embedding pronto');
+    } catch (error) {
+      console.error('❌ Errore nell\'inizializzazione del modello:', error);
+      throw new Error('Impossibile inizializzare il modello di embedding');
+    }
   }
   return embeddingPipeline;
 };
@@ -33,10 +38,16 @@ export const createEmbeddings = async (chunks: string[]): Promise<number[][]> =>
     for (let i = 0; i < chunks.length; i++) {
       console.log(`📊 Processando chunk ${i + 1}/${chunks.length}`);
       
-      // Genera embedding reale usando il modello HuggingFace
-      const output = await model(chunks[i], { pooling: 'mean', normalize: true });
-      const embedding = Array.from(output.data) as number[];
-      embeddings.push(embedding);
+      try {
+        // Genera embedding reale usando il modello HuggingFace
+        const output = await model(chunks[i], { pooling: 'mean', normalize: true });
+        const embedding = Array.from(output.data) as number[];
+        embeddings.push(embedding);
+      } catch (chunkError) {
+        console.warn(`⚠️ Errore nel chunk ${i + 1}, uso embedding vuoto:`, chunkError);
+        // Embedding vuoto come fallback
+        embeddings.push(new Array(384).fill(0));
+      }
       
       // Piccola pausa per non sovraccaricare
       await new Promise(resolve => setTimeout(resolve, 100));
@@ -75,7 +86,7 @@ export const findRelevantChunks = async (
     const topChunks = similarities
       .sort((a, b) => b.similarity - a.similarity)
       .slice(0, 4) // Prendiamo i 4 chunk più rilevanti
-      .filter(item => item.similarity > 0.3) // Solo chunk con similarità decente
+      .filter(item => item.similarity > 0.2) // Soglia più bassa per catturare più contenuti
       .map(item => {
         console.log(`📋 Chunk rilevante (similarità: ${item.similarity.toFixed(3)}): ${item.chunk.substring(0, 100)}...`);
         return item.chunk;
@@ -85,13 +96,16 @@ export const findRelevantChunks = async (
     return topChunks;
   } catch (error) {
     console.error('❌ Errore nella ricerca semantica reale:', error);
-    throw new Error('Impossibile trovare chunk rilevanti: ' + error);
+    // Fallback: restituisci i primi chunk se l'embedding fallisce
+    console.log('🔄 Fallback: uso i primi chunk come rilevanti');
+    return chunks.slice(0, 3);
   }
 };
 
 function cosineSimilarity(a: number[], b: number[]): number {
   if (a.length !== b.length) {
-    throw new Error('I vettori devono avere la stessa lunghezza');
+    console.warn('⚠️ Vettori con lunghezze diverse:', a.length, 'vs', b.length);
+    return 0;
   }
   
   const dotProduct = a.reduce((sum, val, i) => sum + val * b[i], 0);

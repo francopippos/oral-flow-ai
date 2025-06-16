@@ -6,11 +6,16 @@ export const extractTextFromPDF = async (file: File): Promise<string> => {
     // Importazione dinamica di pdfjs-dist
     const pdfjsLib = await import('pdfjs-dist');
     
-    // Configurazione worker con CDN affidabile
-    pdfjsLib.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjsLib.version}/build/pdf.worker.min.js`;
+    // Configurazione worker - disabilitiamo il worker per ora
+    pdfjsLib.GlobalWorkerOptions.workerSrc = null;
+    // Alternativamente, usa questa configurazione se la precedente non funziona:
+    // pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
     
     const arrayBuffer = await file.arrayBuffer();
-    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+    const pdf = await pdfjsLib.getDocument({ 
+      data: arrayBuffer,
+      verbosity: 0 // Riduci i log di debug
+    }).promise;
     
     let fullText = '';
     
@@ -42,8 +47,8 @@ export const extractTextFromPDF = async (file: File): Promise<string> => {
       .replace(/\s+/g, ' ') // Normalizza spazi
       .trim();
     
-    if (!fullText || fullText.length < 100) {
-      throw new Error('Il PDF sembra vuoto o non contiene testo estraibile');
+    if (!fullText || fullText.length < 50) {
+      throw new Error('Il PDF sembra vuoto o non contiene testo estraibile. Assicurati che non sia un PDF scannerizzato o protetto.');
     }
     
     console.log(`✅ Estratto testo dal PDF: ${fullText.length} caratteri`);
@@ -52,6 +57,14 @@ export const extractTextFromPDF = async (file: File): Promise<string> => {
     return fullText;
   } catch (error) {
     console.error('❌ Errore nell\'estrazione REALE dal PDF:', error);
-    throw new Error(`Impossibile estrarre il testo dal PDF: ${error}`);
+    
+    // Messaggi di errore più specifici
+    if (error.toString().includes('Invalid PDF')) {
+      throw new Error('Il file PDF sembra corrotto o non valido.');
+    } else if (error.toString().includes('password')) {
+      throw new Error('Il PDF è protetto da password e non può essere elaborato.');
+    } else {
+      throw new Error(`Impossibile estrarre il testo dal PDF: ${error}. Prova con un altro file PDF.`);
+    }
   }
 };
