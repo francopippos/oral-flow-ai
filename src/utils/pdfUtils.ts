@@ -1,4 +1,5 @@
 
+
 export const extractTextFromPDF = async (file: File): Promise<string> => {
   try {
     console.log('📄 Iniziando estrazione REALE dal PDF:', file.name);
@@ -6,8 +7,8 @@ export const extractTextFromPDF = async (file: File): Promise<string> => {
     // Importazione dinamica di pdfjs-dist
     const pdfjsLib = await import('pdfjs-dist');
     
-    // Configurazione worker più semplice - usa il worker integrato
-    pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js`;
+    // Configurazione worker con versione CORRETTA che matcha l'API 5.3.31
+    pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.worker.min.js`;
     
     const arrayBuffer = await file.arrayBuffer();
     const pdf = await pdfjsLib.getDocument({ 
@@ -62,10 +63,11 @@ export const extractTextFromPDF = async (file: File): Promise<string> => {
       throw new Error('Il file PDF sembra corrotto o non valido.');
     } else if (errorMessage.includes('password')) {
       throw new Error('Il PDF è protetto da password e non può essere elaborato.');
-    } else if (errorMessage.includes('worker')) {
+    } else if (errorMessage.includes('worker') || errorMessage.includes('version')) {
       throw new Error('Errore nel caricamento del sistema PDF. Riprova tra qualche secondo.');
     } else {
       throw new Error(`Impossibile estrarre il testo dal PDF: ${error}. Prova con un altro file PDF.`);
     }
   }
 };
+
