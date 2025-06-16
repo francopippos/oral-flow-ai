@@ -6,8 +6,9 @@ export const extractTextFromPDF = async (file: File): Promise<string> => {
     // Importazione dinamica di pdfjs-dist
     const pdfjsLib = await import('pdfjs-dist');
     
-    // Configurazione worker
-    pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.worker.min.js`;
+    // Configurazione worker LOCALE (non CDN)
+    const pdfjsWorker = await import('pdfjs-dist/build/pdf.worker.min.js?url');
+    pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker.default;
     
     const arrayBuffer = await file.arrayBuffer();
     const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;

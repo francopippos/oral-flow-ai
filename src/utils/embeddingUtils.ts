@@ -1,7 +1,7 @@
 
-import { pipeline, Pipeline } from '@huggingface/transformers';
+import { pipeline } from '@huggingface/transformers';
 
-let embeddingPipeline: Pipeline | null = null;
+let embeddingPipeline: any = null;
 
 const initializeEmbeddingModel = async () => {
   if (!embeddingPipeline) {
@@ -10,7 +10,7 @@ const initializeEmbeddingModel = async () => {
       'feature-extraction',
       'Xenova/all-MiniLM-L6-v2',
       { 
-        quantized: true,
+        device: 'cpu',
         progress_callback: (progress: any) => {
           if (progress.status === 'downloading') {
             console.log(`📥 Download modello: ${Math.round(progress.progress || 0)}%`);
