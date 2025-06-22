@@ -1,5 +1,4 @@
 
-
 export const extractTextFromPDF = async (file: File): Promise<string> => {
   try {
     console.log('📄 Iniziando estrazione REALE dal PDF:', file.name);
@@ -7,8 +6,8 @@ export const extractTextFromPDF = async (file: File): Promise<string> => {
     // Importazione dinamica di pdfjs-dist
     const pdfjsLib = await import('pdfjs-dist');
     
-    // Configurazione worker con versione CORRETTA che matcha l'API 5.3.31
-    pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.worker.min.js`;
+    // Configurazione worker con versione CORRETTA per pdfjs-dist 5.3.31
+    pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/5.3.31/pdf.worker.min.js`;
     
     const arrayBuffer = await file.arrayBuffer();
     const pdf = await pdfjsLib.getDocument({ 
@@ -70,4 +69,3 @@ export const extractTextFromPDF = async (file: File): Promise<string> => {
     }
   }
 };
-

@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -22,24 +21,24 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
 
   const professorModes = {
     severo: {
-      name: t('demo.severe'),
-      description: t('demo.severeDesc'),
+      name: "Professore Severo",
+      description: "Valutazione rigorosa con domande precise e feedback diretto",
       color: "text-red-700",
       bgColor: "bg-red-50",
       question: "Dimmi ESATTAMENTE quando inizia il Rinascimento e perché proprio in quel momento storico.",
       feedback: "La tua risposta è imprecisa. Il Rinascimento non ha una data di inizio univoca. Devi essere più specifico sui fattori scatenanti."
     },
     comprensivo: {
-      name: t('demo.understanding'),
-      description: t('demo.understandingDesc'),
+      name: "Professore Comprensivo", 
+      description: "Approccio paziente con feedback costruttivo e incoraggiante",
       color: "text-green-700",
       bgColor: "bg-green-50",
       question: "Raccontami del Rinascimento, prenditi il tempo che ti serve per organizzare i pensieri.",
       feedback: "Molto bene! Hai colto i punti principali. Potresti approfondire il ruolo dell'umanesimo? L'AI ha notato che hai usato terminologia appropriata e la tua esposizione è stata chiara e ben strutturata."
     },
     tecnico: {
-      name: t('demo.technical'),
-      description: t('demo.technicalDesc'),
+      name: "Professore Tecnico",
+      description: "Focus su terminologia specialistica e approccio analitico avanzato", 
       color: "text-blue-700", 
       bgColor: "bg-blue-50",
       question: "Analizza la correlazione tra il fenomeno dell'umanesimo quattrocentesco e le trasformazioni socio-economiche dell'epoca.",
@@ -49,8 +48,8 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
 
   const demoSteps = [
     {
-      title: t('demo.uploadMaterials'),
-      subtitle: t('demo.uploadSubtitle'),
+      title: "Carica i tuoi materiali",
+      subtitle: "L'AI analizzerà automaticamente i contenuti per personalizzare l'esperienza",
       content: (
         <div className="space-y-4">
           <div className="border-2 border-dashed border-oralmind-300 rounded-lg p-8 text-center">
@@ -93,12 +92,12 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
       )
     },
     {
-      title: t('demo.aiConfiguration'),
-      subtitle: t('demo.aiSubtitle'),
+      title: "Configurazione AI Personalizzata",
+      subtitle: "Scegli lo stile di insegnamento più adatto al tuo livello e obiettivi",
       content: (
         <div className="space-y-6">
           <div className="text-center">
-            <h4 className="font-semibold mb-4">{t('demo.professorModes')}</h4>
+            <h4 className="font-semibold mb-4">Modalità Professore AI</h4>
             <div className="grid grid-cols-1 gap-3">
               {Object.entries(professorModes).map(([key, mode]) => (
                 <button
@@ -143,8 +142,8 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
       )
     },
     {
-      title: t('demo.simulation'),
-      subtitle: `Conversazione interattiva con Professor ${professorModes[professorMode as keyof typeof professorModes].name}`,
+      title: "Simulazione Conversazione",
+      subtitle: `Conversazione interattiva con ${professorModes[professorMode as keyof typeof professorModes].name}`,
       content: (
         <div className="space-y-4">
           <div className="flex justify-between items-center mb-4">
@@ -246,8 +245,8 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
       )
     },
     {
-      title: t('demo.feedback'),
-      subtitle: `Report completo di valutazione da Professor ${professorModes[professorMode as keyof typeof professorModes].name}`,
+      title: "Feedback e Valutazione",
+      subtitle: `Report completo di valutazione da ${professorModes[professorMode as keyof typeof professorModes].name}`,
       content: (
         <div className="space-y-4">
           <div className="bg-success-50 border border-success-200 rounded-lg p-4">
@@ -421,7 +420,7 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
       <DialogContent className="max-w-4xl max-h-[85vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold gradient-text">
-            {t('demo.title')} - Esperienza AI Completa
+            Demo Completa - Esperienza AI Avanzata
           </DialogTitle>
         </DialogHeader>
         
@@ -469,7 +468,7 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
               disabled={step === 0}
               className="flex items-center space-x-2"
             >
-              <span>← {t('demo.prev')}</span>
+              <span>← Precedente</span>
             </Button>
             
             <div className="text-center">
@@ -483,11 +482,11 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
             <div className="space-x-2">
               {step < demoSteps.length - 1 ? (
                 <Button onClick={handleNext} className="flex items-center space-x-2">
-                  <span>{t('demo.next')} →</span>
+                  <span>Successivo →</span>
                 </Button>
               ) : (
                 <Button onClick={handleClose} className="bg-oralmind-500 hover:bg-oralmind-600 flex items-center space-x-2">
-                  <span>{t('demo.start')}</span>
+                  <span>Inizia Ora</span>
                 </Button>
               )}
             </div>
