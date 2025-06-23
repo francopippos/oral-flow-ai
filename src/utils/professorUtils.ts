@@ -6,70 +6,66 @@ export const askProfessor = async (
   allEmbeddings?: number[][]
 ): Promise<string> => {
   try {
-    console.log('👨‍🏫 [AI PROFESSOR] Matching massimo SEMPRE attivo. Chunks rilevanti:', relevantChunks.length);
+    console.log('👨‍🏫 [PROFESSORE UNIVERSITARIO] Analizzando domanda:', question.substring(0, 100));
+    console.log(`📚 Sezioni rilevanti trovate: ${relevantChunks.length}`);
 
-    // Matching severo SEMPRE
-    if (allChunks && allEmbeddings) {
-      // Ricrea embed domanda come nel sistema di matching
-      const generateDeterministicEmbedding = (text: string): number[] => {
-        const embedding = new Array(1536).fill(0);
-        const words = text.toLowerCase().split(/\s+/);
-        words.forEach((word, index) => {
-          let hash = 0;
-          for (let i = 0; i < word.length; i++) {
-            const char = word.charCodeAt(i);
-            hash = ((hash << 5) - hash) + char;
-            hash = hash & hash;
-          }
-          const pos = Math.abs(hash) % 1536;
-          embedding[pos] += 1 / (index + 1);
-        });
-        const magnitude = Math.sqrt(embedding.reduce((sum, val) => sum + val * val, 0));
-        return embedding.map(val => magnitude > 0 ? val / magnitude : 0);
-      };
+    if (relevantChunks.length === 0) {
+      return `🎓 **Professore:** Non ho individuato sezioni specifiche del documento che trattino direttamente questo argomento.
 
-      const cosineSimilarity = (a: number[], b: number[]): number => {
-        const dotProduct = a.reduce((sum, val, i) => sum + val * b[i], 0);
-        const magnitudeA = Math.sqrt(a.reduce((sum, val) => sum + val * val, 0));
-        const magnitudeB = Math.sqrt(b.reduce((sum, val) => sum + val * val, 0));
-        return dotProduct / (magnitudeA * magnitudeB);
-      };
+**Suggerimenti:**
+• Riprova con terminologia più specifica presente nel documento
+• Verifica che l'argomento sia effettivamente trattato nel materiale caricato
+• Considera di riformulare la domanda in modo più preciso
 
-      // Compute question embedding & match
-      const questionEmbedding = generateDeterministicEmbedding(question);
-      const similars = allEmbeddings.map((emb, idx) => ({
-        similarity: cosineSimilarity(questionEmbedding, emb),
-        chunk: allChunks[idx]
-      }));
-
-      similars.sort((a, b) => b.similarity - a.similarity);
-
-      // Solo chunk SEVERAMENTE simili
-      const STRONG_THRESHOLD = 0.7;
-      const bestMatches = similars.filter(s => s.similarity >= STRONG_THRESHOLD);
-
-      if (bestMatches.length === 0) {
-        console.log('[AI PROFESSOR] Nessun chunk supera la soglia di severità.', similars.slice(0, 5).map(s => s.similarity));
-        return `
-Non ho trovato nessuna informazione chiaramente collegata alla tua domanda nel materiale che mi hai fornito. 
-Prova a riformulare la domanda o ad arricchire il documento con parti più dettagliate sull'argomento.
-        `.trim();
-      }
-
-      // SOLO estratti nettamente in topic
-      let txt = `Risposta basata SOLO su informazioni trovate nel tuo PDF (matching ≥0.7). Estratti pertinenti:\n\n`;
-      bestMatches.forEach((match, i) => {
-        txt += `Estratto ${i + 1} (similarità ${match.similarity.toFixed(2)}):\n"${match.chunk.trim().slice(0, 420)}"${match.chunk.length > 430 ? '...' : ''}\n\n`;
-      });
-      txt += `\nVuoi approfondire uno di questi punti? Ricorda: rispondo soltanto con materiale tratto dal tuo documento.`;
-      return txt;
+Sono qui per aiutarti a comprendere al meglio il contenuto del documento. Prova con una nuova domanda! 📖`;
     }
 
-    // Fallback se proprio manca tutto
-    return `Non sono riuscito a trovare nel documento informazioni abbastanza collegate alla domanda. Per favore, prova a specificare meglio la richiesta o fornisci un materiale più dettagliato.`;
+    // Analisi e sintesi accademica del contenuto rilevante
+    let professorResponse = `🎓 **Professore Universitario - Risposta basata sul documento:**\n\n`;
+    
+    // Introduzione contestuale
+    professorResponse += `In base all'analisi del documento che hai caricato, posso fornirti le seguenti informazioni specifiche:\n\n`;
+    
+    // Sezioni rilevanti con analisi
+    relevantChunks.forEach((chunk, index) => {
+      const chunkPreview = chunk.length > 400 ? chunk.substring(0, 400) + '...' : chunk;
+      const cleanChunk = chunkPreview
+        .replace(/--- Pagina \d+ ---/g, '')
+        .replace(/\n+/g, ' ')
+        .trim();
+      
+      professorResponse += `**📖 Sezione ${index + 1}${relevantChunks.length > 1 ? ` di ${relevantChunks.length}` : ''}:**\n`;
+      professorResponse += `"${cleanChunk}"\n\n`;
+    });
+    
+    // Analisi professionale finale
+    if (relevantChunks.length > 1) {
+      professorResponse += `**🧠 Sintesi accademica:**\n`;
+      professorResponse += `Le sezioni estratte forniscono una visione ${relevantChunks.length > 2 ? 'multidimensionale' : 'bidirezionale'} dell'argomento richiesto. `;
+      professorResponse += `Il materiale evidenzia aspetti interconnessi che meritano approfondimento.\n\n`;
+    }
+    
+    // Invito all'approfondimento
+    professorResponse += `**💡 Domande di approfondimento suggerite:**\n`;
+    professorResponse += `• Desideri che elabori uno degli aspetti specifici emersi?\n`;
+    professorResponse += `• Ci sono collegamenti con altre parti del documento che ti interessano?\n`;
+    professorResponse += `• Vuoi che analizzi più nel dettaglio qualche concetto particolare?\n\n`;
+    
+    professorResponse += `*Come professore, sono qui per guidarti nella comprensione approfondita del materiale. Ogni domanda è un'opportunità di apprendimento!* 🎯`;
 
+    console.log('✅ Risposta professionale formulata');
+    return professorResponse;
+    
   } catch (error) {
-    console.error('❌ Errore Professore AI:', error);
-    return "C'è stato un problema tecnico nell'elaborazione della domanda. Puoi riprovare o ricaricare il documento?";
+    console.error('❌ Errore nel sistema professionale:', error);
+    
+    return `🎓 **Professore:** Mi dispiace, si è verificato un problema tecnico nell'analisi del documento.
+
+**Cosa puoi fare:**
+• Riprova con la stessa domanda
+• Verifica che il documento sia stato caricato correttamente
+• Prova con una domanda diversa
+
+Il sistema di analisi è progettato per essere robusto, quindi questo problema dovrebbe essere temporaneo. 🔧`;
   }
 };
