@@ -1,105 +1,85 @@
 
 export const extractTextFromPDF = async (file: File): Promise<string> => {
   try {
-    console.log('📄 Iniziando estrazione REALE dal PDF:', file.name, `(${Math.round(file.size / 1024 / 1024 * 100) / 100} MB)`);
+    console.log('📄 Iniziando estrazione PDF:', file.name, `(${Math.round(file.size / 1024 / 1024 * 100) / 100} MB)`);
     
-    // Importazione dinamica di pdfjs-dist con configurazione robusta
+    // Importazione dinamica di pdfjs-dist
     const pdfjsLib = await import('pdfjs-dist');
     
-    // Configurazione worker più stabile - prova locale prima, poi CDN
-    const workerConfigs = [
-      // Worker locale (più affidabile)
-      {
-        src: new URL('pdfjs-dist/build/pdf.worker.min.js', import.meta.url).href,
-        name: 'locale'
-      },
-      // CDN stabile come fallback
-      {
-        src: 'https://unpkg.com/pdfjs-dist@4.4.168/build/pdf.worker.min.js',
-        name: 'unpkg'
-      },
-      {
-        src: 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.worker.min.js',
-        name: 'cdnjs'
-      }
+    // Configurazione worker semplificata e robusta per Lovable
+    const workerSources = [
+      'https://unpkg.com/pdfjs-dist@4.4.168/build/pdf.worker.min.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.worker.min.js',
+      'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.4.168/build/pdf.worker.min.js'
     ];
     
     let workerConfigured = false;
     
-    for (const config of workerConfigs) {
+    for (const workerSrc of workerSources) {
       try {
-        console.log(`🔧 Configurando worker PDF.js (${config.name}):`, config.src);
-        pdfjsLib.GlobalWorkerOptions.workerSrc = config.src;
-        
-        // Test veloce per verificare il worker
-        const testArray = new Uint8Array([37, 80, 68, 70]); // Header PDF
-        try {
-          await pdfjsLib.getDocument({ data: testArray }).promise;
-        } catch (e) {
-          // Errore atteso per PDF incompleto, ma worker è OK
-        }
-        
-        console.log(`✅ Worker PDF.js configurato (${config.name})`);
+        console.log(`🔧 Configurando worker PDF.js:`, workerSrc);
+        pdfjsLib.GlobalWorkerOptions.workerSrc = workerSrc;
         workerConfigured = true;
+        console.log(`✅ Worker PDF.js configurato`);
         break;
       } catch (error) {
-        console.warn(`⚠️ Worker ${config.name} fallito:`, error);
+        console.warn(`⚠️ Worker fallito:`, error);
+        continue;
       }
     }
     
     if (!workerConfigured) {
-      throw new Error('❌ Impossibile configurare il worker PDF.js. Problemi di connessione o compatibilità browser.');
+      console.warn('⚠️ Worker non configurato, uso fallback');
+      pdfjsLib.GlobalWorkerOptions.workerSrc = workerSources[0];
     }
     
     // Conversione file in ArrayBuffer
     const arrayBuffer = await file.arrayBuffer();
-    console.log(`📊 File convertito in ArrayBuffer: ${arrayBuffer.byteLength} bytes`);
+    console.log(`📊 File convertito: ${arrayBuffer.byteLength} bytes`);
     
-    // Caricamento PDF con configurazione ottimizzata per documenti universitari
+    // Caricamento PDF con configurazione semplificata
     const loadingTask = pdfjsLib.getDocument({
       data: arrayBuffer,
-      verbosity: 0, // Silenzioso
-      isEvalSupported: false, // Sicurezza
-      disableFontFace: false, // Mantieni font per formule/simboli
+      verbosity: 0,
+      isEvalSupported: false,
+      disableFontFace: false,
       useSystemFonts: true,
-      stopAtErrors: false, // Continua anche con errori su alcune pagine
-      maxImageSize: 50 * 1024 * 1024, // 50MB per immagini accademiche grandi
-      cMapPacked: true,
-      standardFontDataUrl: undefined
+      stopAtErrors: false,
+      maxImageSize: 50 * 1024 * 1024,
+      cMapPacked: true
     });
     
     const pdf = await loadingTask.promise;
-    console.log(`📑 PDF caricato con successo: ${pdf.numPages} pagine totali`);
+    console.log(`📑 PDF caricato: ${pdf.numPages} pagine`);
     
-    // Processo di estrazione avanzato per documenti universitari
+    // Estrazione testo ottimizzata
     const extractedPages: Array<{pageNum: number, text: string, wordCount: number}> = [];
-    const maxPagesToProcess = Math.min(pdf.numPages, 100); // Limite ragionevole
+    const maxPages = Math.min(pdf.numPages, 100);
     
-    console.log(`🔄 Elaborazione di ${maxPagesToProcess} pagine...`);
+    console.log(`🔄 Elaborazione ${maxPages} pagine...`);
     
-    // Elaborazione sequenziale per stabilità (evita sovraccarico)
-    for (let pageNum = 1; pageNum <= maxPagesToProcess; pageNum++) {
+    for (let pageNum = 1; pageNum <= maxPages; pageNum++) {
       try {
-        console.log(`📄 Elaborando pagina ${pageNum}/${maxPagesToProcess}...`);
+        console.log(`📄 Pagina ${pageNum}/${maxPages}...`);
         
         const page = await pdf.getPage(pageNum);
         const textContent = await page.getTextContent({
           includeMarkedContent: false
         });
         
-        // Estrazione e pulizia intelligente del testo
+        // Estrazione e pulizia testo
         const rawText = textContent.items
           .filter((item: any) => item.str && typeof item.str === 'string')
           .map((item: any) => item.str.trim())
           .filter(text => text.length > 0)
           .join(' ');
         
-        // Pulizia avanzata per testi accademici
+        // Pulizia per testi accademici
         const cleanedText = rawText
-          .replace(/\s+/g, ' ') // Normalizza spazi
-          .replace(/([.!?])\s*([A-Z])/g, '$1\n\n$2') // Separa frasi
-          .replace(/^\d+\s*$|^Pagina\s+\d+|^Page\s+\d+/gim, '') // Rimuovi numeri pagina
-          .replace(/^(Capitolo|Chapter|Sezione|Section)\s+\d+/gim, '\n\n$&') // Evidenzia capitoli
+          .replace(/\s+/g, ' ')
+          .replace(/([.!?])\s*([A-Z])/g, '$1\n\n$2')
+          .replace(/^\d+\s*$|^Pagina\s+\d+|^Page\s+\d+/gim, '')
+          .replace(/^(Capitolo|Chapter|Sezione|Section)\s+\d+/gim, '\n\n$&')
           .trim();
         
         const wordCount = cleanedText.split(/\s+/).length;
@@ -110,98 +90,85 @@ export const extractTextFromPDF = async (file: File): Promise<string> => {
             text: cleanedText,
             wordCount
           });
-          console.log(`✅ Pagina ${pageNum}: ${wordCount} parole estratte`);
+          console.log(`✅ Pagina ${pageNum}: ${wordCount} parole`);
         } else {
-          console.log(`⚠️ Pagina ${pageNum}: principalmente grafica (${wordCount} parole)`);
-          if (cleanedText.length > 0) {
-            extractedPages.push({
-              pageNum,
-              text: `[Pagina ${pageNum}: Contenuto prevalentemente grafico/visuale]`,
-              wordCount: 0
-            });
-          }
+          console.log(`⚠️ Pagina ${pageNum}: principalmente grafica`);
+          extractedPages.push({
+            pageNum,
+            text: `[Pagina ${pageNum}: Contenuto prevalentemente grafico/visuale]`,
+            wordCount: 0
+          });
         }
         
-        // Pausa tra pagine per stabilità
-        if (pageNum < maxPagesToProcess) {
-          await new Promise(resolve => setTimeout(resolve, 50));
+        // Pausa per stabilità
+        if (pageNum < maxPages) {
+          await new Promise(resolve => setTimeout(resolve, 20));
         }
         
       } catch (pageError) {
         console.error(`❌ Errore pagina ${pageNum}:`, pageError);
         extractedPages.push({
           pageNum,
-          text: `[Pagina ${pageNum}: Errore nell'estrazione - possibile contenuto complesso o danneggiato]`,
+          text: `[Pagina ${pageNum}: Errore nell'estrazione]`,
           wordCount: 0
         });
       }
     }
     
-    // Assemblaggio finale ottimizzato per qualità accademica
+    // Assemblaggio finale
     const documentSections = extractedPages.map(page => {
-      if (page.wordCount > 0) {
-        return `=== PAGINA ${page.pageNum} ===\n${page.text}`;
-      } else {
-        return `=== PAGINA ${page.pageNum} ===\n${page.text}`;
-      }
+      return `=== PAGINA ${page.pageNum} ===\n${page.text}`;
     });
     
     let finalText = documentSections.join('\n\n');
     
-    // Pulizia finale e ottimizzazioni
+    // Pulizia finale
     finalText = finalText
-      .replace(/\n{3,}/g, '\n\n') // Normalizza interruzioni
-      .replace(/\s+([.!?])/g, '$1') // Correggi punteggiatura
+      .replace(/\n{3,}/g, '\n\n')
+      .replace(/\s+([.!?])/g, '$1')
       .trim();
     
-    // Statistiche qualitative per valutazione
+    // Statistiche
     const totalWords = finalText.split(/\s+/).length;
     const meaningfulPages = extractedPages.filter(p => p.wordCount >= 10).length;
     const textualContent = finalText.replace(/\[Pagina \d+:.*?\]/g, '').trim();
     
-    console.log(`📊 STATISTICHE ESTRAZIONE:`);
+    console.log(`📊 STATISTICHE:`);
     console.log(`   • Pagine elaborate: ${extractedPages.length}`);
     console.log(`   • Pagine con testo: ${meaningfulPages}`);
     console.log(`   • Parole totali: ${totalWords}`);
     console.log(`   • Caratteri: ${finalText.length}`);
     
-    // Validazione qualitativa
-    if (textualContent.length < 500) {
-      throw new Error(`⚠️ PDF principalmente composto da immagini o grafici. Estratte solo ${totalWords} parole significative. Per un'esperienza ottimale, usa PDF con più contenuto testuale.`);
+    // Validazione
+    if (textualContent.length < 200) {
+      console.warn(`⚠️ Poco testo estratto (${totalWords} parole), ma procediamo...`);
+      finalText += '\n\n[NOTA: Documento con contenuto principalmente grafico. Analisi basata su testo limitato.]';
     }
     
-    if (meaningfulPages < 2) {
-      console.warn('⚠️ Poche pagine testuali, ma procediamo...');
-      finalText += '\n\n[NOTA: Questo documento contiene prevalentemente contenuto grafico. L\'analisi si basa sul testo limitato disponibile.]';
-    }
-    
-    console.log('✅ Estrazione PDF completata con successo');
-    console.log(`📋 Anteprima: "${textualContent.substring(0, 200)}..."`);
+    console.log('✅ Estrazione PDF completata');
+    console.log(`📋 Anteprima: "${textualContent.substring(0, 150)}..."`);
     
     return finalText;
     
   } catch (error) {
-    console.error('❌ ERRORE CRITICO nell\'estrazione PDF:', error);
+    console.error('❌ ERRORE estrazione PDF:', error);
     
-    // Gestione errori specifica e istruzioni chiare
+    // Gestione errori semplificata
     const errorStr = error.toString().toLowerCase();
-    
-    if (errorStr.includes('worker') || errorStr.includes('fetch')) {
-      throw new Error('🔧 Problema tecnico con il sistema PDF. Verifica la connessione internet e riprova. Se persiste, il PDF potrebbe avere una struttura non standard.');
-    }
     
     if (errorStr.includes('password') || errorStr.includes('encrypted')) {
       throw new Error('🔒 PDF protetto da password. Rimuovi la protezione e riprova.');
     }
     
     if (errorStr.includes('corrupt') || errorStr.includes('invalid')) {
-      throw new Error('📄 File PDF danneggiato o non valido. Prova con un altro documento.');
+      throw new Error('📄 File PDF danneggiato. Prova con un documento diverso.');
     }
     
-    if (errorStr.includes('principalmente composto')) {
-      throw error; // Rilanciare errore specifico per PDF grafici
+    if (file.size > 50 * 1024 * 1024) {
+      throw new Error('📏 File troppo grande (>50MB). Usa un PDF più piccolo.');
     }
     
-    throw new Error(`💥 Errore nell'elaborazione: ${error.message || error}. Verifica che il file sia un PDF valido e accessibile.`);
+    // Errore generico con suggerimenti
+    throw new Error(`💥 Impossibile elaborare il PDF. Suggerimenti:\n• Verifica che sia un PDF valido\n• Prova con un file diverso\n• Controlla la connessione internet\n\nDettagli: ${error.message || error}`);
   }
 };
