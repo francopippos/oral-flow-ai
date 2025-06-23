@@ -16,13 +16,12 @@ export const extractTextFromPDF = async (file: File): Promise<string> => {
     
     const arrayBuffer = await file.arrayBuffer();
     
-    // Configurazione per PDF complessi con immagini
+    // Configurazione per PDF complessi con immagini - usando solo proprietà valide
     const loadingTask = pdfjsLib.getDocument({ 
       data: arrayBuffer,
       verbosity: 0,
       disableFontFace: false, // Mantieni font per testo migliore
       isEvalSupported: false, // Sicurezza
-      disableCreateObjectURL: false,
       useSystemFonts: true, // Usa font di sistema per fallback
       stopAtErrors: false, // Non fermarsi agli errori di singole pagine
       maxImageSize: 16777216, // 16MB max per immagini
@@ -41,9 +40,9 @@ export const extractTextFromPDF = async (file: File): Promise<string> => {
       
       try {
         const page = await pdf.getPage(i);
+        // Usando solo proprietà valide per getTextContent
         const textContent = await page.getTextContent({
-          normalizeWhitespace: true,
-          disableCombineTextItems: false
+          includeMarkedContent: false
         });
         
         // Estrai testo anche da elementi complessi
