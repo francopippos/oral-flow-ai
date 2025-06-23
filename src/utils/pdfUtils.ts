@@ -1,4 +1,3 @@
-
 export const extractTextFromPDF = async (file: File): Promise<string> => {
   try {
     console.log('📄 Iniziando estrazione REALE dal PDF:', file.name);
@@ -70,8 +69,7 @@ export const extractTextFromPDF = async (file: File): Promise<string> => {
         pdf.getPage(i).then(async (page) => {
           try {
             const textContent = await page.getTextContent({
-              includeMarkedContent: false,
-              disableCombineTextItems: false
+              includeMarkedContent: false
             });
             
             const pageText = textContent.items
