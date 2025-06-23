@@ -6,113 +6,153 @@ export const extractTextFromPDF = async (file: File): Promise<string> => {
     // Importazione dinamica di pdfjs-dist
     const pdfjsLib = await import('pdfjs-dist');
     
-    // Configurazione worker - usa versione locale se CDN fallisce
-    try {
-      pdfjsLib.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@5.3.31/build/pdf.worker.min.js`;
-    } catch {
-      // Fallback per worker locale
-      pdfjsLib.GlobalWorkerOptions.workerSrc = '/node_modules/pdfjs-dist/build/pdf.worker.min.js';
+    // Configurazione worker più robusta con multiple fallback
+    const workerSources = [
+      // CDN principale
+      `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.worker.min.js`,
+      // CDN alternativo
+      `https://unpkg.com/pdfjs-dist@4.4.168/build/pdf.worker.min.js`,
+      // Versione locale come ultimo fallback
+      `/node_modules/pdfjs-dist/build/pdf.worker.min.js`
+    ];
+    
+    let workerConfigured = false;
+    for (const workerSrc of workerSources) {
+      try {
+        pdfjsLib.GlobalWorkerOptions.workerSrc = workerSrc;
+        console.log('🔧 Tentativo configurazione worker:', workerSrc);
+        
+        // Test rapido per verificare se il worker funziona
+        const testBuffer = new ArrayBuffer(8);
+        await pdfjsLib.getDocument({ data: testBuffer }).promise.catch(() => {
+          // Errore atteso per buffer vuoto, ma significa che il worker è caricato
+        });
+        
+        workerConfigured = true;
+        console.log('✅ Worker configurato con successo:', workerSrc);
+        break;
+      } catch (error) {
+        console.warn('⚠️ Worker fallito:', workerSrc, error);
+        continue;
+      }
+    }
+    
+    if (!workerConfigured) {
+      throw new Error('Impossibile configurare il worker PDF. Verifica la connessione internet.');
     }
     
     const arrayBuffer = await file.arrayBuffer();
     
-    // Configurazione per PDF complessi con immagini - usando solo proprietà valide
+    // Configurazione ottimizzata per PDF complessi
     const loadingTask = pdfjsLib.getDocument({ 
       data: arrayBuffer,
-      verbosity: 0,
-      disableFontFace: false, // Mantieni font per testo migliore
-      isEvalSupported: false, // Sicurezza
-      useSystemFonts: true, // Usa font di sistema per fallback
-      stopAtErrors: false, // Non fermarsi agli errori di singole pagine
-      maxImageSize: 16777216, // 16MB max per immagini
-      cMapPacked: true
+      verbosity: 0, // Riduci log
+      disableFontFace: false,
+      isEvalSupported: false,
+      useSystemFonts: true,
+      stopAtErrors: false,
+      maxImageSize: 32 * 1024 * 1024, // 32MB per immagini grandi
+      cMapPacked: true,
+      standardFontDataUrl: undefined // Evita caricamenti esterni aggiuntivi
     });
     
     const pdf = await loadingTask.promise;
+    console.log(`📑 PDF caricato: ${pdf.numPages} pagine`);
     
     let fullText = '';
-    let extractedPages = 0;
+    let successfulPages = 0;
+    const pageContents: string[] = [];
     
-    console.log(`📑 Processando ${pdf.numPages} pagine (con possibili immagini/grafici)...`);
-    
-    for (let i = 1; i <= pdf.numPages; i++) {
-      console.log(`📄 Estrazione pagina ${i}/${pdf.numPages}`);
-      
-      try {
-        const page = await pdf.getPage(i);
-        // Usando solo proprietà valide per getTextContent
-        const textContent = await page.getTextContent({
-          includeMarkedContent: false
-        });
-        
-        // Estrai testo anche da elementi complessi
-        const pageText = textContent.items
-          .map((item: any) => {
-            // Gestisci diversi tipi di elementi di testo
-            if (item.str && typeof item.str === 'string') {
-              return item.str.trim();
-            }
-            return '';
-          })
-          .filter(text => text.length > 0) // Rimuovi stringhe vuote
-          .join(' ')
-          .replace(/\s+/g, ' ') // Normalizza spazi multipli
-          .trim();
-        
-        if (pageText && pageText.length > 3) { // Almeno qualche carattere significativo
-          fullText += pageText + '\n\n';
-          extractedPages++;
-        } else {
-          console.log(`⚠️ Pagina ${i} sembra contenere solo immagini/grafici`);
-          // Aggiungi segnaposto per pagine con solo immagini
-          fullText += `[Pagina ${i}: Contenuto grafico/immagini]\n\n`;
-        }
-        
-      } catch (pageError) {
-        console.warn(`⚠️ Errore nella pagina ${i}:`, pageError);
-        fullText += `[Pagina ${i}: Errore nell'estrazione - possibile contenuto grafico]\n\n`;
-      }
+    // Elabora tutte le pagine in parallelo per velocità
+    const pagePromises = [];
+    for (let i = 1; i <= Math.min(pdf.numPages, 50); i++) { // Limite a 50 pagine per performance
+      pagePromises.push(
+        pdf.getPage(i).then(async (page) => {
+          try {
+            const textContent = await page.getTextContent({
+              includeMarkedContent: false,
+              disableCombineTextItems: false
+            });
+            
+            const pageText = textContent.items
+              .map((item: any) => {
+                if (item.str && typeof item.str === 'string') {
+                  return item.str.trim();
+                }
+                return '';
+              })
+              .filter(text => text.length > 0)
+              .join(' ')
+              .replace(/\s+/g, ' ')
+              .trim();
+            
+            return { pageNum: i, text: pageText, success: true };
+          } catch (error) {
+            console.warn(`⚠️ Errore pagina ${i}:`, error);
+            return { pageNum: i, text: `[Pagina ${i}: Contenuto non testuale/grafico]`, success: false };
+          }
+        }).catch((error) => {
+          console.warn(`❌ Impossibile caricare pagina ${i}:`, error);
+          return { pageNum: i, text: `[Pagina ${i}: Errore di caricamento]`, success: false };
+        })
+      );
     }
+    
+    const results = await Promise.all(pagePromises);
+    
+    // Ordina i risultati per numero di pagina
+    results.sort((a, b) => a.pageNum - b.pageNum);
+    
+    // Costruisci il testo finale
+    results.forEach((result) => {
+      if (result.text && result.text.length > 10) {
+        pageContents.push(`--- PAGINA ${result.pageNum} ---\n${result.text}`);
+        if (result.success) successfulPages++;
+      } else {
+        pageContents.push(`--- PAGINA ${result.pageNum} ---\n[Pagina contenente principalmente elementi grafici]`);
+      }
+    });
+    
+    fullText = pageContents.join('\n\n');
     
     // Pulizia finale del testo
     fullText = fullText
-      .replace(/\n{3,}/g, '\n\n') // Max 2 newline consecutive
-      .replace(/\s+/g, ' ') // Normalizza tutti gli spazi
+      .replace(/\n{3,}/g, '\n\n')
+      .replace(/\s+/g, ' ')
       .trim();
     
-    // Verifica che abbiamo estratto almeno qualcosa di utile
+    // Verifica qualità dell'estrazione
     const meaningfulText = fullText.replace(/\[Pagina \d+:.*?\]/g, '').trim();
     
-    if (!meaningfulText || meaningfulText.length < 50) {
-      // Se abbiamo poco testo, potrebbe essere un PDF prevalentemente grafico
-      if (extractedPages === 0) {
-        throw new Error('Il PDF sembra essere composto principalmente da immagini scansionate. Per PDF di questo tipo, è necessario un sistema OCR più avanzato.');
+    if (meaningfulText.length < 100) {
+      if (successfulPages === 0) {
+        throw new Error('Il PDF sembra essere composto principalmente da immagini scansionate. Prova con un PDF che contiene più testo selezionabile.');
       } else {
-        console.log('⚠️ PDF con poco testo ma alcune pagine estratte');
-        fullText = meaningfulText + '\n\n[NOTA: Questo PDF contiene molti elementi grafici/immagini che non possono essere elaborati come testo]';
+        fullText += '\n\n[NOTA: Questo PDF contiene molti elementi grafici. Il testo estratto potrebbe essere limitato.]';
       }
     }
     
-    console.log(`✅ Estratto testo da ${extractedPages}/${pdf.numPages} pagine: ${fullText.length} caratteri`);
-    console.log('📋 Anteprima testo:', fullText.substring(0, 300) + '...');
+    console.log(`✅ Estrazione completata: ${successfulPages}/${results.length} pagine con testo`);
+    console.log(`📊 Caratteri estratti: ${fullText.length}`);
+    console.log('📋 Anteprima:', fullText.substring(0, 200) + '...');
     
     return fullText;
     
   } catch (error) {
-    console.error('❌ Errore nell\'estrazione REALE dal PDF:', error);
+    console.error('❌ Errore nell\'estrazione dal PDF:', error);
     
-    const errorMessage = error.toString();
+    const errorMessage = error.toString().toLowerCase();
     
-    if (errorMessage.includes('Invalid PDF')) {
-      throw new Error('Il file PDF risulta corrotto o non è un PDF valido. Prova con un altro file.');
+    if (errorMessage.includes('worker') || errorMessage.includes('fetch')) {
+      throw new Error('Errore nel sistema di elaborazione PDF. Riprova tra qualche secondo o verifica la connessione internet.');
+    } else if (errorMessage.includes('invalid pdf') || errorMessage.includes('corrupted')) {
+      throw new Error('Il file PDF risulta danneggiato o non valido. Prova con un altro file PDF.');
     } else if (errorMessage.includes('password')) {
       throw new Error('Il PDF è protetto da password. Rimuovi la protezione e riprova.');
-    } else if (errorMessage.includes('worker') || errorMessage.includes('fetch')) {
-      throw new Error('Errore di connessione nel caricamento del sistema PDF. Verifica la connessione internet e riprova.');
-    } else if (errorMessage.includes('scansionate') || errorMessage.includes('OCR')) {
-      throw new Error('Questo PDF è composto principalmente da immagini scansionate. Il sistema attuale funziona meglio con PDF che contengono testo selezionabile.');
+    } else if (errorMessage.includes('scansionate') || errorMessage.includes('immagini')) {
+      throw new Error('Questo PDF è principalmente composto da immagini. Il sistema attuale funziona meglio con PDF contenenti testo selezionabile.');
     } else {
-      throw new Error(`Errore nell'elaborazione del PDF: ${error.message || error}. Se il problema persiste, prova con un PDF diverso.`);
+      throw new Error(`Errore nell'elaborazione del PDF: ${error.message || error}. Prova con un file diverso o riprova tra qualche momento.`);
     }
   }
 };

@@ -6,66 +6,84 @@ export const createTextChunks = async (text: string): Promise<string[]> => {
     console.log('🧩 Iniziando chunking SEMANTICO del testo...');
     console.log(`📊 Testo totale: ${text.length} caratteri`);
     
-    // Pre-processing per PDF con elementi grafici
+    if (text.length < 100) {
+      console.log('⚠️ Testo troppo corto per chunking');
+      return [text];
+    }
+    
+    // Pre-processing per PDF con contenuto misto
     let processedText = text
-      .replace(/\[Pagina \d+: Contenuto grafico\/immagini\]/g, '') // Rimuovi segnaposti grafici vuoti
-      .replace(/\[Pagina \d+: Errore nell'estrazione[^\]]+\]/g, '') // Rimuovi errori di estrazione
+      .replace(/--- PAGINA \d+ ---\n/g, '\n\n') // Rimuovi separatori di pagina
+      .replace(/\[Pagina \d+: Contenuto non testuale\/grafico\]/g, '') // Rimuovi segnaposti vuoti
+      .replace(/\[Pagina \d+: Errore di caricamento\]/g, '') // Rimuovi errori
       .replace(/\n{3,}/g, '\n\n') // Normalizza newline
       .trim();
     
-    // Se il testo è molto corto dopo la pulizia, mantieni anche i segnaposti
-    if (processedText.length < 200) {
-      processedText = text; // Usa il testo originale
-      console.log('📝 Testo corto dopo pulizia, mantengo contenuto originale');
+    // Se il testo è ancora molto corto, mantieni l'originale
+    if (processedText.length < 200 && text.length > processedText.length) {
+      processedText = text;
+      console.log('📝 Mantengo testo originale per preservare contenuto');
+    }
+    
+    // Configurazione chunking adattiva basata sulla lunghezza del testo
+    const textLength = processedText.length;
+    let chunkSize = 1000;
+    let chunkOverlap = 200;
+    
+    if (textLength < 2000) {
+      chunkSize = 500;
+      chunkOverlap = 100;
+    } else if (textLength > 10000) {
+      chunkSize = 1200;
+      chunkOverlap = 300;
     }
     
     const splitter = new RecursiveCharacterTextSplitter({
-      chunkSize: 800, // Chunk più grandi per catturare più contesto
-      chunkOverlap: 200, // Overlap maggiore per continuità
+      chunkSize,
+      chunkOverlap,
       separators: [
-        '\n\n\n', // Separatori di sezione
-        '\n\n',   // Paragrafi
-        '\n',     // Righe
-        '. ',     // Frasi
+        '\n\n\n',
+        '\n\n',
+        '\n',
+        '. ',
         '! ',
         '? ',
         '; ',
         ', ',
-        ' ',      // Parole
-        ''        // Caratteri
+        ' ',
+        ''
       ],
     });
 
     const chunks = await splitter.splitText(processedText);
     
-    // Filtra e pulisci chunk
+    // Filtra e ottimizza chunk
     const filteredChunks = chunks
       .map(chunk => chunk.trim())
       .filter(chunk => {
-        // Mantieni chunk con contenuto significativo
-        const cleanChunk = chunk.replace(/\[Pagina \d+:.*?\]/g, '').trim();
-        
-        return chunk.length >= 80 && // Almeno 80 caratteri
-               (cleanChunk.length >= 40 || chunk.includes('[Pagina')) && // O contenuto grafico
-               chunk.split(/\s+/).length >= 8; // Almeno 8 "parole"
+        // Mantieni chunk significativi
+        const cleanChunk = chunk.replace(/\[.*?\]/g, '').trim();
+        return chunk.length >= 100 && // Almeno 100 caratteri
+               cleanChunk.length >= 50 && // Almeno 50 caratteri di contenuto
+               chunk.split(/\s+/).length >= 10; // Almeno 10 parole
       })
-      .slice(0, 30); // Limite massimo chunk
+      .slice(0, 40); // Limite massimo chunk
     
-    // Se abbiamo troppo pochi chunk, ridividi con parametri più permissivi
-    if (filteredChunks.length < 3 && processedText.length > 500) {
-      console.log('🔄 Pochi chunk generati, riprovo con parametri più permissivi...');
+    // Se abbiamo pochi chunk, prova con parametri più permissivi
+    if (filteredChunks.length < 3 && processedText.length > 1000) {
+      console.log('🔄 Pochi chunk generati, uso parametri più permissivi...');
       
       const permissiveSplitter = new RecursiveCharacterTextSplitter({
-        chunkSize: 600,
-        chunkOverlap: 100,
-        separators: ['\n\n', '\n', '. ', ' ', '']
+        chunkSize: 800,
+        chunkOverlap: 150,
+        separators: ['\n\n', '\n', '. ', '! ', '? ', ' ', '']
       });
       
       const newChunks = await permissiveSplitter.splitText(processedText);
       const newFiltered = newChunks
         .map(c => c.trim())
-        .filter(c => c.length >= 50)
-        .slice(0, 25);
+        .filter(c => c.length >= 80 && c.split(/\s+/).length >= 8)
+        .slice(0, 30);
       
       if (newFiltered.length > filteredChunks.length) {
         console.log('✅ Chunking permissivo ha prodotto più risultati');
@@ -73,35 +91,48 @@ export const createTextChunks = async (text: string): Promise<string[]> => {
       }
     }
     
-    console.log(`✅ Creati ${filteredChunks.length} chunk semantici validi`);
+    console.log(`✅ Creati ${filteredChunks.length} chunk semantici`);
     
-    // Log dei primi chunk per debug
-    filteredChunks.slice(0, 2).forEach((chunk, i) => {
-      console.log(`📋 Chunk ${i + 1} anteprima:`, chunk.substring(0, 120) + '...');
+    // Debug: mostra primi chunk
+    filteredChunks.slice(0, 3).forEach((chunk, i) => {
+      console.log(`📋 Chunk ${i + 1} (${chunk.length} caratteri):`, chunk.substring(0, 100) + '...');
     });
     
+    // Fallback finale se non abbiamo chunk validi
     if (filteredChunks.length === 0) {
-      // Fallback: crea almeno un chunk con tutto il testo disponibile
-      console.log('⚠️ Nessun chunk valido, creo chunk di fallback');
-      return [processedText.substring(0, 1500)]; // Primi 1500 caratteri
+      console.log('⚠️ Nessun chunk valido, creo chunk di emergenza');
+      const emergencyChunks = [];
+      for (let i = 0; i < processedText.length; i += 1000) {
+        const chunk = processedText.substring(i, i + 1000).trim();
+        if (chunk.length >= 50) {
+          emergencyChunks.push(chunk);
+        }
+      }
+      return emergencyChunks.length > 0 ? emergencyChunks : [processedText.substring(0, 1500)];
     }
     
     return filteredChunks;
+    
   } catch (error) {
-    console.error('❌ Errore nel chunking semantico:', error);
+    console.error('❌ Errore nel chunking:', error);
     
-    // Fallback: divisione semplice del testo
+    // Fallback: divisione semplice
     console.log('🔄 Fallback: divisione semplice del testo');
-    const simpleChunks = text
-      .split(/\n\n+/)
-      .filter(chunk => chunk.trim().length >= 100)
-      .slice(0, 20);
+    const paragraphs = text.split(/\n\n+/).filter(p => p.trim().length >= 100);
     
-    if (simpleChunks.length > 0) {
-      return simpleChunks;
+    if (paragraphs.length > 0) {
+      return paragraphs.slice(0, 25);
     }
     
-    // Ultimo fallback
-    return [text.substring(0, 1500)];
+    // Ultimo fallback: chunk fissi
+    const fixedChunks = [];
+    for (let i = 0; i < text.length; i += 1000) {
+      const chunk = text.substring(i, i + 1000).trim();
+      if (chunk.length >= 50) {
+        fixedChunks.push(chunk);
+      }
+    }
+    
+    return fixedChunks.length > 0 ? fixedChunks : [text.substring(0, 1500)];
   }
 };
