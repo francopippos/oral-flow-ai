@@ -6,12 +6,13 @@ export const extractTextFromPDF = async (file: File): Promise<string> => {
     // Importazione dinamica di pdfjs-dist
     const pdfjsLib = await import('pdfjs-dist');
     
-    // Configurazione worker ottimizzata per Lovable
+    // Configurazione worker funzionante per ambiente browser
     console.log('🔧 Configurando PDF.js...');
-    // Disabilita worker per compatibilità massima
-    pdfjsLib.GlobalWorkerOptions.workerSrc = '';
-    pdfjsLib.GlobalWorkerOptions.workerPort = null;
-    console.log('✅ PDF.js configurato (modalità diretta)');
+    
+    // Usa il worker dalla versione installata
+    pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.worker.min.js`;
+    
+    console.log('✅ PDF.js configurato con worker stabile');
     
     // Conversione file in ArrayBuffer
     const arrayBuffer = await file.arrayBuffer();
