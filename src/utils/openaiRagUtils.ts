@@ -51,7 +51,7 @@ IMPORTANTE:
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: "gpt-4", // Usa GPT-4 per qualità accademica superiore
+        model: "gpt-4o", // Usa GPT-4o per qualità accademica superiore e velocità
         messages: [
           { role: "system", content: systemPrompt },
           { role: "user", content: `DOMANDA DELL'STUDENTE: ${question}` }

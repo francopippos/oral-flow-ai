@@ -9,12 +9,12 @@ const initializeEmbeddingModel = async () => {
     try {
       embeddingPipeline = await pipeline(
         'feature-extraction',
-        'Xenova/all-MiniLM-L6-v2',
+        'mixedbread-ai/mxbai-embed-xsmall-v1',
         { 
-          device: 'cpu',
+          device: 'webgpu',
           progress_callback: (progress: any) => {
             if (progress.status === 'downloading') {
-              console.log(`📥 Download modello: ${Math.round(progress.progress || 0)}%`);
+              console.log(`📥 Download modello REALE: ${Math.round(progress.progress || 0)}%`);
             }
           }
         }
@@ -44,9 +44,8 @@ export const createEmbeddings = async (chunks: string[]): Promise<number[][]> =>
         const embedding = Array.from(output.data) as number[];
         embeddings.push(embedding);
       } catch (chunkError) {
-        console.warn(`⚠️ Errore nel chunk ${i + 1}, uso embedding vuoto:`, chunkError);
-        // Embedding vuoto come fallback
-        embeddings.push(new Array(384).fill(0));
+        console.error(`❌ ERRORE CRITICO nel chunk ${i + 1}:`, chunkError);
+        throw new Error(`Impossibile processare chunk ${i + 1}: ${chunkError}`);
       }
       
       // Piccola pausa per non sovraccaricare
@@ -58,10 +57,8 @@ export const createEmbeddings = async (chunks: string[]): Promise<number[][]> =>
     console.log('✅ Embedding REALI creati con successo');
     return embeddings;
   } catch (error) {
-    console.error('❌ Errore nella creazione degli embedding reali:', error);
-    // Fallback con embedding fittizi per permettere comunque l'uso dell'app
-    console.log('🔄 Creando embedding di fallback...');
-    return chunks.map(() => new Array(384).fill(Math.random()));
+    console.error('❌ ERRORE CRITICO nella creazione degli embedding:', error);
+    throw new Error(`Impossibile creare embedding reali: ${error}. Sistema RAG non può funzionare senza embedding validi.`);
   }
 };
 
@@ -99,10 +96,8 @@ export const findRelevantChunks = async (
     console.log('✅ Trovati', topChunks.length, 'chunk REALMENTE rilevanti');
     return topChunks.length > 0 ? topChunks : chunks.slice(0, 3); // Fallback ai primi chunk
   } catch (error) {
-    console.error('❌ Errore nella ricerca semantica reale:', error);
-    // Fallback: restituisci i primi chunk se l'embedding fallisce
-    console.log('🔄 Fallback: uso i primi chunk come rilevanti');
-    return chunks.slice(0, 3);
+    console.error('❌ ERRORE CRITICO nella ricerca semantica:', error);
+    throw new Error(`Ricerca semantica fallita: ${error}. Sistema RAG non funzionante.`);
   }
 };
 
