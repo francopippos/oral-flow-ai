@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -5,7 +6,6 @@ import { BookOpen } from "lucide-react";
 import { extractTextFromPDF } from "../utils/pdfUtils";
 import { createTextChunks } from "../utils/chunkingUtils";
 import { createEmbeddings, findRelevantChunks } from "../utils/embeddingUtils";
-import { askProfessor } from "../utils/professorUtils";
 import { useAudioRecording } from "../hooks/useAudioRecording";
 import { transcribeAudio } from "../utils/aiUtils";
 import { askOpenAIPdfProfessor } from "../utils/openaiRagUtils";
@@ -22,6 +22,7 @@ interface ChatMessage {
   role: "user" | "professor";
   content: string;
   timestamp: Date;
+  sources?: string[];
 }
 
 const VirtualProfessorDemo = ({ isOpen, onClose }: VirtualProfessorDemoProps) => {
@@ -42,7 +43,6 @@ const VirtualProfessorDemo = ({ isOpen, onClose }: VirtualProfessorDemoProps) =>
 
   const [apiKey, setApiKey] = useState<string>(() => localStorage.getItem("openai-demo-key") || "");
 
-  // --- Funzione di upload file con vero processing ---
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0];
     if (!selectedFile || selectedFile.type !== "application/pdf") {
@@ -55,54 +55,58 @@ const VirtualProfessorDemo = ({ isOpen, onClose }: VirtualProfessorDemoProps) =>
     setProcessingStep("Estrazione testo dal PDF...");
     
     try {
-      // 1. Estrazione REALE del testo
-      console.log('🚀 Iniziando elaborazione completa del PDF...');
+      console.log('🚀 Iniziando elaborazione PDF per demo professore...');
+      
+      // 1. Estrazione testo reale
       const text = await extractTextFromPDF(selectedFile);
       setExtractedText(text);
-      console.log('✅ Testo estratto con successo');
+      console.log('✅ Testo estratto:', text.length, 'caratteri');
       
-      // 2. Chunking semantico REALE
-      setProcessingStep("Suddivisione in chunk semantici...");
+      // 2. Chunking semantico avanzato
+      setProcessingStep("Suddivisione semantica intelligente...");
       const textChunks = await createTextChunks(text);
       setChunks(textChunks);
       console.log('✅ Chunk creati:', textChunks.length);
       
-      // 3. Creazione embedding REALI
-      setProcessingStep("Creazione embedding vettoriali...");
+      // 3. Creazione embedding reali
+      setProcessingStep("Generazione embedding vettoriali...");
       const chunkEmbeddings = await createEmbeddings(textChunks);
       setEmbeddings(chunkEmbeddings);
-      console.log('✅ Embedding creati:', chunkEmbeddings.length);
+      console.log('✅ Embedding generati:', chunkEmbeddings.length);
       
-      // 4. Passa al passo successivo
+      // 4. Attivazione chat professore
       setStep(1);
       setMessages([
         {
           role: "professor",
-          content: `🎓 **Perfetto! Il documento è stato elaborato con successo!**
+          content: `🎓 **Professore Universitario Virtuale Attivato**
 
-📊 **Statistiche elaborazione:**
-- **Testo estratto:** ${Math.round(text.length / 1000)}k caratteri
+📚 **Documento elaborato con successo:**
 - **File:** "${selectedFile.name}"
-- **Chunk semantici:** ${textChunks.length} sezioni
-- **Embedding vettoriali:** ${chunkEmbeddings.length} × 384 dimensioni
+- **Contenuto:** ${Math.round(text.length / 1000)}k caratteri analizzati
+- **Sezioni semantiche:** ${textChunks.length} chunk intelligenti
+- **Sistema RAG:** ${chunkEmbeddings.length} embedding vettoriali
 
-🧠 **Sistema RAG attivato con successo:**
-Il tuo documento è ora processato e pronto per rispondere alle tue domande in modo preciso e contestualizzato.
+🧠 **Capacità attive:**
+- Analisi approfondita dei contenuti
+- Risposta a domande specifiche e complesse
+- Correlazione tra diverse sezioni del documento
+- Spiegazioni step-by-step di concetti difficili
 
-💡 **Cosa posso fare per te:**
-- Spiegare concetti specifici dal documento
-- Rispondere a domande dettagliate sui contenuti  
-- Fornire sintesi di sezioni particolari
-- Collegare informazioni tra diverse parti del testo
+💡 **Come interagire con me:**
+- Fai domande specifiche sui contenuti del documento
+- Chiedi spiegazioni di concetti complessi
+- Richiedi correlazioni tra argomenti diversi
+- Usa la registrazione vocale per domande naturali
 
-**Fai pure la tua prima domanda sul documento!** 🎯`,
+**Sono pronto per le tue domande accademiche!** 🎯`,
           timestamp: new Date(),
         },
       ]);
       
     } catch (error) {
-      console.error("❌ Errore nell'elaborazione del file:", error);
-      alert(`❌ Errore nell'elaborazione del PDF:\n\n${error}\n\nSuggerimenti:\n• Assicurati che il PDF contenga testo (non solo immagini)\n• Verifica che il file non sia protetto da password\n• Prova con un PDF diverso`);
+      console.error("❌ Errore elaborazione PDF:", error);
+      alert(`❌ Errore nell'elaborazione del PDF:\n\n${error}\n\nSuggerimenti:\n• PDF deve contenere testo leggibile\n• File non protetto da password\n• Dimensione ragionevole (<100MB)\n• Formato PDF standard`);
       setFile(null);
     } finally {
       setIsProcessing(false);
@@ -110,7 +114,6 @@ Il tuo documento è ora processato e pronto per rispondere alle tue domande in m
     }
   };
 
-  // --- Voice recording handlers ---
   const handleVoiceRecording = async () => {
     if (isRecording) {
       stopRecording();
@@ -135,18 +138,24 @@ Il tuo documento è ora processato e pronto per rispondere alle tue domande in m
       setTranscriptionStatus("done");
       await askQuestion(transcription);
     } catch (error) {
-      console.error("Errore nella trascrizione:", error);
+      console.error("Errore trascrizione:", error);
       setTranscriptionStatus("error");
-      alert("Errore nella trascrizione audio");
+      alert("Errore nella trascrizione audio. Riprova.");
     } finally {
       setIsProcessing(false);
       resetRecording();
     }
   };
 
-  // --- Ask Question con vero RAG ---
   const askQuestion = async (question: string) => {
     if (!question.trim() || chunks.length === 0) return;
+    
+    // Verifica API Key prima di procedere
+    if (!apiKey.trim()) {
+      alert("⚠️ API Key OpenAI mancante!\n\nPer utilizzare il Professore Virtuale devi configurare la tua API Key OpenAI.\n\nClicca su 'Config API' in alto a destra.");
+      setIsApiKeyModal(true);
+      return;
+    }
     
     setMessages((prev) => [
       ...prev,
@@ -155,64 +164,79 @@ Il tuo documento è ora processato e pronto per rispondere alle tue domande in m
     setIsProcessing(true);
 
     try {
-      console.log('🔍 Elaborando domanda con RAG completo...');
+      console.log('🎓 Professore elabora:', question);
       
-      // 1. Trova chunk REALMENTE rilevanti
+      // 1. Ricerca semantica avanzata
       const relevantChunks = await findRelevantChunks(question, chunks, embeddings);
+      console.log('📚 Chunk rilevanti trovati:', relevantChunks.length);
       
       if (relevantChunks.length === 0) {
         setMessages((prev) => [
           ...prev,
           {
             role: "professor",
-            content: "🔍 **Non ho trovato informazioni direttamente rilevanti nel documento per questa domanda.**\n\nSuggerimenti:\n• Prova a riformulare la domanda\n• Usa parole chiave più specifiche\n• Assicurati che l'argomento sia trattato nel PDF\n\nPosso comunque cercare di aiutarti con informazioni generali se vuoi riprovare! 💡",
+            content: `🔍 **Non ho trovato informazioni specifiche nel documento per rispondere a questa domanda.**
+
+**Possibili cause:**
+• L'argomento non è trattato nel PDF caricato
+• La terminologia usata è diversa da quella nel documento
+• La domanda è troppo generica
+
+**Suggerimenti:**
+• Riprova con parole chiave più specifiche
+• Usa terminologia presente nel documento
+• Fai una domanda più dettagliata
+
+Posso aiutarti a esplorare i contenuti del documento se mi dai indicazioni più precise! 📖`,
             timestamp: new Date(),
           },
         ]);
         return;
       }
 
-      let professorResponse = "";
+      // 2. Generazione risposta con ChatGPT reale
+      console.log('🤖 Chiamata ChatGPT con', relevantChunks.length, 'chunk');
+      const professorResponse = await askOpenAIPdfProfessor(apiKey, question, relevantChunks);
       
-      // 2. Usa OpenAI se disponibile, altrimenti fallback intelligente
-      if (apiKey.trim().length > 20) {
-        console.log('🤖 Generando risposta con OpenAI GPT...');
-        professorResponse = await askOpenAIPdfProfessor(apiKey, question, relevantChunks);
-      } else {
-        // Fallback migliorato con estratti formattati
-        console.log('📚 Modalità estratti diretti (senza GPT)');
-        professorResponse = `📚 **Informazioni trovate nel documento relativi alla tua domanda:**
-
-${relevantChunks.map((chunk, i) => `**📄 Estratto ${i + 1}:**
-${chunk.trim()}
-`).join('\n---\n\n')}
-
-💡 *Per risposte più elaborate e contestualizzate, configura la tua API Key OpenAI nelle impostazioni.*
-
-🎯 **Vuoi approfondire qualche aspetto specifico di questi estratti?**`;
-      }
-
       setMessages((prev) => [
         ...prev,
-        { role: "professor", content: professorResponse, timestamp: new Date() },
+        { 
+          role: "professor", 
+          content: professorResponse, 
+          timestamp: new Date(),
+          sources: relevantChunks.map((chunk, i) => `Sezione ${i + 1}: ${chunk.substring(0, 100)}...`)
+        },
       ]);
       
     } catch (error) {
-      console.error("❌ Errore nella risposta del professore:", error);
+      console.error("❌ Errore professore:", error);
+      
+      let errorMessage = "❌ **Errore del sistema professore**\n\n";
+      
+      if (error.toString().includes('API key')) {
+        errorMessage += "**Problema API Key:**\nLa tua API Key OpenAI non è valida o è scaduta.\n\n**Soluzione:** Verifica la tua API Key nelle impostazioni.";
+      } else if (error.toString().includes('rate limit')) {
+        errorMessage += "**Limite di utilizzo raggiunto:**\nHai superato il limite di chiamate API.\n\n**Soluzione:** Attendi qualche minuto e riprova.";
+      } else if (error.toString().includes('insufficient_quota')) {
+        errorMessage += "**Credito esaurito:**\nIl tuo account OpenAI ha esaurito il credito.\n\n**Soluzione:** Ricarica il tuo account OpenAI.";
+      } else {
+        errorMessage += `**Errore tecnico:**\n${error}\n\n**Soluzione:** Riprova o controlla la connessione internet.`;
+      }
+      
       setMessages((prev) => [
         ...prev,
         {
           role: "professor",
-          content: `❌ **Si è verificato un errore nell'elaborazione della domanda.**\n\nDettagli: ${error}\n\n🔄 **Cosa puoi fare:**\n• Riprova con la stessa domanda\n• Verifica la tua API Key se configurata\n• Prova a riformulare la domanda`,
+          content: errorMessage,
           timestamp: new Date(),
         },
       ]);
     } finally {
       setIsProcessing(false);
+      setCurrentQuestion("");
     }
   };
 
-  // --- Gestione chiusura e reset demo ---
   const handleClose = () => {
     setStep(0);
     setFile(null);
@@ -227,13 +251,18 @@ ${chunk.trim()}
   };
 
   const handleSaveApiKey = () => {
+    if (apiKey.trim().length < 20) {
+      alert("⚠️ API Key troppo corta. Inserisci una API Key OpenAI valida.");
+      return;
+    }
     localStorage.setItem("openai-demo-key", apiKey);
     setIsApiKeyModal(false);
+    alert("✅ API Key salvata! Ora puoi utilizzare il Professore Virtuale.");
   };
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-w-5xl max-h-[95vh] overflow-y-auto">
         <ApiKeyModal
           isOpen={isApiKeyModal}
           apiKey={apiKey}
@@ -241,25 +270,34 @@ ${chunk.trim()}
           onSave={handleSaveApiKey}
           onClose={() => setIsApiKeyModal(false)}
         />
+        
         <DialogHeader>
           <div className="flex justify-between items-start">
             <DialogTitle className="text-2xl font-bold gradient-text flex items-center">
               <BookOpen className="mr-3 h-6 w-6" />
-              Professore Universitario Virtuale RAG
+              🎓 Professore Universitario Virtuale
             </DialogTitle>
             <Button
               size="sm"
-              className="bg-blue-200 hover:bg-blue-300 text-blue-900 ml-6"
+              className={`ml-6 ${apiKey ? 'bg-green-100 hover:bg-green-200 text-green-800' : 'bg-orange-100 hover:bg-orange-200 text-orange-800'}`}
               onClick={() => setIsApiKeyModal(true)}
               variant="outline"
             >
-              {apiKey ? "✅ API Key" : "⚙️ Config API"}
+              {apiKey ? "✅ API Key Configurata" : "⚙️ Configura API Key"}
             </Button>
           </div>
-          <p className="text-muted-foreground">
-            Sistema RAG avanzato: carica PDF → embedding ML → retrieval semantico → LLM
+          <p className="text-muted-foreground text-lg">
+            Sistema RAG avanzato: <strong>PDF → Embedding → ChatGPT → Risposte Accademiche</strong>
           </p>
+          {!apiKey && (
+            <div className="bg-orange-50 border border-orange-200 rounded-lg p-3 mt-2">
+              <p className="text-orange-800 text-sm">
+                ⚠️ <strong>API Key OpenAI richiesta:</strong> Per utilizzare il Professore Virtuale devi configurare la tua API Key OpenAI. Clicca su "Configura API Key" in alto a destra.
+              </p>
+            </div>
+          )}
         </DialogHeader>
+        
         <div className="space-y-6">
           {step === 0 ? (
             <PdfUploadStep
