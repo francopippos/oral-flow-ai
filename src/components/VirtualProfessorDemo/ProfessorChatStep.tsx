@@ -84,13 +84,17 @@ const ProfessorChatStep = ({
         {hasApiKey && (
           <div className="bg-white rounded-lg p-4">
             <p className="text-sm text-oralmind-700 mb-2">
-              <strong>🧠 Capacità AI Attive:</strong>
+              <strong>🧠 Capacità AI REALI Attive:</strong>
             </p>
             <div className="grid grid-cols-2 gap-4 text-xs">
-              <div>• Comprensione semantica avanzata</div>
-              <div>• Risposte contestualizzate</div>
-              <div>• Correlazioni tra argomenti</div>
-              <div>• Spiegazioni step-by-step</div>
+              <div>• 🔄 HuggingFace Embeddings REALI</div>
+              <div>• 🤖 GPT-4o OpenAI REALE</div>
+              <div>• 🔍 Ricerca semantica VERA</div>
+              <div>• 📊 Similarità coseno REALE</div>
+            </div>
+            <div className="mt-3 p-2 bg-green-50 rounded text-xs">
+              <strong>✅ SISTEMA COMPLETAMENTE REALE:</strong> Ogni processo utilizza AI vera, 
+              non simulazioni. PDF.js → Chunks → Embeddings ML → OpenAI GPT-4o
             </div>
           </div>
         )}

@@ -5,21 +5,45 @@ let embeddingPipeline: any = null;
 
 const initializeEmbeddingModel = async () => {
   if (!embeddingPipeline) {
-    console.log('🧠 Inizializzando modello embedding...');
+    console.log('🧠 Inizializzando modello embedding REALE...');
     try {
-      embeddingPipeline = await pipeline(
-        'feature-extraction',
-        'mixedbread-ai/mxbai-embed-xsmall-v1',
-        { 
-          device: 'webgpu',
-          progress_callback: (progress: any) => {
-            if (progress.status === 'downloading') {
-              console.log(`📥 Download modello REALE: ${Math.round(progress.progress || 0)}%`);
+      // Prima prova con WebGPU, poi fallback a CPU
+      let device = 'webgpu';
+      
+      try {
+        console.log('🔄 Tentativo con WebGPU...');
+        embeddingPipeline = await pipeline(
+          'feature-extraction',
+          'Xenova/all-MiniLM-L6-v2', // Modello più compatibile
+          { 
+            device: 'webgpu',
+            progress_callback: (progress: any) => {
+              if (progress.status === 'downloading') {
+                console.log(`📥 Download modello REALE (WebGPU): ${Math.round(progress.progress || 0)}%`);
+              }
             }
           }
-        }
-      );
-      console.log('✅ Modello embedding pronto');
+        );
+        console.log('✅ Modello embedding WebGPU pronto');
+      } catch (webgpuError) {
+        console.log('⚠️ WebGPU non disponibile, fallback a CPU...');
+        device = 'cpu';
+        
+        embeddingPipeline = await pipeline(
+          'feature-extraction',
+          'Xenova/all-MiniLM-L6-v2',
+          { 
+            device: 'cpu',
+            progress_callback: (progress: any) => {
+              if (progress.status === 'downloading') {
+                console.log(`📥 Download modello REALE (CPU): ${Math.round(progress.progress || 0)}%`);
+              }
+            }
+          }
+        );
+        console.log('✅ Modello embedding CPU pronto');
+      }
+      
     } catch (error) {
       console.error('❌ Errore nell\'inizializzazione del modello:', error);
       throw new Error('Impossibile inizializzare il modello di embedding');
@@ -68,13 +92,16 @@ export const findRelevantChunks = async (
   embeddings: number[][]
 ): Promise<string[]> => {
   try {
-    console.log('🔍 Ricerca semantica REALE per:', question.substring(0, 50) + '...');
+    console.log('🔍 [RICERCA SEMANTICA REALE] Per:', question.substring(0, 50) + '...');
+    console.log('📊 [RICERCA SEMANTICA REALE] Embedding disponibili:', embeddings.length);
     
     const model = await initializeEmbeddingModel();
     
     // Genera embedding REALE per la domanda
+    console.log('🧠 [EMBEDDING REALE] Generando embedding per la domanda...');
     const questionOutput = await model(question, { pooling: 'mean', normalize: true });
     const questionEmbedding = Array.from(questionOutput.data) as number[];
+    console.log('✅ [EMBEDDING REALE] Embedding domanda generato:', questionEmbedding.length, 'dimensioni');
 
     // Calcola similarità coseno REALE
     const similarities = embeddings.map((embedding, index) => ({

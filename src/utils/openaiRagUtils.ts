@@ -41,8 +41,10 @@ IMPORTANTE:
 - Cita implicitamente da quale estratto provengono le informazioni principali`;
 
   try {
-    console.log('🎓 [PROFESSORE] Elaborando domanda:', question.substring(0, 100));
-    console.log('📚 [CONTEXT] Chunk utilizzati:', contextChunks.length);
+    console.log('🎓 [PROFESSORE REALE] Elaborando domanda:', question.substring(0, 100));
+    console.log('📚 [CONTEXT REALE] Chunk utilizzati:', contextChunks.length);
+    console.log('🤖 [GPT-4o REALE] Preparando chiamata API OpenAI...');
+    console.log('🔐 [API KEY] Lunghezza:', apiKey.length, 'caratteri');
     
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
@@ -80,13 +82,16 @@ IMPORTANTE:
     }
 
     const data = await response.json();
+    console.log('🤖 [GPT-4o RISPOSTA] Ricevuta da OpenAI:', JSON.stringify(data, null, 2).substring(0, 500) + '...');
+    
     const answer = data.choices?.[0]?.message?.content?.trim();
     
     if (!answer) {
       throw new Error("Nessuna risposta generata dal modello GPT");
     }
 
-    console.log('✅ [RISPOSTA] Generata:', answer.length, 'caratteri');
+    console.log('✅ [RISPOSTA REALE] Generata da GPT-4o:', answer.length, 'caratteri');
+    console.log('📝 [PREVIEW RISPOSTA]:', answer.substring(0, 200) + '...');
     
     // Aggiungi metadata professore se la risposta è valida
     const professionalAnswer = `${answer}
