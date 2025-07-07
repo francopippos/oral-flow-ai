@@ -55,12 +55,15 @@ const VirtualProfessorDemo = ({ isOpen, onClose }: VirtualProfessorDemoProps) =>
     setProcessingStep("Estrazione testo dal PDF...");
     
     try {
-      console.log('🚀 Iniziando elaborazione PDF per demo professore...');
+      console.log('🚀 [DEMO REALE] Iniziando elaborazione PDF per demo professore...');
+      console.log('📄 [DEMO REALE] File:', selectedFile.name, selectedFile.size, 'bytes');
       
-      // 1. Estrazione testo reale
+      // 1. Estrazione testo reale con PDF.js
+      console.log('📥 [DEMO REALE] Chiamando extractTextFromPDF...');
       const text = await extractTextFromPDF(selectedFile);
       setExtractedText(text);
-      console.log('✅ Testo estratto:', text.length, 'caratteri');
+      console.log('✅ [DEMO REALE] Testo estratto:', text.length, 'caratteri');
+      console.log('📖 [DEMO REALE] Preview testo:', text.substring(0, 200) + '...');
       
       // 2. Chunking semantico avanzato
       setProcessingStep("Suddivisione semantica intelligente...");
@@ -287,7 +290,7 @@ Posso aiutarti a esplorare i contenuti del documento se mi dai indicazioni più 
             </Button>
           </div>
           <p className="text-muted-foreground text-lg">
-            Sistema RAG avanzato: <strong>PDF → Embedding → ChatGPT → Risposte Accademiche</strong>
+            Sistema RAG <strong>REALE</strong>: <strong>PDF.js → HuggingFace Embeddings → GPT-4o → Risposte Accademiche VERE</strong>
           </p>
           {!apiKey && (
             <div className="bg-orange-50 border border-orange-200 rounded-lg p-3 mt-2">

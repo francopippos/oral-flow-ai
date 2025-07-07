@@ -9,8 +9,11 @@ export const extractTextFromPDF = async (file: File): Promise<string> => {
     // Configurazione worker funzionante per ambiente browser
     console.log('🔧 Configurando PDF.js...');
     
-    // Usa il worker dalla versione installata
-    pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.worker.min.js`;
+    // Usa il worker dalla versione installata - versione compatibile
+    pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
+      'pdfjs-dist/build/pdf.worker.min.mjs',
+      import.meta.url
+    ).toString();
     
     console.log('✅ PDF.js configurato con worker stabile');
     
