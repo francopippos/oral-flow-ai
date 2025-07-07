@@ -7,14 +7,14 @@ const initializeEmbeddingModel = async () => {
   if (!embeddingPipeline) {
     console.log('🧠 Inizializzando modello embedding REALE...');
     try {
-      // Prima prova con WebGPU, poi fallback a CPU
+      // Prima prova con WebGPU, poi WASM
       let device = 'webgpu';
       
       try {
         console.log('🔄 Tentativo con WebGPU...');
         embeddingPipeline = await pipeline(
           'feature-extraction',
-          'Xenova/all-MiniLM-L6-v2', // Modello più compatibile
+          'Xenova/all-MiniLM-L6-v2',
           { 
             device: 'webgpu',
             progress_callback: (progress: any) => {
@@ -26,27 +26,27 @@ const initializeEmbeddingModel = async () => {
         );
         console.log('✅ Modello embedding WebGPU pronto');
       } catch (webgpuError) {
-        console.log('⚠️ WebGPU non disponibile, fallback a CPU...');
-        device = 'cpu';
+        console.log('⚠️ WebGPU non disponibile, tentativo con WASM...');
+        device = 'wasm';
         
         embeddingPipeline = await pipeline(
           'feature-extraction',
           'Xenova/all-MiniLM-L6-v2',
           { 
-            device: 'cpu',
+            device: 'wasm',
             progress_callback: (progress: any) => {
               if (progress.status === 'downloading') {
-                console.log(`📥 Download modello REALE (CPU): ${Math.round(progress.progress || 0)}%`);
+                console.log(`📥 Download modello REALE (WASM): ${Math.round(progress.progress || 0)}%`);
               }
             }
           }
         );
-        console.log('✅ Modello embedding CPU pronto');
+        console.log('✅ Modello embedding WASM pronto');
       }
       
     } catch (error) {
       console.error('❌ Errore nell\'inizializzazione del modello:', error);
-      throw new Error('Impossibile inizializzare il modello di embedding');
+      throw new Error('HUGGINGFACE_FAILED'); // Segnale speciale per fallback
     }
   }
   return embeddingPipeline;

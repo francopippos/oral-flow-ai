@@ -6,6 +6,7 @@ import { BookOpen } from "lucide-react";
 import { extractTextFromPDF } from "../utils/pdfUtils";
 import { createTextChunks } from "../utils/chunkingUtils";
 import { createEmbeddings, findRelevantChunks } from "../utils/embeddingUtils";
+import { createOpenAIEmbeddings, findRelevantChunksOpenAI } from "../utils/openaiEmbeddingUtils";
 import { useAudioRecording } from "../hooks/useAudioRecording";
 import { transcribeAudio } from "../utils/aiUtils";
 import { askOpenAIPdfProfessor } from "../utils/openaiRagUtils";
@@ -71,11 +72,27 @@ const VirtualProfessorDemo = ({ isOpen, onClose }: VirtualProfessorDemoProps) =>
       setChunks(textChunks);
       console.log('✅ Chunk creati:', textChunks.length);
       
-      // 3. Creazione embedding reali
+      // 3. Creazione embedding reali con sistema di fallback
       setProcessingStep("Generazione embedding vettoriali...");
-      const chunkEmbeddings = await createEmbeddings(textChunks);
+      let chunkEmbeddings: number[][];
+      
+      try {
+        console.log('🔄 [EMBEDDING] Tentativo con HuggingFace...');
+        chunkEmbeddings = await createEmbeddings(textChunks);
+        console.log('✅ [HUGGINGFACE] Embedding generati:', chunkEmbeddings.length);
+      } catch (huggingFaceError) {
+        console.log('⚠️ [FALLBACK] HuggingFace fallito, uso OpenAI embeddings...');
+        
+        if (!apiKey.trim()) {
+          throw new Error('🔑 API Key OpenAI necessaria per embedding. Configura la tua API Key per continuare.');
+        }
+        
+        setProcessingStep("Generazione embedding OpenAI (fallback)...");
+        chunkEmbeddings = await createOpenAIEmbeddings(apiKey, textChunks);
+        console.log('✅ [OPENAI FALLBACK] Embedding generati:', chunkEmbeddings.length);
+      }
+      
       setEmbeddings(chunkEmbeddings);
-      console.log('✅ Embedding generati:', chunkEmbeddings.length);
       
       // 4. Attivazione chat professore
       setStep(1);
@@ -169,9 +186,17 @@ const VirtualProfessorDemo = ({ isOpen, onClose }: VirtualProfessorDemoProps) =>
     try {
       console.log('🎓 Professore elabora:', question);
       
-      // 1. Ricerca semantica avanzata
-      const relevantChunks = await findRelevantChunks(question, chunks, embeddings);
-      console.log('📚 Chunk rilevanti trovati:', relevantChunks.length);
+      // 1. Ricerca semantica avanzata con sistema di fallback
+      let relevantChunks: string[];
+      
+      try {
+        relevantChunks = await findRelevantChunks(question, chunks, embeddings);
+        console.log('📚 [HUGGINGFACE] Chunk rilevanti trovati:', relevantChunks.length);
+      } catch (searchError) {
+        console.log('⚠️ [FALLBACK RICERCA] HuggingFace fallito, uso OpenAI search...');
+        relevantChunks = await findRelevantChunksOpenAI(apiKey, question, chunks, embeddings);
+        console.log('📚 [OPENAI SEARCH] Chunk rilevanti trovati:', relevantChunks.length);
+      }
       
       if (relevantChunks.length === 0) {
         setMessages((prev) => [
