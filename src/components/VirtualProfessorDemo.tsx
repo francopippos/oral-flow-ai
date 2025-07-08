@@ -10,6 +10,7 @@ import { createOpenAIEmbeddings, findRelevantChunksOpenAI } from "../utils/opena
 import { useAudioRecording } from "../hooks/useAudioRecording";
 import { transcribeAudio } from "../utils/aiUtils";
 import { askOpenAIPdfProfessor } from "../utils/openaiRagUtils";
+import { askLocalPdfProfessor } from "../utils/localRagUtils";
 import ApiKeyModal from "./VirtualProfessorDemo/ApiKeyModal";
 import PdfUploadStep from "./VirtualProfessorDemo/PdfUploadStep";
 import ProfessorChatStep from "./VirtualProfessorDemo/ProfessorChatStep";
@@ -72,24 +73,23 @@ const VirtualProfessorDemo = ({ isOpen, onClose }: VirtualProfessorDemoProps) =>
       setChunks(textChunks);
       console.log('✅ Chunk creati:', textChunks.length);
       
-      // 3. Creazione embedding con priorità OpenAI per evitare problemi di rete
+      // 3. Creazione embedding con sistema robusto
       setProcessingStep("Generazione embedding vettoriali...");
       let chunkEmbeddings: number[][];
       
-      if (!apiKey.trim()) {
-        throw new Error('🔑 API Key OpenAI richiesta. Il sistema richiede una API Key valida per funzionare correttamente.');
-      }
-      
       try {
-        console.log('🚀 [OPENAI DIRECT] Uso diretto OpenAI embeddings (stabile e veloce)...');
-        setProcessingStep("Generazione embedding OpenAI...");
-        chunkEmbeddings = await createOpenAIEmbeddings(apiKey, textChunks);
-        console.log('✅ [OPENAI] Embedding generati:', chunkEmbeddings.length);
-      } catch (openaiError) {
-        console.log('⚠️ [FALLBACK] OpenAI fallito, provo HuggingFace locale...');
-        setProcessingStep("Fallback embedding locali...");
+        console.log('🧠 [LOCALE] Uso diretto HuggingFace embeddings (sempre funzionante)...');
+        setProcessingStep("Generazione embedding locali...");
         chunkEmbeddings = await createEmbeddings(textChunks);
-        console.log('✅ [HUGGINGFACE FALLBACK] Embedding generati:', chunkEmbeddings.length);
+        console.log('✅ [HUGGINGFACE] Embedding generati:', chunkEmbeddings.length);
+      } catch (huggingFaceError) {
+        console.log('⚠️ [FALLBACK] HuggingFace fallito, provo OpenAI se disponibile...');
+        if (!apiKey.trim()) {
+          throw new Error('🔑 Sistema non disponibile. Configura API Key OpenAI o riprova.');
+        }
+        setProcessingStep("Tentativo embedding OpenAI...");
+        chunkEmbeddings = await createOpenAIEmbeddings(apiKey, textChunks);
+        console.log('✅ [OPENAI FALLBACK] Embedding generati:', chunkEmbeddings.length);
       }
       
       setEmbeddings(chunkEmbeddings);
@@ -170,13 +170,6 @@ const VirtualProfessorDemo = ({ isOpen, onClose }: VirtualProfessorDemoProps) =>
   const askQuestion = async (question: string) => {
     if (!question.trim() || chunks.length === 0) return;
     
-    // Verifica API Key prima di procedere
-    if (!apiKey.trim()) {
-      alert("⚠️ API Key OpenAI mancante!\n\nPer utilizzare il Professore Virtuale devi configurare la tua API Key OpenAI.\n\nClicca su 'Config API' in alto a destra.");
-      setIsApiKeyModal(true);
-      return;
-    }
-    
     setMessages((prev) => [
       ...prev,
       { role: "user", content: question, timestamp: new Date() },
@@ -186,17 +179,17 @@ const VirtualProfessorDemo = ({ isOpen, onClose }: VirtualProfessorDemoProps) =>
     try {
       console.log('🎓 Professore elabora:', question);
       
-      // 1. Ricerca semantica priorità OpenAI per stabilità
+      // 1. Ricerca semantica sempre funzionante
       let relevantChunks: string[];
       
       try {
-        console.log('🔍 [OPENAI SEARCH] Ricerca semantica con OpenAI...');
-        relevantChunks = await findRelevantChunksOpenAI(apiKey, question, chunks, embeddings);
-        console.log('📚 [OPENAI] Chunk rilevanti trovati:', relevantChunks.length);
-      } catch (searchError) {
-        console.log('⚠️ [FALLBACK RICERCA] OpenAI fallito, uso HuggingFace locale...');
+        console.log('🔍 [LOCALE] Ricerca semantica con HuggingFace...');
         relevantChunks = await findRelevantChunks(question, chunks, embeddings);
-        console.log('📚 [HUGGINGFACE FALLBACK] Chunk rilevanti trovati:', relevantChunks.length);
+        console.log('📚 [HUGGINGFACE] Chunk rilevanti trovati:', relevantChunks.length);
+      } catch (searchError) {
+        console.log('⚠️ [FALLBACK RICERCA] HuggingFace fallito, provo OpenAI...');
+        relevantChunks = await findRelevantChunksOpenAI(apiKey, question, chunks, embeddings);
+        console.log('📚 [OPENAI FALLBACK] Chunk rilevanti trovati:', relevantChunks.length);
       }
       
       if (relevantChunks.length === 0) {
@@ -223,9 +216,24 @@ Posso aiutarti a esplorare i contenuti del documento se mi dai indicazioni più 
         return;
       }
 
-      // 2. Generazione risposta con ChatGPT reale
-      console.log('🤖 Chiamata ChatGPT con', relevantChunks.length, 'chunk');
-      const professorResponse = await askOpenAIPdfProfessor(apiKey, question, relevantChunks);
+      // 2. Generazione risposta con sistema robusto
+      console.log('🤖 Chiamata Professore con', relevantChunks.length, 'chunk');
+      let professorResponse: string;
+      
+      try {
+        // Prova prima con OpenAI se disponibile
+        if (apiKey.trim()) {
+          professorResponse = await askOpenAIPdfProfessor(apiKey, question, relevantChunks);
+        } else {
+          throw new Error('NO_API_KEY');
+        }
+      } catch (openaiError) {
+        console.log('⚠️ [FALLBACK PROFESSORE] OpenAI non disponibile, uso sistema locale...');
+        if (openaiError.toString().includes('QUOTA_EXCEEDED')) {
+          console.log('💳 Credito OpenAI esaurito, attivo modalità locale');
+        }
+        professorResponse = await askLocalPdfProfessor(question, relevantChunks);
+      }
       
       setMessages((prev) => [
         ...prev,

@@ -44,7 +44,9 @@ export const createOpenAIEmbeddings = async (apiKey: string, chunks: string[]): 
           if (response.status === 401) {
             throw new Error('API Key OpenAI non valida');
           } else if (response.status === 429) {
-            throw new Error('Limite di rate raggiunto, rallento...');
+            throw new Error('QUOTA_EXCEEDED');
+          } else if (response.status === 403) {
+            throw new Error('QUOTA_EXCEEDED');
           } else {
             throw new Error(`Errore OpenAI embedding ${response.status}: ${errorData?.error?.message || 'Errore sconosciuto'}`);
           }

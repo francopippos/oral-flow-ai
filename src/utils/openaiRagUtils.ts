@@ -71,11 +71,11 @@ IMPORTANTE:
       console.error('❌ [OPENAI] Errore risposta:', response.status, errorData);
       
       if (response.status === 401) {
-        throw new Error("API Key OpenAI non valida o scaduta");
+        throw new Error("API_KEY_INVALID");
       } else if (response.status === 429) {
-        throw new Error("Limite di chiamate raggiunto. Riprova tra qualche minuto");
+        throw new Error("QUOTA_EXCEEDED");
       } else if (response.status === 403) {
-        throw new Error("Credito OpenAI esaurito. Controlla il tuo account");
+        throw new Error("QUOTA_EXCEEDED");
       } else {
         throw new Error(`Errore OpenAI ${response.status}: ${errorData?.error?.message || 'Errore sconosciuto'}`);
       }
