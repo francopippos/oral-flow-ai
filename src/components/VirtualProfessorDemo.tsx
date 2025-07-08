@@ -72,24 +72,24 @@ const VirtualProfessorDemo = ({ isOpen, onClose }: VirtualProfessorDemoProps) =>
       setChunks(textChunks);
       console.log('✅ Chunk creati:', textChunks.length);
       
-      // 3. Creazione embedding reali con sistema di fallback
+      // 3. Creazione embedding con priorità OpenAI per evitare problemi di rete
       setProcessingStep("Generazione embedding vettoriali...");
       let chunkEmbeddings: number[][];
       
+      if (!apiKey.trim()) {
+        throw new Error('🔑 API Key OpenAI richiesta. Il sistema richiede una API Key valida per funzionare correttamente.');
+      }
+      
       try {
-        console.log('🔄 [EMBEDDING] Tentativo con HuggingFace...');
-        chunkEmbeddings = await createEmbeddings(textChunks);
-        console.log('✅ [HUGGINGFACE] Embedding generati:', chunkEmbeddings.length);
-      } catch (huggingFaceError) {
-        console.log('⚠️ [FALLBACK] HuggingFace fallito, uso OpenAI embeddings...');
-        
-        if (!apiKey.trim()) {
-          throw new Error('🔑 API Key OpenAI necessaria per embedding. Configura la tua API Key per continuare.');
-        }
-        
-        setProcessingStep("Generazione embedding OpenAI (fallback)...");
+        console.log('🚀 [OPENAI DIRECT] Uso diretto OpenAI embeddings (stabile e veloce)...');
+        setProcessingStep("Generazione embedding OpenAI...");
         chunkEmbeddings = await createOpenAIEmbeddings(apiKey, textChunks);
-        console.log('✅ [OPENAI FALLBACK] Embedding generati:', chunkEmbeddings.length);
+        console.log('✅ [OPENAI] Embedding generati:', chunkEmbeddings.length);
+      } catch (openaiError) {
+        console.log('⚠️ [FALLBACK] OpenAI fallito, provo HuggingFace locale...');
+        setProcessingStep("Fallback embedding locali...");
+        chunkEmbeddings = await createEmbeddings(textChunks);
+        console.log('✅ [HUGGINGFACE FALLBACK] Embedding generati:', chunkEmbeddings.length);
       }
       
       setEmbeddings(chunkEmbeddings);
@@ -186,16 +186,17 @@ const VirtualProfessorDemo = ({ isOpen, onClose }: VirtualProfessorDemoProps) =>
     try {
       console.log('🎓 Professore elabora:', question);
       
-      // 1. Ricerca semantica avanzata con sistema di fallback
+      // 1. Ricerca semantica priorità OpenAI per stabilità
       let relevantChunks: string[];
       
       try {
-        relevantChunks = await findRelevantChunks(question, chunks, embeddings);
-        console.log('📚 [HUGGINGFACE] Chunk rilevanti trovati:', relevantChunks.length);
-      } catch (searchError) {
-        console.log('⚠️ [FALLBACK RICERCA] HuggingFace fallito, uso OpenAI search...');
+        console.log('🔍 [OPENAI SEARCH] Ricerca semantica con OpenAI...');
         relevantChunks = await findRelevantChunksOpenAI(apiKey, question, chunks, embeddings);
-        console.log('📚 [OPENAI SEARCH] Chunk rilevanti trovati:', relevantChunks.length);
+        console.log('📚 [OPENAI] Chunk rilevanti trovati:', relevantChunks.length);
+      } catch (searchError) {
+        console.log('⚠️ [FALLBACK RICERCA] OpenAI fallito, uso HuggingFace locale...');
+        relevantChunks = await findRelevantChunks(question, chunks, embeddings);
+        console.log('📚 [HUGGINGFACE FALLBACK] Chunk rilevanti trovati:', relevantChunks.length);
       }
       
       if (relevantChunks.length === 0) {

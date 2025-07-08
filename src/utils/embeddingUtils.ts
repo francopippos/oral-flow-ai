@@ -5,48 +5,31 @@ let embeddingPipeline: any = null;
 
 const initializeEmbeddingModel = async () => {
   if (!embeddingPipeline) {
-    console.log('🧠 Inizializzando modello embedding REALE...');
+    console.log('🧠 Inizializzando modello embedding LEGGERO...');
     try {
-      // Prima prova con WebGPU, poi WASM
-      let device = 'webgpu';
-      
-      try {
-        console.log('🔄 Tentativo con WebGPU...');
-        embeddingPipeline = await pipeline(
-          'feature-extraction',
-          'Xenova/all-MiniLM-L6-v2',
-          { 
-            device: 'webgpu',
-            progress_callback: (progress: any) => {
-              if (progress.status === 'downloading') {
-                console.log(`📥 Download modello REALE (WebGPU): ${Math.round(progress.progress || 0)}%`);
-              }
+      // Usa un modello più piccolo per evitare problemi di rete
+      console.log('🔄 Caricamento modello compatto...');
+      embeddingPipeline = await pipeline(
+        'feature-extraction',
+        'Xenova/all-MiniLM-L6-v2', // Modello leggero e veloce
+        { 
+          device: 'wasm', // Usa WASM direttamente per stabilità
+          progress_callback: (progress: any) => {
+            if (progress.status === 'downloading') {
+              console.log(`📥 Download: ${Math.round(progress.progress || 0)}%`);
             }
-          }
-        );
-        console.log('✅ Modello embedding WebGPU pronto');
-      } catch (webgpuError) {
-        console.log('⚠️ WebGPU non disponibile, tentativo con WASM...');
-        device = 'wasm';
-        
-        embeddingPipeline = await pipeline(
-          'feature-extraction',
-          'Xenova/all-MiniLM-L6-v2',
-          { 
-            device: 'wasm',
-            progress_callback: (progress: any) => {
-              if (progress.status === 'downloading') {
-                console.log(`📥 Download modello REALE (WASM): ${Math.round(progress.progress || 0)}%`);
-              }
-            }
-          }
-        );
-        console.log('✅ Modello embedding WASM pronto');
-      }
+          },
+          // Configurazioni per ridurre uso rete
+          cache_dir: './.cache',
+          local_files_only: false,
+          revision: 'main'
+        }
+      );
+      console.log('✅ Modello embedding WASM pronto');
       
     } catch (error) {
-      console.error('❌ Errore nell\'inizializzazione del modello:', error);
-      throw new Error('HUGGINGFACE_FAILED'); // Segnale speciale per fallback
+      console.error('❌ Fallimento HuggingFace:', error);
+      throw new Error('HUGGINGFACE_FAILED');
     }
   }
   return embeddingPipeline;
