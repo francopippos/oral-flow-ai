@@ -180,7 +180,7 @@ const VirtualProfessorDemo = ({ isOpen, onClose }: VirtualProfessorDemoProps) =>
       console.log('🎓 Professore elabora:', question);
       
       // 1. Ricerca semantica sempre funzionante
-      let relevantChunks: string[];
+      let relevantChunks: string[] = [];
       
       try {
         console.log('🔍 [LOCALE] Ricerca semantica con HuggingFace...');
@@ -248,26 +248,38 @@ Posso aiutarti a esplorare i contenuti del documento se mi dai indicazioni più 
     } catch (error) {
       console.error("❌ Errore professore:", error);
       
-      let errorMessage = "❌ **Errore del sistema professore**\n\n";
-      
-      if (error.toString().includes('API key')) {
-        errorMessage += "**Problema API Key:**\nLa tua API Key OpenAI non è valida o è scaduta.\n\n**Soluzione:** Verifica la tua API Key nelle impostazioni.";
-      } else if (error.toString().includes('rate limit')) {
-        errorMessage += "**Limite di utilizzo raggiunto:**\nHai superato il limite di chiamate API.\n\n**Soluzione:** Attendi qualche minuto e riprova.";
-      } else if (error.toString().includes('insufficient_quota')) {
-        errorMessage += "**Credito esaurito:**\nIl tuo account OpenAI ha esaurito il credito.\n\n**Soluzione:** Ricarica il tuo account OpenAI.";
-      } else {
-        errorMessage += `**Errore tecnico:**\n${error}\n\n**Soluzione:** Riprova o controlla la connessione internet.`;
+      // Sistema di emergenza: prova sempre il fallback locale
+      try {
+        console.log('🚨 [EMERGENZA] Attivazione sistema locale di backup...');
+        const emergencyResponse = await askLocalPdfProfessor(question, chunks.slice(0, 3));
+        
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: "professor",
+            content: emergencyResponse + "\n\n⚠️ *Risposta generata con sistema locale (OpenAI non disponibile)*",
+            timestamp: new Date(),
+          },
+        ]);
+        
+      } catch (localError) {
+        console.error("❌ Anche il sistema locale ha fallito:", localError);
+        
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: "professor",
+            content: `🔍 **Analisi del documento completata**
+
+Ho trovato alcune sezioni nel documento per la tua domanda:
+
+${chunks.slice(0, 3).map((chunk, i) => `**Sezione ${i + 1}:**\n${chunk.substring(0, 300)}...\n`).join('\n')}
+
+⚠️ *Sistema in modalità di emergenza - mostrando contenuti grezzi del documento*`,
+            timestamp: new Date(),
+          },
+        ]);
       }
-      
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: "professor",
-          content: errorMessage,
-          timestamp: new Date(),
-        },
-      ]);
     } finally {
       setIsProcessing(false);
       setCurrentQuestion("");
