@@ -148,19 +148,51 @@ const VirtualProfessorDemo = ({ isOpen, onClose }: VirtualProfessorDemoProps) =>
   };
 
   const processVoiceQuestion = async () => {
-    if (!recordedAudio) return;
+    if (!recordedAudio) {
+      alert("⚠️ Nessun audio registrato. Premi il pulsante e parla chiaramente.");
+      return;
+    }
+    
     setTranscriptionStatus("in_progress");
     setIsProcessing(true);
+    console.log('🎤 [TRASCRIZIONE] Iniziando trascrizione audio...');
+    
     try {
+      console.log('🎵 [AUDIO] File audio presente:', recordedAudio.size, 'bytes');
       const transcription = await transcribeAudio(recordedAudio);
+      console.log('✅ [TRASCRIZIONE] Completata:', transcription);
+      
+      if (!transcription.trim()) {
+        throw new Error('Trascrizione vuota');
+      }
+      
       setLastTranscription(transcription);
       setCurrentQuestion(transcription);
       setTranscriptionStatus("done");
+      
+      // Aggiungi messaggio di conferma trascrizione
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "user",
+          content: `🎤 *Domanda vocale:* ${transcription}`,
+          timestamp: new Date(),
+        },
+      ]);
+      
       await askQuestion(transcription);
     } catch (error) {
-      console.error("Errore trascrizione:", error);
+      console.error("❌ [TRASCRIZIONE] Errore:", error);
       setTranscriptionStatus("error");
-      alert("Errore nella trascrizione audio. Riprova.");
+      
+      let errorMsg = "❌ Errore nella trascrizione audio.\n\n";
+      if (error.toString().includes('API key')) {
+        errorMsg += "**Problema:** API Key OpenAI non configurata\n**Soluzione:** Configura la tua API Key OpenAI";
+      } else {
+        errorMsg += "**Suggerimenti:**\n• Parla più chiaramente\n• Riduci il rumore di fondo\n• Registra per almeno 2-3 secondi\n• Verifica il microfono";
+      }
+      
+      alert(errorMsg);
     } finally {
       setIsProcessing(false);
       resetRecording();
@@ -216,32 +248,45 @@ Posso aiutarti a esplorare i contenuti del documento se mi dai indicazioni più 
         return;
       }
 
-      // 2. Generazione risposta con sistema SEMPRE funzionante
+      // 2. Sistema Professore SEMPRE funzionante (PDF + AI background)
       console.log('🤖 Chiamata Professore con', relevantChunks.length, 'chunk');
       let professorResponse: string;
       
-      // Sistema prioritario: OpenAI se disponibile, altrimenti locale SEMPRE
-      if (!apiKey.trim()) {
-        console.log('🔧 [LOCALE] Nessuna API Key - uso sistema locale diretto');
-        professorResponse = await askLocalPdfProfessor(question, relevantChunks);
-      } else {
-        try {
-          console.log('🎯 [OPENAI] Tentativo con GPT-4o...');
-          professorResponse = await askOpenAIPdfProfessor(apiKey, question, relevantChunks);
-          console.log('✅ [OPENAI] Risposta generata con successo');
-        } catch (openaiError: any) {
-          console.log('⚠️ [FALLBACK AUTOMATICO] OpenAI fallito:', openaiError.message);
-          
-          // FALLBACK LOCALE IMMEDIATO per qualsiasi errore OpenAI
-          console.log('🔄 [LOCALE] Attivazione sistema locale...');
+      // Strategia ROBUSTA: Locale prima, OpenAI come miglioramento
+      try {
+        if (!apiKey.trim()) {
+          console.log('🔧 [LOCALE] Nessuna API Key - sistema locale diretto');
           professorResponse = await askLocalPdfProfessor(question, relevantChunks);
-          console.log('✅ [LOCALE] Risposta locale generata');
-          
-          // Aggiungi nota informativa se quota esaurita
-          if (openaiError.message?.includes('QUOTA_EXCEEDED') || openaiError.message?.includes('quota')) {
-            professorResponse += '\n\n💡 *Sistema locale attivato - OpenAI quota esaurita*';
+        } else {
+          // Prima prova OpenAI, se fallisce usa locale IMMEDIATAMENTE
+          try {
+            console.log('🎯 [OPENAI] Tentativo con GPT-4o...');
+            professorResponse = await askOpenAIPdfProfessor(apiKey, question, relevantChunks);
+            console.log('✅ [OPENAI] Successo');
+          } catch (openaiError: any) {
+            console.log('⚠️ [FALLBACK] OpenAI fallito - attivo sistema locale');
+            console.log('🔄 [LOCALE] Generazione risposta locale...');
+            professorResponse = await askLocalPdfProfessor(question, relevantChunks);
+            
+            if (openaiError.message?.includes('QUOTA')) {
+              professorResponse += '\n\n💡 *Sistema locale attivo (quota OpenAI esaurita)*';
+            } else {
+              professorResponse += '\n\n🔧 *Sistema locale attivo (OpenAI non disponibile)*';
+            }
           }
         }
+      } catch (fallbackError) {
+        console.error('❌ Errore critico:', fallbackError);
+        // Sistema di emergenza finale
+        professorResponse = `📚 **Analisi documento per: "${question}"**
+
+Basandomi sul contenuto caricato:
+
+${relevantChunks.slice(0, 2).map((chunk, i) => 
+  `**Sezione ${i + 1}:**\n${chunk.substring(0, 400)}...\n`
+).join('\n')}
+
+⚠️ *Sistema in modalità emergenza - contenuto grezzo del documento*`;
       }
       
       setMessages((prev) => [
