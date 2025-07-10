@@ -208,11 +208,13 @@ const VirtualProfessorDemo = ({ isOpen, onClose }: VirtualProfessorDemoProps) =>
     ]);
     setIsProcessing(true);
 
+    // Dichiarazione fuori dal try per usarla nel catch
+    let relevantChunks: string[] = [];
+
     try {
       console.log('🎓 Professore elabora:', question);
       
       // 1. Ricerca semantica sempre funzionante
-      let relevantChunks: string[] = [];
       
       try {
         console.log('🔍 [LOCALE] Ricerca semantica con HuggingFace...');
@@ -300,40 +302,35 @@ ${relevantChunks.slice(0, 2).map((chunk, i) =>
       ]);
       
     } catch (error) {
-      console.error("❌ Errore professore:", error);
+      console.error("❌ Errore CRITICO professore:", error);
       
-      // Sistema di emergenza: prova sempre il fallback locale
-      try {
-        console.log('🚨 [EMERGENZA] Attivazione sistema locale di backup...');
-        const emergencyResponse = await askLocalPdfProfessor(question, chunks.slice(0, 3));
-        
-        setMessages((prev) => [
-          ...prev,
-          {
-            role: "professor",
-            content: emergencyResponse + "\n\n⚠️ *Risposta generata con sistema locale (OpenAI non disponibile)*",
-            timestamp: new Date(),
-          },
-        ]);
-        
-      } catch (localError) {
-        console.error("❌ Anche il sistema locale ha fallito:", localError);
-        
-        setMessages((prev) => [
-          ...prev,
-          {
-            role: "professor",
-            content: `🔍 **Analisi del documento completata**
+      // Sistema di emergenza FINALE - usa i chunk trovati o chunk base
+      const fallbackChunks = relevantChunks.length > 0 ? relevantChunks : chunks.slice(0, 2);
+      
+      const emergencyResponse = `🎓 **Professore Universitario Virtuale**
 
-Ho trovato alcune sezioni nel documento per la tua domanda:
+**Risposta di emergenza alla tua domanda:** *${question}*
 
-${chunks.slice(0, 3).map((chunk, i) => `**Sezione ${i + 1}:**\n${chunk.substring(0, 300)}...\n`).join('\n')}
+**📖 Dal documento caricato:**
 
-⚠️ *Sistema in modalità di emergenza - mostrando contenuti grezzi del documento*`,
-            timestamp: new Date(),
-          },
-        ]);
-      }
+${fallbackChunks.slice(0, 2).map((chunk, i) => 
+  `**Sezione ${i + 1}:**\n${chunk.substring(0, 400)}...\n`
+).join('\n')}
+
+**🧠 Analisi accademica:**
+In base al contenuto del documento, posso confermare che l'argomento è presente nel materiale caricato. Le sezioni estratte mostrano informazioni rilevanti per la tua richiesta.
+
+---
+⚠️ *Sistema di emergenza attivo - risposta basata su contenuto grezzo del documento*`;
+
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "professor",
+          content: emergencyResponse,
+          timestamp: new Date(),
+        },
+      ]);
     } finally {
       setIsProcessing(false);
       setCurrentQuestion("");

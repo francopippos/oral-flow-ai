@@ -106,26 +106,63 @@ Continua pure con la tua esposizione!`;
 
 export const transcribeAudio = async (audioBlob: Blob): Promise<string> => {
   try {
-    console.log('🎯 Trascrizione audio in corso...');
+    console.log('🎯 [TRASCRIZIONE REALE] Iniziando trascrizione con OpenAI Whisper...');
+    console.log('🎵 [AUDIO] File da trascrivere:', audioBlob.size, 'bytes, tipo:', audioBlob.type);
     
-    // Simulazione di trascrizione per la demo
-    // In produzione, qui useremmo una vera API di trascrizione
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    // Controllo API Key
+    const apiKey = localStorage.getItem("openai-demo-key");
+    if (!apiKey || apiKey.trim().length < 10) {
+      throw new Error('API_KEY_REQUIRED');
+    }
     
-    const transcriptions = [
-      "Vorrei parlare dell'algoritmo Branch and Bound che è un metodo di ottimizzazione combinatoria utilizzato per risolvere problemi complessi.",
-      "L'algoritmo di Branch and Bound funziona dividendo il problema in sottoproblemi più piccoli e utilizzando limiti per eliminare soluzioni non ottimali.",
-      "Gli algoritmi di ottimizzazione sono fondamentali per risolvere problemi computazionali complessi in vari domini applicativi.",
-      "La complessità computazionale studia le risorse necessarie per risolvere problemi, con particolare attenzione alle classi P e NP.",
-      "Vorrei approfondire il concetto di programmazione dinamica e come si differenzia dagli altri approcci algoritmici."
-    ];
+    // Prepara FormData per OpenAI Whisper
+    const formData = new FormData();
+    formData.append('file', audioBlob, 'audio.webm');
+    formData.append('model', 'whisper-1');
+    formData.append('language', 'it'); // Italiano
+    formData.append('response_format', 'text');
     
-    const randomTranscription = transcriptions[Math.floor(Math.random() * transcriptions.length)];
+    console.log('🤖 [WHISPER] Chiamata API OpenAI per trascrizione...');
     
-    console.log('✅ Trascrizione completata:', randomTranscription);
-    return randomTranscription;
-  } catch (error) {
-    console.error('❌ Errore nella trascrizione:', error);
-    return "Mi dispiace, non sono riuscito a trascrivere chiaramente l'audio. Puoi ripetere la domanda?";
+    const response = await fetch('https://api.openai.com/v1/audio/transcriptions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+      },
+      body: formData,
+    });
+    
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      console.error('❌ [WHISPER] Errore API:', response.status, errorData);
+      
+      if (response.status === 401) {
+        throw new Error('API_KEY_INVALID');
+      } else if (response.status === 429) {
+        throw new Error('QUOTA_EXCEEDED');
+      } else {
+        throw new Error(`Errore trascrizione ${response.status}`);
+      }
+    }
+    
+    const transcription = await response.text();
+    console.log('✅ [WHISPER REALE] Trascrizione completata:', transcription);
+    
+    if (!transcription.trim()) {
+      throw new Error('Trascrizione vuota - parla più chiaramente');
+    }
+    
+    return transcription.trim();
+    
+  } catch (error: any) {
+    console.error('❌ [TRASCRIZIONE] Errore:', error);
+    
+    if (error.message?.includes('API_KEY')) {
+      throw new Error('❌ API Key OpenAI richiesta per la trascrizione vocale. Configurala nelle impostazioni.');
+    } else if (error.message?.includes('QUOTA')) {
+      throw new Error('❌ Quota OpenAI esaurita. Ricarica il tuo account o usa la scrittura manuale.');
+    }
+    
+    throw new Error('❌ Errore nella trascrizione. Verifica il microfono e riprova.');
   }
 };
