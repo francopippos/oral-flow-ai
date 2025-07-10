@@ -216,23 +216,32 @@ Posso aiutarti a esplorare i contenuti del documento se mi dai indicazioni più 
         return;
       }
 
-      // 2. Generazione risposta con sistema robusto
+      // 2. Generazione risposta con sistema SEMPRE funzionante
       console.log('🤖 Chiamata Professore con', relevantChunks.length, 'chunk');
       let professorResponse: string;
       
-      try {
-        // Prova prima con OpenAI se disponibile
-        if (apiKey.trim()) {
-          professorResponse = await askOpenAIPdfProfessor(apiKey, question, relevantChunks);
-        } else {
-          throw new Error('NO_API_KEY');
-        }
-      } catch (openaiError) {
-        console.log('⚠️ [FALLBACK PROFESSORE] OpenAI non disponibile, uso sistema locale...');
-        if (openaiError.toString().includes('QUOTA_EXCEEDED')) {
-          console.log('💳 Credito OpenAI esaurito, attivo modalità locale');
-        }
+      // Sistema prioritario: OpenAI se disponibile, altrimenti locale SEMPRE
+      if (!apiKey.trim()) {
+        console.log('🔧 [LOCALE] Nessuna API Key - uso sistema locale diretto');
         professorResponse = await askLocalPdfProfessor(question, relevantChunks);
+      } else {
+        try {
+          console.log('🎯 [OPENAI] Tentativo con GPT-4o...');
+          professorResponse = await askOpenAIPdfProfessor(apiKey, question, relevantChunks);
+          console.log('✅ [OPENAI] Risposta generata con successo');
+        } catch (openaiError: any) {
+          console.log('⚠️ [FALLBACK AUTOMATICO] OpenAI fallito:', openaiError.message);
+          
+          // FALLBACK LOCALE IMMEDIATO per qualsiasi errore OpenAI
+          console.log('🔄 [LOCALE] Attivazione sistema locale...');
+          professorResponse = await askLocalPdfProfessor(question, relevantChunks);
+          console.log('✅ [LOCALE] Risposta locale generata');
+          
+          // Aggiungi nota informativa se quota esaurita
+          if (openaiError.message?.includes('QUOTA_EXCEEDED') || openaiError.message?.includes('quota')) {
+            professorResponse += '\n\n💡 *Sistema locale attivato - OpenAI quota esaurita*';
+          }
+        }
       }
       
       setMessages((prev) => [
