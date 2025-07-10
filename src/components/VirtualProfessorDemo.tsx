@@ -250,46 +250,16 @@ Posso aiutarti a esplorare i contenuti del documento se mi dai indicazioni più 
         return;
       }
 
-      // 2. Sistema Professore SEMPRE funzionante (PDF + AI background)
-      console.log('🤖 Chiamata Professore con', relevantChunks.length, 'chunk');
-      let professorResponse: string;
+      // 2. ChatGPT è IL FULCRO - DEVE funzionare sempre
+      console.log('🤖 Chiamata OBBLIGATORIA a ChatGPT con', relevantChunks.length, 'chunk');
       
-      // Strategia ROBUSTA: Locale prima, OpenAI come miglioramento
-      try {
-        if (!apiKey.trim()) {
-          console.log('🔧 [LOCALE] Nessuna API Key - sistema locale diretto');
-          professorResponse = await askLocalPdfProfessor(question, relevantChunks);
-        } else {
-          // Prima prova OpenAI, se fallisce usa locale IMMEDIATAMENTE
-          try {
-            console.log('🎯 [OPENAI] Tentativo con GPT-4o...');
-            professorResponse = await askOpenAIPdfProfessor(apiKey, question, relevantChunks);
-            console.log('✅ [OPENAI] Successo');
-          } catch (openaiError: any) {
-            console.log('⚠️ [FALLBACK] OpenAI fallito - attivo sistema locale');
-            console.log('🔄 [LOCALE] Generazione risposta locale...');
-            professorResponse = await askLocalPdfProfessor(question, relevantChunks);
-            
-            if (openaiError.message?.includes('QUOTA')) {
-              professorResponse += '\n\n💡 *Sistema locale attivo (quota OpenAI esaurita)*';
-            } else {
-              professorResponse += '\n\n🔧 *Sistema locale attivo (OpenAI non disponibile)*';
-            }
-          }
-        }
-      } catch (fallbackError) {
-        console.error('❌ Errore critico:', fallbackError);
-        // Sistema di emergenza finale
-        professorResponse = `📚 **Analisi documento per: "${question}"**
-
-Basandomi sul contenuto caricato:
-
-${relevantChunks.slice(0, 2).map((chunk, i) => 
-  `**Sezione ${i + 1}:**\n${chunk.substring(0, 400)}...\n`
-).join('\n')}
-
-⚠️ *Sistema in modalità emergenza - contenuto grezzo del documento*`;
+      if (!apiKey.trim()) {
+        throw new Error('API_KEY_REQUIRED');
       }
+      
+      console.log('🎯 [CHATGPT OBBLIGATORIO] Chiamata a GPT-4o...');
+      const professorResponse = await askOpenAIPdfProfessor(apiKey, question, relevantChunks);
+      console.log('✅ [CHATGPT] Risposta ricevuta con successo');
       
       setMessages((prev) => [
         ...prev,
@@ -301,33 +271,33 @@ ${relevantChunks.slice(0, 2).map((chunk, i) =>
         },
       ]);
       
-    } catch (error) {
-      console.error("❌ Errore CRITICO professore:", error);
+    } catch (error: any) {
+      console.error("❌ [CHATGPT CRITICO] Errore del fulcro:", error);
       
-      // Sistema di emergenza FINALE - usa i chunk trovati o chunk base
-      const fallbackChunks = relevantChunks.length > 0 ? relevantChunks : chunks.slice(0, 2);
+      // ChatGPT È IL FULCRO - se fallisce, l'app non funziona
+      let errorMessage = "❌ **ERRORE CHATGPT - Sistema Non Operativo**\n\n";
       
-      const emergencyResponse = `🎓 **Professore Universitario Virtuale**
-
-**Risposta di emergenza alla tua domanda:** *${question}*
-
-**📖 Dal documento caricato:**
-
-${fallbackChunks.slice(0, 2).map((chunk, i) => 
-  `**Sezione ${i + 1}:**\n${chunk.substring(0, 400)}...\n`
-).join('\n')}
-
-**🧠 Analisi accademica:**
-In base al contenuto del documento, posso confermare che l'argomento è presente nel materiale caricato. Le sezioni estratte mostrano informazioni rilevanti per la tua richiesta.
-
----
-⚠️ *Sistema di emergenza attivo - risposta basata su contenuto grezzo del documento*`;
-
+      if (error.message?.includes('API_KEY_REQUIRED')) {
+        errorMessage += "🔑 **API Key Mancante:**\nChatGPT è il fulcro di questa applicazione.\n\n**SOLUZIONE OBBLIGATORIA:** Configura subito la tua API Key OpenAI cliccando su 'Configura API Key' in alto a destra.";
+      } else if (error.message?.includes('API_KEY_INVALID') || error.toString().includes('401')) {
+        errorMessage += "🔑 **API Key Non Valida:**\nLa tua API Key OpenAI non è corretta.\n\n**SOLUZIONE:** Verifica e aggiorna la tua API Key nelle impostazioni.";
+      } else if (error.message?.includes('QUOTA_EXCEEDED') || error.toString().includes('quota') || error.toString().includes('429')) {
+        errorMessage += "💳 **Credito OpenAI Esaurito:**\nIl tuo account OpenAI ha terminato il credito disponibile.\n\n**SOLUZIONE OBBLIGATORIA:** Ricarica il tuo account su platform.openai.com\n\n⚠️ **IMPORTANTE:** Senza credito OpenAI, questa applicazione non può funzionare.";
+      } else if (error.toString().includes('403')) {
+        errorMessage += "🚫 **Accesso Negato:**\nProblema di autorizzazione con il tuo account OpenAI.\n\n**SOLUZIONE:** Verifica lo stato del tuo account su platform.openai.com";
+      } else if (error.toString().includes('network') || error.toString().includes('fetch')) {
+        errorMessage += "🌐 **Errore di Connessione:**\nImpossibile raggiungere i server OpenAI.\n\n**SOLUZIONE:** Controlla la tua connessione internet e riprova.";
+      } else {
+        errorMessage += `🔧 **Errore Tecnico ChatGPT:**\n${error.message || error}\n\n**SOLUZIONE:** Riprova tra qualche secondo. Se persiste, verifica la tua API Key.`;
+      }
+      
+      errorMessage += "\n\n🎯 **ChatGPT è il cuore di questa applicazione. Senza di lui, il sistema non è operativo.**";
+      
       setMessages((prev) => [
         ...prev,
         {
           role: "professor",
-          content: emergencyResponse,
+          content: errorMessage,
           timestamp: new Date(),
         },
       ]);
@@ -390,9 +360,13 @@ In base al contenuto del documento, posso confermare che l'argomento è presente
             Sistema RAG <strong>REALE</strong>: <strong>PDF.js → HuggingFace Embeddings → GPT-4o → Risposte Accademiche VERE</strong>
           </p>
           {!apiKey && (
-            <div className="bg-orange-50 border border-orange-200 rounded-lg p-3 mt-2">
-              <p className="text-orange-800 text-sm">
-                ⚠️ <strong>API Key OpenAI richiesta:</strong> Per utilizzare il Professore Virtuale devi configurare la tua API Key OpenAI. Clicca su "Configura API Key" in alto a destra.
+            <div className="bg-red-50 border border-red-200 rounded-lg p-4 mt-2">
+              <p className="text-red-800 text-sm font-semibold">
+                🚫 <strong>SISTEMA NON OPERATIVO:</strong> ChatGPT è il fulcro di questa applicazione. 
+                <strong className="block mt-1">DEVI configurare la tua API Key OpenAI per procedere.</strong>
+              </p>
+              <p className="text-red-700 text-xs mt-2">
+                Senza ChatGPT, il Professore Virtuale non può funzionare. Clicca su "Configura API Key" per attivare il sistema.
               </p>
             </div>
           )}
