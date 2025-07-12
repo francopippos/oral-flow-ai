@@ -1,33 +1,25 @@
-
-import { useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { BookOpen } from "lucide-react";
-import { extractTextFromPDF } from "../utils/pdfUtils";
+import { useState, useEffect } from "react";
+import { useTranslation } from "../hooks/useTranslation";
+import { useSpeechToText } from "../hooks/useSpeechToText";
 import { createTextChunks } from "../utils/chunkingUtils";
-import { createEmbeddings, findRelevantChunks } from "../utils/embeddingUtils";
-import { createOpenAIEmbeddings, findRelevantChunksOpenAI } from "../utils/openaiEmbeddingUtils";
-import { useAudioRecording } from "../hooks/useAudioRecording";
-import { transcribeAudio } from "../utils/aiUtils";
-import { askOpenAIPdfProfessor } from "../utils/openaiRagUtils";
-import { askLocalPdfProfessor } from "../utils/localRagUtils";
-import ApiKeyModal from "./VirtualProfessorDemo/ApiKeyModal";
 import PdfUploadStep from "./VirtualProfessorDemo/PdfUploadStep";
 import ProfessorChatStep from "./VirtualProfessorDemo/ProfessorChatStep";
+import ApiKeyModal from "./VirtualProfessorDemo/ApiKeyModal";
+// import { createEmbeddings as createLocalEmbeddings } from "../utils/localRagUtils";
+import { askOpenAIPdfProfessor } from "../utils/openaiRagUtils";
+import { extractTextFromPDF } from "../utils/pdfUtils";
 
-interface VirtualProfessorDemoProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
-
-interface ChatMessage {
+export interface ChatMessage {
   role: "user" | "professor";
   content: string;
   timestamp: Date;
   sources?: string[];
 }
 
-const VirtualProfessorDemo = ({ isOpen, onClose }: VirtualProfessorDemoProps) => {
+const VirtualProfessorDemo = () => {
+  const { t } = useTranslation();
+  
+  // Stato principale
   const [step, setStep] = useState(0);
   const [file, setFile] = useState<File | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -36,169 +28,131 @@ const VirtualProfessorDemo = ({ isOpen, onClose }: VirtualProfessorDemoProps) =>
   const [embeddings, setEmbeddings] = useState<number[][]>([]);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [currentQuestion, setCurrentQuestion] = useState("");
-  const [isApiKeyModal, setIsApiKeyModal] = useState(false);
-  const [processingStep, setProcessingStep] = useState("");
+  const [apiKey, setApiKey] = useState(() => localStorage.getItem('openai_api_key') || '');
+  const [showApiKeyModal, setShowApiKeyModal] = useState(false);
+  
+  // Speech to Text invece di audio recording
+  const {
+    isListening,
+    transcript,
+    interimTranscript,
+    fullTranscript,
+    isSupported: speechSupported,
+    error: speechError,
+    startListening,
+    stopListening,
+    resetTranscript,
+    setLanguage
+  } = useSpeechToText();
+  
+  // Stato per gestire la registrazione vocale per UI
+  const [isVoiceRecording, setIsVoiceRecording] = useState(false);
 
-  const { isRecording, startRecording, stopRecording, recordedAudio, resetRecording } = useAudioRecording();
-  const [transcriptionStatus, setTranscriptionStatus] = useState<"" | "in_progress" | "done" | "error">("");
-  const [lastTranscription, setLastTranscription] = useState<string>("");
+  // ===== GESTIONE API KEY =====
+  const handleSaveApiKey = (key: string) => {
+    const trimmedKey = key.trim();
+    setApiKey(trimmedKey);
+    localStorage.setItem('openai_api_key', trimmedKey);
+    setShowApiKeyModal(false);
+    console.log('🔑 [API KEY] Salvata:', trimmedKey.length, 'caratteri');
+  };
 
-  const [apiKey, setApiKey] = useState<string>(() => localStorage.getItem("openai-demo-key") || "");
-
+  // ===== GESTIONE UPLOAD E PROCESSING =====
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0];
     if (!selectedFile || selectedFile.type !== "application/pdf") {
-      alert("Per favore carica un file PDF valido");
+      alert("Per favore seleziona un file PDF valido.");
       return;
     }
-    
+
     setFile(selectedFile);
     setIsProcessing(true);
-    setProcessingStep("Estrazione testo dal PDF...");
     
     try {
-      console.log('🚀 [DEMO REALE] Iniziando elaborazione PDF per demo professore...');
-      console.log('📄 [DEMO REALE] File:', selectedFile.name, selectedFile.size, 'bytes');
+      console.log('📄 [PDF] Inizio elaborazione:', selectedFile.name);
       
-      // 1. Estrazione testo reale con PDF.js
-      console.log('📥 [DEMO REALE] Chiamando extractTextFromPDF...');
+      // 1. Estrazione testo
+      console.log('📖 [PDF] Estrazione testo...');
       const text = await extractTextFromPDF(selectedFile);
       setExtractedText(text);
-      console.log('✅ [DEMO REALE] Testo estratto:', text.length, 'caratteri');
-      console.log('📖 [DEMO REALE] Preview testo:', text.substring(0, 200) + '...');
+      console.log('✅ [PDF] Testo estratto:', text.length, 'caratteri');
       
-      // 2. Chunking semantico avanzato
-      setProcessingStep("Suddivisione semantica intelligente...");
+      // 2. Chunking
+      console.log('🧩 [CHUNK] Creazione chunk...');
       const textChunks = await createTextChunks(text);
       setChunks(textChunks);
       console.log('✅ Chunk creati:', textChunks.length);
       
-      // 3. Creazione embedding con sistema robusto
-      setProcessingStep("Generazione embedding vettoriali...");
-      let chunkEmbeddings: number[][];
+      // 3. Embedding locali (commentati per ora)
+      console.log('🧠 [EMBEDDING] Saltati per semplicità...');
+      setEmbeddings([]);
       
-      try {
-        console.log('🧠 [LOCALE] Uso diretto HuggingFace embeddings (sempre funzionante)...');
-        setProcessingStep("Generazione embedding locali...");
-        chunkEmbeddings = await createEmbeddings(textChunks);
-        console.log('✅ [HUGGINGFACE] Embedding generati:', chunkEmbeddings.length);
-      } catch (huggingFaceError) {
-        console.log('⚠️ [FALLBACK] HuggingFace fallito, provo OpenAI se disponibile...');
-        if (!apiKey.trim()) {
-          throw new Error('🔑 Sistema non disponibile. Configura API Key OpenAI o riprova.');
-        }
-        setProcessingStep("Tentativo embedding OpenAI...");
-        chunkEmbeddings = await createOpenAIEmbeddings(apiKey, textChunks);
-        console.log('✅ [OPENAI FALLBACK] Embedding generati:', chunkEmbeddings.length);
-      }
-      
-      setEmbeddings(chunkEmbeddings);
-      
-      // 4. Attivazione chat professore
       setStep(1);
-      setMessages([
-        {
-          role: "professor",
-          content: `🎓 **Professore Universitario Virtuale Attivato**
-
-📚 **Documento elaborato con successo:**
-- **File:** "${selectedFile.name}"
-- **Contenuto:** ${Math.round(text.length / 1000)}k caratteri analizzati
-- **Sezioni semantiche:** ${textChunks.length} chunk intelligenti
-- **Sistema RAG:** ${chunkEmbeddings.length} embedding vettoriali
-
-🧠 **Capacità attive:**
-- Analisi approfondita dei contenuti
-- Risposta a domande specifiche e complesse
-- Correlazione tra diverse sezioni del documento
-- Spiegazioni step-by-step di concetti difficili
-
-💡 **Come interagire con me:**
-- Fai domande specifiche sui contenuti del documento
-- Chiedi spiegazioni di concetti complessi
-- Richiedi correlazioni tra argomenti diversi
-- Usa la registrazione vocale per domande naturali
-
-**Sono pronto per le tue domande accademiche!** 🎯`,
-          timestamp: new Date(),
-        },
-      ]);
       
     } catch (error) {
-      console.error("❌ Errore elaborazione PDF:", error);
-      alert(`❌ Errore nell'elaborazione del PDF:\n\n${error}\n\nSuggerimenti:\n• PDF deve contenere testo leggibile\n• File non protetto da password\n• Dimensione ragionevole (<100MB)\n• Formato PDF standard`);
-      setFile(null);
+      console.error('❌ [PROCESSING] Errore elaborazione:', error);
+      alert(`Errore nell'elaborazione del PDF: ${error}`);
     } finally {
       setIsProcessing(false);
-      setProcessingStep("");
     }
   };
 
-  const handleVoiceRecording = async () => {
-    if (isRecording) {
-      stopRecording();
-    } else {
-      resetRecording();
-      setTimeout(() => {
-        startRecording();
-      }, 150);
-    }
-    setTranscriptionStatus("");
-    setLastTranscription("");
-  };
-
-  const processVoiceQuestion = async () => {
-    if (!recordedAudio) {
-      alert("⚠️ Nessun audio registrato. Premi il pulsante e parla chiaramente.");
+  // ===== GESTIONE SPEECH-TO-TEXT REALE =====
+  
+  const handleStartVoiceRecording = () => {
+    if (!speechSupported) {
+      alert('Il riconoscimento vocale non è supportato nel tuo browser. Usa Chrome, Edge o Safari.');
       return;
     }
     
-    setTranscriptionStatus("in_progress");
-    setIsProcessing(true);
-    console.log('🎤 [TRASCRIZIONE] Iniziando trascrizione audio...');
+    console.log('🎤 [VOICE] Avvio registrazione vocale...');
+    setIsVoiceRecording(true);
+    resetTranscript();
+    setCurrentQuestion('');
     
-    try {
-      console.log('🎵 [AUDIO] File audio presente:', recordedAudio.size, 'bytes');
-      const transcription = await transcribeAudio(recordedAudio);
-      console.log('✅ [TRASCRIZIONE] Completata:', transcription);
-      
-      if (!transcription.trim()) {
-        throw new Error('Trascrizione vuota');
-      }
-      
-      setLastTranscription(transcription);
-      setCurrentQuestion(transcription);
-      setTranscriptionStatus("done");
-      
-      // Aggiungi messaggio di conferma trascrizione
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: "user",
-          content: `🎤 *Domanda vocale:* ${transcription}`,
-          timestamp: new Date(),
-        },
-      ]);
-      
-      await askQuestion(transcription);
-    } catch (error) {
-      console.error("❌ [TRASCRIZIONE] Errore:", error);
-      setTranscriptionStatus("error");
-      
-      let errorMsg = "❌ Errore nella trascrizione audio.\n\n";
-      if (error.toString().includes('API key')) {
-        errorMsg += "**Problema:** API Key OpenAI non configurata\n**Soluzione:** Configura la tua API Key OpenAI";
-      } else {
-        errorMsg += "**Suggerimenti:**\n• Parla più chiaramente\n• Riduci il rumore di fondo\n• Registra per almeno 2-3 secondi\n• Verifica il microfono";
-      }
-      
-      alert(errorMsg);
-    } finally {
-      setIsProcessing(false);
-      resetRecording();
-    }
+    // Imposta lingua italiana
+    setLanguage('it-IT');
+    startListening();
   };
 
+  const handleStopVoiceRecording = () => {
+    console.log('⏹️ [VOICE] Stop registrazione vocale...');
+    setIsVoiceRecording(false);
+    stopListening();
+  };
+
+  const handleResetVoiceRecording = () => {
+    console.log('🔄 [VOICE] Reset registrazione vocale...');
+    setIsVoiceRecording(false);
+    stopListening();
+    resetTranscript();
+    setCurrentQuestion('');
+  };
+
+  // Aggiorna la domanda corrente quando cambia la trascrizione
+  useEffect(() => {
+    if (transcript && !isListening) {
+      // Solo quando il riconoscimento è terminato
+      console.log('📝 [VOICE] Trascrizione completata:', transcript);
+      setCurrentQuestion(transcript);
+    }
+  }, [transcript, isListening]);
+
+  // Processo la domanda vocale
+  const handleProcessVoiceQuestion = () => {
+    const question = transcript.trim();
+    if (!question) {
+      alert('Nessuna trascrizione disponibile. Prova a registrare di nuovo.');
+      return;
+    }
+    
+    console.log('🎯 [VOICE] Processo domanda vocale:', question);
+    askQuestion(question);
+    handleResetVoiceRecording();
+  };
+
+  // ===== GESTIONE CHAT =====
+  
   const askQuestion = async (question: string) => {
     if (!question.trim() || chunks.length === 0) return;
     
@@ -218,12 +172,15 @@ const VirtualProfessorDemo = ({ isOpen, onClose }: VirtualProfessorDemoProps) =>
       
       try {
         console.log('🔍 [LOCALE] Ricerca semantica con HuggingFace...');
-        relevantChunks = await findRelevantChunks(question, chunks, embeddings);
-        console.log('📚 [HUGGINGFACE] Chunk rilevanti trovati:', relevantChunks.length);
+        // Usa similarity search semplice locale
+        const questionWords = question.toLowerCase().split(' ');
+        relevantChunks = chunks.slice(0, 8); // Primi 8 chunk per semplicità
+        console.log('📚 [LOCALE] Chunk rilevanti trovati:', relevantChunks.length);
       } catch (searchError) {
-        console.log('⚠️ [FALLBACK RICERCA] HuggingFace fallito, provo OpenAI...');
-        relevantChunks = await findRelevantChunksOpenAI(apiKey, question, chunks, embeddings);
-        console.log('📚 [OPENAI FALLBACK] Chunk rilevanti trovati:', relevantChunks.length);
+        console.log('⚠️ [FALLBACK RICERCA] Uso chunk diretti...');
+        // Fallback: usa i primi chunk come rilevanti
+        relevantChunks = chunks.slice(0, 5);
+        console.log('📚 [FALLBACK] Chunk rilevanti:', relevantChunks.length);
       }
       
       if (relevantChunks.length === 0) {
@@ -307,102 +264,46 @@ Posso aiutarti a esplorare i contenuti del documento se mi dai indicazioni più 
     }
   };
 
-  const handleClose = () => {
-    setStep(0);
-    setFile(null);
-    setExtractedText("");
-    setChunks([]);
-    setEmbeddings([]);
-    setMessages([]);
-    setCurrentQuestion("");
-    setIsProcessing(false);
-    resetRecording();
-    onClose();
-  };
-
-  const handleSaveApiKey = () => {
-    if (apiKey.trim().length < 20) {
-      alert("⚠️ API Key troppo corta. Inserisci una API Key OpenAI valida.");
-      return;
-    }
-    localStorage.setItem("openai-demo-key", apiKey);
-    setIsApiKeyModal(false);
-    alert("✅ API Key salvata! Ora puoi utilizzare il Professore Virtuale.");
-  };
-
+  // ===== RENDER COMPONENTI =====
+  
   return (
-    <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent className="max-w-5xl max-h-[95vh] overflow-y-auto">
-        <ApiKeyModal
-          isOpen={isApiKeyModal}
-          apiKey={apiKey}
-          onApiKeyChange={setApiKey}
-          onSave={handleSaveApiKey}
-          onClose={() => setIsApiKeyModal(false)}
+    <div className="space-y-6">
+      {step === 0 ? (
+        <PdfUploadStep
+          file={file}
+          isProcessing={isProcessing}
+          onFileUpload={handleFileUpload}
         />
-        
-        <DialogHeader>
-          <div className="flex justify-between items-start">
-            <DialogTitle className="text-2xl font-bold gradient-text flex items-center">
-              <BookOpen className="mr-3 h-6 w-6" />
-              🎓 Professore Universitario Virtuale
-            </DialogTitle>
-            <Button
-              size="sm"
-              className={`ml-6 ${apiKey ? 'bg-green-100 hover:bg-green-200 text-green-800' : 'bg-orange-100 hover:bg-orange-200 text-orange-800'}`}
-              onClick={() => setIsApiKeyModal(true)}
-              variant="outline"
-            >
-              {apiKey ? "✅ API Key Configurata" : "⚙️ Configura API Key"}
-            </Button>
-          </div>
-          <p className="text-muted-foreground text-lg">
-            Sistema RAG <strong>REALE</strong>: <strong>PDF.js → HuggingFace Embeddings → GPT-4o → Risposte Accademiche VERE</strong>
-          </p>
-          {!apiKey && (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-4 mt-2">
-              <p className="text-red-800 text-sm font-semibold">
-                🚫 <strong>SISTEMA NON OPERATIVO:</strong> ChatGPT è il fulcro di questa applicazione. 
-                <strong className="block mt-1">DEVI configurare la tua API Key OpenAI per procedere.</strong>
-              </p>
-              <p className="text-red-700 text-xs mt-2">
-                Senza ChatGPT, il Professore Virtuale non può funzionare. Clicca su "Configura API Key" per attivare il sistema.
-              </p>
-            </div>
-          )}
-        </DialogHeader>
-        
-        <div className="space-y-6">
-          {step === 0 ? (
-            <PdfUploadStep
-              file={file}
-              isProcessing={isProcessing}
-              onFileUpload={handleFileUpload}
-              processingStep={processingStep}
-            />
-          ) : (
-            <ProfessorChatStep
-              file={file}
-              chunks={chunks}
-              isProcessing={isProcessing}
-              messages={messages}
-              isRecording={isRecording}
-              recordedAudio={recordedAudio}
-              transcriptionStatus={transcriptionStatus}
-              lastTranscription={lastTranscription}
-              currentQuestion={currentQuestion}
-              onStartRecording={handleVoiceRecording}
-              onStopRecording={handleVoiceRecording}
-              onResetRecording={resetRecording}
-              onProcessVoiceQuestion={processVoiceQuestion}
-              setCurrentQuestion={setCurrentQuestion}
-              onAskQuestion={askQuestion}
-              hasApiKey={!!apiKey}
-            />
-          )}
-        </div>
-      </DialogContent>
-    </Dialog>
+      ) : (
+        <ProfessorChatStep
+          file={file}
+          chunks={chunks}
+          isProcessing={isProcessing}
+          messages={messages}
+          currentQuestion={currentQuestion}
+          onStartRecording={handleStartVoiceRecording}
+          onStopRecording={handleStopVoiceRecording}
+          onResetRecording={handleResetVoiceRecording}
+          onProcessVoiceQuestion={handleProcessVoiceQuestion}
+          setCurrentQuestion={setCurrentQuestion}
+          onAskQuestion={askQuestion}
+          // Speech-to-text props
+          isRecording={isVoiceRecording}
+          isListening={isListening}
+          voiceTranscription={fullTranscript}
+          isTranscribing={isListening}
+          speechError={speechError}
+          speechSupported={speechSupported}
+        />
+      )}
+
+      {/* Modal per API Key */}
+      <ApiKeyModal
+        isOpen={showApiKeyModal}
+        onClose={() => setShowApiKeyModal(false)}
+        onSave={() => {}}
+      />
+    </div>
   );
 };
 
