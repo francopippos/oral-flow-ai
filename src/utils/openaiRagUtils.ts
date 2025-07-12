@@ -1,6 +1,8 @@
 
+import { optimizeChunksForTokens, compressChunks, getOptimalStrategy, estimateTokens } from './tokenUtils';
+
 /**
- * Sistema RAG reale con OpenAI GPT per Professore Universitario Virtuale
+ * Sistema RAG ottimizzato con gestione intelligente dei token per OpenAI
  */
 export const askOpenAIPdfProfessor = async (
   apiKey: string,
@@ -9,6 +11,58 @@ export const askOpenAIPdfProfessor = async (
 ): Promise<string> => {
   if (!contextChunks || contextChunks.length === 0) {
     return "🔍 Non ho trovato informazioni rilevanti nel documento per rispondere alla tua domanda. Prova a riformulare la domanda o verifica che il PDF contenga informazioni sull'argomento richiesto.";
+  }
+
+  // ===== OTTIMIZZAZIONE TOKEN INTELLIGENTE =====
+  console.log(`🧮 [TOKEN MANAGEMENT] Input iniziale: ${contextChunks.length} chunk`);
+  
+  // Determina strategia ottimale
+  const strategy = getOptimalStrategy(contextChunks);
+  console.log(`🎯 [STRATEGY] Strategia selezionata: ${strategy.strategy} (max ${strategy.maxTokens} token)`);
+  
+  // Applica ottimizzazione basata sulla strategia
+  let optimizedChunks: string[];
+  
+  switch (strategy.strategy) {
+    case 'full':
+      optimizedChunks = contextChunks;
+      console.log(`✅ [FULL] Uso tutti i chunk: ${contextChunks.length}`);
+      break;
+      
+    case 'optimized':
+      optimizedChunks = optimizeChunksForTokens(contextChunks, strategy.maxTokens);
+      console.log(`⚡ [OPTIMIZED] Chunk ottimizzati: ${optimizedChunks.length}`);
+      break;
+      
+    case 'compressed':
+      const selectedForCompression = contextChunks.slice(0, strategy.maxChunks);
+      optimizedChunks = compressChunks(selectedForCompression, strategy.maxTokens);
+      console.log(`🗜️ [COMPRESSED] Chunk compressi: ${optimizedChunks.length}`);
+      break;
+      
+    case 'summarized':
+      // Per documenti molto grandi, usa solo i chunk più rilevanti
+      optimizedChunks = contextChunks
+        .slice(0, strategy.maxChunks)
+        .map(chunk => {
+          // Estrai solo le parti più significative
+          const sentences = chunk.split(/[.!?]+/).filter(s => s.trim().length > 20);
+          return sentences.slice(0, 3).join('. ') + '.';
+        });
+      console.log(`📝 [SUMMARIZED] Chunk riassunti: ${optimizedChunks.length}`);
+      break;
+      
+    default:
+      optimizedChunks = contextChunks.slice(0, 8);
+  }
+  
+  // Verifica finale dei token
+  const finalTokens = optimizedChunks.reduce((sum, chunk) => sum + estimateTokens(chunk), 0);
+  console.log(`🎯 [FINAL CHECK] Token finali: ${finalTokens} (limite: ${strategy.maxTokens})`);
+  
+  if (finalTokens > strategy.maxTokens) {
+    console.log(`⚠️ [EMERGENCY] Ancora troppi token, compressione finale...`);
+    optimizedChunks = compressChunks(optimizedChunks, strategy.maxTokens * 0.8);
   }
 
   // Prompt professionale ottimizzato per risposte accademiche
@@ -29,7 +83,7 @@ FORMATO RISPOSTA:
 - Usa formattazione markdown per chiarezza
 
 ESTRATTI DAL DOCUMENTO CARICATO:
-${contextChunks.map((chunk, idx) => `
+${optimizedChunks.map((chunk, idx) => `
 === ESTRATTO ${idx + 1} ===
 ${chunk.trim()}
 `).join('\n')}
@@ -42,7 +96,8 @@ IMPORTANTE:
 
   try {
     console.log('🎓 [PROFESSORE REALE] Elaborando domanda:', question.substring(0, 100));
-    console.log('📚 [CONTEXT REALE] Chunk utilizzati:', contextChunks.length);
+    console.log('📚 [CONTEXT REALE] Chunk utilizzati:', optimizedChunks.length);
+    console.log('🧮 [TOKEN ESTIMATE] Token stimati:', estimateTokens(systemPrompt + question));
     console.log('🤖 [GPT-4o REALE] Preparando chiamata API OpenAI...');
     console.log('🔐 [API KEY] Lunghezza:', apiKey.length, 'caratteri');
     
@@ -53,13 +108,13 @@ IMPORTANTE:
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: "gpt-4o", // Usa GPT-4o per qualità accademica superiore e velocità
+        model: "gpt-4o-mini", // Usa GPT-4o-mini per efficienza e costi ridotti
         messages: [
           { role: "system", content: systemPrompt },
           { role: "user", content: `DOMANDA DELL'STUDENTE: ${question}` }
         ],
         temperature: 0.2, // Bassa per massima aderenza al testo
-        max_tokens: 1500, // Spazio sufficiente per risposte elaborate
+        max_tokens: Math.min(1200, 4096 - estimateTokens(systemPrompt + question)), // Dinamico
         top_p: 0.9,
         frequency_penalty: 0.3, // Evita ripetizioni
         presence_penalty: 0.2
@@ -93,11 +148,12 @@ IMPORTANTE:
     console.log('✅ [RISPOSTA REALE] Generata da GPT-4o:', answer.length, 'caratteri');
     console.log('📝 [PREVIEW RISPOSTA]:', answer.substring(0, 200) + '...');
     
-    // Aggiungi metadata professore se la risposta è valida
+    // Aggiungi metadata professore con info ottimizzazione
+    const strategyInfo = strategy.strategy === 'full' ? 'tutte le' : `${optimizedChunks.length} sezioni ottimizzate delle ${contextChunks.length}`;
     const professionalAnswer = `${answer}
 
 ---
-*🎓 Risposta del Professore Universitario Virtuale basata su ${contextChunks.length} sezione/i del documento caricato*`;
+*🎓 Risposta del Professore Universitario Virtuale basata su ${strategyInfo} sezioni del documento caricato*`;
     
     return professionalAnswer;
     
