@@ -8,7 +8,7 @@ import ApiKeyModal from "./VirtualProfessorDemo/ApiKeyModal";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { X, Settings } from "lucide-react";
-// import { createEmbeddings as createLocalEmbeddings } from "../utils/localRagUtils";
+import { createEmbeddingsForChunks, findRelevantChunks } from "../utils/embeddingUtils";
 import { askOpenAIPdfProfessor } from "../utils/openaiRagUtils";
 import { extractTextFromPDF } from "../utils/pdfUtils";
 
@@ -36,7 +36,7 @@ const VirtualProfessorDemo = ({ isOpen, onClose }: VirtualProfessorDemoProps = {
   const [embeddings, setEmbeddings] = useState<number[][]>([]);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [currentQuestion, setCurrentQuestion] = useState("");
-  const [apiKey, setApiKey] = useState(() => localStorage.getItem('openai_api_key') || '');
+  const [apiKey, setApiKey] = useState(''); // In-memory only, no localStorage
   const [showApiKeyModal, setShowApiKeyModal] = useState(false);
   
   // Speech to Text invece di audio recording
@@ -60,9 +60,9 @@ const VirtualProfessorDemo = ({ isOpen, onClose }: VirtualProfessorDemoProps = {
   const handleSaveApiKey = (key: string) => {
     const trimmedKey = key.trim();
     setApiKey(trimmedKey);
-    localStorage.setItem('openai_api_key', trimmedKey);
+    // No localStorage - keep in memory only
     setShowApiKeyModal(false);
-    console.log('🔑 [API KEY] Salvata:', trimmedKey.length, 'caratteri');
+    console.log('🔑 [API KEY] Salvata in memoria:', trimmedKey.length, 'caratteri');
   };
 
   // ===== GESTIONE UPLOAD E PROCESSING =====
@@ -91,9 +91,23 @@ const VirtualProfessorDemo = ({ isOpen, onClose }: VirtualProfessorDemoProps = {
       setChunks(textChunks);
       console.log('✅ Chunk creati:', textChunks.length);
       
-      // 3. Embedding locali (commentati per ora)
-      console.log('🧠 [EMBEDDING] Saltati per semplicità...');
-      setEmbeddings([]);
+      // 3. Create embeddings for each chunk
+      console.log('🧠 [EMBEDDING] Creazione embeddings per', textChunks.length, 'chunk...');
+      if (!apiKey.trim()) {
+        // If no API key, store empty embeddings and use simple text search as fallback
+        setEmbeddings([]);
+        console.log('⚠️ [EMBEDDING] API Key mancante, userò ricerca testuale semplice');
+      } else {
+        try {
+          const chunkEmbeddings = await createEmbeddingsForChunks(apiKey, textChunks);
+          setEmbeddings(chunkEmbeddings);
+          console.log('✅ [EMBEDDING] Embeddings creati:', chunkEmbeddings.length);
+        } catch (embError) {
+          console.error('❌ [EMBEDDING] Errore creazione embeddings:', embError);
+          setEmbeddings([]);
+          console.log('⚠️ [EMBEDDING] Fallback a ricerca testuale');
+        }
+      }
       
       setStep(1);
       
@@ -170,26 +184,27 @@ const VirtualProfessorDemo = ({ isOpen, onClose }: VirtualProfessorDemoProps = {
     ]);
     setIsProcessing(true);
 
-    // Dichiarazione fuori dal try per usarla nel catch
-    let relevantChunks: string[] = [];
-
     try {
       console.log('🎓 Professore elabora:', question);
       
-      // 1. Ricerca semantica sempre funzionante
-      
-      try {
-        console.log('🔍 [LOCALE] Ricerca semantica con HuggingFace...');
-        // Usa similarity search semplice locale
-        const questionWords = question.toLowerCase().split(' ');
-        relevantChunks = chunks.slice(0, 8); // Primi 8 chunk per semplicità
-        console.log('📚 [LOCALE] Chunk rilevanti trovati:', relevantChunks.length);
-      } catch (searchError) {
-        console.log('⚠️ [FALLBACK RICERCA] Uso chunk diretti...');
-        // Fallback: usa i primi chunk come rilevanti
-        relevantChunks = chunks.slice(0, 5);
-        console.log('📚 [FALLBACK] Chunk rilevanti:', relevantChunks.length);
+      if (!apiKey.trim()) {
+        throw new Error('API_KEY_REQUIRED');
       }
+      
+      // 1. Semantic Search with OpenAI embeddings (or fallback to text search)
+      console.log('🔍 [RAG] Ricerca chunk rilevanti...');
+      let searchResult: { chunks: string[], sourceInfo: string };
+      
+      if (embeddings.length > 0) {
+        // Use semantic search with embeddings
+        searchResult = await findRelevantChunks(apiKey, question, chunks, embeddings, 3);
+      } else {
+        // Fallback to text-based search
+        console.log('⚠️ [RAG] Embeddings non disponibili, uso ricerca testuale');
+        searchResult = await findRelevantChunks(apiKey, question, chunks, [], 3);
+      }
+      
+      const { chunks: relevantChunks, sourceInfo } = searchResult;
       
       if (relevantChunks.length === 0) {
         setMessages((prev) => [
@@ -197,6 +212,8 @@ const VirtualProfessorDemo = ({ isOpen, onClose }: VirtualProfessorDemoProps = {
           {
             role: "professor",
             content: `🔍 **Non ho trovato informazioni specifiche nel documento per rispondere a questa domanda.**
+
+${sourceInfo}
 
 **Possibili cause:**
 • L'argomento non è trattato nel PDF caricato
@@ -215,22 +232,23 @@ Posso aiutarti a esplorare i contenuti del documento se mi dai indicazioni più 
         return;
       }
 
-      // 2. ChatGPT è IL FULCRO - DEVE funzionare sempre
-      console.log('🤖 Chiamata OBBLIGATORIA a ChatGPT con', relevantChunks.length, 'chunk');
+      // 2. Send to GPT-4 with context
+      console.log('🤖 [RAG] Chiamata a GPT-4 con', relevantChunks.length, 'chunk rilevanti');
       
-      if (!apiKey.trim()) {
-        throw new Error('API_KEY_REQUIRED');
-      }
-      
-      console.log('🎯 [CHATGPT OBBLIGATORIO] Chiamata a GPT-4o...');
       const professorResponse = await askOpenAIPdfProfessor(apiKey, question, relevantChunks);
-      console.log('✅ [CHATGPT] Risposta ricevuta con successo');
+      console.log('✅ [RAG] Risposta ricevuta con successo');
+      
+      // Add source information to the response
+      const responseWithSource = `${professorResponse}
+
+---
+📋 **Fonte della Risposta:** ${sourceInfo}`;
       
       setMessages((prev) => [
         ...prev,
         { 
           role: "professor", 
-          content: professorResponse, 
+          content: responseWithSource, 
           timestamp: new Date(),
           sources: relevantChunks.map((chunk, i) => `Sezione ${i + 1}: ${chunk.substring(0, 100)}...`)
         },
