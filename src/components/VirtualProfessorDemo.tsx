@@ -5,6 +5,9 @@ import { createTextChunks } from "../utils/chunkingUtils";
 import PdfUploadStep from "./VirtualProfessorDemo/PdfUploadStep";
 import ProfessorChatStep from "./VirtualProfessorDemo/ProfessorChatStep";
 import ApiKeyModal from "./VirtualProfessorDemo/ApiKeyModal";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { X, Settings } from "lucide-react";
 // import { createEmbeddings as createLocalEmbeddings } from "../utils/localRagUtils";
 import { askOpenAIPdfProfessor } from "../utils/openaiRagUtils";
 import { extractTextFromPDF } from "../utils/pdfUtils";
@@ -271,46 +274,72 @@ Posso aiutarti a esplorare i contenuti del documento se mi dai indicazioni più 
 
   // ===== RENDER COMPONENTI =====
   
-  return (
-    <div className="space-y-6">
-      {step === 0 ? (
-        <PdfUploadStep
-          file={file}
-          isProcessing={isProcessing}
-          onFileUpload={handleFileUpload}
-        />
-      ) : (
-        <ProfessorChatStep
-          file={file}
-          chunks={chunks}
-          isProcessing={isProcessing}
-          messages={messages}
-          currentQuestion={currentQuestion}
-          onStartRecording={handleStartVoiceRecording}
-          onStopRecording={handleStopVoiceRecording}
-          onResetRecording={handleResetVoiceRecording}
-          onProcessVoiceQuestion={handleProcessVoiceQuestion}
-          setCurrentQuestion={setCurrentQuestion}
-          onAskQuestion={askQuestion}
-          // Speech-to-text props
-          isRecording={isVoiceRecording}
-          isListening={isListening}
-          voiceTranscription={fullTranscript}
-          isTranscribing={isListening}
-          speechError={speechError}
-          speechSupported={speechSupported}
-        />
-      )}
+  if (!isOpen) return null;
 
-      {/* Modal per API Key */}
-      <ApiKeyModal
-        isOpen={showApiKeyModal}
-        apiKey={apiKey}
-        onApiKeyChange={setApiKey}
-        onSave={() => handleSaveApiKey(apiKey)}
-        onClose={() => setShowApiKeyModal(false)}
-      />
-    </div>
+  return (
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden flex flex-col">
+        <DialogHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
+          <DialogTitle className="text-2xl font-bold text-primary">
+            🎓 Professore Virtuale - Demo RAG
+          </DialogTitle>
+          <div className="flex items-center gap-2">
+            <Button 
+              variant="outline" 
+              size="sm"
+              onClick={() => setShowApiKeyModal(true)}
+              className="text-xs"
+            >
+              <Settings className="h-4 w-4 mr-1" />
+              Configura API Key
+            </Button>
+            <Button variant="ghost" size="sm" onClick={onClose}>
+              <X className="h-4 w-4" />
+            </Button>
+          </div>
+        </DialogHeader>
+        
+        <div className="flex-1 overflow-auto space-y-6">
+          {step === 0 ? (
+            <PdfUploadStep
+              file={file}
+              isProcessing={isProcessing}
+              onFileUpload={handleFileUpload}
+            />
+          ) : (
+            <ProfessorChatStep
+              file={file}
+              chunks={chunks}
+              isProcessing={isProcessing}
+              messages={messages}
+              currentQuestion={currentQuestion}
+              onStartRecording={handleStartVoiceRecording}
+              onStopRecording={handleStopVoiceRecording}
+              onResetRecording={handleResetVoiceRecording}
+              onProcessVoiceQuestion={handleProcessVoiceQuestion}
+              setCurrentQuestion={setCurrentQuestion}
+              onAskQuestion={askQuestion}
+              // Speech-to-text props
+              isRecording={isVoiceRecording}
+              isListening={isListening}
+              voiceTranscription={fullTranscript}
+              isTranscribing={isListening}
+              speechError={speechError}
+              speechSupported={speechSupported}
+            />
+          )}
+        </div>
+
+        {/* Modal per API Key */}
+        <ApiKeyModal
+          isOpen={showApiKeyModal}
+          apiKey={apiKey}
+          onApiKeyChange={setApiKey}
+          onSave={() => handleSaveApiKey(apiKey)}
+          onClose={() => setShowApiKeyModal(false)}
+        />
+      </DialogContent>
+    </Dialog>
   );
 };
 
