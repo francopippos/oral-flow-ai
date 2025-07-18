@@ -16,7 +16,12 @@ export interface ChatMessage {
   sources?: string[];
 }
 
-const VirtualProfessorDemo = () => {
+interface VirtualProfessorDemoProps {
+  isOpen?: boolean;
+  onClose?: () => void;
+}
+
+const VirtualProfessorDemo = ({ isOpen, onClose }: VirtualProfessorDemoProps = {}) => {
   const { t } = useTranslation();
   
   // Stato principale
@@ -300,8 +305,10 @@ Posso aiutarti a esplorare i contenuti del documento se mi dai indicazioni più 
       {/* Modal per API Key */}
       <ApiKeyModal
         isOpen={showApiKeyModal}
+        apiKey={apiKey}
+        onApiKeyChange={setApiKey}
+        onSave={() => handleSaveApiKey(apiKey)}
         onClose={() => setShowApiKeyModal(false)}
-        onSave={() => {}}
       />
     </div>
   );
