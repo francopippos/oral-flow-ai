@@ -35,10 +35,10 @@ interface ProfessorChatStepProps {
 const ProfessorChatStep = (props: ProfessorChatStepProps) => {
   
   const suggestedExplanations = [
-    "Explain the main concept from this document as if teaching a classmate",
-    "Describe how you would present the key theory to an exam committee", 
-    "Explain the practical applications and their importance",
-    "Describe how different concepts in this document connect to each other"
+    "Explain electric charge and electron movement as if teaching it to a study group",
+    "Describe Coulomb's Law and its applications like you're presenting to a professor", 
+    "Present the concept of electric fields as if giving an oral exam answer",
+    "Explain electromagnetic induction as if you're teaching a lab session"
   ];
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -150,10 +150,10 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
         <div className="flex items-center gap-3 p-4 bg-secondary/50 rounded-lg border">
           <Mic className="h-5 w-5 text-primary" />
           <div className="flex-1">
-            <h3 className="font-semibold text-sm">🎤 Record your explanation</h3>
+            <h3 className="font-semibold text-sm">🎤 Practice Oral Explanation</h3>
             <p className="text-xs text-muted-foreground mt-1">
               {props.speechSupported 
-                ? "Practice your oral explanation: speak as if presenting to a class"
+                ? "Record yourself explaining concepts as if presenting to a professor or classmates. The AI will analyze your spoken explanation for clarity, accuracy, and academic language."
                 : "⚠️ Voice recognition not supported in this browser"
               }
             </p>
@@ -177,7 +177,7 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
               variant="default"
             >
               <Mic className="h-4 w-4" />
-              Start Recording
+              Start Oral Practice
             </Button>
           ) : (
             <Button
@@ -186,7 +186,7 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
               className="flex items-center gap-2"
             >
               <Square className="h-4 w-4" />
-              Stop Recording
+              Stop Explanation
             </Button>
           )}
 
@@ -211,11 +211,11 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
                 <div className="w-2 h-2 bg-primary rounded-full animate-pulse delay-150"></div>
               </div>
               <span className="text-sm font-medium text-primary">
-                🎤 Listening...
+                🎤 Recording your explanation...
               </span>
             </div>
             <p className="text-xs text-muted-foreground">
-              Speak clearly into the microphone
+              Explain the concept as if you're teaching it to someone. Speak clearly and use proper academic terminology.
             </p>
           </div>
         )}
@@ -226,7 +226,7 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
             <div className="p-3 bg-accent/20 border border-accent/30 rounded-lg">
               <h4 className="text-sm font-medium mb-2 flex items-center gap-2">
                 <MessageSquare className="h-4 w-4" />
-                📝 Transcription:
+                📝 Your Oral Explanation:
               </h4>
               <p className="text-sm">
                 {props.voiceTranscription}
@@ -244,7 +244,7 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
                 className="w-full flex items-center gap-2"
               >
                 <Send className="h-4 w-4" />
-                {props.isProcessing ? "Processing..." : "✅ Confirm and Send"}
+                {props.isProcessing ? "Getting Feedback..." : "✅ Submit for Analysis"}
               </Button>
             )}
           </div>
@@ -256,9 +256,9 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
         <div className="flex items-center gap-3 p-4 bg-secondary/50 rounded-lg border">
           <MessageCircle className="h-5 w-5 text-primary" />
           <div className="flex-1">
-            <h3 className="font-semibold text-sm">💬 Write your explanation</h3>
+            <h3 className="font-semibold text-sm">💬 Type your explanation</h3>
             <p className="text-xs text-muted-foreground mt-1">
-              Explain a concept as if presenting to classmates or in an oral exam
+              Alternatively, write out your explanation as if you were speaking it aloud
             </p>
           </div>
         </div>
@@ -267,7 +267,7 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
           <Textarea
             value={props.currentQuestion}
             onChange={(e) => props.setCurrentQuestion(e.target.value)}
-            placeholder="Explain a concept from your document here..."
+            placeholder="Type your explanation as if speaking to an audience..."
             disabled={props.isProcessing}
             className="min-h-[100px]"
           />
@@ -278,7 +278,7 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
             className="w-full flex items-center gap-2"
           >
             <Send className="h-4 w-4" />
-            {props.isProcessing ? "Evaluating..." : "Get Feedback"}
+            {props.isProcessing ? "Analyzing..." : "Get Coaching Feedback"}
           </Button>
         </form>
 
