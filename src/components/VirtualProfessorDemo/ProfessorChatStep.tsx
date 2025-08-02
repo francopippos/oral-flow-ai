@@ -40,6 +40,7 @@ interface ProfessorChatStepProps {
   speechSupported: boolean;
   voiceCapabilities?: VoiceCapabilities;
   supportMessage?: string;
+  detectedLanguage?: string;
 }
 
 const ProfessorChatStep = (props: ProfessorChatStepProps) => {
@@ -163,7 +164,7 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
             <h3 className="font-semibold text-sm">🎤 Practice Oral Explanation</h3>
             <p className="text-xs text-muted-foreground mt-1">
               {props.speechSupported 
-                ? "Record yourself explaining concepts as if presenting to a professor or classmates. The AI will analyze your spoken explanation for clarity, accuracy, and academic language."
+                ? "🌍 Speak in any language (Italian, English, French, Spanish, etc.). The AI will automatically detect your language and respond appropriately."
                 : props.supportMessage || "Voice recognition not supported in this browser"
               }
             </p>
@@ -171,17 +172,26 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
               <div className="text-xs mt-2 p-2 bg-blue-50 dark:bg-blue-900/20 rounded border">
                 <div className="flex items-center gap-2 mb-1">
                   <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                  <span className="font-medium">Platform Support:</span>
+                  <span className="font-medium">🌍 Multi-Language Voice Support:</span>
                 </div>
-                <div className="grid grid-cols-2 gap-2 text-xs">
+                <div className="grid grid-cols-1 gap-1 text-xs mb-2">
+                  <div className="font-medium">
+                    Current Language: {props.detectedLanguage === 'auto' ? 'Auto-detect' : 
+                    props.detectedLanguage?.split('-')[0].toUpperCase() || 'Auto'}
+                  </div>
+                  <div>
+                    Supported: 🇮🇹 Italian • 🇺🇸 English • 🇫🇷 French • 🇪🇸 Spanish • 🇩🇪 German • 🇧🇷 Portuguese • 🇷🇺 Russian • 🇨🇳 Chinese • 🇯🇵 Japanese • 🇰🇷 Korean
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-2 text-xs border-t pt-2">
                   <div>Browser Speech: {props.voiceCapabilities.canUseBrowserSpeech ? '✅' : '❌'}</div>
                   <div>Audio Recording: {props.voiceCapabilities.canRecordAudio ? '✅' : '❌'}</div>
                   <div>Server Transcription: {props.voiceCapabilities.canUseServerTranscription ? '✅' : '❌'}</div>
-                  <div>Mobile Device: {props.voiceCapabilities.isMobile ? '📱' : '🖥️'}</div>
+                  <div>Device: {props.voiceCapabilities.isMobile ? '📱 Mobile' : '🖥️ Desktop'}</div>
                 </div>
                 <div className="mt-1 font-medium">
-                  Mode: {props.voiceCapabilities.recommendedMode === 'browser-speech' ? '🎤 Real-time' : 
-                         props.voiceCapabilities.recommendedMode === 'server-transcription' ? '🔄 Server-based' : '❌ Unavailable'}
+                  Active Mode: {props.voiceCapabilities.recommendedMode === 'browser-speech' ? '🎤 Real-time Recognition' : 
+                         props.voiceCapabilities.recommendedMode === 'server-transcription' ? '🔄 Server-based Transcription' : '❌ Unavailable'}
                 </div>
               </div>
             )}
@@ -243,7 +253,7 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
               </span>
             </div>
             <p className="text-xs text-muted-foreground">
-              Explain the concept as if you're teaching it to someone. Speak clearly and use proper academic terminology.
+              🌍 Speak naturally in your preferred language. The system will automatically detect and process your speech, whether you're speaking Italian, English, or any other supported language.
             </p>
           </div>
         )}

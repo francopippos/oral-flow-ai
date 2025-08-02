@@ -29,12 +29,12 @@ serve(async (req) => {
 
     console.log('🎵 [WHISPER] Processing audio file:', audioFile.name, audioFile.size, 'bytes');
 
-    // Prepare FormData for OpenAI Whisper
+    // Prepare FormData for OpenAI Whisper with auto-language detection
     const whisperFormData = new FormData();
     whisperFormData.append('file', audioFile);
     whisperFormData.append('model', 'whisper-1');
-    whisperFormData.append('language', 'it');
-    whisperFormData.append('response_format', 'text');
+    // Remove hardcoded language to enable auto-detection for all languages
+    whisperFormData.append('response_format', 'json'); // Use JSON to get language info
 
     const response = await fetch('https://api.openai.com/v1/audio/transcriptions', {
       method: 'POST',
@@ -50,16 +50,18 @@ serve(async (req) => {
       throw new Error(`OpenAI API error: ${response.status}`);
     }
 
-    const transcription = await response.text();
+    const result = await response.json();
     console.log('✅ [WHISPER] Transcription completed successfully');
+    console.log('🌍 [WHISPER] Detected language:', result.language);
 
-    if (!transcription.trim()) {
+    if (!result.text || !result.text.trim()) {
       throw new Error('Transcription was empty - please speak more clearly');
     }
 
     return new Response(
       JSON.stringify({ 
-        transcription: transcription.trim(),
+        text: result.text.trim(),
+        language: result.language || 'auto-detected',
         success: true 
       }),
       { 

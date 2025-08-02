@@ -46,6 +46,7 @@ const VirtualProfessorDemo = ({ isOpen, onClose }: VirtualProfessorDemoProps = {
     error: speechError,
     capabilities,
     supportMessage,
+    detectedLanguage,
     startListening,
     stopListening,
     resetTranscript,
@@ -329,6 +330,7 @@ I can help you explore the document contents if you give me more precise guidanc
               speechSupported={speechSupported}
               voiceCapabilities={capabilities}
               supportMessage={supportMessage}
+              detectedLanguage={detectedLanguage}
             />
           )}
         </div>

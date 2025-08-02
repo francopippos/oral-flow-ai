@@ -3,7 +3,40 @@ import { supabase } from '@/integrations/supabase/client';
 
 // Enhanced browser detection and feature support
 const detectBrowserCapabilities = () => {
-  if (typeof window === 'undefined') return { hasWebSpeech: false, hasMediaRecorder: false, isMobile: false };
+  if (typeof window === 'undefined') return { 
+    hasWebSpeech: false, 
+    hasMediaRecorder: false, 
+    isMobile: false,
+    autoLanguage: 'en-US' 
+  };
+  
+  // Enhanced language detection
+  const autoDetectLanguage = () => {
+    const userLang = navigator.language || navigator.languages?.[0] || 'en-US';
+    // Support for major languages
+    const supportedLanguages: Record<string, string> = {
+      'it': 'it-IT',
+      'it-IT': 'it-IT',
+      'en': 'en-US', 
+      'en-US': 'en-US',
+      'en-GB': 'en-GB',
+      'fr': 'fr-FR',
+      'fr-FR': 'fr-FR',
+      'es': 'es-ES',
+      'es-ES': 'es-ES',
+      'de': 'de-DE',
+      'de-DE': 'de-DE',
+      'pt': 'pt-BR',
+      'pt-BR': 'pt-BR',
+      'ru': 'ru-RU',
+      'zh': 'zh-CN',
+      'ja': 'ja-JP',
+      'ko': 'ko-KR'
+    };
+    
+    const langCode = userLang.split('-')[0];
+    return supportedLanguages[userLang] || supportedLanguages[langCode] || 'en-US';
+  };
   
   const userAgent = navigator.userAgent.toLowerCase();
   const isMobile = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent);
@@ -26,7 +59,8 @@ const detectBrowserCapabilities = () => {
     isIOS,
     isSafari,
     webSpeechReliable,
-    preferServerTranscription: !webSpeechReliable || isMobile
+    preferServerTranscription: !webSpeechReliable || isMobile,
+    autoLanguage: autoDetectLanguage()
   };
 };
 
@@ -48,6 +82,8 @@ export interface VoiceCapabilities {
   canUseServerTranscription: boolean;
   isMobile: boolean;
   recommendedMode: 'browser-speech' | 'server-transcription' | 'none';
+  detectedLanguage: string;
+  supportedLanguages: string[];
 }
 
 export const useUniversalVoice = () => {
@@ -56,12 +92,15 @@ export const useUniversalVoice = () => {
   const [transcript, setTranscript] = useState('');
   const [interimTranscript, setInterimTranscript] = useState('');
   const [error, setError] = useState<string | null>(null);
+  const [detectedLanguage, setDetectedLanguage] = useState<string>('auto');
   const [capabilities, setCapabilities] = useState<VoiceCapabilities>({
     canUseBrowserSpeech: false,
     canRecordAudio: false,
     canUseServerTranscription: false,
     isMobile: false,
-    recommendedMode: 'none'
+    recommendedMode: 'none',
+    detectedLanguage: 'auto',
+    supportedLanguages: ['en-US', 'it-IT', 'fr-FR', 'es-ES', 'de-DE', 'pt-BR', 'ru-RU', 'zh-CN', 'ja-JP', 'ko-KR']
   });
   
   const recognitionRef = useRef<any>(null);
@@ -81,10 +120,13 @@ export const useUniversalVoice = () => {
       canUseServerTranscription: caps.hasMediaRecorder, // If we can record, we can send to server
       isMobile: caps.isMobile,
       recommendedMode: caps.preferServerTranscription ? 'server-transcription' : 
-                      caps.webSpeechReliable ? 'browser-speech' : 'none'
+                      caps.webSpeechReliable ? 'browser-speech' : 'none',
+      detectedLanguage: caps.autoLanguage,
+      supportedLanguages: ['en-US', 'it-IT', 'fr-FR', 'es-ES', 'de-DE', 'pt-BR', 'ru-RU', 'zh-CN', 'ja-JP', 'ko-KR', 'auto']
     };
     
     setCapabilities(voiceCapabilities);
+    setDetectedLanguage(caps.autoLanguage);
     
     console.log('🔍 Voice capabilities detected:', voiceCapabilities);
   }, []);
@@ -102,7 +144,7 @@ export const useUniversalVoice = () => {
       
       recognition.continuous = true;
       recognition.interimResults = true;
-      recognition.lang = 'en-US'; // Default to English for wider compatibility
+      recognition.lang = detectedLanguage; // Use auto-detected language
       recognition.maxAlternatives = 1;
       
       recognition.onstart = () => {
@@ -278,8 +320,12 @@ export const useUniversalVoice = () => {
 
           if (data?.text) {
             const transcribedText = data.text.trim();
-            console.log('✅ Server transcription result:', transcribedText);
+            const language = data.language || 'auto-detected';
             
+            console.log('✅ Server transcription result:', transcribedText);
+            console.log('🌍 Detected language:', language);
+            
+            setDetectedLanguage(language);
             finalTranscriptRef.current = transcribedText;
             setTranscript(transcribedText);
             setInterimTranscript('');
@@ -353,16 +399,19 @@ export const useUniversalVoice = () => {
       return 'Voice input not supported in this browser. Please use Chrome, Edge, or Safari.';
     }
     
+    const langName = detectedLanguage === 'auto' ? 'Auto-detect' : 
+                    detectedLanguage.split('-')[0].toUpperCase();
+    
     if (capabilities.recommendedMode === 'server-transcription') {
-      return 'Using enhanced server-based transcription for better accuracy.';
+      return `Using enhanced server-based transcription (${langName}) for better accuracy across all languages.`;
     }
     
     if (capabilities.recommendedMode === 'browser-speech') {
-      return 'Using real-time browser speech recognition.';
+      return `Using real-time browser speech recognition (${langName}). Supports multiple languages automatically.`;
     }
     
-    return 'Voice input available.';
-  }, [capabilities.recommendedMode]);
+    return 'Voice input available with multi-language support.';
+  }, [capabilities.recommendedMode, detectedLanguage]);
 
   return {
     // State
@@ -371,6 +420,7 @@ export const useUniversalVoice = () => {
     interimTranscript,
     error,
     capabilities,
+    detectedLanguage,
     
     // Computed values
     fullTranscript: transcript + (interimTranscript ? ` ${interimTranscript}` : ''),
