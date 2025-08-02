@@ -203,15 +203,15 @@ I can help you explore the document contents if you give me more precise guidanc
         return;
       }
 
-      // 2. Send to Bistro AI with context
-      console.log('🤖 [BISTRO] Calling Bistro AI with', relevantChunks.length, 'relevant chunks');
+      // 2. Send to AI Professor with context (combines PDF + ChatGPT knowledge)
+      console.log('🎓 [AI PROFESSOR] Calling AI Professor with', relevantChunks.length, 'relevant chunks');
       
-      const { askBistroProfessor } = await import("../utils/bistroApiUtils");
-      const bistroResponse = await askBistroProfessor(question, relevantChunks);
-      console.log('✅ [BISTRO] Response received successfully');
+      const { askAIProfessor } = await import("../utils/aiProfessorUtils");
+      const aiResponse = await askAIProfessor(question, relevantChunks, file?.name);
+      console.log('✅ [AI PROFESSOR] Response received successfully');
       
       // Add source information to the response
-      const responseWithSource = `${bistroResponse}
+      const responseWithSource = `${aiResponse}
 
 ---
 📋 **Response Source:** ${sourceInfo}`;
@@ -227,22 +227,22 @@ I can help you explore the document contents if you give me more precise guidanc
       ]);
       
     } catch (error: any) {
-      console.error("❌ [BISTRO CRITICAL] Core system error:", error);
+      console.error("❌ [AI PROFESSOR CRITICAL] Core system error:", error);
       
-      // Bistro AI is the core - if it fails, the app doesn't work
-      let errorMessage = "❌ **BISTRO AI SYSTEM ERROR**\n\n";
+      // AI Professor is the core - if it fails, the app doesn't work
+      let errorMessage = "❌ **AI PROFESSOR SYSTEM ERROR**\n\n";
       
-      if (error.message?.includes('SERVICE_UNAVAILABLE')) {
-        errorMessage += "🤖 **Bistro AI Temporarily Unavailable:**\nThe AI service is currently undergoing maintenance.\n\n**SOLUTION:** Please try again in a few moments. Our team is working to restore full functionality.";
-      } else if (error.message?.includes('NETWORK_ERROR')) {
-        errorMessage += "🌐 **Connection Error:**\nUnable to reach Bistro AI services.\n\n**SOLUTION:** Check your internet connection and try again.";
-      } else if (error.message?.includes('BISTRO_ERROR')) {
-        errorMessage += `🔧 **Bistro AI Processing Error:**\n${error.message.replace('BISTRO_ERROR: ', '')}\n\n**SOLUTION:** Please try rephrasing your question or try again in a moment.`;
+      if (error.message?.includes('API key')) {
+        errorMessage += "🔑 **OpenAI API Key Required:**\nThe AI Professor needs an OpenAI API key to function.\n\n**SOLUTION:** Please configure your OpenAI API key in the system settings.";
+      } else if (error.message?.includes('quota')) {
+        errorMessage += "📊 **Usage Limit Reached:**\nThe AI service has reached its daily quota.\n\n**SOLUTION:** Please try again later when the quota resets.";
+      } else if (error.message?.includes('AI_PROFESSOR_ERROR')) {
+        errorMessage += `🔧 **AI Professor Processing Error:**\n${error.message.replace('AI_PROFESSOR_ERROR: ', '')}\n\n**SOLUTION:** Please try rephrasing your question or try again in a moment.`;
       } else {
         errorMessage += `🔧 **Technical Error:**\n${error.message || error}\n\n**SOLUTION:** Please try again. If the issue persists, the system may be temporarily unavailable.`;
       }
       
-      errorMessage += "\n\n🎯 **Bistro AI powers the core intelligence of this platform. Thank you for your patience while we resolve any issues.**";
+      errorMessage += "\n\n🎓 **The AI Professor combines document analysis with comprehensive AI knowledge to provide detailed, educational responses.**";
       
       setMessages((prev) => [
         ...prev,
@@ -267,7 +267,7 @@ I can help you explore the document contents if you give me more precise guidanc
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden flex flex-col">
         <DialogHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
           <DialogTitle className="text-2xl font-bold text-primary">
-            🤖 Bistro AI - Virtual Professor Demo
+            🎓 AI Professor - Enhanced Document Analysis
           </DialogTitle>
           <div className="flex items-center gap-2">
             <div className="text-xs text-muted-foreground flex items-center gap-1">
