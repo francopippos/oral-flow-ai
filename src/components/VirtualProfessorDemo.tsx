@@ -4,16 +4,15 @@ import { useSpeechToText } from "../hooks/useSpeechToText";
 import { createTextChunks } from "../utils/chunkingUtils";
 import PdfUploadStep from "./VirtualProfessorDemo/PdfUploadStep";
 import ProfessorChatStep from "./VirtualProfessorDemo/ProfessorChatStep";
-import ApiKeyModal from "./VirtualProfessorDemo/ApiKeyModal";
+
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { X, Settings } from "lucide-react";
-import { createEmbeddingsForChunks, findRelevantChunks } from "../utils/embeddingUtils";
-import { askOpenAIPdfProfessor } from "../utils/openaiRagUtils";
+import { createEmbeddingsWithBistro, findRelevantChunksWithBistro, askBistroProfessor } from "../utils/bistroApiUtils";
 import { extractTextFromPDF } from "../utils/pdfUtils";
 
 export interface ChatMessage {
-  role: "user" | "professor";
+  role: "user" | "bistro";
   content: string;
   timestamp: Date;
   sources?: string[];
@@ -36,8 +35,6 @@ const VirtualProfessorDemo = ({ isOpen, onClose }: VirtualProfessorDemoProps = {
   const [embeddings, setEmbeddings] = useState<number[][]>([]);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [currentQuestion, setCurrentQuestion] = useState("");
-  const [apiKey, setApiKey] = useState(''); // In-memory only, no localStorage
-  const [showApiKeyModal, setShowApiKeyModal] = useState(false);
   
   // Speech to Text invece di audio recording
   const {
@@ -56,14 +53,6 @@ const VirtualProfessorDemo = ({ isOpen, onClose }: VirtualProfessorDemoProps = {
   // Stato per gestire la registrazione vocale per UI
   const [isVoiceRecording, setIsVoiceRecording] = useState(false);
 
-  // ===== GESTIONE API KEY =====
-  const handleSaveApiKey = (key: string) => {
-    const trimmedKey = key.trim();
-    setApiKey(trimmedKey);
-    // No localStorage - keep in memory only
-    setShowApiKeyModal(false);
-    console.log('🔑 [API KEY] Salvata in memoria:', trimmedKey.length, 'caratteri');
-  };
 
   // ===== GESTIONE UPLOAD E PROCESSING =====
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -91,22 +80,16 @@ const VirtualProfessorDemo = ({ isOpen, onClose }: VirtualProfessorDemoProps = {
       setChunks(textChunks);
       console.log('✅ Chunk creati:', textChunks.length);
       
-      // 3. Create embeddings for each chunk
-      console.log('🧠 [EMBEDDING] Creazione embeddings per', textChunks.length, 'chunk...');
-      if (!apiKey.trim()) {
-        // If no API key, store empty embeddings and use simple text search as fallback
+      // 3. Create embeddings for each chunk with Bistro AI
+      console.log('🧠 [BISTRO] Creating embeddings for', textChunks.length, 'chunks...');
+      try {
+        const chunkEmbeddings = await createEmbeddingsWithBistro(textChunks);
+        setEmbeddings(chunkEmbeddings);
+        console.log('✅ [BISTRO] Embeddings created:', chunkEmbeddings.length);
+      } catch (embError) {
+        console.error('❌ [BISTRO] Error creating embeddings:', embError);
         setEmbeddings([]);
-        console.log('⚠️ [EMBEDDING] API Key mancante, userò ricerca testuale semplice');
-      } else {
-        try {
-          const chunkEmbeddings = await createEmbeddingsForChunks(apiKey, textChunks);
-          setEmbeddings(chunkEmbeddings);
-          console.log('✅ [EMBEDDING] Embeddings creati:', chunkEmbeddings.length);
-        } catch (embError) {
-          console.error('❌ [EMBEDDING] Errore creazione embeddings:', embError);
-          setEmbeddings([]);
-          console.log('⚠️ [EMBEDDING] Fallback a ricerca testuale');
-        }
+        console.log('⚠️ [BISTRO] Fallback to text search');
       }
       
       setStep(1);
@@ -185,101 +168,83 @@ const VirtualProfessorDemo = ({ isOpen, onClose }: VirtualProfessorDemoProps = {
     setIsProcessing(true);
 
     try {
-      console.log('🎓 Professore elabora:', question);
+      console.log('🤖 [BISTRO] Processing question:', question);
       
-      if (!apiKey.trim()) {
-        throw new Error('API_KEY_REQUIRED');
-      }
-      
-      // 1. Semantic Search with OpenAI embeddings (or fallback to text search)
-      console.log('🔍 [RAG] Ricerca chunk rilevanti...');
-      let searchResult: { chunks: string[], sourceInfo: string };
-      
-      if (embeddings.length > 0) {
-        // Use semantic search with embeddings
-        searchResult = await findRelevantChunks(apiKey, question, chunks, embeddings, 3);
-      } else {
-        // Fallback to text-based search
-        console.log('⚠️ [RAG] Embeddings non disponibili, uso ricerca testuale');
-        searchResult = await findRelevantChunks(apiKey, question, chunks, [], 3);
-      }
-      
+      // 1. Semantic Search with Bistro AI (or fallback to text search)
+      console.log('🔍 [BISTRO] Finding relevant chunks...');
+      const searchResult = await findRelevantChunksWithBistro(question, chunks, embeddings, 3);
       const { chunks: relevantChunks, sourceInfo } = searchResult;
       
       if (relevantChunks.length === 0) {
         setMessages((prev) => [
           ...prev,
           {
-            role: "professor",
-            content: `🔍 **Non ho trovato informazioni specifiche nel documento per rispondere a questa domanda.**
+            role: "bistro",
+            content: `🔍 **I couldn't find specific information in the document to answer this question.**
 
 ${sourceInfo}
 
-**Possibili cause:**
-• L'argomento non è trattato nel PDF caricato
-• La terminologia usata è diversa da quella nel documento
-• La domanda è troppo generica
+**Possible reasons:**
+• The topic is not covered in the uploaded PDF
+• The terminology used differs from what's in the document  
+• The question is too general
 
-**Suggerimenti:**
-• Riprova con parole chiave più specifiche
-• Usa terminologia presente nel documento
-• Fai una domanda più dettagliata
+**Suggestions:**
+• Try with more specific keywords
+• Use terminology present in the document
+• Ask a more detailed question
 
-Posso aiutarti a esplorare i contenuti del documento se mi dai indicazioni più precise! 📖`,
+I can help you explore the document contents if you give me more precise guidance! 📖`,
             timestamp: new Date(),
           },
         ]);
         return;
       }
 
-      // 2. Send to GPT-4 with context
-      console.log('🤖 [RAG] Chiamata a GPT-4 con', relevantChunks.length, 'chunk rilevanti');
+      // 2. Send to Bistro AI with context
+      console.log('🤖 [BISTRO] Calling Bistro AI with', relevantChunks.length, 'relevant chunks');
       
-      const professorResponse = await askOpenAIPdfProfessor(apiKey, question, relevantChunks);
-      console.log('✅ [RAG] Risposta ricevuta con successo');
+      const bistroResponse = await askBistroProfessor(question, relevantChunks);
+      console.log('✅ [BISTRO] Response received successfully');
       
       // Add source information to the response
-      const responseWithSource = `${professorResponse}
+      const responseWithSource = `${bistroResponse}
 
 ---
-📋 **Fonte della Risposta:** ${sourceInfo}`;
+📋 **Response Source:** ${sourceInfo}`;
       
       setMessages((prev) => [
         ...prev,
         { 
-          role: "professor", 
+          role: "bistro", 
           content: responseWithSource, 
           timestamp: new Date(),
-          sources: relevantChunks.map((chunk, i) => `Sezione ${i + 1}: ${chunk.substring(0, 100)}...`)
+          sources: relevantChunks.map((chunk, i) => `Section ${i + 1}: ${chunk.substring(0, 100)}...`)
         },
       ]);
       
     } catch (error: any) {
-      console.error("❌ [CHATGPT CRITICO] Errore del fulcro:", error);
+      console.error("❌ [BISTRO CRITICAL] Core system error:", error);
       
-      // ChatGPT È IL FULCRO - se fallisce, l'app non funziona
-      let errorMessage = "❌ **ERRORE CHATGPT - Sistema Non Operativo**\n\n";
+      // Bistro AI is the core - if it fails, the app doesn't work
+      let errorMessage = "❌ **BISTRO AI SYSTEM ERROR**\n\n";
       
-      if (error.message?.includes('API_KEY_REQUIRED')) {
-        errorMessage += "🔑 **API Key Mancante:**\nChatGPT è il fulcro di questa applicazione.\n\n**SOLUZIONE OBBLIGATORIA:** Configura subito la tua API Key OpenAI cliccando su 'Configura API Key' in alto a destra.";
-      } else if (error.message?.includes('API_KEY_INVALID') || error.toString().includes('401')) {
-        errorMessage += "🔑 **API Key Non Valida:**\nLa tua API Key OpenAI non è corretta.\n\n**SOLUZIONE:** Verifica e aggiorna la tua API Key nelle impostazioni.";
-      } else if (error.message?.includes('QUOTA_EXCEEDED') || error.toString().includes('quota') || error.toString().includes('429')) {
-        errorMessage += "💳 **Credito OpenAI Esaurito:**\nIl tuo account OpenAI ha terminato il credito disponibile.\n\n**SOLUZIONE OBBLIGATORIA:** Ricarica il tuo account su platform.openai.com\n\n⚠️ **IMPORTANTE:** Senza credito OpenAI, questa applicazione non può funzionare.";
-      } else if (error.toString().includes('403')) {
-        errorMessage += "🚫 **Accesso Negato:**\nProblema di autorizzazione con il tuo account OpenAI.\n\n**SOLUZIONE:** Verifica lo stato del tuo account su platform.openai.com";
-      } else if (error.toString().includes('network') || error.toString().includes('fetch')) {
-        errorMessage += "🌐 **Errore di Connessione:**\nImpossibile raggiungere i server OpenAI.\n\n**SOLUZIONE:** Controlla la tua connessione internet e riprova.";
+      if (error.message?.includes('SERVICE_UNAVAILABLE')) {
+        errorMessage += "🤖 **Bistro AI Temporarily Unavailable:**\nThe AI service is currently undergoing maintenance.\n\n**SOLUTION:** Please try again in a few moments. Our team is working to restore full functionality.";
+      } else if (error.message?.includes('NETWORK_ERROR')) {
+        errorMessage += "🌐 **Connection Error:**\nUnable to reach Bistro AI services.\n\n**SOLUTION:** Check your internet connection and try again.";
+      } else if (error.message?.includes('BISTRO_ERROR')) {
+        errorMessage += `🔧 **Bistro AI Processing Error:**\n${error.message.replace('BISTRO_ERROR: ', '')}\n\n**SOLUTION:** Please try rephrasing your question or try again in a moment.`;
       } else {
-        errorMessage += `🔧 **Errore Tecnico ChatGPT:**\n${error.message || error}\n\n**SOLUZIONE:** Riprova tra qualche secondo. Se persiste, verifica la tua API Key.`;
+        errorMessage += `🔧 **Technical Error:**\n${error.message || error}\n\n**SOLUTION:** Please try again. If the issue persists, the system may be temporarily unavailable.`;
       }
       
-      errorMessage += "\n\n🎯 **ChatGPT è il cuore di questa applicazione. Senza di lui, il sistema non è operativo.**";
+      errorMessage += "\n\n🎯 **Bistro AI powers the core intelligence of this platform. Thank you for your patience while we resolve any issues.**";
       
       setMessages((prev) => [
         ...prev,
         {
-          role: "professor",
+          role: "bistro",
           content: errorMessage,
           timestamp: new Date(),
         },
@@ -299,18 +264,13 @@ Posso aiutarti a esplorare i contenuti del documento se mi dai indicazioni più 
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden flex flex-col">
         <DialogHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
           <DialogTitle className="text-2xl font-bold text-primary">
-            🎓 Professore Virtuale - Demo RAG
+            🤖 Bistro AI - Virtual Professor Demo
           </DialogTitle>
           <div className="flex items-center gap-2">
-            <Button 
-              variant="outline" 
-              size="sm"
-              onClick={() => setShowApiKeyModal(true)}
-              className="text-xs"
-            >
-              <Settings className="h-4 w-4 mr-1" />
-              Configura API Key
-            </Button>
+            <div className="text-xs text-muted-foreground flex items-center gap-1">
+              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+              Powered by OralFlow AI
+            </div>
             <Button variant="ghost" size="sm" onClick={onClose}>
               <X className="h-4 w-4" />
             </Button>
@@ -348,14 +308,6 @@ Posso aiutarti a esplorare i contenuti del documento se mi dai indicazioni più 
           )}
         </div>
 
-        {/* Modal per API Key */}
-        <ApiKeyModal
-          isOpen={showApiKeyModal}
-          apiKey={apiKey}
-          onApiKeyChange={setApiKey}
-          onSave={() => handleSaveApiKey(apiKey)}
-          onClose={() => setShowApiKeyModal(false)}
-        />
       </DialogContent>
     </Dialog>
   );

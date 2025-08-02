@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
 interface ChatMessage {
-  role: "user" | "professor";
+  role: "user" | "bistro";
   content: string;
   timestamp: Date;
   sources?: string[];
@@ -34,10 +34,10 @@ interface ProfessorChatStepProps {
 const ProfessorChatStep = (props: ProfessorChatStepProps) => {
   
   const suggestedQuestions = [
-    "Riassumi i concetti principali del documento",
-    "Spiega gli aspetti più complessi in modo semplice",
-    "Quali sono i punti chiave da ricordare?",
-    "Collega i diversi argomenti trattati"
+    "Summarize the main concepts in the document",
+    "Explain the most complex aspects in simple terms", 
+    "What are the key points to remember?",
+    "Connect the different topics covered"
   ];
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -54,15 +54,15 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
         <div className="flex items-center space-x-4 mb-4">
           <Brain className="h-8 w-8 text-primary" />
           <div className="flex-1">
-            <h3 className="text-xl font-bold">🎓 Professore Universitario Virtuale Attivo</h3>
+            <h3 className="text-xl font-bold">🤖 Bistro AI Virtual Professor Active</h3>
             <p className="text-muted-foreground">
-              Sistema RAG operativo • <strong>{props.file?.name}</strong> • {props.chunks.length} sezioni semantiche
+              OralFlow AI System • <strong>{props.file?.name}</strong> • {props.chunks.length} semantic sections
             </p>
           </div>
           <div className="text-right">
             <div className="bg-green-100 text-green-800 px-4 py-2 rounded-lg dark:bg-green-900 dark:text-green-200">
-              <div className="font-semibold">✅ ChatGPT Attivo</div>
-              <div className="text-xs">Risposte AI avanzate</div>
+              <div className="font-semibold">✅ Bistro AI Active</div>
+              <div className="text-xs">Advanced AI responses</div>
             </div>
           </div>
         </div>
@@ -72,15 +72,15 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
             <div className="flex items-center gap-2">
               <BookOpen className="h-4 w-4 text-primary" />
-              <span><strong>Analisi Semantica:</strong> Comprende il contenuto in profondità</span>
+              <span><strong>Semantic Analysis:</strong> Deep content understanding</span>
             </div>
             <div className="flex items-center gap-2">
               <MessageCircle className="h-4 w-4 text-primary" />
-              <span><strong>Risposte Contestualizzate:</strong> Basate sui tuoi documenti</span>
+              <span><strong>Contextualized Responses:</strong> Based on your documents</span>
             </div>
             <div className="flex items-center gap-2">
               <Lightbulb className="h-4 w-4 text-primary" />
-              <span><strong>Approccio Didattico:</strong> Spiegazioni chiare e strutturate</span>
+              <span><strong>Educational Approach:</strong> Clear and structured explanations</span>
             </div>
           </div>
         </div>
@@ -91,7 +91,7 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
         {props.messages.length === 0 ? (
           <div className="text-center py-8 text-muted-foreground">
             <Brain className="h-12 w-12 mx-auto mb-4 text-primary/50" />
-            <p>Il Professore è pronto a rispondere alle tue domande sul documento caricato!</p>
+            <p>Bistro AI is ready to answer your questions about the uploaded document!</p>
           </div>
         ) : (
           props.messages.map((message, index) => (
@@ -125,7 +125,7 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
                   <div className="w-2 h-2 bg-primary rounded-full animate-pulse delay-75"></div>
                   <div className="w-2 h-2 bg-primary rounded-full animate-pulse delay-150"></div>
                 </div>
-                <span className="text-sm">🎓 Il Professore sta elaborando la risposta...</span>
+                <span className="text-sm">🤖 Bistro AI is processing your question...</span>
               </div>
             </div>
           </div>
@@ -137,11 +137,11 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
         <div className="flex items-center gap-3 p-4 bg-secondary/50 rounded-lg border">
           <Mic className="h-5 w-5 text-primary" />
           <div className="flex-1">
-            <h3 className="font-semibold text-sm">🎤 Registra la tua domanda</h3>
+            <h3 className="font-semibold text-sm">🎤 Record your question</h3>
             <p className="text-xs text-muted-foreground mt-1">
               {props.speechSupported 
-                ? "Clicca e parla: il tuo audio verrà trascritto automaticamente"
-                : "⚠️ Riconoscimento vocale non supportato in questo browser"
+                ? "Click and speak: your audio will be automatically transcribed"
+                : "⚠️ Voice recognition not supported in this browser"
               }
             </p>
           </div>
@@ -164,7 +164,7 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
               variant="default"
             >
               <Mic className="h-4 w-4" />
-              Inizia Registrazione
+              Start Recording
             </Button>
           ) : (
             <Button
@@ -173,7 +173,7 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
               className="flex items-center gap-2"
             >
               <Square className="h-4 w-4" />
-              Stop Registrazione
+              Stop Recording
             </Button>
           )}
 
@@ -198,11 +198,11 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
                 <div className="w-2 h-2 bg-primary rounded-full animate-pulse delay-150"></div>
               </div>
               <span className="text-sm font-medium text-primary">
-                🎤 Sto ascoltando...
+                🎤 Listening...
               </span>
             </div>
             <p className="text-xs text-muted-foreground">
-              Parla chiaramente verso il microfono
+              Speak clearly into the microphone
             </p>
           </div>
         )}
@@ -213,7 +213,7 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
             <div className="p-3 bg-accent/20 border border-accent/30 rounded-lg">
               <h4 className="text-sm font-medium mb-2 flex items-center gap-2">
                 <MessageSquare className="h-4 w-4" />
-                📝 Trascrizione:
+                📝 Transcription:
               </h4>
               <p className="text-sm">
                 {props.voiceTranscription}
@@ -231,7 +231,7 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
                 className="w-full flex items-center gap-2"
               >
                 <Send className="h-4 w-4" />
-                {props.isProcessing ? "Elaborando..." : "✅ Conferma e Invia"}
+                {props.isProcessing ? "Processing..." : "✅ Confirm and Send"}
               </Button>
             )}
           </div>
@@ -243,9 +243,9 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
         <div className="flex items-center gap-3 p-4 bg-secondary/50 rounded-lg border">
           <MessageCircle className="h-5 w-5 text-primary" />
           <div className="flex-1">
-            <h3 className="font-semibold text-sm">💬 Scrivi la tua domanda</h3>
+            <h3 className="font-semibold text-sm">💬 Write your question</h3>
             <p className="text-xs text-muted-foreground mt-1">
-              Digita la tua domanda o usa una delle domande suggerite
+              Type your question or use one of the suggested questions
             </p>
           </div>
         </div>
@@ -254,7 +254,7 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
           <Textarea
             value={props.currentQuestion}
             onChange={(e) => props.setCurrentQuestion(e.target.value)}
-            placeholder="Scrivi la tua domanda qui..."
+            placeholder="Write your question here..."
             disabled={props.isProcessing}
             className="min-h-[100px]"
           />
@@ -265,7 +265,7 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
             className="w-full flex items-center gap-2"
           >
             <Send className="h-4 w-4" />
-            {props.isProcessing ? "Elaborando..." : "Invia Domanda"}
+            {props.isProcessing ? "Processing..." : "Send Question"}
           </Button>
         </form>
 
@@ -273,7 +273,7 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
         <div className="space-y-3">
           <h4 className="text-sm font-medium flex items-center gap-2">
             <Lightbulb className="h-4 w-4" />
-            💡 Domande suggerite:
+            💡 Suggested questions:
           </h4>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
@@ -292,12 +292,12 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
           </div>
         </div>
 
-        {/* Warning se manca API Key */}
-        <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg dark:bg-yellow-900/20 dark:border-yellow-800">
+        {/* Info about Bistro AI */}
+        <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg dark:bg-blue-900/20 dark:border-blue-800">
           <div className="flex items-center gap-2">
-            <div className="text-yellow-600 dark:text-yellow-400">⚠️</div>
+            <div className="text-blue-600 dark:text-blue-400">🤖</div>
             <div className="text-sm">
-              <strong>ChatGPT è il fulcro di questa applicazione:</strong> per risposte accurate e contestualizzate, è necessaria un'API Key OpenAI valida.
+              <strong>Powered by Bistro AI:</strong> Advanced intelligence from the OralFlow AI stack provides accurate, contextual responses based on your documents.
             </div>
           </div>
         </div>
