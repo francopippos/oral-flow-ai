@@ -1,4 +1,4 @@
-import { Brain, BookOpen, MessageCircle, Mic, Send, Lightbulb, Square, RotateCcw, MessageSquare } from "lucide-react";
+import { Brain, BookOpen, MessageCircle, Mic, Send, Lightbulb, Square, RotateCcw, MessageSquare, Upload, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -22,6 +22,7 @@ interface ProfessorChatStepProps {
   onProcessVoiceQuestion: () => void;
   setCurrentQuestion: (value: string) => void;
   onAskQuestion: (question: string) => void;
+  onNewDocumentUpload: () => void;
   // Speech-to-text props
   isRecording: boolean;
   isListening: boolean;
@@ -34,10 +35,10 @@ interface ProfessorChatStepProps {
 const ProfessorChatStep = (props: ProfessorChatStepProps) => {
   
   const suggestedQuestions = [
-    "Summarize the main concepts in the document",
-    "Explain the most complex aspects in simple terms", 
-    "What are the key points to remember?",
-    "Connect the different topics covered"
+    "Provide a comprehensive analysis with related concepts",
+    "Connect theoretical principles to practical applications", 
+    "Explain complex topics with expanded context",
+    "Compare different approaches mentioned in the document"
   ];
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -54,15 +55,26 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
         <div className="flex items-center space-x-4 mb-4">
           <Brain className="h-8 w-8 text-primary" />
           <div className="flex-1">
-            <h3 className="text-xl font-bold">🤖 Bistro AI Virtual Professor Active</h3>
+            <h3 className="text-xl font-bold">🎓 AI Professor - Enhanced Document Analysis</h3>
             <p className="text-muted-foreground">
-              OralFlow AI System • <strong>{props.file?.name}</strong> • {props.chunks.length} semantic sections
+              Dynamic Context • <strong>{props.file?.name}</strong> • {props.chunks.length} semantic sections
             </p>
           </div>
-          <div className="text-right">
-            <div className="bg-green-100 text-green-800 px-4 py-2 rounded-lg dark:bg-green-900 dark:text-green-200">
-              <div className="font-semibold">✅ Bistro AI Active</div>
-              <div className="text-xs">Advanced AI responses</div>
+          <div className="flex items-center gap-3">
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={props.onNewDocumentUpload}
+              className="flex items-center gap-2"
+            >
+              <Upload className="h-4 w-4" />
+              Switch Document
+            </Button>
+            <div className="text-right">
+              <div className="bg-green-100 text-green-800 px-4 py-2 rounded-lg dark:bg-green-900 dark:text-green-200">
+                <div className="font-semibold">✅ AI Professor Active</div>
+                <div className="text-xs">Enhanced responses</div>
+              </div>
             </div>
           </div>
         </div>
@@ -72,15 +84,15 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
             <div className="flex items-center gap-2">
               <BookOpen className="h-4 w-4 text-primary" />
-              <span><strong>Semantic Analysis:</strong> Deep content understanding</span>
+              <span><strong>Document Analysis:</strong> Extract and reference specific content</span>
             </div>
             <div className="flex items-center gap-2">
               <MessageCircle className="h-4 w-4 text-primary" />
-              <span><strong>Contextualized Responses:</strong> Based on your documents</span>
+              <span><strong>Concept Expansion:</strong> Multi-dimensional understanding</span>
             </div>
             <div className="flex items-center gap-2">
               <Lightbulb className="h-4 w-4 text-primary" />
-              <span><strong>Educational Approach:</strong> Clear and structured explanations</span>
+              <span><strong>Structured Format:</strong> Clear academic responses</span>
             </div>
           </div>
         </div>
@@ -91,7 +103,8 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
         {props.messages.length === 0 ? (
           <div className="text-center py-8 text-muted-foreground">
             <Brain className="h-12 w-12 mx-auto mb-4 text-primary/50" />
-            <p>Bistro AI is ready to answer your questions about the uploaded document!</p>
+            <p>AI Professor is ready to provide structured, comprehensive responses about your document!</p>
+            <p className="text-xs mt-2">🔄 Switch documents anytime • 💡 Ask multi-concept questions • 📋 Get structured academic format</p>
           </div>
         ) : (
           props.messages.map((message, index) => (
@@ -125,7 +138,7 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
                   <div className="w-2 h-2 bg-primary rounded-full animate-pulse delay-75"></div>
                   <div className="w-2 h-2 bg-primary rounded-full animate-pulse delay-150"></div>
                 </div>
-                <span className="text-sm">🤖 Bistro AI is processing your question...</span>
+                <span className="text-sm">🎓 AI Professor is analyzing your question...</span>
               </div>
             </div>
           </div>
@@ -273,7 +286,7 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
         <div className="space-y-3">
           <h4 className="text-sm font-medium flex items-center gap-2">
             <Lightbulb className="h-4 w-4" />
-            💡 Suggested questions:
+            💡 Multi-concept questions to try:
           </h4>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
@@ -295,9 +308,10 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
         {/* Info about Bistro AI */}
         <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg dark:bg-blue-900/20 dark:border-blue-800">
           <div className="flex items-center gap-2">
-            <div className="text-blue-600 dark:text-blue-400">🤖</div>
+            <div className="text-blue-600 dark:text-blue-400">🎓</div>
             <div className="text-sm">
-              <strong>Powered by Bistro AI:</strong> Advanced intelligence from the OralFlow AI stack provides accurate, contextual responses based on your documents.
+              <strong>Enhanced AI Professor:</strong> Combines document analysis with comprehensive AI knowledge for structured, academic responses. 
+              Features dynamic context switching and multi-concept understanding.
             </div>
           </div>
         </div>

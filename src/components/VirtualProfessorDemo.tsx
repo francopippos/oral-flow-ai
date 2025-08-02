@@ -54,6 +54,18 @@ const VirtualProfessorDemo = ({ isOpen, onClose }: VirtualProfessorDemoProps = {
   const [isVoiceRecording, setIsVoiceRecording] = useState(false);
 
 
+  // ===== RESET CONTEXT FOR NEW DOCUMENT =====
+  const resetDocumentContext = () => {
+    setFile(null);
+    setExtractedText("");
+    setChunks([]);
+    setEmbeddings([]);
+    setMessages([]);
+    setCurrentQuestion("");
+    setStep(0);
+    console.log('🔄 [CONTEXT] Document context reset for new upload');
+  };
+
   // ===== GESTIONE UPLOAD E PROCESSING =====
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0];
@@ -62,11 +74,21 @@ const VirtualProfessorDemo = ({ isOpen, onClose }: VirtualProfessorDemoProps = {
       return;
     }
 
+    // Reset previous context for new document
+    resetDocumentContext();
+    
     setFile(selectedFile);
     setIsProcessing(true);
     
     try {
-      console.log('📄 [PDF] Inizio elaborazione:', selectedFile.name);
+      console.log('📄 [PDF] Inizio elaborazione nuovo documento:', selectedFile.name);
+      
+      // Add context switch message
+      setMessages([{
+        role: "bistro",
+        content: `🔄 **New Document Context Loaded**\n\n📁 **Document:** ${selectedFile.name}\n\nI've switched to analyzing this new document. All previous context has been cleared, and I'm now ready to explore this new academic material with you.\n\n🎓 Ask me anything about the content, and I'll provide structured academic responses with:\n• Comprehensive analysis\n• Document references\n• Related concepts\n• Follow-up suggestions`,
+        timestamp: new Date()
+      }]);
       
       // 1. Estrazione testo
       console.log('📖 [PDF] Estrazione testo...');
@@ -98,6 +120,7 @@ const VirtualProfessorDemo = ({ isOpen, onClose }: VirtualProfessorDemoProps = {
     } catch (error) {
       console.error('❌ [PROCESSING] Errore elaborazione:', error);
       alert(`Errore nell'elaborazione del PDF: ${error}`);
+      resetDocumentContext();
     } finally {
       setIsProcessing(false);
     }
@@ -300,6 +323,7 @@ I can help you explore the document contents if you give me more precise guidanc
               onProcessVoiceQuestion={handleProcessVoiceQuestion}
               setCurrentQuestion={setCurrentQuestion}
               onAskQuestion={askQuestion}
+              onNewDocumentUpload={resetDocumentContext}
               // Speech-to-text props
               isRecording={isVoiceRecording}
               isListening={isListening}

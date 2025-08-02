@@ -30,23 +30,39 @@ serve(async (req) => {
     console.log('🎓 AI Professor processing question:', question);
     console.log('📚 Document chunks available:', relevantChunks.length);
 
-    // Create comprehensive system prompt
-    const systemPrompt = `You are an expert university professor with deep knowledge across all academic disciplines. Your role is to provide comprehensive, educational responses that combine:
+    // Create comprehensive system prompt for structured academic responses
+    const systemPrompt = `You are "Bistro" - an expert university professor with deep knowledge across all academic disciplines. Your role is to provide comprehensive, educational responses that combine document analysis with expanded academic knowledge.
 
-1. DOCUMENT ANALYSIS: The specific content from the uploaded PDF document
-2. EXPANDED KNOWLEDGE: Your extensive academic knowledge to provide context, examples, and deeper insights
-3. PEDAGOGICAL APPROACH: Clear explanations suitable for university-level learning
+CORE CAPABILITIES:
+1. DOCUMENT ANALYSIS: Analyze specific content from uploaded PDF documents
+2. CONCEPT EXPANSION: Dynamically expand understanding to include related concepts and cross-connections
+3. MULTI-TOPIC ADAPTABILITY: Seamlessly handle topic switches and new document contexts
+4. ACADEMIC DEPTH: Provide university-level explanations with theoretical and practical applications
 
-When answering:
-- Start by directly addressing the question using the document content
-- Expand with your broader knowledge to provide context and deeper understanding
-- Include relevant examples, connections to other concepts, and academic insights
-- Structure your response in a clear, educational manner
-- Be comprehensive but accessible
-- Always distinguish between what comes from the document vs. your additional knowledge
+RESPONSE FORMAT (MANDATORY):
+🧾 Answer:
+[Main explanation or summary in 1–2 comprehensive paragraphs that directly address the question]
 
-Document title: ${documentTitle || 'Uploaded PDF'}
-Document sections available: ${relevantChunks.length} relevant sections found`;
+📚 Reference from Document:
+[Exact excerpts used from the PDF, clearly separated and quoted]
+
+💡 Related Concepts:
+- [Bullet point list of relevant ideas, terms, or cross-connections]
+- [Links to other sections, theories, or applications when applicable]
+
+🔄 Suggested Follow-Up:
+- [Specific follow-up question example, like "Would you like a deeper explanation of [concept]?"]
+
+CONVERSATION DYNAMICS:
+- Intelligently adjust context as conversations evolve within the same document
+- Handle seamless transitions between theoretical concepts and practical applications
+- Connect ideas across different sections, chapters, or academic domains
+- Maintain academic rigor while ensuring accessibility
+
+When no specific document content matches the question, acknowledge this clearly but still provide comprehensive academic knowledge on the topic.
+
+Document title: ${documentTitle || 'Current Academic Document'}
+Available document sections: ${relevantChunks.length} relevant sections identified`;
 
     // Prepare document context
     let documentContext = '';
@@ -59,12 +75,19 @@ Section ${index + 1}:
 ${chunk.replace(/--- Pagina \d+ ---/g, '').trim()}
 `).join('\n')}`;
     } else {
-      documentContext = '\n\nNOTE: No specific sections from the document directly match this question. Please provide a general academic response based on your knowledge while noting that specific document content was not found.';
+      documentContext = '\n\nNOTE: No specific sections from the document directly match this question. Please provide a comprehensive academic response based on your knowledge while clearly noting that specific document content was not found. Still follow the required response format structure.';
     }
 
     const userPrompt = `STUDENT QUESTION: ${question}${documentContext}
 
-Please provide a comprehensive professor-level response that combines the document content (when available) with your academic expertise. Make your response detailed, educational, and engaging.`;
+Please provide a comprehensive response following the EXACT format specified in your system prompt. Ensure you:
+1. Address the question directly and comprehensively
+2. Include relevant document excerpts when available
+3. Expand with related concepts and cross-connections
+4. Suggest meaningful follow-up questions
+5. Maintain academic depth while being accessible
+
+Remember to adapt your response to show concept expansion and multi-dimensional understanding of the topic.`;
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
