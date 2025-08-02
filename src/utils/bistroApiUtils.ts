@@ -1,13 +1,9 @@
 import { createClient } from '@supabase/supabase-js'
 
-// Initialize Supabase client with error handling
+// Initialize Supabase client with secure configuration
 const getSupabaseClient = () => {
-  const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
-  const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
-
-  if (!supabaseUrl || !supabaseAnonKey) {
-    throw new Error('SUPABASE_NOT_CONFIGURED: Please connect your Lovable project to Supabase using the green Supabase button in the top right corner.')
-  }
+  const supabaseUrl = 'https://muilijjxilogkwazfxlp.supabase.co'
+  const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im11aWxpamp4aWxvZ2t3YXpmeGxwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQxNDQ0MjEsImV4cCI6MjA2OTcyMDQyMX0.uVAxiBkxcnG1JmVVSuI-QkOqLMdvFMpL4rVHAtBHNP4'
 
   return createClient(supabaseUrl, supabaseAnonKey)
 }

@@ -10,5 +10,20 @@ max_rows = 1000
 [db]
 port = 54322
 
+[auth]
+enabled = true
+enable_signup = true
+enable_anonymous_sign_ins = false
+enable_email_confirmations = true
+
 [functions.ai-professor]
 verify_jwt = false
+
+[functions.bistro-chat]
+verify_jwt = false
+
+[functions.bistro-embeddings]
+verify_jwt = false
+
+[functions.whisper-transcription]
+verify_jwt = true

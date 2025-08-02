@@ -5,6 +5,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { User, GraduationCap, BookOpen, Users, BarChart3, Settings } from 'lucide-react';
+import { useAuth } from '@/hooks/useAuth';
+import { toast } from '@/hooks/use-toast';
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -15,6 +17,9 @@ const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
   const [userType, setUserType] = useState<'student' | 'teacher' | null>(null);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isSignUp, setIsSignUp] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const { signIn, signUp } = useAuth();
 
   const handleUserTypeSelect = (type: 'student' | 'teacher') => {
     setUserType(type);
@@ -24,13 +29,56 @@ const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
     setUserType(null);
     setEmail('');
     setPassword('');
+    setIsSignUp(false);
   };
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Qui andrà la logica di login
-    console.log('Login attempt:', { userType, email, password });
-    onClose();
+    setLoading(true);
+
+    try {
+      const { error } = isSignUp 
+        ? await signUp(email, password)
+        : await signIn(email, password);
+
+      if (error) {
+        if (error.message.includes('User already registered')) {
+          toast({
+            title: "Account già esistente",
+            description: "Questo indirizzo email è già registrato. Prova ad accedere invece.",
+            variant: "destructive"
+          });
+        } else if (error.message.includes('Invalid login credentials')) {
+          toast({
+            title: "Credenziali non valide",
+            description: "Email o password incorrette. Verifica i tuoi dati.",
+            variant: "destructive"
+          });
+        } else {
+          toast({
+            title: "Errore di autenticazione",
+            description: error.message,
+            variant: "destructive"
+          });
+        }
+      } else {
+        toast({
+          title: isSignUp ? "Registrazione completata" : "Accesso effettuato",
+          description: isSignUp 
+            ? "Controlla la tua email per confermare l'account."
+            : "Benvenuto su OralMind!",
+        });
+        onClose();
+      }
+    } catch (error) {
+      toast({
+        title: "Errore",
+        description: "Si è verificato un errore imprevisto. Riprova.",
+        variant: "destructive"
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   const studentFeatures = [
@@ -114,8 +162,8 @@ const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
             </div>
           </div>
         ) : (
-          // Login form
-          <form onSubmit={handleLogin} className="space-y-4">
+          // Login/Signup form
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div className={`p-4 rounded-lg ${
               userType === 'student' ? 'bg-oralmind-50' : 'bg-success-50'
             }`}>
@@ -128,7 +176,7 @@ const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
                 <span className={`font-medium ${
                   userType === 'student' ? 'text-oralmind-800' : 'text-success-800'
                 }`}>
-                  Accesso {userType === 'student' ? 'Studente' : 'Professore'}
+                  {isSignUp ? 'Registrazione' : 'Accesso'} {userType === 'student' ? 'Studente' : 'Professore'}
                 </span>
               </div>
             </div>
@@ -170,22 +218,24 @@ const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
               </Button>
               <Button
                 type="submit"
+                disabled={loading}
                 className={`flex-1 ${
                   userType === 'student' 
                     ? 'bg-oralmind-500 hover:bg-oralmind-600' 
                     : 'bg-success-500 hover:bg-success-600'
                 } text-white`}
               >
-                Accedi
+                {loading ? 'Caricamento...' : (isSignUp ? 'Registrati' : 'Accedi')}
               </Button>
             </div>
 
             <div className="text-center">
               <button
                 type="button"
+                onClick={() => setIsSignUp(!isSignUp)}
                 className="text-sm text-muted-foreground hover:text-oralmind-600 transition-colors"
               >
-                Non hai un account? Registrati
+                {isSignUp ? 'Hai già un account? Accedi' : 'Non hai un account? Registrati'}
               </button>
             </div>
           </form>

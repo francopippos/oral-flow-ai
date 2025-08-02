@@ -105,64 +105,6 @@ Continua pure con la tua esposizione!`;
 }
 
 export const transcribeAudio = async (audioBlob: Blob): Promise<string> => {
-  try {
-    console.log('🎯 [TRASCRIZIONE REALE] Iniziando trascrizione con OpenAI Whisper...');
-    console.log('🎵 [AUDIO] File da trascrivere:', audioBlob.size, 'bytes, tipo:', audioBlob.type);
-    
-    // Controllo API Key
-    const apiKey = localStorage.getItem("openai-demo-key");
-    if (!apiKey || apiKey.trim().length < 10) {
-      throw new Error('API_KEY_REQUIRED');
-    }
-    
-    // Prepara FormData per OpenAI Whisper
-    const formData = new FormData();
-    formData.append('file', audioBlob, 'audio.webm');
-    formData.append('model', 'whisper-1');
-    formData.append('language', 'it'); // Italiano
-    formData.append('response_format', 'text');
-    
-    console.log('🤖 [WHISPER] Chiamata API OpenAI per trascrizione...');
-    
-    const response = await fetch('https://api.openai.com/v1/audio/transcriptions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${apiKey}`,
-      },
-      body: formData,
-    });
-    
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      console.error('❌ [WHISPER] Errore API:', response.status, errorData);
-      
-      if (response.status === 401) {
-        throw new Error('API_KEY_INVALID');
-      } else if (response.status === 429) {
-        throw new Error('QUOTA_EXCEEDED');
-      } else {
-        throw new Error(`Errore trascrizione ${response.status}`);
-      }
-    }
-    
-    const transcription = await response.text();
-    console.log('✅ [WHISPER REALE] Trascrizione completata:', transcription);
-    
-    if (!transcription.trim()) {
-      throw new Error('Trascrizione vuota - parla più chiaramente');
-    }
-    
-    return transcription.trim();
-    
-  } catch (error: any) {
-    console.error('❌ [TRASCRIZIONE] Errore:', error);
-    
-    if (error.message?.includes('API_KEY')) {
-      throw new Error('❌ API Key OpenAI richiesta per la trascrizione vocale. Configurala nelle impostazioni.');
-    } else if (error.message?.includes('QUOTA')) {
-      throw new Error('❌ Quota OpenAI esaurita. Ricarica il tuo account o usa la scrittura manuale.');
-    }
-    
-    throw new Error('❌ Errore nella trascrizione. Verifica il microfono e riprova.');
-  }
+  console.log('🎯 [SECURITY] Transcription moved to secure server-side implementation');
+  throw new Error('⚠️ Transcription requires authentication. Please log in to use voice features.');
 };
