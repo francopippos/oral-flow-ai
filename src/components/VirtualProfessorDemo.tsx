@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "../hooks/useTranslation";
-import { useSpeechToText } from "../hooks/useSpeechToText";
+import { useUniversalVoice } from "../hooks/useUniversalVoice";
 import { createTextChunks } from "../utils/chunkingUtils";
 import PdfUploadStep from "./VirtualProfessorDemo/PdfUploadStep";
 import ProfessorChatStep from "./VirtualProfessorDemo/ProfessorChatStep";
@@ -44,14 +44,15 @@ const VirtualProfessorDemo = ({ isOpen, onClose }: VirtualProfessorDemoProps = {
     fullTranscript,
     isSupported: speechSupported,
     error: speechError,
+    capabilities,
+    supportMessage,
     startListening,
     stopListening,
     resetTranscript,
-    setLanguage
-  } = useSpeechToText();
+    isRecording
+  } = useUniversalVoice();
   
-  // Stato per gestire la registrazione vocale per UI
-  const [isVoiceRecording, setIsVoiceRecording] = useState(false);
+  // Use isRecording from the hook instead of separate state
 
 
   // ===== RESET CONTEXT FOR NEW DOCUMENT =====
@@ -130,29 +131,24 @@ const VirtualProfessorDemo = ({ isOpen, onClose }: VirtualProfessorDemoProps = {
   
   const handleStartVoiceRecording = () => {
     if (!speechSupported) {
-      alert('Il riconoscimento vocale non è supportato nel tuo browser. Usa Chrome, Edge o Safari.');
+      alert('Voice recognition not supported in your browser. Please use Chrome, Edge, or Safari.');
       return;
     }
     
-    console.log('🎤 [VOICE] Avvio registrazione vocale...');
-    setIsVoiceRecording(true);
+    console.log('🎤 [VOICE] Starting voice recording...');
     resetTranscript();
     setCurrentQuestion('');
     
-    // Imposta lingua italiana
-    setLanguage('it-IT');
     startListening();
   };
 
   const handleStopVoiceRecording = () => {
-    console.log('⏹️ [VOICE] Stop registrazione vocale...');
-    setIsVoiceRecording(false);
+    console.log('⏹️ [VOICE] Stopping voice recording...');
     stopListening();
   };
 
   const handleResetVoiceRecording = () => {
-    console.log('🔄 [VOICE] Reset registrazione vocale...');
-    setIsVoiceRecording(false);
+    console.log('🔄 [VOICE] Resetting voice recording...');
     stopListening();
     resetTranscript();
     setCurrentQuestion('');
@@ -325,12 +321,14 @@ I can help you explore the document contents if you give me more precise guidanc
               onAskQuestion={askQuestion}
               onNewDocumentUpload={resetDocumentContext}
               // Speech-to-text props
-              isRecording={isVoiceRecording}
+              isRecording={isRecording || isListening}
               isListening={isListening}
               voiceTranscription={fullTranscript}
               isTranscribing={isListening}
               speechError={speechError}
               speechSupported={speechSupported}
+              voiceCapabilities={capabilities}
+              supportMessage={supportMessage}
             />
           )}
         </div>

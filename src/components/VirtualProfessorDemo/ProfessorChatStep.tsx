@@ -10,6 +10,14 @@ interface ChatMessage {
   sources?: string[];
 }
 
+interface VoiceCapabilities {
+  canUseBrowserSpeech: boolean;
+  canRecordAudio: boolean;
+  canUseServerTranscription: boolean;
+  isMobile: boolean;
+  recommendedMode: 'browser-speech' | 'server-transcription' | 'none';
+}
+
 interface ProfessorChatStepProps {
   file: File | null;
   chunks: string[];
@@ -30,6 +38,8 @@ interface ProfessorChatStepProps {
   isTranscribing: boolean;
   speechError: string | null;
   speechSupported: boolean;
+  voiceCapabilities?: VoiceCapabilities;
+  supportMessage?: string;
 }
 
 const ProfessorChatStep = (props: ProfessorChatStepProps) => {
@@ -154,9 +164,27 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
             <p className="text-xs text-muted-foreground mt-1">
               {props.speechSupported 
                 ? "Record yourself explaining concepts as if presenting to a professor or classmates. The AI will analyze your spoken explanation for clarity, accuracy, and academic language."
-                : "⚠️ Voice recognition not supported in this browser"
+                : props.supportMessage || "Voice recognition not supported in this browser"
               }
             </p>
+            {props.voiceCapabilities && (
+              <div className="text-xs mt-2 p-2 bg-blue-50 dark:bg-blue-900/20 rounded border">
+                <div className="flex items-center gap-2 mb-1">
+                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                  <span className="font-medium">Platform Support:</span>
+                </div>
+                <div className="grid grid-cols-2 gap-2 text-xs">
+                  <div>Browser Speech: {props.voiceCapabilities.canUseBrowserSpeech ? '✅' : '❌'}</div>
+                  <div>Audio Recording: {props.voiceCapabilities.canRecordAudio ? '✅' : '❌'}</div>
+                  <div>Server Transcription: {props.voiceCapabilities.canUseServerTranscription ? '✅' : '❌'}</div>
+                  <div>Mobile Device: {props.voiceCapabilities.isMobile ? '📱' : '🖥️'}</div>
+                </div>
+                <div className="mt-1 font-medium">
+                  Mode: {props.voiceCapabilities.recommendedMode === 'browser-speech' ? '🎤 Real-time' : 
+                         props.voiceCapabilities.recommendedMode === 'server-transcription' ? '🔄 Server-based' : '❌ Unavailable'}
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
