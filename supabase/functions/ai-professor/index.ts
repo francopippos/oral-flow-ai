@@ -118,7 +118,7 @@ Please evaluate this student's explanation following the EXACT coaching format s
 4. Suggest specific ways to improve their explanation
 5. Encourage them to re-explain specific aspects for better understanding
 
-Remember: You are coaching them to become better at oral academic presentations, not just answering questions. Respond in ${detectedLanguage || 'the same language as the student'}.
+Remember: You are coaching them to become better at oral academic presentations, not just answering questions. Respond in ${detectedLanguage || 'the same language as the student'}.`;
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
