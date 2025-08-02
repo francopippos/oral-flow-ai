@@ -1,14 +1,22 @@
 import { createClient } from '@supabase/supabase-js'
 
-const supabase = createClient(
-  import.meta.env.VITE_SUPABASE_URL!,
-  import.meta.env.VITE_SUPABASE_ANON_KEY!
-)
+// Initialize Supabase client with error handling
+const getSupabaseClient = () => {
+  const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
+  const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
+
+  if (!supabaseUrl || !supabaseAnonKey) {
+    throw new Error('SUPABASE_NOT_CONFIGURED: Please connect your Lovable project to Supabase using the green Supabase button in the top right corner.')
+  }
+
+  return createClient(supabaseUrl, supabaseAnonKey)
+}
 
 export const askBistroProfessor = async (question: string, contextChunks: string[]): Promise<string> => {
   try {
     console.log('🤖 [BISTRO] Sending question to Bistro AI...', question.substring(0, 100))
     
+    const supabase = getSupabaseClient()
     const { data, error } = await supabase.functions.invoke('bistro-chat', {
       body: {
         question,
@@ -55,6 +63,7 @@ export const createEmbeddingsWithBistro = async (texts: string[]): Promise<numbe
   try {
     console.log('🧠 [BISTRO] Creating embeddings for', texts.length, 'texts...')
     
+    const supabase = getSupabaseClient()
     const { data, error } = await supabase.functions.invoke('bistro-embeddings', {
       body: {
         texts
