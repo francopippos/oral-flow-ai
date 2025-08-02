@@ -178,6 +178,11 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
                   <div className="font-medium">
                     Current Language: {props.detectedLanguage === 'auto' ? 'Auto-detect' : 
                     props.detectedLanguage?.split('-')[0].toUpperCase() || 'Auto'}
+                    {props.detectedLanguage && props.detectedLanguage !== 'auto' && (
+                      <span className="ml-2 bg-green-100 text-green-800 px-2 py-1 rounded text-xs">
+                        AI will respond in {props.detectedLanguage}
+                      </span>
+                    )}
                   </div>
                   <div>
                     Supported: 🇮🇹 Italian • 🇺🇸 English • 🇫🇷 French • 🇪🇸 Spanish • 🇩🇪 German • 🇧🇷 Portuguese • 🇷🇺 Russian • 🇨🇳 Chinese • 🇯🇵 Japanese • 🇰🇷 Korean

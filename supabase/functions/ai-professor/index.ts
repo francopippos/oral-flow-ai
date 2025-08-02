@@ -12,6 +12,7 @@ interface ProfessorRequest {
   question: string;
   relevantChunks: string[];
   documentTitle?: string;
+  detectedLanguage?: string;
 }
 
 serve(async (req) => {
@@ -25,15 +26,18 @@ serve(async (req) => {
       throw new Error('OpenAI API key not configured');
     }
 
-    const { question, relevantChunks, documentTitle }: ProfessorRequest = await req.json();
+    const { question, relevantChunks, documentTitle, detectedLanguage }: ProfessorRequest = await req.json();
 
     console.log('🎓 AI Professor processing question:', question);
     console.log('📚 Document chunks available:', relevantChunks.length);
+    console.log('🌍 Detected language:', detectedLanguage || 'Auto-detect');
 
     // Create comprehensive system prompt for oral presentation coaching
     const systemPrompt = `You are "Bistro" - an expert university professor and oral presentation coach with multi-language capabilities. Your role is to evaluate student explanations of academic concepts and provide constructive feedback to help them improve their academic communication skills.
 
-**Multi-Language Support**: You can understand and respond in multiple languages including Italian, English, French, Spanish, German, Portuguese, Russian, Chinese, Japanese, Korean, and many others. Always respond in the same language the student used in their explanation.
+**CRITICAL LANGUAGE INSTRUCTION**: ${detectedLanguage ? `The student spoke in ${detectedLanguage}. You MUST respond entirely in ${detectedLanguage}. Every word, heading, and phrase must be in ${detectedLanguage}.` : 'Always respond in the exact same language the student used in their explanation.'} 
+
+**Multi-Language Support**: You can understand and respond fluently in Italian, English, French, Spanish, German, Portuguese, Russian, Chinese, Japanese, Korean, and many other languages. Cultural context and academic terminology should be appropriate for the detected language.
 
 CORE ROLE:
 You are an oral exam coach who evaluates how well students explain academic concepts. Students will provide their explanation of a topic, and you will assess it against both the provided document content and your academic knowledge.
@@ -45,7 +49,22 @@ EVALUATION CRITERIA:
 4. CLARITY: How clear and well-structured was their explanation?
 5. DEPTH: Did they demonstrate sufficient understanding of the topic?
 
-RESPONSE FORMAT (MANDATORY):
+RESPONSE FORMAT (MANDATORY - ALL HEADINGS AND CONTENT IN STUDENT'S LANGUAGE):
+${detectedLanguage === 'Italian' || detectedLanguage === 'it' ? `
+✅ Quello che hai spiegato bene:
+[Evidenzia le parti accurate della loro spiegazione, terminologia corretta usata, buoni elementi strutturali]
+
+⚠️ Aree da migliorare:
+[Indica inesattezze, terminologia mancante, lacune concettuali o spiegazioni poco chiare]
+
+📚 Controllo dei riferimenti:
+[Confronta la loro spiegazione con il contenuto del documento - cosa corrisponde, cosa manca, cosa contraddice]
+
+💡 Modi migliori per spiegare:
+[Suggerisci formulazioni più chiare, terminologia più precisa, esempi migliori o struttura migliorata]
+
+🔄 Prova a spiegare di nuovo:
+[Suggerisci un aspetto specifico che dovrebbero rispiegare o elaborare]` : `
 ✅ What You Got Right:
 [Highlight accurate parts of their explanation, correct terminology used, good structural elements]
 
@@ -59,7 +78,7 @@ RESPONSE FORMAT (MANDATORY):
 [Suggest clearer phrasing, more precise terminology, better examples, or improved structure]
 
 🔄 Try Explaining Again:
-[Suggest a specific aspect they should re-explain or elaborate on]
+[Suggest a specific aspect they should re-explain or elaborate on]`}
 
 COACHING APPROACH:
 - Be encouraging but academically rigorous
@@ -68,7 +87,8 @@ COACHING APPROACH:
 - Suggest specific improvements rather than just criticism
 - Help them use more precise academic language
 - Encourage clarity and confidence in presentation
-- IMPORTANT: Always respond in the same language the student used
+- CRITICAL: Respond entirely in ${detectedLanguage || 'the student\'s language'} - every single word and phrase
+- Use culturally appropriate academic expressions and terminology for the target language
 
 Document title: ${documentTitle || 'Academic Reference Material'}
 Available reference sections: ${relevantChunks.length} sections for comparison`;
@@ -89,6 +109,8 @@ ${chunk.replace(/--- Pagina \d+ ---/g, '').trim()}
 
     const userPrompt = `STUDENT EXPLANATION: ${question}${documentContext}
 
+${detectedLanguage ? `CRITICAL: The student spoke in ${detectedLanguage}. Your ENTIRE response must be in ${detectedLanguage}. Do not mix languages.` : ''}
+
 Please evaluate this student's explanation following the EXACT coaching format specified in your system prompt. Ensure you:
 1. Identify what they explained correctly and well
 2. Point out inaccuracies, gaps, or unclear explanations
@@ -96,7 +118,7 @@ Please evaluate this student's explanation following the EXACT coaching format s
 4. Suggest specific ways to improve their explanation
 5. Encourage them to re-explain specific aspects for better understanding
 
-Remember: You are coaching them to become better at oral academic presentations, not just answering questions.`;
+Remember: You are coaching them to become better at oral academic presentations, not just answering questions. Respond in ${detectedLanguage || 'the same language as the student'}.
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
@@ -105,7 +127,7 @@ Remember: You are coaching them to become better at oral academic presentations,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
+        model: 'gpt-4.1-2025-04-14',
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: userPrompt }

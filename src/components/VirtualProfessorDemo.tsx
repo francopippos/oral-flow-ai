@@ -227,7 +227,7 @@ I can help you explore the document contents if you give me more precise guidanc
       console.log('🎓 [AI PROFESSOR] Calling AI Professor with', relevantChunks.length, 'relevant chunks');
       
       const { askAIProfessor } = await import("../utils/aiProfessorUtils");
-      const aiResponse = await askAIProfessor(question, relevantChunks, file?.name);
+      const aiResponse = await askAIProfessor(question, relevantChunks, file?.name, detectedLanguage);
       console.log('✅ [AI PROFESSOR] Response received successfully');
       
       // Add source information to the response

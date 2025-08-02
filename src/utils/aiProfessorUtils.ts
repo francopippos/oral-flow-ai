@@ -3,7 +3,8 @@ import { supabase } from "@/integrations/supabase/client";
 export const askAIProfessor = async (
   question: string,
   relevantChunks: string[],
-  documentTitle?: string
+  documentTitle?: string,
+  detectedLanguage?: string
 ): Promise<string> => {
   try {
     console.log('🎓 [AI PROFESSOR] Processing question:', question.substring(0, 100));
@@ -13,7 +14,8 @@ export const askAIProfessor = async (
       body: {
         question,
         relevantChunks,
-        documentTitle
+        documentTitle,
+        detectedLanguage
       }
     });
 
