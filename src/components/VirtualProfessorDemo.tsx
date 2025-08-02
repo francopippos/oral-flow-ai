@@ -8,7 +8,7 @@ import ProfessorChatStep from "./VirtualProfessorDemo/ProfessorChatStep";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { X, Settings } from "lucide-react";
-import { createEmbeddingsWithBistro, findRelevantChunksWithBistro, askBistroProfessor } from "../utils/bistroApiUtils";
+// Dynamic import to avoid Supabase initialization errors
 import { extractTextFromPDF } from "../utils/pdfUtils";
 
 export interface ChatMessage {
@@ -83,6 +83,7 @@ const VirtualProfessorDemo = ({ isOpen, onClose }: VirtualProfessorDemoProps = {
       // 3. Create embeddings for each chunk with Bistro AI
       console.log('🧠 [BISTRO] Creating embeddings for', textChunks.length, 'chunks...');
       try {
+        const { createEmbeddingsWithBistro } = await import("../utils/bistroApiUtils");
         const chunkEmbeddings = await createEmbeddingsWithBistro(textChunks);
         setEmbeddings(chunkEmbeddings);
         console.log('✅ [BISTRO] Embeddings created:', chunkEmbeddings.length);
@@ -172,6 +173,7 @@ const VirtualProfessorDemo = ({ isOpen, onClose }: VirtualProfessorDemoProps = {
       
       // 1. Semantic Search with Bistro AI (or fallback to text search)
       console.log('🔍 [BISTRO] Finding relevant chunks...');
+      const { findRelevantChunksWithBistro } = await import("../utils/bistroApiUtils");
       const searchResult = await findRelevantChunksWithBistro(question, chunks, embeddings, 3);
       const { chunks: relevantChunks, sourceInfo } = searchResult;
       
@@ -204,6 +206,7 @@ I can help you explore the document contents if you give me more precise guidanc
       // 2. Send to Bistro AI with context
       console.log('🤖 [BISTRO] Calling Bistro AI with', relevantChunks.length, 'relevant chunks');
       
+      const { askBistroProfessor } = await import("../utils/bistroApiUtils");
       const bistroResponse = await askBistroProfessor(question, relevantChunks);
       console.log('✅ [BISTRO] Response received successfully');
       
