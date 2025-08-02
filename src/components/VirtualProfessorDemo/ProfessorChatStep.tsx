@@ -34,11 +34,11 @@ interface ProfessorChatStepProps {
 
 const ProfessorChatStep = (props: ProfessorChatStepProps) => {
   
-  const suggestedQuestions = [
-    "Provide a comprehensive analysis with related concepts",
-    "Connect theoretical principles to practical applications", 
-    "Explain complex topics with expanded context",
-    "Compare different approaches mentioned in the document"
+  const suggestedExplanations = [
+    "Explain the main concept from this document as if teaching a classmate",
+    "Describe how you would present the key theory to an exam committee", 
+    "Explain the practical applications and their importance",
+    "Describe how different concepts in this document connect to each other"
   ];
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -55,9 +55,9 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
         <div className="flex items-center space-x-4 mb-4">
           <Brain className="h-8 w-8 text-primary" />
           <div className="flex-1">
-            <h3 className="text-xl font-bold">🎓 AI Professor - Enhanced Document Analysis</h3>
+            <h3 className="text-xl font-bold">🎓 Oral Presentation Coach - Academic Feedback</h3>
             <p className="text-muted-foreground">
-              Dynamic Context • <strong>{props.file?.name}</strong> • {props.chunks.length} semantic sections
+              Evaluating Explanations • <strong>{props.file?.name}</strong> • {props.chunks.length} reference sections
             </p>
           </div>
           <div className="flex items-center gap-3">
@@ -72,8 +72,8 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
             </Button>
             <div className="text-right">
               <div className="bg-green-100 text-green-800 px-4 py-2 rounded-lg dark:bg-green-900 dark:text-green-200">
-                <div className="font-semibold">✅ AI Professor Active</div>
-                <div className="text-xs">Enhanced responses</div>
+                <div className="font-semibold">✅ Coach Active</div>
+                <div className="text-xs">Evaluation ready</div>
               </div>
             </div>
           </div>
@@ -84,15 +84,15 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
             <div className="flex items-center gap-2">
               <BookOpen className="h-4 w-4 text-primary" />
-              <span><strong>Document Analysis:</strong> Extract and reference specific content</span>
+              <span><strong>Accuracy Check:</strong> Compare against document content</span>
             </div>
             <div className="flex items-center gap-2">
               <MessageCircle className="h-4 w-4 text-primary" />
-              <span><strong>Concept Expansion:</strong> Multi-dimensional understanding</span>
+              <span><strong>Presentation Skills:</strong> Evaluate clarity and terminology</span>
             </div>
             <div className="flex items-center gap-2">
               <Lightbulb className="h-4 w-4 text-primary" />
-              <span><strong>Structured Format:</strong> Clear academic responses</span>
+              <span><strong>Constructive Feedback:</strong> Improve your explanations</span>
             </div>
           </div>
         </div>
@@ -103,8 +103,8 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
         {props.messages.length === 0 ? (
           <div className="text-center py-8 text-muted-foreground">
             <Brain className="h-12 w-12 mx-auto mb-4 text-primary/50" />
-            <p>AI Professor is ready to provide structured, comprehensive responses about your document!</p>
-            <p className="text-xs mt-2">🔄 Switch documents anytime • 💡 Ask multi-concept questions • 📋 Get structured academic format</p>
+            <p>Oral Presentation Coach is ready to evaluate your explanations and provide feedback!</p>
+            <p className="text-xs mt-2">🔄 Switch documents anytime • 💡 Explain concepts for evaluation • 📋 Get structured coaching feedback</p>
           </div>
         ) : (
           props.messages.map((message, index) => (
@@ -138,7 +138,7 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
                   <div className="w-2 h-2 bg-primary rounded-full animate-pulse delay-75"></div>
                   <div className="w-2 h-2 bg-primary rounded-full animate-pulse delay-150"></div>
                 </div>
-                <span className="text-sm">🎓 AI Professor is analyzing your question...</span>
+                <span className="text-sm">🎓 Coach is evaluating your explanation...</span>
               </div>
             </div>
           </div>
@@ -150,10 +150,10 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
         <div className="flex items-center gap-3 p-4 bg-secondary/50 rounded-lg border">
           <Mic className="h-5 w-5 text-primary" />
           <div className="flex-1">
-            <h3 className="font-semibold text-sm">🎤 Record your question</h3>
+            <h3 className="font-semibold text-sm">🎤 Record your explanation</h3>
             <p className="text-xs text-muted-foreground mt-1">
               {props.speechSupported 
-                ? "Click and speak: your audio will be automatically transcribed"
+                ? "Practice your oral explanation: speak as if presenting to a class"
                 : "⚠️ Voice recognition not supported in this browser"
               }
             </p>
@@ -256,9 +256,9 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
         <div className="flex items-center gap-3 p-4 bg-secondary/50 rounded-lg border">
           <MessageCircle className="h-5 w-5 text-primary" />
           <div className="flex-1">
-            <h3 className="font-semibold text-sm">💬 Write your question</h3>
+            <h3 className="font-semibold text-sm">💬 Write your explanation</h3>
             <p className="text-xs text-muted-foreground mt-1">
-              Type your question or use one of the suggested questions
+              Explain a concept as if presenting to classmates or in an oral exam
             </p>
           </div>
         </div>
@@ -267,7 +267,7 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
           <Textarea
             value={props.currentQuestion}
             onChange={(e) => props.setCurrentQuestion(e.target.value)}
-            placeholder="Write your question here..."
+            placeholder="Explain a concept from your document here..."
             disabled={props.isProcessing}
             className="min-h-[100px]"
           />
@@ -278,7 +278,7 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
             className="w-full flex items-center gap-2"
           >
             <Send className="h-4 w-4" />
-            {props.isProcessing ? "Processing..." : "Send Question"}
+            {props.isProcessing ? "Evaluating..." : "Get Feedback"}
           </Button>
         </form>
 
@@ -286,20 +286,20 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
         <div className="space-y-3">
           <h4 className="text-sm font-medium flex items-center gap-2">
             <Lightbulb className="h-4 w-4" />
-            💡 Multi-concept questions to try:
+            💡 Practice explanations to try:
           </h4>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-            {suggestedQuestions.map((question, index) => (
+           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+            {suggestedExplanations.map((explanation, index) => (
               <Button
                 key={index}
                 variant="outline"
                 size="sm"
-                onClick={() => props.setCurrentQuestion(question)}
+                onClick={() => props.setCurrentQuestion(explanation)}
                 disabled={props.isProcessing}
                 className="text-left justify-start h-auto p-3 text-xs"
               >
-                {question}
+                {explanation}
               </Button>
             ))}
           </div>
@@ -310,8 +310,8 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
           <div className="flex items-center gap-2">
             <div className="text-blue-600 dark:text-blue-400">🎓</div>
             <div className="text-sm">
-              <strong>Enhanced AI Professor:</strong> Combines document analysis with comprehensive AI knowledge for structured, academic responses. 
-              Features dynamic context switching and multi-concept understanding.
+              <strong>Oral Presentation Coach:</strong> Evaluates your explanations against document content and academic standards. 
+              Provides structured feedback to improve your academic communication skills.
             </div>
           </div>
         </div>
