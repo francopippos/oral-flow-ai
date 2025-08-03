@@ -24,7 +24,7 @@ interface VirtualProfessorDemoProps {
 }
 
 const VirtualProfessorDemo = ({ isOpen, onClose }: VirtualProfessorDemoProps = {}) => {
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
   
   // Stato principale
   const [step, setStep] = useState(0);
@@ -88,7 +88,9 @@ const VirtualProfessorDemo = ({ isOpen, onClose }: VirtualProfessorDemoProps = {
       // Add context switch message
       setMessages([{
         role: "bistro",
-        content: `🔄 **New Document Context Loaded**\n\n📁 **Document:** ${selectedFile.name}\n\nI've switched to analyzing this new document. All previous context has been cleared, and I'm now ready to explore this new academic material with you.\n\n🎓 Ask me anything about the content, and I'll provide structured academic responses with:\n• Comprehensive analysis\n• Document references\n• Related concepts\n• Follow-up suggestions`,
+        content: language === 'it' 
+          ? `🔄 **Nuovo Contesto Documento Caricato**\n\n📁 **Documento:** ${selectedFile.name}\n\nSono passato all'analisi di questo nuovo documento. Tutto il contesto precedente è stato cancellato, e ora sono pronto a esplorare questo nuovo materiale accademico con te.\n\n🎓 Chiedimi qualsiasi cosa sul contenuto, e fornirò risposte accademiche strutturate con:\n• Analisi completa\n• Riferimenti al documento\n• Concetti correlati\n• Suggerimenti di approfondimento`
+          : `🔄 **New Document Context Loaded**\n\n📁 **Document:** ${selectedFile.name}\n\nI've switched to analyzing this new document. All previous context has been cleared, and I'm now ready to explore this new academic material with you.\n\n🎓 Ask me anything about the content, and I'll provide structured academic responses with:\n• Comprehensive analysis\n• Document references\n• Related concepts\n• Follow-up suggestions`,
         timestamp: new Date()
       }]);
       
@@ -287,7 +289,7 @@ I can help you explore the document contents if you give me more precise guidanc
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden flex flex-col">
         <DialogHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
           <DialogTitle className="text-2xl font-bold text-primary">
-            🎓 AI Professor - Enhanced Document Analysis
+            🎓 {language === 'it' ? 'Professore AI - Analisi Documenti Avanzata' : 'AI Professor - Enhanced Document Analysis'}
           </DialogTitle>
           <div className="flex items-center gap-2 mr-8">
             <div className="text-xs text-muted-foreground flex items-center gap-1">

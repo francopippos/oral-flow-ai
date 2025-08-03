@@ -2,6 +2,7 @@ import { Brain, BookOpen, MessageCircle, Mic, Send, Lightbulb, Square, RotateCcw
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { useTranslation } from "../../hooks/useTranslation";
 
 interface ChatMessage {
   role: "user" | "bistro";
@@ -44,6 +45,7 @@ interface ProfessorChatStepProps {
 }
 
 const ProfessorChatStep = (props: ProfessorChatStepProps) => {
+  const { language } = useTranslation();
   
   const suggestedExplanations = [
     "Explain electric charge and electron movement as if teaching it to a study group",
@@ -66,9 +68,11 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
         <div className="flex items-center space-x-4 mb-4">
           <Brain className="h-8 w-8 text-primary" />
           <div className="flex-1">
-            <h3 className="text-xl font-bold">🎓 Oral Presentation Coach - Academic Feedback</h3>
+            <h3 className="text-xl font-bold">
+              🎓 {language === 'it' ? 'Coach di Presentazione Orale - Feedback Accademico' : 'Oral Presentation Coach - Academic Feedback'}
+            </h3>
             <p className="text-muted-foreground">
-              Evaluating Explanations • <strong>{props.file?.name}</strong> • {props.chunks.length} reference sections
+              {language === 'it' ? 'Valutando Spiegazioni' : 'Evaluating Explanations'} • <strong>{props.file?.name}</strong> • {props.chunks.length} {language === 'it' ? 'sezioni di riferimento' : 'reference sections'}
             </p>
           </div>
           <div className="flex items-center gap-3">
