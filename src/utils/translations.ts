@@ -11,12 +11,18 @@ export interface TranslationKeys {
   'header.tryFree': string;
 
   // Hero Section
+  'hero.badge': string;
   'hero.title': string;
   'hero.subtitle': string;
   'hero.description': string;
   'hero.tryDemo': string;
   'hero.watchVideo': string;
   'hero.trustedBy': string;
+  'hero.professorDemo': string;
+  'hero.professorDemoDesc': string;
+  'hero.stat1': string;
+  'hero.stat2': string;
+  'hero.stat3': string;
 
   // Features
   'features.title': string;
@@ -186,12 +192,18 @@ export const italianTranslations: TranslationKeys = {
   'header.tryFree': 'Prova Gratis',
 
   // Hero Section
+  'hero.badge': 'Rivoluziona il tuo metodo di studio',
   'hero.title': 'Trasforma le tue interrogazioni orali con',
   'hero.subtitle': 'Il primo AI tutor che ti prepara alle interrogazioni con feedback personalizzato',
   'hero.description': 'Carica i tuoi materiali, esercitati con l\'AI e ricevi valutazioni dettagliate. Migliora la tua esposizione orale e supera ogni interrogazione con sicurezza.',
   'hero.tryDemo': 'Prova la Demo',
   'hero.watchVideo': 'Guarda il Video',
   'hero.trustedBy': 'Scelto da oltre 10.000 studenti',
+  'hero.professorDemo': 'Metti alla prova il Professore',
+  'hero.professorDemoDesc': '🎓 Carica un PDF e interroga il Professore Virtuale con tecnologia RAG',
+  'hero.stat1': 'Studenti Soddisfatti',
+  'hero.stat2': 'Miglioramento Orale',
+  'hero.stat3': 'Sempre Disponibile',
 
   // Features
   'features.title': 'Funzionalità',
@@ -361,12 +373,18 @@ export const englishTranslations: TranslationKeys = {
   'header.tryFree': 'Try Free',
 
   // Hero Section
+  'hero.badge': 'Revolutionize your study method',
   'hero.title': 'Transform your oral exams with',
   'hero.subtitle': 'The first AI tutor that prepares you for oral exams with personalized feedback',
   'hero.description': 'Upload your materials, practice with AI and receive detailed evaluations. Improve your oral presentation and pass every exam with confidence.',
   'hero.tryDemo': 'Try Demo',
   'hero.watchVideo': 'Watch Video',
   'hero.trustedBy': 'Trusted by over 10,000 students',
+  'hero.professorDemo': 'Challenge the Professor',
+  'hero.professorDemoDesc': '🎓 Upload a PDF and examine the Virtual Professor with RAG technology',
+  'hero.stat1': 'Satisfied Students',
+  'hero.stat2': 'Oral Improvement',
+  'hero.stat3': 'Always Available',
 
   // Features
   'features.title': 'Features',

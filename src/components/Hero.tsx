@@ -27,7 +27,7 @@ const Hero = () => {
                 <div className="space-y-6">
                   <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-primary/10 to-violet-500/10 border border-primary/20 rounded-full text-sm font-medium text-primary">
                     <span className="animate-pulse mr-2">🚀</span>
-                    Rivoluziona il tuo metodo di studio
+                    {t('hero.badge')}
                   </div>
                   
                   <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold leading-tight">
@@ -37,6 +37,10 @@ const Hero = () => {
                   
                   <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed font-medium">
                     {t('hero.subtitle')}
+                  </p>
+                  
+                  <p className="text-lg text-muted-foreground/80 leading-relaxed max-w-2xl">
+                    {t('hero.description')}
                   </p>
                 </div>
 
@@ -67,10 +71,10 @@ const Hero = () => {
                     onClick={() => setIsProfessorDemoOpen(true)}
                   >
                     <BookOpen className="mr-3 h-6 w-6 group-hover:scale-110 transition-transform" />
-                    Metti alla prova il Professore
+                    {t('hero.professorDemo')}
                   </Button>
                   <p className="text-sm text-muted-foreground mt-3 font-medium">
-                    🎓 Carica un PDF e interroga il Professore Virtuale con tecnologia RAG
+                    {t('hero.professorDemoDesc')}
                   </p>
                 </div>
 
@@ -78,15 +82,15 @@ const Hero = () => {
                 <div className="grid grid-cols-3 gap-8 pt-8">
                   <div className="text-center group">
                     <div className="text-3xl font-bold bg-gradient-to-r from-primary to-blue-500 bg-clip-text text-transparent mb-2">98%</div>
-                    <div className="text-sm text-muted-foreground font-medium">Studenti Soddisfatti</div>
+                    <div className="text-sm text-muted-foreground font-medium">{t('hero.stat1')}</div>
                   </div>
                   <div className="text-center group">
                     <div className="text-3xl font-bold bg-gradient-to-r from-success-500 to-emerald-500 bg-clip-text text-transparent mb-2">+40%</div>
-                    <div className="text-sm text-muted-foreground font-medium">Miglioramento Orale</div>
+                    <div className="text-sm text-muted-foreground font-medium">{t('hero.stat2')}</div>
                   </div>
                   <div className="text-center group">
                     <div className="text-3xl font-bold bg-gradient-to-r from-blue-500 to-primary bg-clip-text text-transparent mb-2">24/7</div>
-                    <div className="text-sm text-muted-foreground font-medium">Sempre Disponibile</div>
+                    <div className="text-sm text-muted-foreground font-medium">{t('hero.stat3')}</div>
                   </div>
                 </div>
               </div>
