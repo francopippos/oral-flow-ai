@@ -1,73 +1,73 @@
 
 import { GraduationCap, Users, Clock, Target, Lightbulb, Award } from 'lucide-react';
+import { useTranslation } from '../hooks/useTranslation';
 
 const Benefits = () => {
+  const { t } = useTranslation();
   const benefits = [
     {
       icon: GraduationCap,
-      title: "Per gli Studenti",
+      title: t('benefits.studentsTitle'),
       items: [
-        "Miglioramento della sicurezza nell'esposizione orale",
-        "Preparazione mirata basata sui propri materiali",
-        "Feedback immediato e costruttivo",
-        "Disponibilità 24/7 per sessioni di studio"
+        t('benefits.studentsItem1'),
+        t('benefits.studentsItem2'),
+        t('benefits.studentsItem3'),
+        t('benefits.studentsItem4')
       ],
       color: "from-oralmind-500 to-oralmind-600"
     },
     {
       icon: Users,
-      title: "Per gli Insegnanti",
+      title: t('benefits.teachersTitle'),
       items: [
-        "Supporto nell'individuazione delle difficoltà degli studenti",
-        "Strumento complementare alla didattica tradizionale",
-        "Monitoraggio dei progressi nel tempo",
-        "Riduzione del carico di lavoro per le verifiche orali"
+        t('benefits.teachersItem1'),
+        t('benefits.teachersItem2'),
+        t('benefits.teachersItem3'),
+        t('benefits.teachersItem4')
       ],
       color: "from-success-500 to-success-600"
     },
     {
       icon: Clock,
-      title: "Efficienza Temporale",
+      title: t('benefits.efficiencyTitle'),
       items: [
-        "Studio più efficace e mirato",
-        "Sessioni personalizzate di durata variabile",
-        "Riduzione del tempo necessario per la preparazione",
-        "Ottimizzazione delle sessioni di ripasso"
+        t('benefits.efficiencyItem1'),
+        t('benefits.efficiencyItem2'),
+        t('benefits.efficiencyItem3'),
+        t('benefits.efficiencyItem4')
       ],
       color: "from-purple-500 to-purple-600"
     },
     {
       icon: Target,
-      title: "Precisione e Personalizzazione",
+      title: t('benefits.precisionTitle'),
       items: [
-        "Utilizzo esclusivo dei propri materiali di studio",
-        "Adattamento al livello e al ritmo individuale",
-        "Focus su aree specifiche di miglioramento",
-        "Approccio pedagogico scientificamente validato"
+        t('benefits.precisionItem1'),
+        t('benefits.precisionItem2'),
+        t('benefits.precisionItem3'),
+        t('benefits.precisionItem4')
       ],
       color: "from-orange-500 to-orange-600"
     }
   ];
 
   const achievements = [
-    { icon: Lightbulb, value: "10x", label: "Più Efficace dello Studio Tradizionale" },
-    { icon: Award, value: "95%", label: "Miglioramento nelle Valutazioni" },
-    { icon: Clock, value: "3h", label: "Risparmio Medio di Studio Settimanale" },
-    { icon: Users, value: "1000+", label: "Studenti Già Soddisfatti" }
+    { icon: Lightbulb, value: "10x", label: t('benefits.achievement1') },
+    { icon: Award, value: "95%", label: t('benefits.achievement2') },
+    { icon: Clock, value: "3h", label: t('benefits.achievement3') },
+    { icon: Users, value: "1000+", label: t('benefits.achievement4') }
   ];
 
   return (
     <section id="benefits" className="py-20 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
-          {/* Header */}
           <div className="text-center space-y-4 mb-16 animate-fade-in">
             <h2 className="text-3xl md:text-4xl font-bold">
-              I <span className="gradient-text">Benefici</span> di OralMind
+              {t('benefits.title')}
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Scopri come OralMind può trasformare l'esperienza di apprendimento 
-              per studenti e insegnanti, creando un ambiente educativo più efficace e coinvolgente.
+              {t('benefits.subtitle')}
             </p>
           </div>
 
@@ -101,11 +101,10 @@ const Benefits = () => {
           <div className="bg-gradient-to-br from-oralmind-50 via-white to-success-50 rounded-2xl p-8 md:p-12">
             <div className="text-center mb-12">
               <h3 className="text-2xl md:text-3xl font-bold mb-4">
-                Risultati <span className="gradient-text">Straordinari</span>
+                {t('benefits.achievementsTitle')}
               </h3>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                I dati parlano chiaro: OralMind sta rivoluzionando il modo in cui gli studenti 
-                si preparano alle interrogazioni orali.
+                {t('benefits.achievementsSubtitle')}
               </p>
             </div>
 

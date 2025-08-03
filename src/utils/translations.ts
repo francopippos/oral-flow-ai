@@ -22,42 +22,82 @@ export interface TranslationKeys {
   'features.title': string;
   'features.subtitle': string;
   'features.description': string;
-  'features.smartAnalysis': string;
-  'features.smartAnalysisDesc': string;
-  'features.oralPractice': string;
-  'features.oralPracticeDesc': string;
-  'features.detailedFeedback': string;
-  'features.detailedFeedbackDesc': string;
-  'features.progressTracking': string;
-  'features.progressTrackingDesc': string;
-  'features.contentLibrary': string;
-  'features.contentLibraryDesc': string;
-  'features.voiceRecognition': string;
-  'features.voiceRecognitionDesc': string;
+  'features.badge': string;
+  'features.cta': string;
+  'features.uploadTitle': string;
+  'features.uploadDesc': string;
+  'features.simulationTitle': string;
+  'features.simulationDesc': string;
+  'features.aiTitle': string;
+  'features.aiDesc': string;
+  'features.feedbackTitle': string;
+  'features.feedbackDesc': string;
+  'features.personalizedTitle': string;
+  'features.personalizedDesc': string;
+  'features.voiceTitle': string;
+  'features.voiceDesc': string;
 
   // How It Works
   'howItWorks.title': string;
   'howItWorks.subtitle': string;
-  'howItWorks.step1': string;
+  'howItWorks.step1Title': string;
   'howItWorks.step1Desc': string;
-  'howItWorks.step2': string;
+  'howItWorks.step2Title': string;
   'howItWorks.step2Desc': string;
-  'howItWorks.step3': string;
+  'howItWorks.step3Title': string;
   'howItWorks.step3Desc': string;
+  'howItWorks.step4Title': string;
+  'howItWorks.step4Desc': string;
 
   // Benefits
   'benefits.title': string;
   'benefits.subtitle': string;
-  'benefits.confidence': string;
-  'benefits.confidenceDesc': string;
-  'benefits.timeEfficient': string;
-  'benefits.timeEfficientDesc': string;
-  'benefits.personalized': string;
-  'benefits.personalizedDesc': string;
+  'benefits.studentsTitle': string;
+  'benefits.studentsItem1': string;
+  'benefits.studentsItem2': string;
+  'benefits.studentsItem3': string;
+  'benefits.studentsItem4': string;
+  'benefits.teachersTitle': string;
+  'benefits.teachersItem1': string;
+  'benefits.teachersItem2': string;
+  'benefits.teachersItem3': string;
+  'benefits.teachersItem4': string;
+  'benefits.efficiencyTitle': string;
+  'benefits.efficiencyItem1': string;
+  'benefits.efficiencyItem2': string;
+  'benefits.efficiencyItem3': string;
+  'benefits.efficiencyItem4': string;
+  'benefits.precisionTitle': string;
+  'benefits.precisionItem1': string;
+  'benefits.precisionItem2': string;
+  'benefits.precisionItem3': string;
+  'benefits.precisionItem4': string;
+  'benefits.achievementsTitle': string;
+  'benefits.achievementsSubtitle': string;
+  'benefits.achievement1': string;
+  'benefits.achievement2': string;
+  'benefits.achievement3': string;
+  'benefits.achievement4': string;
 
   // Testimonials
   'testimonials.title': string;
   'testimonials.subtitle': string;
+  'testimonials.student1Name': string;
+  'testimonials.student1Role': string;
+  'testimonials.student1Content': string;
+  'testimonials.student1Subject': string;
+  'testimonials.teacher1Name': string;
+  'testimonials.teacher1Role': string;
+  'testimonials.teacher1Content': string;
+  'testimonials.teacher1Subject': string;
+  'testimonials.student2Name': string;
+  'testimonials.student2Role': string;
+  'testimonials.student2Content': string;
+  'testimonials.student2Subject': string;
+  'testimonials.student3Name': string;
+  'testimonials.student3Role': string;
+  'testimonials.student3Content': string;
+  'testimonials.student3Subject': string;
 
   // Footer
   'footer.product': string;
@@ -154,45 +194,85 @@ export const italianTranslations: TranslationKeys = {
   'hero.trustedBy': 'Scelto da oltre 10.000 studenti',
 
   // Features
-  'features.title': 'Tutto quello che ti serve per eccellere',
-  'features.subtitle': 'nelle interrogazioni orali',
-  'features.description': 'OralMind combina intelligenza artificiale avanzata con metodologie didattiche comprovate per offrirti un\'esperienza di apprendimento personalizzata e efficace.',
-  'features.smartAnalysis': 'Analisi Intelligente',
-  'features.smartAnalysisDesc': 'Il nostro AI analizza i tuoi materiali e crea domande personalizzate',
-  'features.oralPractice': 'Pratica Orale',
-  'features.oralPracticeDesc': 'Esercitati con simulazioni realistiche delle interrogazioni',
-  'features.detailedFeedback': 'Feedback Dettagliato',
-  'features.detailedFeedbackDesc': 'Ricevi valutazioni precise su contenuto, fluidità e sicurezza',
-  'features.progressTracking': 'Monitoraggio Progressi',
-  'features.progressTrackingDesc': 'Traccia i tuoi miglioramenti nel tempo con statistiche dettagliate',
-  'features.contentLibrary': 'Biblioteca Contenuti',
-  'features.contentLibraryDesc': 'Accedi a una vasta raccolta di materiali di studio organizzati',
-  'features.voiceRecognition': 'Riconoscimento Vocale',
-  'features.voiceRecognitionDesc': 'Tecnologia avanzata per analizzare pronuncia e fluidità',
+  'features.title': 'Funzionalità',
+  'features.subtitle': 'Rivoluzionarie',
+  'features.description': 'OralMind combina intelligenza artificiale avanzata e metodologie didattiche innovative per offrirti un\'esperienza di apprendimento unica e personalizzata.',
+  'features.badge': 'Tecnologia all\'avanguardia',
+  'features.cta': 'Scopri Tutte le Funzionalità',
+  'features.uploadTitle': 'Carica i Tuoi Materiali',
+  'features.uploadDesc': 'Carica PDF, slide e appunti. OralMind impara solo dai tuoi documenti, garantendo risposte personalizzate e attinenti al programma.',
+  'features.simulationTitle': 'Interrogazioni Simulate',
+  'features.simulationDesc': 'Parla con l\'AI come se fossi in classe. Ricevi domande mirate e feedback immediato sulla tua esposizione orale.',
+  'features.aiTitle': 'AI Educativa Avanzata',
+  'features.aiDesc': 'Tecnologia all\'avanguardia che simula l\'approccio di un professore esperto, con tono incoraggiante e formativo.',
+  'features.feedbackTitle': 'Feedback Dettagliato',
+  'features.feedbackDesc': 'Analisi di fluidità, correttezza terminologica e chiarezza espositiva con consigli personalizzati per migliorare.',
+  'features.personalizedTitle': 'Base Dati Personalizzata',
+  'features.personalizedDesc': 'Nessuna informazione da internet: solo i tuoi materiali come fonte di conoscenza per una preparazione mirata.',
+  'features.voiceTitle': 'Riconoscimento Vocale',
+  'features.voiceDesc': 'Tecnologia speech-to-text avanzata per comprendere al meglio la tua esposizione e fornire correzioni precise.',
 
   // How It Works
   'howItWorks.title': 'Come Funziona',
-  'howItWorks.subtitle': 'Tre semplici passaggi per migliorare le tue interrogazioni',
-  'howItWorks.step1': 'Carica i Materiali',
-  'howItWorks.step1Desc': 'Carica PDF, documenti o inserisci il testo da studiare',
-  'howItWorks.step2': 'Pratica con l\'AI',
-  'howItWorks.step2Desc': 'L\'AI ti farà domande personalizzate sul contenuto',
-  'howItWorks.step3': 'Ricevi Feedback',
-  'howItWorks.step3Desc': 'Ottieni valutazioni dettagliate e suggerimenti per migliorare',
+  'howItWorks.subtitle': 'Quattro semplici passaggi per trasformare il tuo metodo di studio e migliorare drasticamente le tue performance nelle interrogazioni orali.',
+  'howItWorks.step1Title': '1. Carica i Materiali',
+  'howItWorks.step1Desc': 'Carica i tuoi PDF, slide o appunti. OralMind analizza i contenuti e crea la tua base di conoscenza personalizzata.',
+  'howItWorks.step2Title': '2. L\'AI Impara',
+  'howItWorks.step2Desc': 'Il sistema elabora i tuoi materiali e si prepara a condurti attraverso interrogazioni mirate sui contenuti studiati.',
+  'howItWorks.step3Title': '3. Pratica Orale',
+  'howItWorks.step3Desc': 'Inizia la conversazione! Rispondi alle domande dell\'AI come se fossi in un\'interrogazione reale con il tuo professore.',
+  'howItWorks.step4Title': '4. Migliora Costantemente',
+  'howItWorks.step4Desc': 'Ricevi feedback dettagliato e suggerimenti personalizzati per perfezionare la tua tecnica espositiva e la padronanza dei contenuti.',
 
   // Benefits
-  'benefits.title': 'Perché Scegliere OralMind',
-  'benefits.subtitle': 'I vantaggi che fanno la differenza',
-  'benefits.confidence': 'Maggiore Sicurezza',
-  'benefits.confidenceDesc': 'Supera l\'ansia da interrogazione con pratica costante',
-  'benefits.timeEfficient': 'Risparmio di Tempo',
-  'benefits.timeEfficientDesc': 'Studia in modo più efficace con feedback immediato',
-  'benefits.personalized': 'Apprendimento Personalizzato',
-  'benefits.personalizedDesc': 'Contenuti adattati al tuo livello e stile di apprendimento',
+  'benefits.title': 'I Benefici di OralMind',
+  'benefits.subtitle': 'Scopri come OralMind può trasformare l\'esperienza di apprendimento per studenti e insegnanti, creando un ambiente educativo più efficace e coinvolgente.',
+  'benefits.studentsTitle': 'Per gli Studenti',
+  'benefits.studentsItem1': 'Miglioramento della sicurezza nell\'esposizione orale',
+  'benefits.studentsItem2': 'Preparazione mirata basata sui propri materiali',
+  'benefits.studentsItem3': 'Feedback immediato e costruttivo',
+  'benefits.studentsItem4': 'Disponibilità 24/7 per sessioni di studio',
+  'benefits.teachersTitle': 'Per gli Insegnanti',
+  'benefits.teachersItem1': 'Supporto nell\'individuazione delle difficoltà degli studenti',
+  'benefits.teachersItem2': 'Strumento complementare alla didattica tradizionale',
+  'benefits.teachersItem3': 'Monitoraggio dei progressi nel tempo',
+  'benefits.teachersItem4': 'Riduzione del carico di lavoro per le verifiche orali',
+  'benefits.efficiencyTitle': 'Efficienza Temporale',
+  'benefits.efficiencyItem1': 'Studio più efficace e mirato',
+  'benefits.efficiencyItem2': 'Sessioni personalizzate di durata variabile',
+  'benefits.efficiencyItem3': 'Riduzione del tempo necessario per la preparazione',
+  'benefits.efficiencyItem4': 'Ottimizzazione delle sessioni di ripasso',
+  'benefits.precisionTitle': 'Precisione e Personalizzazione',
+  'benefits.precisionItem1': 'Utilizzo esclusivo dei propri materiali di studio',
+  'benefits.precisionItem2': 'Adattamento al livello e al ritmo individuale',
+  'benefits.precisionItem3': 'Focus su aree specifiche di miglioramento',
+  'benefits.precisionItem4': 'Approccio pedagogico scientificamente validato',
+  'benefits.achievementsTitle': 'Risultati Straordinari',
+  'benefits.achievementsSubtitle': 'I dati parlano chiaro: OralMind sta rivoluzionando il modo in cui gli studenti si preparano alle interrogazioni orali.',
+  'benefits.achievement1': 'Più Efficace dello Studio Tradizionale',
+  'benefits.achievement2': 'Miglioramento nelle Valutazioni',
+  'benefits.achievement3': 'Risparmio Medio di Studio Settimanale',
+  'benefits.achievement4': 'Studenti Già Soddisfatti',
 
   // Testimonials
-  'testimonials.title': 'Cosa Dicono i Nostri Studenti',
-  'testimonials.subtitle': 'Storie di successo reali',
+  'testimonials.title': 'Cosa dicono di OralMind',
+  'testimonials.subtitle': 'Scopri come studenti e professori stanno trasformando il loro approccio alle interrogazioni orali con l\'aiuto dell\'intelligenza artificiale di OralMind',
+  'testimonials.student1Name': 'Marco Rossi',
+  'testimonials.student1Role': 'Studente di Liceo Scientifico',
+  'testimonials.student1Content': 'OralMind ha completamente trasformato il mio approccio alle interrogazioni. Prima ero sempre nervoso, ora mi sento sicuro e preparato. I feedback dell\'AI sono incredibilmente utili!',
+  'testimonials.student1Subject': 'Matematica e Fisica',
+  'testimonials.teacher1Name': 'Prof.ssa Elena Bianchi',
+  'testimonials.teacher1Role': 'Insegnante di Storia',
+  'testimonials.teacher1Content': 'Uno strumento rivoluzionario per i miei studenti. Ho notato un miglioramento significativo nella loro capacità espositiva e nella sicurezza durante le interrogazioni orali.',
+  'testimonials.teacher1Subject': 'Storia e Filosofia',
+  'testimonials.student2Name': 'Giulia Verdi',
+  'testimonials.student2Role': 'Studentessa Universitaria',
+  'testimonials.student2Content': 'Uso OralMind per prepararmi agli esami orali universitari. La capacità dell\'AI di adattarsi ai miei materiali specifici è impressionante. Non potrei più farne a meno!',
+  'testimonials.student2Subject': 'Giurisprudenza',
+  'testimonials.student3Name': 'Alessandro Neri',
+  'testimonials.student3Role': 'Studente di Liceo Classico',
+  'testimonials.student3Content': 'Finalmente uno strumento che mi aiuta davvero a migliorare nell\'esposizione orale. L\'AI è paziente e i suoi consigli sono sempre pertinenti. Voto aumentato del 30%!',
+  'testimonials.student3Subject': 'Latino e Greco',
 
   // Footer
   'footer.product': 'Prodotto',
@@ -289,45 +369,85 @@ export const englishTranslations: TranslationKeys = {
   'hero.trustedBy': 'Trusted by over 10,000 students',
 
   // Features
-  'features.title': 'Everything you need to excel',
-  'features.subtitle': 'in oral examinations',
-  'features.description': 'OralMind combines advanced artificial intelligence with proven teaching methodologies to offer you a personalized and effective learning experience.',
-  'features.smartAnalysis': 'Smart Analysis',
-  'features.smartAnalysisDesc': 'Our AI analyzes your materials and creates personalized questions',
-  'features.oralPractice': 'Oral Practice',
-  'features.oralPracticeDesc': 'Practice with realistic exam simulations',
-  'features.detailedFeedback': 'Detailed Feedback',
-  'features.detailedFeedbackDesc': 'Receive precise evaluations on content, fluency and confidence',
-  'features.progressTracking': 'Progress Tracking',
-  'features.progressTrackingDesc': 'Track your improvements over time with detailed statistics',
-  'features.contentLibrary': 'Content Library',
-  'features.contentLibraryDesc': 'Access a vast collection of organized study materials',
-  'features.voiceRecognition': 'Voice Recognition',
-  'features.voiceRecognitionDesc': 'Advanced technology to analyze pronunciation and fluency',
+  'features.title': 'Features',
+  'features.subtitle': 'Revolutionary',
+  'features.description': 'OralMind combines advanced artificial intelligence and innovative teaching methodologies to offer you a unique and personalized learning experience.',
+  'features.badge': 'Cutting-edge technology',
+  'features.cta': 'Discover All Features',
+  'features.uploadTitle': 'Upload Your Materials',
+  'features.uploadDesc': 'Upload PDFs, slides and notes. OralMind learns only from your documents, ensuring personalized and relevant responses to the program.',
+  'features.simulationTitle': 'Simulated Examinations',
+  'features.simulationDesc': 'Talk to AI as if you were in class. Receive targeted questions and immediate feedback on your oral presentation.',
+  'features.aiTitle': 'Advanced Educational AI',
+  'features.aiDesc': 'Cutting-edge technology that simulates the approach of an expert professor, with an encouraging and formative tone.',
+  'features.feedbackTitle': 'Detailed Feedback',
+  'features.feedbackDesc': 'Analysis of fluency, terminological correctness and expository clarity with personalized advice for improvement.',
+  'features.personalizedTitle': 'Personalized Database',
+  'features.personalizedDesc': 'No information from the internet: only your materials as a source of knowledge for targeted preparation.',
+  'features.voiceTitle': 'Voice Recognition',
+  'features.voiceDesc': 'Advanced speech-to-text technology to better understand your presentation and provide precise corrections.',
 
   // How It Works
   'howItWorks.title': 'How It Works',
-  'howItWorks.subtitle': 'Three simple steps to improve your oral exams',
-  'howItWorks.step1': 'Upload Materials',
-  'howItWorks.step1Desc': 'Upload PDFs, documents or enter text to study',
-  'howItWorks.step2': 'Practice with AI',
-  'howItWorks.step2Desc': 'AI will ask you personalized questions about the content',
-  'howItWorks.step3': 'Receive Feedback',
-  'howItWorks.step3Desc': 'Get detailed evaluations and suggestions for improvement',
+  'howItWorks.subtitle': 'Four simple steps to transform your study method and dramatically improve your performance in oral examinations.',
+  'howItWorks.step1Title': '1. Upload Materials',
+  'howItWorks.step1Desc': 'Upload your PDFs, slides or notes. OralMind analyzes the content and creates your personalized knowledge base.',
+  'howItWorks.step2Title': '2. AI Learns',
+  'howItWorks.step2Desc': 'The system processes your materials and prepares to guide you through targeted examinations on the studied content.',
+  'howItWorks.step3Title': '3. Oral Practice',
+  'howItWorks.step3Desc': 'Start the conversation! Answer the AI\'s questions as if you were in a real examination with your professor.',
+  'howItWorks.step4Title': '4. Improve Constantly',
+  'howItWorks.step4Desc': 'Receive detailed feedback and personalized suggestions to perfect your presentation technique and content mastery.',
 
   // Benefits
-  'benefits.title': 'Why Choose OralMind',
-  'benefits.subtitle': 'The advantages that make the difference',
-  'benefits.confidence': 'Greater Confidence',
-  'benefits.confidenceDesc': 'Overcome exam anxiety with constant practice',
-  'benefits.timeEfficient': 'Time Saving',
-  'benefits.timeEfficientDesc': 'Study more effectively with immediate feedback',
-  'benefits.personalized': 'Personalized Learning',
-  'benefits.personalizedDesc': 'Content adapted to your level and learning style',
+  'benefits.title': 'Benefits of OralMind',
+  'benefits.subtitle': 'Discover how OralMind can transform the learning experience for students and teachers, creating a more effective and engaging educational environment.',
+  'benefits.studentsTitle': 'For Students',
+  'benefits.studentsItem1': 'Improvement in oral presentation confidence',
+  'benefits.studentsItem2': 'Targeted preparation based on own materials',
+  'benefits.studentsItem3': 'Immediate and constructive feedback',
+  'benefits.studentsItem4': '24/7 availability for study sessions',
+  'benefits.teachersTitle': 'For Teachers',
+  'benefits.teachersItem1': 'Support in identifying student difficulties',
+  'benefits.teachersItem2': 'Complementary tool to traditional teaching',
+  'benefits.teachersItem3': 'Progress monitoring over time',
+  'benefits.teachersItem4': 'Reduced workload for oral assessments',
+  'benefits.efficiencyTitle': 'Time Efficiency',
+  'benefits.efficiencyItem1': 'More effective and targeted study',
+  'benefits.efficiencyItem2': 'Personalized sessions of variable duration',
+  'benefits.efficiencyItem3': 'Reduced preparation time needed',
+  'benefits.efficiencyItem4': 'Optimization of review sessions',
+  'benefits.precisionTitle': 'Precision and Personalization',
+  'benefits.precisionItem1': 'Exclusive use of own study materials',
+  'benefits.precisionItem2': 'Adaptation to individual level and pace',
+  'benefits.precisionItem3': 'Focus on specific areas for improvement',
+  'benefits.precisionItem4': 'Scientifically validated pedagogical approach',
+  'benefits.achievementsTitle': 'Extraordinary Results',
+  'benefits.achievementsSubtitle': 'The data speaks clearly: OralMind is revolutionizing the way students prepare for oral examinations.',
+  'benefits.achievement1': 'More Effective than Traditional Study',
+  'benefits.achievement2': 'Improvement in Evaluations',
+  'benefits.achievement3': 'Average Weekly Study Savings',
+  'benefits.achievement4': 'Already Satisfied Students',
 
   // Testimonials
-  'testimonials.title': 'What Our Students Say',
-  'testimonials.subtitle': 'Real success stories',
+  'testimonials.title': 'What they say about OralMind',
+  'testimonials.subtitle': 'Discover how students and professors are transforming their approach to oral examinations with the help of OralMind\'s artificial intelligence',
+  'testimonials.student1Name': 'Marco Rossi',
+  'testimonials.student1Role': 'High School Science Student',
+  'testimonials.student1Content': 'OralMind has completely transformed my approach to examinations. I used to be always nervous, now I feel confident and prepared. The AI feedback is incredibly helpful!',
+  'testimonials.student1Subject': 'Mathematics and Physics',
+  'testimonials.teacher1Name': 'Prof. Elena Bianchi',
+  'testimonials.teacher1Role': 'History Teacher',
+  'testimonials.teacher1Content': 'A revolutionary tool for my students. I have noticed a significant improvement in their presentation skills and confidence during oral examinations.',
+  'testimonials.teacher1Subject': 'History and Philosophy',
+  'testimonials.student2Name': 'Giulia Verdi',
+  'testimonials.student2Role': 'University Student',
+  'testimonials.student2Content': 'I use OralMind to prepare for university oral exams. The AI\'s ability to adapt to my specific materials is impressive. I couldn\'t do without it anymore!',
+  'testimonials.student2Subject': 'Law',
+  'testimonials.student3Name': 'Alessandro Neri',
+  'testimonials.student3Role': 'Classical High School Student',
+  'testimonials.student3Content': 'Finally a tool that really helps me improve in oral presentation. The AI is patient and its advice is always relevant. Grade increased by 30%!',
+  'testimonials.student3Subject': 'Latin and Greek',
 
   // Footer
   'footer.product': 'Product',

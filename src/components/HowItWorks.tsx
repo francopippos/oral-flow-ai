@@ -1,30 +1,32 @@
 
 import { Upload, Brain, MessageCircle, TrendingUp } from 'lucide-react';
+import { useTranslation } from '../hooks/useTranslation';
 
 const HowItWorks = () => {
+  const { t } = useTranslation();
   const steps = [
     {
       icon: Upload,
-      title: "1. Carica i Materiali",
-      description: "Carica i tuoi PDF, slide o appunti. OralMind analizza i contenuti e crea la tua base di conoscenza personalizzata.",
+      title: t('howItWorks.step1Title'),
+      description: t('howItWorks.step1Desc'),
       color: "from-oralmind-500 to-oralmind-600"
     },
     {
       icon: Brain,
-      title: "2. L'AI Impara",
-      description: "Il sistema elabora i tuoi materiali e si prepara a condurti attraverso interrogazioni mirate sui contenuti studiati.",
+      title: t('howItWorks.step2Title'),
+      description: t('howItWorks.step2Desc'),
       color: "from-purple-500 to-purple-600"
     },
     {
       icon: MessageCircle,
-      title: "3. Pratica Orale",
-      description: "Inizia la conversazione! Rispondi alle domande dell'AI come se fossi in un'interrogazione reale con il tuo professore.",
+      title: t('howItWorks.step3Title'),
+      description: t('howItWorks.step3Desc'),
       color: "from-success-500 to-success-600"
     },
     {
       icon: TrendingUp,
-      title: "4. Migliora Costantemente",
-      description: "Ricevi feedback dettagliato e suggerimenti personalizzati per perfezionare la tua tecnica espositiva e la padronanza dei contenuti.",
+      title: t('howItWorks.step4Title'),
+      description: t('howItWorks.step4Desc'),
       color: "from-orange-500 to-orange-600"
     }
   ];
@@ -33,14 +35,12 @@ const HowItWorks = () => {
     <section id="how-it-works" className="py-20 gradient-bg">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
-          {/* Header */}
           <div className="text-center space-y-4 mb-16 animate-fade-in">
             <h2 className="text-3xl md:text-4xl font-bold">
-              Come <span className="gradient-text">Funziona</span>
+              {t('howItWorks.title')}
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Quattro semplici passaggi per trasformare il tuo metodo di studio e 
-              migliorare drasticamente le tue performance nelle interrogazioni orali.
+              {t('howItWorks.subtitle')}
             </p>
           </div>
 

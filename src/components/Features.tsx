@@ -1,42 +1,44 @@
 
 import { Upload, MessageCircle, Brain, TrendingUp, FileText, Mic } from 'lucide-react';
+import { useTranslation } from '../hooks/useTranslation';
 
 const Features = () => {
+  const { t } = useTranslation();
   const features = [
     {
       icon: Upload,
-      title: "Carica i Tuoi Materiali",
-      description: "Carica PDF, slide e appunti. OralMind impara solo dai tuoi documenti, garantendo risposte personalizzate e attinenti al programma.",
+      title: t('features.uploadTitle'),
+      description: t('features.uploadDesc'),
       color: "from-oralmind-500 to-oralmind-600"
     },
     {
       icon: MessageCircle,
-      title: "Interrogazioni Simulate",
-      description: "Parla con l'AI come se fossi in classe. Ricevi domande mirate e feedback immediato sulla tua esposizione orale.",
+      title: t('features.simulationTitle'),
+      description: t('features.simulationDesc'),
       color: "from-success-500 to-success-600"
     },
     {
       icon: Brain,
-      title: "AI Educativa Avanzata",
-      description: "Tecnologia all'avanguardia che simula l'approccio di un professore esperto, con tono incoraggiante e formativo.",
+      title: t('features.aiTitle'),
+      description: t('features.aiDesc'),
       color: "from-purple-500 to-purple-600"
     },
     {
       icon: TrendingUp,
-      title: "Feedback Dettagliato",
-      description: "Analisi di fluidità, correttezza terminologica e chiarezza espositiva con consigli personalizzati per migliorare.",
+      title: t('features.feedbackTitle'),
+      description: t('features.feedbackDesc'),
       color: "from-orange-500 to-orange-600"
     },
     {
       icon: FileText,
-      title: "Base Dati Personalizzata",
-      description: "Nessuna informazione da internet: solo i tuoi materiali come fonte di conoscenza per una preparazione mirata.",
+      title: t('features.personalizedTitle'),
+      description: t('features.personalizedDesc'),
       color: "from-blue-500 to-blue-600"
     },
     {
       icon: Mic,
-      title: "Riconoscimento Vocale",
-      description: "Tecnologia speech-to-text avanzata per comprendere al meglio la tua esposizione e fornire correzioni precise.",
+      title: t('features.voiceTitle'),
+      description: t('features.voiceDesc'),
       color: "from-teal-500 to-teal-600"
     }
   ];
@@ -53,14 +55,13 @@ const Features = () => {
           <div className="text-center space-y-6 mb-20 animate-fade-in">
             <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-primary/10 to-violet-500/10 border border-primary/20 rounded-full text-sm font-medium text-primary mb-4">
               <span className="animate-pulse mr-2">✨</span>
-              Tecnologia all'avanguardia
+              {t('features.badge')}
             </div>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold">
-              Funzionalità <span className="gradient-text">Rivoluzionarie</span>
+              {t('features.title')} <span className="gradient-text">{t('features.subtitle')}</span>
             </h2>
             <p className="text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed font-medium">
-              OralMind combina intelligenza artificiale avanzata e metodologie didattiche innovative 
-              per offrirti un'esperienza di apprendimento unica e personalizzata.
+              {t('features.description')}
             </p>
           </div>
 
@@ -95,10 +96,9 @@ const Features = () => {
             ))}
           </div>
           
-          {/* Call to action */}
           <div className="text-center mt-20 animate-fade-in">
             <button className="modern-button group px-10 py-5 text-xl font-bold">
-              Scopri Tutte le Funzionalità
+              {t('features.cta')}
               <TrendingUp className="ml-3 h-6 w-6 group-hover:scale-110 transition-transform" />
             </button>
           </div>

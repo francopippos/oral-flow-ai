@@ -1,35 +1,37 @@
 
 import { Star, Quote } from 'lucide-react';
+import { useTranslation } from '../hooks/useTranslation';
 
 const Testimonials = () => {
+  const { t } = useTranslation();
   const testimonials = [
     {
-      name: "Marco Rossi",
-      role: "Studente di Liceo Scientifico",
-      content: "OralMind ha completamente trasformato il mio approccio alle interrogazioni. Prima ero sempre nervoso, ora mi sento sicuro e preparato. I feedback dell'AI sono incredibilmente utili!",
+      name: t('testimonials.student1Name'),
+      role: t('testimonials.student1Role'),
+      content: t('testimonials.student1Content'),
       rating: 5,
-      subject: "Matematica e Fisica"
+      subject: t('testimonials.student1Subject')
     },
     {
-      name: "Prof.ssa Elena Bianchi",
-      role: "Insegnante di Storia",
-      content: "Uno strumento rivoluzionario per i miei studenti. Ho notato un miglioramento significativo nella loro capacità espositiva e nella sicurezza durante le interrogazioni orali.",
+      name: t('testimonials.teacher1Name'),
+      role: t('testimonials.teacher1Role'),
+      content: t('testimonials.teacher1Content'),
       rating: 5,
-      subject: "Storia e Filosofia"
+      subject: t('testimonials.teacher1Subject')
     },
     {
-      name: "Giulia Verdi",
-      role: "Studentessa Universitaria",
-      content: "Uso OralMind per prepararmi agli esami orali universitari. La capacità dell'AI di adattarsi ai miei materiali specifici è impressionante. Non potrei più farne a meno!",
+      name: t('testimonials.student2Name'),
+      role: t('testimonials.student2Role'),
+      content: t('testimonials.student2Content'),
       rating: 5,
-      subject: "Giurisprudenza"
+      subject: t('testimonials.student2Subject')
     },
     {
-      name: "Alessandro Neri",
-      role: "Studente di Liceo Classico",
-      content: "Finalmente uno strumento che mi aiuta davvero a migliorare nell'esposizione orale. L'AI è paziente e i suoi consigli sono sempre pertinenti. Voto aumentato del 30%!",
+      name: t('testimonials.student3Name'),
+      role: t('testimonials.student3Role'),
+      content: t('testimonials.student3Content'),
       rating: 5,
-      subject: "Latino e Greco"
+      subject: t('testimonials.student3Subject')
     }
   ];
 
@@ -37,13 +39,12 @@ const Testimonials = () => {
     <section id="testimonials" className="py-20 gradient-bg">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
-          {/* Header */}
           <div className="text-center space-y-4 mb-16 animate-fade-in">
             <h2 className="text-3xl md:text-4xl font-bold">
-              Cosa dicono di <span className="gradient-text">OralMind</span>
+              {t('testimonials.title')}
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Scopri come studenti e professori stanno trasformando il loro approccio alle interrogazioni orali con l'aiuto dell'intelligenza artificiale di OralMind
+              {t('testimonials.subtitle')}
             </p>
           </div>
 
