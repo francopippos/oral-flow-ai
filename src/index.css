@@ -129,8 +129,8 @@
   
   .feature-card::before {
     content: '';
-    @apply absolute inset-0 bg-gradient-to-br from-primary/3 to-success-500/3 opacity-0 
-           transition-opacity duration-300;
+    @apply absolute inset-0 opacity-0 transition-opacity duration-300;
+    background: linear-gradient(to bottom right, hsl(201, 89%, 45%, 0.03), hsl(142, 76%, 47%, 0.03));
   }
   
   .feature-card:hover::before {
