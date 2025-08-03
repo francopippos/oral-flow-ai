@@ -289,9 +289,12 @@ I can help you explore the document contents if you give me more precise guidanc
           <DialogTitle className="text-2xl font-bold text-primary">
             🎓 AI Professor - Enhanced Document Analysis
           </DialogTitle>
-          <Button variant="ghost" size="sm" onClick={onClose}>
-            <X className="h-4 w-4" />
-          </Button>
+          <div className="flex items-center gap-2">
+            <div className="text-xs text-muted-foreground flex items-center gap-1">
+              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+              Powered by OralFlow AI
+            </div>
+          </div>
         </DialogHeader>
         
         <div className="flex-1 overflow-auto space-y-6">
