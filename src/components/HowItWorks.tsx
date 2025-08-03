@@ -102,7 +102,7 @@ const HowItWorks = () => {
                               <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full animate-spin">
                                 <Brain className="h-4 w-4 text-white m-2" />
                               </div>
-                              <div className="text-sm">Analizzando contenuti...</div>
+                              <div className="text-sm">{t('howItWorks.analyzing')}</div>
                             </div>
                             <div className="w-full bg-gray-200 rounded-full h-2">
                               <div className="bg-gradient-to-r from-purple-500 to-purple-600 h-2 rounded-full w-3/4 animate-pulse"></div>
@@ -113,10 +113,10 @@ const HowItWorks = () => {
                         {index === 2 && (
                           <div className="space-y-3">
                             <div className="bg-success-50 rounded-lg p-3">
-                              <div className="text-sm font-medium text-success-800">🎤 "Spiegami le cause della Prima Guerra Mondiale"</div>
+                              <div className="text-sm font-medium text-success-800">🎤 "{t('howItWorks.question')}"</div>
                             </div>
                             <div className="bg-oralmind-50 rounded-lg p-3">
-                              <div className="text-sm text-oralmind-800">⚡ Risposta in corso...</div>
+                              <div className="text-sm text-oralmind-800">⚡ {t('howItWorks.responding')}</div>
                             </div>
                           </div>
                         )}
@@ -124,11 +124,11 @@ const HowItWorks = () => {
                         {index === 3 && (
                           <div className="space-y-3">
                             <div className="bg-success-100 rounded-lg p-3">
-                              <div className="text-sm font-medium text-success-800">✨ Eccellente esposizione!</div>
-                              <div className="text-xs text-success-600 mt-1">Chiarezza: 9/10 • Completezza: 8/10</div>
+                              <div className="text-sm font-medium text-success-800">✨ {t('howItWorks.excellent')}</div>
+                              <div className="text-xs text-success-600 mt-1">{t('howItWorks.clarity')}</div>
                             </div>
                             <div className="bg-orange-50 rounded-lg p-3">
-                              <div className="text-sm text-orange-800">💡 Suggerimento: Approfondisci il ruolo dell'Austria-Ungheria</div>
+                              <div className="text-sm text-orange-800">💡 {t('howItWorks.suggestion')}</div>
                             </div>
                           </div>
                         )}

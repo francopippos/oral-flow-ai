@@ -54,6 +54,12 @@ export interface TranslationKeys {
   'howItWorks.step3Desc': string;
   'howItWorks.step4Title': string;
   'howItWorks.step4Desc': string;
+  'howItWorks.analyzing': string;
+  'howItWorks.question': string;
+  'howItWorks.responding': string;
+  'howItWorks.excellent': string;
+  'howItWorks.clarity': string;
+  'howItWorks.suggestion': string;
 
   // Benefits
   'benefits.title': string;
@@ -235,6 +241,12 @@ export const italianTranslations: TranslationKeys = {
   'howItWorks.step3Desc': 'Inizia la conversazione! Rispondi alle domande dell\'AI come se fossi in un\'interrogazione reale con il tuo professore.',
   'howItWorks.step4Title': '4. Migliora Costantemente',
   'howItWorks.step4Desc': 'Ricevi feedback dettagliato e suggerimenti personalizzati per perfezionare la tua tecnica espositiva e la padronanza dei contenuti.',
+  'howItWorks.analyzing': 'Analizzando contenuti...',
+  'howItWorks.question': 'Spiegami le cause della Prima Guerra Mondiale',
+  'howItWorks.responding': 'Risposta in corso...',
+  'howItWorks.excellent': 'Eccellente esposizione!',
+  'howItWorks.clarity': 'Chiarezza: 9/10 • Completezza: 8/10',
+  'howItWorks.suggestion': 'Suggerimento: Approfondisci il ruolo dell\'Austria-Ungheria',
 
   // Benefits
   'benefits.title': 'I Benefici di OralMind',
@@ -416,6 +428,12 @@ export const englishTranslations: TranslationKeys = {
   'howItWorks.step3Desc': 'Start the conversation! Answer the AI\'s questions as if you were in a real examination with your professor.',
   'howItWorks.step4Title': '4. Improve Constantly',
   'howItWorks.step4Desc': 'Receive detailed feedback and personalized suggestions to perfect your presentation technique and content mastery.',
+  'howItWorks.analyzing': 'Analyzing content...',
+  'howItWorks.question': 'Explain the causes of World War I',
+  'howItWorks.responding': 'Response in progress...',
+  'howItWorks.excellent': 'Excellent presentation!',
+  'howItWorks.clarity': 'Clarity: 9/10 • Completeness: 8/10',
+  'howItWorks.suggestion': 'Suggestion: Deepen the role of Austria-Hungary',
 
   // Benefits
   'benefits.title': 'Benefits of OralMind',
