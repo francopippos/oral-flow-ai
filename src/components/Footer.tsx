@@ -1,11 +1,14 @@
 import { Brain, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
+import { useTranslation } from '../hooks/useTranslation';
+
 const Footer = () => {
+  const { t } = useTranslation();
   const footerLinks = {
     prodotto: [{
-      name: 'Funzionalità',
+      name: t('nav.features'),
       href: '#features'
     }, {
-      name: 'Come Funziona',
+      name: t('nav.howItWorks'),
       href: '#how-it-works'
     }, {
       name: 'Prezzi',
@@ -15,42 +18,42 @@ const Footer = () => {
       href: '#demo'
     }],
     supporto: [{
-      name: 'Centro Assistenza',
+      name: t('footer.helpCenter'),
       href: '#help'
     }, {
-      name: 'Guide e Tutorial',
+      name: t('footer.guides'),
       href: '#guides'
     }, {
-      name: 'FAQ',
+      name: t('footer.faq'),
       href: '#faq'
     }, {
-      name: 'Contattaci',
+      name: t('footer.contact'),
       href: '#contact'
     }],
     azienda: [{
-      name: 'Chi Siamo',
+      name: t('footer.about'),
       href: '#about'
     }, {
-      name: 'Blog',
+      name: t('footer.blog'),
       href: '#blog'
     }, {
-      name: 'Carriere',
+      name: t('footer.careers'),
       href: '#careers'
     }, {
-      name: 'Stampa',
+      name: t('footer.press'),
       href: '#press'
     }],
     legale: [{
-      name: 'Privacy Policy',
+      name: t('footer.privacy'),
       href: '/privacy'
     }, {
-      name: 'Termini di Servizio',
+      name: t('footer.terms'),
       href: '/terms'
     }, {
-      name: 'Cookie Policy',
+      name: t('footer.cookies'),
       href: '/cookies'
     }, {
-      name: 'GDPR',
+      name: t('footer.gdpr'),
       href: '/gdpr'
     }]
   };
@@ -85,8 +88,7 @@ const Footer = () => {
                 <span className="text-xl font-bold">OralMind</span>
               </div>
               <p className="text-slate-400 leading-relaxed">
-                L'intelligenza artificiale che rivoluziona l'apprendimento orale. 
-                Preparati alle interrogazioni con sicurezza e migliora le tue capacità espositive.
+                {t('footer.description')}
               </p>
               <div className="space-y-3">
                 <div className="flex items-center space-x-3 text-slate-400">
@@ -104,10 +106,9 @@ const Footer = () => {
               </div>
             </div>
 
-            {/* Links Columns */}
             <div className="lg:col-span-4 grid md:grid-cols-4 gap-8">
               <div>
-                <h3 className="font-semibold mb-4 text-white">Prodotto</h3>
+                <h3 className="font-semibold mb-4 text-white">{t('footer.product')}</h3>
                 <ul className="space-y-3">
                   {footerLinks.prodotto.map(link => <li key={link.name}>
                       <a href={link.href} className="text-slate-400 hover:text-white transition-colors">
@@ -118,7 +119,7 @@ const Footer = () => {
               </div>
 
               <div>
-                <h3 className="font-semibold mb-4 text-white">Supporto</h3>
+                <h3 className="font-semibold mb-4 text-white">{t('footer.support')}</h3>
                 <ul className="space-y-3">
                   {footerLinks.supporto.map(link => <li key={link.name}>
                       <a href={link.href} className="text-slate-400 hover:text-white transition-colors">
@@ -129,7 +130,7 @@ const Footer = () => {
               </div>
 
               <div>
-                <h3 className="font-semibold mb-4 text-white">Azienda</h3>
+                <h3 className="font-semibold mb-4 text-white">{t('footer.company')}</h3>
                 <ul className="space-y-3">
                   {footerLinks.azienda.map(link => <li key={link.name}>
                       <a href={link.href} className="text-slate-400 hover:text-white transition-colors">
@@ -140,7 +141,7 @@ const Footer = () => {
               </div>
 
               <div>
-                <h3 className="font-semibold mb-4 text-white">Legale</h3>
+                <h3 className="font-semibold mb-4 text-white">{t('footer.legal')}</h3>
                 <ul className="space-y-3">
                   {footerLinks.legale.map(link => <li key={link.name}>
                       <a href={link.href} className="text-slate-400 hover:text-white transition-colors">
@@ -152,18 +153,16 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Newsletter */}
           <div className="bg-slate-800 rounded-2xl p-8 mb-12">
             <div className="max-w-2xl mx-auto text-center">
-              <h3 className="text-xl font-semibold mb-4">Resta Aggiornato</h3>
+              <h3 className="text-xl font-semibold mb-4">{t('footer.newsletter')}</h3>
               <p className="text-slate-400 mb-6">
-                Iscriviti alla nostra newsletter per ricevere aggiornamenti sulle nuove funzionalità 
-                e consigli per migliorare il tuo apprendimento.
+                {t('footer.newsletterDesc')}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-                <input type="email" placeholder="La tua email" className="flex-1 px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-oralmind-500" />
+                <input type="email" placeholder={t('footer.emailPlaceholder')} className="flex-1 px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-oralmind-500" />
                 <button className="bg-gradient-to-r from-oralmind-500 to-success-500 hover:from-oralmind-600 hover:to-success-600 px-6 py-3 rounded-lg font-semibold transition-all duration-300">
-                  Iscriviti
+                  {t('footer.subscribe')}
                 </button>
               </div>
             </div>
@@ -173,7 +172,7 @@ const Footer = () => {
           <div className="border-t border-slate-800 pt-8">
             <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
               <div className="text-slate-400 text-sm">
-                © 2024 OralMind. Tutti i diritti riservati.
+                {t('footer.copyright')}
               </div>
               
               {/* Social Links */}

@@ -4,8 +4,10 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight, Play, Upload, MessageCircle, TrendingUp, BookOpen } from 'lucide-react';
 import DemoModal from './DemoModal';
 import VirtualProfessorDemo from './VirtualProfessorDemo';
+import { useTranslation } from '../hooks/useTranslation';
 
 const Hero = () => {
+  const { t } = useTranslation();
   const [isDemoOpen, setIsDemoOpen] = useState(false);
   const [isProfessorDemoOpen, setIsProfessorDemoOpen] = useState(false);
 
@@ -29,20 +31,18 @@ const Hero = () => {
                   </div>
                   
                   <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold leading-tight">
-                    Trasforma le tue{' '}
-                    <span className="gradient-text">interrogazioni</span>{' '}
-                    con l'AI
+                    {t('hero.title')}{' '}
+                    <span className="gradient-text">OralMind</span>
                   </h1>
                   
                   <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed font-medium">
-                    OralMind è l'intelligenza artificiale che ti aiuta a migliorare le tue capacità di esposizione orale, 
-                    utilizzando esclusivamente i tuoi materiali di studio. Preparati alle interrogazioni come mai prima d'ora.
+                    {t('hero.subtitle')}
                   </p>
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-4">
                   <button className="modern-button group px-8 py-4 text-lg font-semibold">
-                    Inizia Subito Gratis
+                    {t('hero.tryDemo')}
                     <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-1 transition-transform" />
                   </button>
                   
@@ -54,7 +54,7 @@ const Hero = () => {
                   >
                     <div className="flex items-center">
                       <Play className="mr-3 h-6 w-6 group-hover:scale-110 transition-transform" />
-                      Guarda la Demo
+                      {t('hero.watchVideo')}
                     </div>
                   </Button>
                 </div>

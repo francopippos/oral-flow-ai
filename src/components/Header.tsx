@@ -3,16 +3,19 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Menu, X, Brain } from 'lucide-react';
 import LoginModal from './LoginModal';
+import LanguageSwitcher from './LanguageSwitcher';
+import { useTranslation } from '../hooks/useTranslation';
 
 const Header = () => {
+  const { t } = useTranslation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
 
   const navItems = [
-    { name: 'Funzionalità', href: '#features' },
-    { name: 'Come Funziona', href: '#how-it-works' },
-    { name: 'Benefici', href: '#benefits' },
-    { name: 'Testimonianze', href: '#testimonials' },
+    { name: t('nav.features'), href: '#features' },
+    { name: t('nav.howItWorks'), href: '#how-it-works' },
+    { name: t('nav.benefits'), href: '#benefits' },
+    { name: t('nav.testimonials'), href: '#testimonials' },
   ];
 
   return (
@@ -44,15 +47,16 @@ const Header = () => {
 
             {/* Enhanced CTA Buttons */}
             <div className="hidden md:flex items-center space-x-4">
+              <LanguageSwitcher />
               <Button 
                 variant="outline" 
                 className="border-2 border-primary/20 text-primary hover:bg-primary/5 hover:border-primary/40 font-semibold px-6 py-2 rounded-xl transition-all duration-300"
                 onClick={() => setIsLoginOpen(true)}
               >
-                Accedi
+                {t('header.login')}
               </Button>
               <button className="modern-button px-6 py-3 text-lg font-semibold">
-                Prova Gratis
+                {t('header.tryFree')}
               </button>
             </div>
 
@@ -82,6 +86,10 @@ const Header = () => {
                   </a>
                 ))}
                 <div className="flex flex-col space-y-3 pt-4 border-t border-primary/10">
+                  <div className="flex items-center justify-between pb-2">
+                    <span className="text-sm text-muted-foreground">Language</span>
+                    <LanguageSwitcher />
+                  </div>
                   <Button 
                     variant="outline" 
                     className="border-2 border-primary/20 text-primary hover:bg-primary/5 hover:border-primary/40 font-semibold py-3 rounded-xl"
@@ -90,10 +98,10 @@ const Header = () => {
                       setIsMenuOpen(false);
                     }}
                   >
-                    Accedi
+                    {t('header.login')}
                   </Button>
                   <button className="modern-button py-3 text-lg font-semibold">
-                    Prova Gratis
+                    {t('header.tryFree')}
                   </button>
                 </div>
               </div>
