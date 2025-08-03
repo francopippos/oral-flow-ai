@@ -122,15 +122,15 @@
   }
   
   .feature-card {
-    @apply bg-white/90 backdrop-blur-xl border border-white/20 rounded-3xl p-8 
-           hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 
-           hover:-translate-y-2 hover:scale-105 relative overflow-hidden;
+    @apply bg-white/95 backdrop-blur-sm border border-white/20 rounded-3xl p-8 
+           hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 
+           hover:-translate-y-1 relative overflow-hidden;
   }
   
   .feature-card::before {
     content: '';
-    @apply absolute inset-0 bg-gradient-to-br from-primary/5 to-success-500/5 opacity-0 
-           transition-opacity duration-500;
+    @apply absolute inset-0 bg-gradient-to-br from-primary/3 to-success-500/3 opacity-0 
+           transition-opacity duration-300;
   }
   
   .feature-card:hover::before {
@@ -138,24 +138,23 @@
   }
   
   .glow-effect {
-    @apply relative transition-all duration-300;
-    filter: drop-shadow(0 0 20px hsl(201, 89%, 45%, 0.3));
+    @apply relative transition-all duration-200;
   }
   
   .glow-effect:hover {
-    filter: drop-shadow(0 0 30px hsl(201, 89%, 45%, 0.5));
+    @apply shadow-lg shadow-primary/20;
   }
   
   .modern-button {
     @apply relative overflow-hidden bg-gradient-to-r from-primary to-success-500 
-           text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-300
-           hover:scale-105 hover:shadow-xl hover:shadow-primary/25;
+           text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-200
+           hover:scale-[1.02] hover:shadow-lg hover:shadow-primary/20;
   }
   
   .modern-button::before {
     content: '';
-    @apply absolute inset-0 bg-gradient-to-r from-white/20 to-transparent 
-           translate-x-[-100%] transition-transform duration-500;
+    @apply absolute inset-0 bg-gradient-to-r from-white/10 to-transparent 
+           translate-x-[-100%] transition-transform duration-300;
   }
   
   .modern-button:hover::before {
@@ -163,8 +162,8 @@
   }
   
   .glass-card {
-    @apply bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl 
-           shadow-xl shadow-black/5;
+    @apply bg-white/95 backdrop-blur-sm border border-white/20 rounded-3xl 
+           shadow-lg shadow-black/5;
   }
   
   .neon-border {
@@ -180,12 +179,10 @@
   }
   
   .floating-element {
-    animation: float 3s ease-in-out infinite;
+    animation: float 4s ease-in-out infinite;
   }
   
-  .pulse-glow {
-    animation: pulse-glow 2s ease-in-out infinite;
-  }
+  /* Rimuoviamo pulse-glow per performance */
   
   .animate-fade-in {
     animation: fadeIn 0.8s ease-out forwards;
@@ -212,21 +209,10 @@
 
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-15px); }
+  50% { transform: translateY(-10px); }
 }
 
-@keyframes pulse-glow {
-  0%, 100% { 
-    box-shadow: 0 0 20px hsl(201, 89%, 45%, 0.4),
-                0 0 40px hsl(201, 89%, 45%, 0.2),
-                0 0 60px hsl(201, 89%, 45%, 0.1);
-  }
-  50% { 
-    box-shadow: 0 0 30px hsl(201, 89%, 45%, 0.6),
-                0 0 60px hsl(201, 89%, 45%, 0.4),
-                0 0 90px hsl(201, 89%, 45%, 0.2);
-  }
-}
+/* Rimosso pulse-glow keyframe per performance */
 
 @keyframes fadeIn {
   from {

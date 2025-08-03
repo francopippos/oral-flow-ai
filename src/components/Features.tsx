@@ -75,21 +75,21 @@ const Features = () => {
                 {/* Card with enhanced glass effect */}
                 <div className="feature-card h-full">
                   {/* Icon with enhanced gradient */}
-                  <div className={`w-16 h-16 rounded-3xl bg-gradient-to-r ${feature.color} p-4 mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-lg relative`}>
+                  <div className={`w-16 h-16 rounded-3xl bg-gradient-to-r ${feature.color} p-4 mb-6 group-hover:scale-105 transition-all duration-300 shadow-lg relative`}>
                     <feature.icon className="h-8 w-8 text-white" />
-                    <div className="absolute inset-0 rounded-3xl bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="absolute inset-0 rounded-3xl bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   </div>
                   
                   {/* Content */}
-                  <h3 className="text-2xl font-bold mb-4 text-foreground group-hover:text-primary transition-colors duration-300">
+                  <h3 className="text-2xl font-bold mb-4 text-foreground group-hover:text-primary transition-colors duration-200">
                     {feature.title}
                   </h3>
                   <p className="text-muted-foreground leading-relaxed text-lg">
                     {feature.description}
                   </p>
                   
-                  {/* Hover indicator */}
-                  <div className="absolute bottom-6 left-8 w-12 h-1 bg-gradient-to-r from-primary to-violet-500 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0"></div>
+                  {/* Hover indicator semplificato */}
+                  <div className="absolute bottom-6 left-8 w-12 h-1 bg-gradient-to-r from-primary to-blue-500 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-200"></div>
                 </div>
               </div>
             ))}
