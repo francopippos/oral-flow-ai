@@ -42,16 +42,16 @@ const Footer = () => {
     }],
     legale: [{
       name: 'Privacy Policy',
-      href: '#privacy'
+      href: '/privacy'
     }, {
       name: 'Termini di Servizio',
-      href: '#terms'
+      href: '/terms'
     }, {
       name: 'Cookie Policy',
-      href: '#cookies'
+      href: '/cookies'
     }, {
       name: 'GDPR',
-      href: '#gdpr'
+      href: '/gdpr'
     }]
   };
   const socialLinks = [{
