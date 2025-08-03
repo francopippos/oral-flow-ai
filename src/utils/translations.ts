@@ -185,6 +185,58 @@ export interface TranslationKeys {
   'report.newInterrogation': string;
   'report.downloadReport': string;
   'report.completeDemo': string;
+
+  // Demo Modal Full
+  'demoModal.step1Title': string;
+  'demoModal.step1Subtitle': string;
+  'demoModal.step2Title': string;
+  'demoModal.step2Subtitle': string;
+  'demoModal.step3Title': string;
+  'demoModal.step3Subtitle': string;
+  'demoModal.step4Title': string;
+  'demoModal.step4Subtitle': string;
+  'demoModal.dragDrop': string;
+  'demoModal.fileAnalyzed': string;
+  'demoModal.conceptsIdentified': string;
+  'demoModal.professorModes': string;
+  'demoModal.professorSevere': string;
+  'demoModal.professorSevereDesc': string;
+  'demoModal.professorUnderstanding': string;
+  'demoModal.professorUnderstandingDesc': string;
+  'demoModal.professorTechnical': string;
+  'demoModal.professorTechnicalDesc': string;
+  'demoModal.advancedPersonalization': string;
+  'demoModal.levelAdaptation': string;
+  'demoModal.progressiveQuestions': string;
+  'demoModal.personalizedFeedback': string;
+  'demoModal.conversationSimulation': string;
+  'demoModal.pause': string;
+  'demoModal.play': string;
+  'demoModal.aiPrepared': string;
+  'demoModal.voiceTranscription': string;
+  'demoModal.recording': string;
+  'demoModal.clickToRespond': string;
+  'demoModal.supports30Languages': string;
+  'demoModal.evaluationTitle': string;
+  'demoModal.clarity': string;
+  'demoModal.precision': string;
+  'demoModal.completeness': string;
+  'demoModal.fluency': string;
+  'demoModal.personalizedSuggestions': string;
+  'demoModal.excellentExamples': string;
+  'demoModal.betterConnections': string;
+  'demoModal.deepenEconomic': string;
+  'demoModal.advancedFeatures': string;
+  'demoModal.groupExams': string;
+  'demoModal.aiDebates': string;
+  'demoModal.progressTracking': string;
+  'demoModal.exportableReports': string;
+  'demoModal.multiPlatform': string;
+  'demoModal.studyAnywhere': string;
+  'demoModal.webApp': string;
+  'demoModal.mobileApps': string;
+  'demoModal.cloudSync': string;
+  'demoModal.autoBackup': string;
 }
 
 // Italian translations (default)
@@ -372,6 +424,58 @@ export const italianTranslations: TranslationKeys = {
   'report.newInterrogation': 'Nuova Interrogazione',
   'report.downloadReport': 'Scarica Report',
   'report.completeDemo': 'Completa Demo',
+
+  // Demo Modal Full
+  'demoModal.step1Title': 'Carica i tuoi materiali',
+  'demoModal.step1Subtitle': 'L\'AI analizzerà automaticamente i contenuti per personalizzare l\'esperienza',
+  'demoModal.step2Title': 'Configurazione AI Personalizzata',
+  'demoModal.step2Subtitle': 'Scegli lo stile di insegnamento più adatto al tuo livello e obiettivi',
+  'demoModal.step3Title': 'Simulazione Conversazione',
+  'demoModal.step3Subtitle': 'Conversazione interattiva con il Professore',
+  'demoModal.step4Title': 'Feedback e Valutazione',
+  'demoModal.step4Subtitle': 'Report completo di valutazione dal Professore',
+  'demoModal.dragDrop': 'Trascina qui i tuoi PDF o clicca per caricare',
+  'demoModal.fileAnalyzed': '✅ File analizzato con successo!',
+  'demoModal.conceptsIdentified': 'L\'AI ha identificato 15 concetti chiave del Rinascimento',
+  'demoModal.professorModes': 'Modalità Professore AI',
+  'demoModal.professorSevere': 'Professore Severo',
+  'demoModal.professorSevereDesc': 'Valutazione rigorosa con domande precise e feedback diretto',
+  'demoModal.professorUnderstanding': 'Professore Comprensivo',
+  'demoModal.professorUnderstandingDesc': 'Approccio paziente con feedback costruttivo e incoraggiante',
+  'demoModal.professorTechnical': 'Professore Tecnico',
+  'demoModal.professorTechnicalDesc': 'Focus su terminologia specialistica e approccio analitico avanzato',
+  'demoModal.advancedPersonalization': '🎯 Personalizzazione AI Avanzata:',
+  'demoModal.levelAdaptation': 'Adattamento al livello di studio',
+  'demoModal.progressiveQuestions': 'Domande progressive e intelligenti',
+  'demoModal.personalizedFeedback': 'Feedback personalizzato dettagliato',
+  'demoModal.conversationSimulation': 'Simulazione Conversazione AI',
+  'demoModal.pause': 'Pausa',
+  'demoModal.play': 'Play',
+  'demoModal.aiPrepared': '💡 L\'AI ha preparato questa domanda basandosi sui contenuti del tuo PDF',
+  'demoModal.voiceTranscription': 'Trascrizione vocale completata',
+  'demoModal.recording': '🔴 Registrazione in corso... L\'AI sta ascoltando',
+  'demoModal.clickToRespond': '🎤 Clicca per rispondere vocalmente alla domanda',
+  'demoModal.supports30Languages': 'Supporta oltre 30 lingue • Trascrizione in tempo reale • Analisi automatica',
+  'demoModal.evaluationTitle': 'Valutazione Dettagliata AI',
+  'demoModal.clarity': 'Chiarezza espositiva:',
+  'demoModal.precision': 'Correttezza terminologica:',
+  'demoModal.completeness': 'Completezza della risposta:',
+  'demoModal.fluency': 'Fluidità comunicativa:',
+  'demoModal.personalizedSuggestions': '💡 Suggerimenti AI personalizzati:',
+  'demoModal.excellentExamples': '• Eccellente uso di esempi concreti',
+  'demoModal.betterConnections': '• Potresti collegare meglio i concetti tra loro',
+  'demoModal.deepenEconomic': '• Prova ad approfondire le cause economiche',
+  'demoModal.advancedFeatures': '👥 Funzionalità Avanzate',
+  'demoModal.groupExams': 'Interrogazioni di gruppo',
+  'demoModal.aiDebates': 'Dibattiti guidati dall\'AI',
+  'demoModal.progressTracking': 'Tracciamento progressi',
+  'demoModal.exportableReports': 'Report esportabili',
+  'demoModal.multiPlatform': '📱 Accesso Multi-Piattaforma',
+  'demoModal.studyAnywhere': 'Studia ovunque con l\'app mobile ottimizzata per sessioni di allenamento vocale anche offline.',
+  'demoModal.webApp': '💻 Web App',
+  'demoModal.mobileApps': '📱 iOS & Android',
+  'demoModal.cloudSync': '☁️ Sync Cloud',
+  'demoModal.autoBackup': '🔄 Backup automatico',
 };
 
 // English translations
@@ -559,6 +663,58 @@ export const englishTranslations: TranslationKeys = {
   'report.newInterrogation': 'New Interrogation',
   'report.downloadReport': 'Download Report',
   'report.completeDemo': 'Complete Demo',
+
+  // Demo Modal Full
+  'demoModal.step1Title': 'Upload your materials',
+  'demoModal.step1Subtitle': 'AI will automatically analyze the content to personalize the experience',
+  'demoModal.step2Title': 'Personalized AI Configuration',
+  'demoModal.step2Subtitle': 'Choose the teaching style best suited to your level and goals',
+  'demoModal.step3Title': 'Conversation Simulation',
+  'demoModal.step3Subtitle': 'Interactive conversation with the Professor',
+  'demoModal.step4Title': 'Feedback and Evaluation',
+  'demoModal.step4Subtitle': 'Complete evaluation report from the Professor',
+  'demoModal.dragDrop': 'Drag your PDFs here or click to upload',
+  'demoModal.fileAnalyzed': '✅ File analyzed successfully!',
+  'demoModal.conceptsIdentified': 'AI has identified 15 key concepts of the Renaissance',
+  'demoModal.professorModes': 'AI Professor Modes',
+  'demoModal.professorSevere': 'Strict Professor',
+  'demoModal.professorSevereDesc': 'Rigorous evaluation with precise questions and direct feedback',
+  'demoModal.professorUnderstanding': 'Understanding Professor',
+  'demoModal.professorUnderstandingDesc': 'Patient approach with constructive and encouraging feedback',
+  'demoModal.professorTechnical': 'Technical Professor',
+  'demoModal.professorTechnicalDesc': 'Focus on specialized terminology and advanced analytical approach',
+  'demoModal.advancedPersonalization': '🎯 Advanced AI Personalization:',
+  'demoModal.levelAdaptation': 'Study level adaptation',
+  'demoModal.progressiveQuestions': 'Progressive and intelligent questions',
+  'demoModal.personalizedFeedback': 'Detailed personalized feedback',
+  'demoModal.conversationSimulation': 'AI Conversation Simulation',
+  'demoModal.pause': 'Pause',
+  'demoModal.play': 'Play',
+  'demoModal.aiPrepared': '💡 AI prepared this question based on your PDF content',
+  'demoModal.voiceTranscription': 'Voice transcription completed',
+  'demoModal.recording': '🔴 Recording in progress... AI is listening',
+  'demoModal.clickToRespond': '🎤 Click to respond vocally to the question',
+  'demoModal.supports30Languages': 'Supports over 30 languages • Real-time transcription • Automatic analysis',
+  'demoModal.evaluationTitle': 'Detailed AI Evaluation',
+  'demoModal.clarity': 'Expository clarity:',
+  'demoModal.precision': 'Terminological correctness:',
+  'demoModal.completeness': 'Response completeness:',
+  'demoModal.fluency': 'Communicative fluency:',
+  'demoModal.personalizedSuggestions': '💡 Personalized AI suggestions:',
+  'demoModal.excellentExamples': '• Excellent use of concrete examples',
+  'demoModal.betterConnections': '• You could better connect concepts together',
+  'demoModal.deepenEconomic': '• Try to deepen the economic causes',
+  'demoModal.advancedFeatures': '👥 Advanced Features',
+  'demoModal.groupExams': 'Group examinations',
+  'demoModal.aiDebates': 'AI-guided debates',
+  'demoModal.progressTracking': 'Progress tracking',
+  'demoModal.exportableReports': 'Exportable reports',
+  'demoModal.multiPlatform': '📱 Multi-Platform Access',
+  'demoModal.studyAnywhere': 'Study anywhere with the mobile app optimized for voice training sessions even offline.',
+  'demoModal.webApp': '💻 Web App',
+  'demoModal.mobileApps': '📱 iOS & Android',
+  'demoModal.cloudSync': '☁️ Cloud Sync',
+  'demoModal.autoBackup': '🔄 Automatic backup',
 };
 
 export const translations: Record<Language, TranslationKeys> = {

@@ -21,24 +21,24 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
 
   const professorModes = {
     severo: {
-      name: "Professore Severo",
-      description: "Valutazione rigorosa con domande precise e feedback diretto",
+      name: t('demoModal.professorSevere'),
+      description: t('demoModal.professorSevereDesc'),
       color: "text-red-700",
       bgColor: "bg-red-50",
       question: "Dimmi ESATTAMENTE quando inizia il Rinascimento e perché proprio in quel momento storico.",
       feedback: "La tua risposta è imprecisa. Il Rinascimento non ha una data di inizio univoca. Devi essere più specifico sui fattori scatenanti."
     },
     comprensivo: {
-      name: "Professore Comprensivo", 
-      description: "Approccio paziente con feedback costruttivo e incoraggiante",
+      name: t('demoModal.professorUnderstanding'), 
+      description: t('demoModal.professorUnderstandingDesc'),
       color: "text-green-700",
       bgColor: "bg-green-50",
       question: "Raccontami del Rinascimento, prenditi il tempo che ti serve per organizzare i pensieri.",
       feedback: "Molto bene! Hai colto i punti principali. Potresti approfondire il ruolo dell'umanesimo? L'AI ha notato che hai usato terminologia appropriata e la tua esposizione è stata chiara e ben strutturata."
     },
     tecnico: {
-      name: "Professore Tecnico",
-      description: "Focus su terminologia specialistica e approccio analitico avanzato", 
+      name: t('demoModal.professorTechnical'),
+      description: t('demoModal.professorTechnicalDesc'), 
       color: "text-blue-700", 
       bgColor: "bg-blue-50",
       question: "Analizza la correlazione tra il fenomeno dell'umanesimo quattrocentesco e le trasformazioni socio-economiche dell'epoca.",
@@ -48,13 +48,13 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
 
   const demoSteps = [
     {
-      title: "Carica i tuoi materiali",
-      subtitle: "L'AI analizzerà automaticamente i contenuti per personalizzare l'esperienza",
+      title: t('demoModal.step1Title'),
+      subtitle: t('demoModal.step1Subtitle'),
       content: (
         <div className="space-y-4">
           <div className="border-2 border-dashed border-oralmind-300 rounded-lg p-8 text-center">
             <Upload className="h-12 w-12 text-oralmind-500 mx-auto mb-4" />
-            <p className="text-oralmind-700">Trascina qui i tuoi PDF o clicca per caricare</p>
+            <p className="text-oralmind-700">{t('demoModal.dragDrop')}</p>
             <div className="mt-4 flex items-center justify-center space-x-4 text-sm text-muted-foreground">
               <div className="flex items-center space-x-1">
                 <Cloud className="h-4 w-4" />
@@ -82,8 +82,8 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
               </div>
               {uploadProgress === 100 && (
                 <div className="text-center p-4 bg-success-50 rounded-lg">
-                  <p className="text-success-700 font-medium">✅ File analizzato con successo!</p>
-                  <p className="text-sm text-success-600 mt-1">L'AI ha identificato 15 concetti chiave del Rinascimento</p>
+                  <p className="text-success-700 font-medium">{t('demoModal.fileAnalyzed')}</p>
+                  <p className="text-sm text-success-600 mt-1">{t('demoModal.conceptsIdentified')}</p>
                 </div>
               )}
             </div>
@@ -92,12 +92,12 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
       )
     },
     {
-      title: "Configurazione AI Personalizzata",
-      subtitle: "Scegli lo stile di insegnamento più adatto al tuo livello e obiettivi",
+      title: t('demoModal.step2Title'),
+      subtitle: t('demoModal.step2Subtitle'),
       content: (
         <div className="space-y-6">
           <div className="text-center">
-            <h4 className="font-semibold mb-4">Modalità Professore AI</h4>
+            <h4 className="font-semibold mb-4">{t('demoModal.professorModes')}</h4>
             <div className="grid grid-cols-1 gap-3">
               {Object.entries(professorModes).map(([key, mode]) => (
                 <button
@@ -122,19 +122,19 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
           </div>
           
           <div className="bg-oralmind-50 rounded-lg p-4 space-y-2">
-            <h5 className="font-medium text-oralmind-800">🎯 Personalizzazione AI Avanzata:</h5>
+            <h5 className="font-medium text-oralmind-800">{t('demoModal.advancedPersonalization')}</h5>
             <div className="grid grid-cols-1 gap-2 text-sm">
               <div className="flex items-center space-x-2">
                 <TrendingUp className="h-4 w-4 text-oralmind-600" />
-                <span>Adattamento al livello di studio</span>
+                <span>{t('demoModal.levelAdaptation')}</span>
               </div>
               <div className="flex items-center space-x-2">
                 <MessageCircle className="h-4 w-4 text-oralmind-600" />
-                <span>Domande progressive e intelligenti</span>
+                <span>{t('demoModal.progressiveQuestions')}</span>
               </div>
               <div className="flex items-center space-x-2">
                 <Users className="h-4 w-4 text-oralmind-600" />
-                <span>Feedback personalizzato dettagliato</span>
+                <span>{t('demoModal.personalizedFeedback')}</span>
               </div>
             </div>
           </div>
@@ -142,12 +142,12 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
       )
     },
     {
-      title: "Simulazione Conversazione",
-      subtitle: `Conversazione interattiva con ${professorModes[professorMode as keyof typeof professorModes].name}`,
+      title: t('demoModal.step3Title'),
+      subtitle: `${t('demoModal.step3Subtitle')} ${professorModes[professorMode as keyof typeof professorModes].name}`,
       content: (
         <div className="space-y-4">
           <div className="flex justify-between items-center mb-4">
-            <h5 className="font-medium text-oralmind-800">Simulazione Conversazione AI</h5>
+            <h5 className="font-medium text-oralmind-800">{t('demoModal.conversationSimulation')}</h5>
             <Button
               size="sm"
               variant="outline"
@@ -155,7 +155,7 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
               className="flex items-center space-x-2"
             >
               {isAutoPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
-              <span>{isAutoPlaying ? 'Pausa' : 'Play'}</span>
+              <span>{isAutoPlaying ? t('demoModal.pause') : t('demoModal.play')}</span>
             </Button>
           </div>
           
@@ -171,7 +171,7 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
                 </p>
                 {aiTypingStep >= 1 && (
                   <div className="mt-2 text-xs text-gray-600">
-                    💡 L'AI ha preparato questa domanda basandosi sui contenuti del tuo PDF
+                    {t('demoModal.aiPrepared')}
                   </div>
                 )}
               </div>
@@ -186,7 +186,7 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
                   </p>
                   <div className="mt-2 flex items-center space-x-2 text-xs text-success-600">
                     <Mic className="h-3 w-3" />
-                    <span>Trascrizione vocale completata</span>
+                    <span>{t('demoModal.voiceTranscription')}</span>
                   </div>
                 </div>
               </div>
@@ -204,15 +204,15 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
                   </p>
                   <div className="mt-3 space-y-1">
                     <div className="flex justify-between text-xs">
-                      <span>Chiarezza:</span>
+                      <span>{t('demoModal.clarity').replace(':', '')}</span>
                       <span className="font-semibold">9/10</span>
                     </div>
                     <div className="flex justify-between text-xs">
-                      <span>Precisione:</span>
+                      <span>{t('demoModal.precision').replace(':', '')}</span>
                       <span className="font-semibold">8/10</span>
                     </div>
                     <div className="flex justify-between text-xs">
-                      <span>Completezza:</span>
+                      <span>{t('demoModal.completeness').replace(':', '')}</span>
                       <span className="font-semibold">7/10</span>
                     </div>
                   </div>
@@ -232,11 +232,11 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
             </Button>
             <div className="flex-1">
               <span className="text-sm text-muted-foreground">
-                {isRecording ? "🔴 Registrazione in corso... L'AI sta ascoltando" : "🎤 Clicca per rispondere vocalmente alla domanda"}
+                {isRecording ? t('demoModal.recording') : t('demoModal.clickToRespond')}
               </span>
               {!isRecording && (
                 <div className="text-xs text-gray-500 mt-1">
-                  Supporta oltre 30 lingue • Trascrizione in tempo reale • Analisi automatica
+                  {t('demoModal.supports30Languages')}
                 </div>
               )}
             </div>
@@ -245,18 +245,18 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
       )
     },
     {
-      title: "Feedback e Valutazione",
-      subtitle: `Report completo di valutazione da ${professorModes[professorMode as keyof typeof professorModes].name}`,
+      title: t('demoModal.step4Title'),
+      subtitle: `${t('demoModal.step4Subtitle')} ${professorModes[professorMode as keyof typeof professorModes].name}`,
       content: (
         <div className="space-y-4">
           <div className="bg-success-50 border border-success-200 rounded-lg p-4">
             <h4 className="font-semibold text-success-800 mb-3 flex items-center">
               <TrendingUp className="h-5 w-5 mr-2" />
-              📊 Valutazione Dettagliata AI
+              📊 {t('demoModal.evaluationTitle')}
             </h4>
             <div className="space-y-3">
               <div className="flex justify-between items-center">
-                <span className="text-sm text-success-700">Chiarezza espositiva:</span>
+                <span className="text-sm text-success-700">{t('demoModal.clarity')}</span>
                 <div className="flex items-center space-x-2">
                   <div className="w-24 bg-success-200 rounded-full h-2">
                     <div className="bg-success-600 h-2 rounded-full" style={{width: '90%'}}></div>
@@ -265,7 +265,7 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
                 </div>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-sm text-success-700">Correttezza terminologica:</span>
+                <span className="text-sm text-success-700">{t('demoModal.precision')}</span>
                 <div className="flex items-center space-x-2">
                   <div className="w-24 bg-success-200 rounded-full h-2">
                     <div className="bg-success-600 h-2 rounded-full" style={{width: '80%'}}></div>
@@ -274,7 +274,7 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
                 </div>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-sm text-success-700">Completezza della risposta:</span>
+                <span className="text-sm text-success-700">{t('demoModal.completeness')}</span>
                 <div className="flex items-center space-x-2">
                   <div className="w-24 bg-success-200 rounded-full h-2">
                     <div className="bg-success-600 h-2 rounded-full" style={{width: '70%'}}></div>
@@ -283,7 +283,7 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
                 </div>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-sm text-success-700">Fluidità comunicativa:</span>
+                <span className="text-sm text-success-700">{t('demoModal.fluency')}</span>
                 <div className="flex items-center space-x-2">
                   <div className="w-24 bg-success-200 rounded-full h-2">
                     <div className="bg-success-600 h-2 rounded-full" style={{width: '85%'}}></div>
@@ -293,11 +293,11 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
               </div>
             </div>
             <div className="mt-3 p-3 bg-success-100 rounded-lg">
-              <p className="text-sm text-success-800 font-medium">💡 Suggerimenti AI personalizzati:</p>
+              <p className="text-sm text-success-800 font-medium">{t('demoModal.personalizedSuggestions')}</p>
               <ul className="text-sm text-success-700 mt-1 space-y-1">
-                <li>• Eccellente uso di esempi concreti</li>
-                <li>• Potresti collegare meglio i concetti tra loro</li>
-                <li>• Prova ad approfondire le cause economiche</li>
+                <li>{t('demoModal.excellentExamples')}</li>
+                <li>{t('demoModal.betterConnections')}</li>
+                <li>{t('demoModal.deepenEconomic')}</li>
               </ul>
             </div>
           </div>
@@ -305,24 +305,24 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
           <div className="bg-orange-50 border border-orange-200 rounded-lg p-4">
             <h4 className="font-semibold text-orange-800 mb-2 flex items-center">
               <Users className="h-5 w-5 mr-2" />
-              👥 Funzionalità Avanzate
+              {t('demoModal.advancedFeatures')}
             </h4>
             <div className="grid grid-cols-2 gap-3 text-sm">
               <div className="flex items-center space-x-2 text-orange-700">
                 <Users className="h-4 w-4" />
-                <span>Interrogazioni di gruppo</span>
+                <span>{t('demoModal.groupExams')}</span>
               </div>
               <div className="flex items-center space-x-2 text-orange-700">
                 <MessageCircle className="h-4 w-4" />
-                <span>Dibattiti guidati dall'AI</span>
+                <span>{t('demoModal.aiDebates')}</span>
               </div>
               <div className="flex items-center space-x-2 text-orange-700">
                 <TrendingUp className="h-4 w-4" />
-                <span>Tracciamento progressi</span>
+                <span>{t('demoModal.progressTracking')}</span>
               </div>
               <div className="flex items-center space-x-2 text-orange-700">
                 <FileText className="h-4 w-4" />
-                <span>Report esportabili</span>
+                <span>{t('demoModal.exportableReports')}</span>
               </div>
             </div>
           </div>
@@ -330,16 +330,16 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
           <div className="bg-oralmind-50 border border-oralmind-200 rounded-lg p-4">
             <h4 className="font-semibold text-oralmind-800 mb-2 flex items-center">
               <Smartphone className="h-5 w-5 mr-2" />
-              📱 Accesso Multi-Piattaforma
+              {t('demoModal.multiPlatform')}
             </h4>
             <p className="text-sm text-oralmind-700 mb-2">
-              Studia ovunque con l'app mobile ottimizzata per sessioni di allenamento vocale anche offline.
+              {t('demoModal.studyAnywhere')}
             </p>
             <div className="flex items-center space-x-4 text-xs text-oralmind-600">
-              <span>💻 Web App</span>
-              <span>📱 iOS & Android</span>
-              <span>☁️ Sync Cloud</span>
-              <span>🔄 Backup automatico</span>
+              <span>{t('demoModal.webApp')}</span>
+              <span>{t('demoModal.mobileApps')}</span>
+              <span>{t('demoModal.cloudSync')}</span>
+              <span>{t('demoModal.autoBackup')}</span>
             </div>
           </div>
         </div>
