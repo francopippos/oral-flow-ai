@@ -42,39 +42,65 @@ const Features = () => {
   ];
 
   return (
-    <section id="features" className="py-20 bg-white">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto">
-          {/* Header */}
-          <div className="text-center space-y-4 mb-16 animate-fade-in">
-            <h2 className="text-3xl md:text-4xl font-bold">
+    <section id="features" className="py-24 relative overflow-hidden">
+      {/* Background with subtle gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-50/50 to-gray-100/30"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(239,68,68,0.03),transparent_70%)]"></div>
+      
+      <div className="container relative mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          {/* Enhanced Header */}
+          <div className="text-center space-y-6 mb-20 animate-fade-in">
+            <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-primary/10 to-violet-500/10 border border-primary/20 rounded-full text-sm font-medium text-primary mb-4">
+              <span className="animate-pulse mr-2">✨</span>
+              Tecnologia all'avanguardia
+            </div>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold">
               Funzionalità <span className="gradient-text">Rivoluzionarie</span>
             </h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            <p className="text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed font-medium">
               OralMind combina intelligenza artificiale avanzata e metodologie didattiche innovative 
               per offrirti un'esperienza di apprendimento unica e personalizzata.
             </p>
           </div>
 
-          {/* Features Grid */}
+          {/* Enhanced Features Grid */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {features.map((feature, index) => (
               <div
                 key={feature.title}
-                className="feature-card group animate-fade-in"
-                style={{ animationDelay: `${index * 0.1}s` }}
+                className="group relative animate-fade-in"
+                style={{ animationDelay: `${index * 0.15}s` }}
               >
-                <div className={`w-12 h-12 rounded-lg bg-gradient-to-r ${feature.color} p-3 mb-4 group-hover:scale-110 transition-transform duration-300`}>
-                  <feature.icon className="h-6 w-6 text-white" />
+                {/* Card with enhanced glass effect */}
+                <div className="feature-card h-full">
+                  {/* Icon with enhanced gradient */}
+                  <div className={`w-16 h-16 rounded-3xl bg-gradient-to-r ${feature.color} p-4 mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-lg relative`}>
+                    <feature.icon className="h-8 w-8 text-white" />
+                    <div className="absolute inset-0 rounded-3xl bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  </div>
+                  
+                  {/* Content */}
+                  <h3 className="text-2xl font-bold mb-4 text-foreground group-hover:text-primary transition-colors duration-300">
+                    {feature.title}
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed text-lg">
+                    {feature.description}
+                  </p>
+                  
+                  {/* Hover indicator */}
+                  <div className="absolute bottom-6 left-8 w-12 h-1 bg-gradient-to-r from-primary to-violet-500 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0"></div>
                 </div>
-                <h3 className="text-xl font-semibold mb-3 text-foreground">
-                  {feature.title}
-                </h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  {feature.description}
-                </p>
               </div>
             ))}
+          </div>
+          
+          {/* Call to action */}
+          <div className="text-center mt-20 animate-fade-in">
+            <button className="modern-button group px-10 py-5 text-xl font-bold">
+              Scopri Tutte le Funzionalità
+              <TrendingUp className="ml-3 h-6 w-6 group-hover:scale-110 transition-transform" />
+            </button>
           </div>
         </div>
       </div>

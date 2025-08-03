@@ -11,128 +11,143 @@ const Hero = () => {
 
   return (
     <>
-      <section className="pt-24 pb-16 gradient-bg">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-6xl mx-auto">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
+      <section className="relative pt-32 pb-20 overflow-hidden">
+        {/* Background with modern gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br from-pink-50/50 via-blue-50/30 to-violet-50/50"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,rgba(239,68,68,0.05),transparent_50%)]"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(147,51,234,0.05),transparent_50%)]"></div>
+        
+        <div className="container relative mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto">
+            <div className="grid lg:grid-cols-2 gap-16 items-center">
               {/* Left Content */}
-              <div className="space-y-8 animate-slide-in-left">
-                <div className="space-y-4">
-                  <div className="inline-flex items-center px-4 py-2 bg-oralmind-100 text-oralmind-700 rounded-full text-sm font-medium">
-                    🚀 Rivoluziona il tuo metodo di studio
+              <div className="space-y-10 animate-slide-in-left">
+                <div className="space-y-6">
+                  <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-primary/10 to-violet-500/10 border border-primary/20 rounded-full text-sm font-medium text-primary">
+                    <span className="animate-pulse mr-2">🚀</span>
+                    Rivoluziona il tuo metodo di studio
                   </div>
-                  <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+                  
+                  <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold leading-tight">
                     Trasforma le tue{' '}
                     <span className="gradient-text">interrogazioni</span>{' '}
                     con l'AI
                   </h1>
-                  <p className="text-xl text-muted-foreground leading-relaxed">
+                  
+                  <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed font-medium">
                     OralMind è l'intelligenza artificiale che ti aiuta a migliorare le tue capacità di esposizione orale, 
                     utilizzando esclusivamente i tuoi materiali di studio. Preparati alle interrogazioni come mai prima d'ora.
                   </p>
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <Button 
-                    size="lg" 
-                    className="bg-gradient-to-r from-oralmind-500 to-success-500 hover:from-oralmind-600 hover:to-success-600 text-white shadow-xl group"
-                  >
+                  <button className="modern-button group px-8 py-4 text-lg font-semibold">
                     Inizia Subito Gratis
-                    <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                  </Button>
+                    <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-1 transition-transform" />
+                  </button>
+                  
                   <Button 
                     size="lg" 
                     variant="outline" 
-                    className="border-oralmind-200 text-oralmind-700 hover:bg-oralmind-50 group"
+                    className="border-2 border-primary/20 text-primary hover:bg-primary/5 hover:border-primary/40 font-semibold text-lg px-8 py-4 rounded-2xl group neon-border"
                     onClick={() => setIsDemoOpen(true)}
                   >
-                    <Play className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform" />
-                    Guarda la Demo
+                    <div className="flex items-center">
+                      <Play className="mr-3 h-6 w-6 group-hover:scale-110 transition-transform" />
+                      Guarda la Demo
+                    </div>
                   </Button>
                 </div>
 
-                {/* New Professor Demo Button */}
-                <div className="pt-4">
+                {/* Professor Demo Button */}
+                <div className="pt-6">
                   <Button 
                     size="lg" 
-                    className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-xl group w-full sm:w-auto"
+                    className="bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 text-white font-semibold text-lg px-8 py-4 rounded-2xl shadow-xl shadow-violet-500/25 group w-full sm:w-auto pulse-glow"
                     onClick={() => setIsProfessorDemoOpen(true)}
                   >
-                    <BookOpen className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform" />
+                    <BookOpen className="mr-3 h-6 w-6 group-hover:scale-110 transition-transform" />
                     Metti alla prova il Professore
                   </Button>
-                  <p className="text-sm text-muted-foreground mt-2">
+                  <p className="text-sm text-muted-foreground mt-3 font-medium">
                     🎓 Carica un PDF e interroga il Professore Virtuale con tecnologia RAG
                   </p>
                 </div>
 
-                {/* Stats */}
-                <div className="grid grid-cols-3 gap-6 pt-8">
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-oralmind-600">98%</div>
-                    <div className="text-sm text-muted-foreground">Studenti Soddisfatti</div>
+                {/* Enhanced Stats */}
+                <div className="grid grid-cols-3 gap-8 pt-8">
+                  <div className="text-center group">
+                    <div className="text-3xl font-bold bg-gradient-to-r from-primary to-pink-500 bg-clip-text text-transparent mb-2">98%</div>
+                    <div className="text-sm text-muted-foreground font-medium">Studenti Soddisfatti</div>
                   </div>
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-success-600">+40%</div>
-                    <div className="text-sm text-muted-foreground">Miglioramento Orale</div>
+                  <div className="text-center group">
+                    <div className="text-3xl font-bold bg-gradient-to-r from-success-500 to-emerald-500 bg-clip-text text-transparent mb-2">+40%</div>
+                    <div className="text-sm text-muted-foreground font-medium">Miglioramento Orale</div>
                   </div>
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-oralmind-600">24/7</div>
-                    <div className="text-sm text-muted-foreground">Sempre Disponibile</div>
+                  <div className="text-center group">
+                    <div className="text-3xl font-bold bg-gradient-to-r from-violet-500 to-purple-500 bg-clip-text text-transparent mb-2">24/7</div>
+                    <div className="text-sm text-muted-foreground font-medium">Sempre Disponibile</div>
                   </div>
                 </div>
               </div>
 
-              {/* Right Content - Visual Demo */}
+              {/* Right Content - Enhanced Visual Demo */}
               <div className="relative animate-slide-in-right">
-                <div className="relative bg-white rounded-2xl shadow-2xl p-8 border border-oralmind-100">
-                  <div className="space-y-6">
-                    {/* Upload simulation */}
-                    <div className="flex items-center space-x-3 p-4 bg-oralmind-50 rounded-lg">
-                      <Upload className="h-6 w-6 text-oralmind-600" />
-                      <div>
-                        <div className="font-medium text-oralmind-800">Storia_Rinascimento.pdf</div>
-                        <div className="text-sm text-oralmind-600">Caricato con successo ✓</div>
-                      </div>
-                    </div>
-
-                    {/* Conversation simulation */}
-                    <div className="space-y-4">
-                      <div className="flex items-start space-x-3">
-                        <div className="w-8 h-8 bg-gradient-to-br from-oralmind-500 to-success-500 rounded-full flex items-center justify-center">
-                          <MessageCircle className="h-4 w-4 text-white" />
+                <div className="relative">
+                  {/* Main demo card with glass effect */}
+                  <div className="glass-card p-10 relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent"></div>
+                    <div className="relative space-y-8">
+                      {/* Upload simulation with glow */}
+                      <div className="flex items-center space-x-4 p-6 bg-gradient-to-r from-primary/5 to-violet-500/5 rounded-2xl border border-primary/10 glow-effect">
+                        <div className="w-12 h-12 bg-gradient-to-r from-primary to-pink-500 rounded-2xl flex items-center justify-center">
+                          <Upload className="h-6 w-6 text-white" />
                         </div>
-                        <div className="bg-oralmind-50 rounded-lg p-3 max-w-xs">
-                          <p className="text-sm text-oralmind-800">
-                            "Parlami delle caratteristiche principali del Rinascimento italiano"
-                          </p>
+                        <div>
+                          <div className="font-semibold text-lg text-foreground">Storia_Rinascimento.pdf</div>
+                          <div className="text-sm text-primary font-medium">Caricato con successo ✓</div>
                         </div>
                       </div>
 
-                      <div className="flex justify-end">
-                        <div className="bg-success-50 rounded-lg p-3 max-w-xs">
-                          <p className="text-sm text-success-800">
-                            "Il Rinascimento italiano si caratterizza per..."
-                          </p>
+                      {/* Enhanced conversation simulation */}
+                      <div className="space-y-6">
+                        <div className="flex items-start space-x-4">
+                          <div className="w-10 h-10 bg-gradient-to-br from-primary to-pink-500 rounded-2xl flex items-center justify-center floating-element">
+                            <MessageCircle className="h-5 w-5 text-white" />
+                          </div>
+                          <div className="bg-gradient-to-r from-primary/10 to-pink-500/10 rounded-2xl p-4 max-w-xs border border-primary/20">
+                            <p className="text-sm font-medium text-foreground">
+                              "Parlami delle caratteristiche principali del Rinascimento italiano"
+                            </p>
+                          </div>
                         </div>
-                      </div>
 
-                      <div className="flex items-start space-x-3">
-                        <div className="w-8 h-8 bg-gradient-to-br from-oralmind-500 to-success-500 rounded-full flex items-center justify-center">
-                          <TrendingUp className="h-4 w-4 text-white" />
+                        <div className="flex justify-end">
+                          <div className="bg-gradient-to-r from-success-500/10 to-emerald-500/10 rounded-2xl p-4 max-w-xs border border-success-500/20">
+                            <p className="text-sm font-medium text-foreground">
+                              "Il Rinascimento italiano si caratterizza per..."
+                            </p>
+                          </div>
                         </div>
-                        <div className="bg-oralmind-50 rounded-lg p-3 max-w-xs">
-                          <p className="text-sm text-oralmind-800">
-                            "Ottima esposizione! Potresti approfondire il concetto di umanesimo?"
-                          </p>
+
+                        <div className="flex items-start space-x-4">
+                          <div className="w-10 h-10 bg-gradient-to-br from-violet-500 to-purple-500 rounded-2xl flex items-center justify-center floating-element" style={{ animationDelay: '1s' }}>
+                            <TrendingUp className="h-5 w-5 text-white" />
+                          </div>
+                          <div className="bg-gradient-to-r from-violet-500/10 to-purple-500/10 rounded-2xl p-4 max-w-xs border border-violet-500/20">
+                            <p className="text-sm font-medium text-foreground">
+                              "Ottima esposizione! Potresti approfondire il concetto di umanesimo?"
+                            </p>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  {/* Floating elements */}
-                  <div className="absolute -top-4 -right-4 w-12 h-12 bg-success-100 rounded-full animate-bounce-gentle"></div>
-                  <div className="absolute -bottom-4 -left-4 w-8 h-8 bg-oralmind-100 rounded-full animate-bounce-gentle" style={{ animationDelay: '1s' }}></div>
+                  {/* Floating decorative elements */}
+                  <div className="absolute -top-6 -right-6 w-16 h-16 bg-gradient-to-br from-primary to-pink-500 rounded-full floating-element opacity-20"></div>
+                  <div className="absolute -bottom-6 -left-6 w-12 h-12 bg-gradient-to-br from-violet-500 to-purple-500 rounded-full floating-element opacity-20" style={{ animationDelay: '2s' }}></div>
+                  <div className="absolute top-1/2 -right-4 w-8 h-8 bg-gradient-to-br from-success-500 to-emerald-500 rounded-full floating-element opacity-30" style={{ animationDelay: '1.5s' }}></div>
                 </div>
               </div>
             </div>

@@ -17,73 +17,74 @@ const Header = () => {
 
   return (
     <>
-      <header className="fixed top-0 w-full bg-white/90 backdrop-blur-md border-b border-oralmind-100 z-50">
+      <header className="fixed top-0 w-full bg-white/95 backdrop-blur-xl border-b border-white/20 z-50 shadow-sm">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            {/* Logo */}
-            <div className="flex items-center space-x-2">
-              <div className="p-2 bg-gradient-to-br from-oralmind-500 to-success-500 rounded-lg">
-                <Brain className="h-6 w-6 text-white" />
+          <div className="flex justify-between items-center h-20">
+            {/* Enhanced Logo */}
+            <div className="flex items-center space-x-3">
+              <div className="p-3 bg-gradient-to-br from-primary to-pink-500 rounded-2xl shadow-lg glow-effect">
+                <Brain className="h-7 w-7 text-white" />
               </div>
-              <span className="text-xl font-bold gradient-text">OralMind</span>
+              <span className="text-2xl font-display font-bold gradient-text">OralMind</span>
             </div>
 
-            {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center space-x-8">
+            {/* Desktop Navigation with enhanced styling */}
+            <nav className="hidden md:flex items-center space-x-10">
               {navItems.map((item) => (
                 <a
                   key={item.name}
                   href={item.href}
-                  className="text-foreground hover:text-oralmind-600 transition-colors duration-200 font-medium"
+                  className="relative text-foreground hover:text-primary transition-all duration-300 font-medium text-lg group"
                 >
                   {item.name}
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-violet-500 group-hover:w-full transition-all duration-300"></span>
                 </a>
               ))}
             </nav>
 
-            {/* CTA Buttons */}
+            {/* Enhanced CTA Buttons */}
             <div className="hidden md:flex items-center space-x-4">
               <Button 
                 variant="outline" 
-                className="border-oralmind-200 text-oralmind-700 hover:bg-oralmind-50"
+                className="border-2 border-primary/20 text-primary hover:bg-primary/5 hover:border-primary/40 font-semibold px-6 py-2 rounded-xl transition-all duration-300"
                 onClick={() => setIsLoginOpen(true)}
               >
                 Accedi
               </Button>
-              <Button className="bg-gradient-to-r from-oralmind-500 to-success-500 hover:from-oralmind-600 hover:to-success-600 text-white shadow-lg animate-pulse-glow">
+              <button className="modern-button px-6 py-3 text-lg font-semibold">
                 Prova Gratis
-              </Button>
+              </button>
             </div>
 
-            {/* Mobile menu button */}
+            {/* Enhanced Mobile menu button */}
             <div className="md:hidden">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="text-foreground hover:text-oralmind-600 transition-colors"
+                className="p-2 text-foreground hover:text-primary transition-colors rounded-xl hover:bg-primary/5"
               >
-                {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+                {isMenuOpen ? <X className="h-7 w-7" /> : <Menu className="h-7 w-7" />}
               </button>
             </div>
           </div>
 
-          {/* Mobile Navigation */}
+          {/* Enhanced Mobile Navigation */}
           {isMenuOpen && (
             <div className="md:hidden animate-fade-in">
-              <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-oralmind-100">
+              <div className="px-4 pt-4 pb-6 space-y-4 bg-white/95 backdrop-blur-xl border-t border-white/20 rounded-b-2xl shadow-lg">
                 {navItems.map((item) => (
                   <a
                     key={item.name}
                     href={item.href}
-                    className="block px-3 py-2 text-foreground hover:text-oralmind-600 transition-colors"
+                    className="block px-4 py-3 text-foreground hover:text-primary hover:bg-primary/5 transition-all duration-300 rounded-xl font-medium text-lg"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     {item.name}
                   </a>
                 ))}
-                <div className="flex flex-col space-y-2 pt-4">
+                <div className="flex flex-col space-y-3 pt-4 border-t border-primary/10">
                   <Button 
                     variant="outline" 
-                    className="border-oralmind-200 text-oralmind-700"
+                    className="border-2 border-primary/20 text-primary hover:bg-primary/5 hover:border-primary/40 font-semibold py-3 rounded-xl"
                     onClick={() => {
                       setIsLoginOpen(true);
                       setIsMenuOpen(false);
@@ -91,9 +92,9 @@ const Header = () => {
                   >
                     Accedi
                   </Button>
-                  <Button className="bg-gradient-to-r from-oralmind-500 to-success-500 text-white">
+                  <button className="modern-button py-3 text-lg font-semibold">
                     Prova Gratis
-                  </Button>
+                  </button>
                 </div>
               </div>
             </div>
