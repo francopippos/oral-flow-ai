@@ -1,11 +1,11 @@
 
 import React, { createContext, useState, ReactNode } from 'react';
-import { translations, Language } from '../utils/translations';
+import { translations, Language, TranslationKeys } from '../utils/translations';
 
 interface TranslationContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
-  t: (key: string) => string;
+  t: (key: keyof TranslationKeys) => string;
 }
 
 export const TranslationContext = createContext<TranslationContextType | undefined>(undefined);
@@ -17,7 +17,7 @@ interface TranslationProviderProps {
 export const TranslationProvider: React.FC<TranslationProviderProps> = ({ children }) => {
   const [language, setLanguage] = useState<Language>('it'); // Default to Italian
 
-  const t = (key: string): string => {
+  const t = (key: keyof TranslationKeys): string => {
     return translations[language][key] || key;
   };
 

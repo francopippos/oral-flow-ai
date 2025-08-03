@@ -1,8 +1,142 @@
 
 export type Language = 'it' | 'en';
 
+export interface TranslationKeys {
+  // Header
+  'nav.features': string;
+  'nav.howItWorks': string;
+  'nav.benefits': string;
+  'nav.testimonials': string;
+  'header.login': string;
+  'header.tryFree': string;
+
+  // Hero Section
+  'hero.title': string;
+  'hero.subtitle': string;
+  'hero.description': string;
+  'hero.tryDemo': string;
+  'hero.watchVideo': string;
+  'hero.trustedBy': string;
+
+  // Features
+  'features.title': string;
+  'features.subtitle': string;
+  'features.description': string;
+  'features.smartAnalysis': string;
+  'features.smartAnalysisDesc': string;
+  'features.oralPractice': string;
+  'features.oralPracticeDesc': string;
+  'features.detailedFeedback': string;
+  'features.detailedFeedbackDesc': string;
+  'features.progressTracking': string;
+  'features.progressTrackingDesc': string;
+  'features.contentLibrary': string;
+  'features.contentLibraryDesc': string;
+  'features.voiceRecognition': string;
+  'features.voiceRecognitionDesc': string;
+
+  // How It Works
+  'howItWorks.title': string;
+  'howItWorks.subtitle': string;
+  'howItWorks.step1': string;
+  'howItWorks.step1Desc': string;
+  'howItWorks.step2': string;
+  'howItWorks.step2Desc': string;
+  'howItWorks.step3': string;
+  'howItWorks.step3Desc': string;
+
+  // Benefits
+  'benefits.title': string;
+  'benefits.subtitle': string;
+  'benefits.confidence': string;
+  'benefits.confidenceDesc': string;
+  'benefits.timeEfficient': string;
+  'benefits.timeEfficientDesc': string;
+  'benefits.personalized': string;
+  'benefits.personalizedDesc': string;
+
+  // Testimonials
+  'testimonials.title': string;
+  'testimonials.subtitle': string;
+
+  // Footer
+  'footer.product': string;
+  'footer.support': string;
+  'footer.company': string;
+  'footer.legal': string;
+  'footer.helpCenter': string;
+  'footer.guides': string;
+  'footer.faq': string;
+  'footer.contact': string;
+  'footer.about': string;
+  'footer.blog': string;
+  'footer.careers': string;
+  'footer.press': string;
+  'footer.privacy': string;
+  'footer.terms': string;
+  'footer.cookies': string;
+  'footer.gdpr': string;
+  'footer.newsletter': string;
+  'footer.newsletterDesc': string;
+  'footer.emailPlaceholder': string;
+  'footer.subscribe': string;
+  'footer.copyright': string;
+  'footer.description': string;
+
+  // Common
+  'common.loading': string;
+  'common.error': string;
+  'common.success': string;
+  'common.cancel': string;
+  'common.save': string;
+  'common.close': string;
+  'common.back': string;
+  'common.next': string;
+  'common.previous': string;
+  'common.continue': string;
+  'common.finish': string;
+
+  // Demo Modal
+  'demo.title': string;
+  'demo.description': string;
+  'demo.uploadStep': string;
+  'demo.conversationStep': string;
+  'demo.reportStep': string;
+
+  // Upload Step
+  'upload.title': string;
+  'upload.description': string;
+  'upload.clickToUpload': string;
+  'upload.onlyPdf': string;
+  'upload.professorStudy': string;
+  'upload.analyzing': string;
+  'upload.analyzed': string;
+
+  // Conversation Step
+  'conversation.title': string;
+  'conversation.document': string;
+  'conversation.recordVoice': string;
+  'conversation.professor': string;
+  'conversation.student': string;
+  'conversation.processing': string;
+  'conversation.startRecording': string;
+  'conversation.stopRecording': string;
+  'conversation.playback': string;
+  'conversation.recordingInProgress': string;
+  'conversation.stopWhenDone': string;
+  'conversation.restart': string;
+  'conversation.generateReport': string;
+
+  // Report Step
+  'report.title': string;
+  'report.description': string;
+  'report.newInterrogation': string;
+  'report.downloadReport': string;
+  'report.completeDemo': string;
+}
+
 // Italian translations (default)
-export const italianTranslations = {
+export const italianTranslations: TranslationKeys = {
   // Header
   'nav.features': 'Funzionalità',
   'nav.howItWorks': 'Come Funziona',
@@ -103,10 +237,41 @@ export const italianTranslations = {
   'demo.uploadStep': 'Carica Documento',
   'demo.conversationStep': 'Conversazione AI',
   'demo.reportStep': 'Report Valutazione',
+
+  // Upload Step
+  'upload.title': 'Carica il tuo documento',
+  'upload.description': 'Il professore virtuale studierà il contenuto per interrogarti',
+  'upload.clickToUpload': 'Clicca per caricare o trascina qui',
+  'upload.onlyPdf': 'Solo file PDF (max 10MB)',
+  'upload.professorStudy': 'Il professore sta studiando il tuo documento...',
+  'upload.analyzing': 'Analizzando...',
+  'upload.analyzed': 'Documento analizzato! Procedi alla conversazione.',
+
+  // Conversation Step
+  'conversation.title': 'Conversazione con il Professore',
+  'conversation.document': 'Documento',
+  'conversation.recordVoice': 'Registra la tua voce per rispondere',
+  'conversation.professor': 'Professore',
+  'conversation.student': 'Tu',
+  'conversation.processing': 'Elaborando la tua risposta...',
+  'conversation.startRecording': 'Inizia Registrazione',
+  'conversation.stopRecording': 'Ferma Registrazione',
+  'conversation.playback': 'Riascolta',
+  'conversation.recordingInProgress': 'Registrazione in corso...',
+  'conversation.stopWhenDone': 'Premi quando hai finito',
+  'conversation.restart': 'Ricomincia Demo',
+  'conversation.generateReport': 'Genera Report',
+
+  // Report Step
+  'report.title': 'Report di Valutazione',
+  'report.description': 'Ecco il tuo feedback personalizzato',
+  'report.newInterrogation': 'Nuova Interrogazione',
+  'report.downloadReport': 'Scarica Report',
+  'report.completeDemo': 'Completa Demo',
 };
 
 // English translations
-export const englishTranslations = {
+export const englishTranslations: TranslationKeys = {
   // Header
   'nav.features': 'Features',
   'nav.howItWorks': 'How It Works',
@@ -207,9 +372,40 @@ export const englishTranslations = {
   'demo.uploadStep': 'Upload Document',
   'demo.conversationStep': 'AI Conversation',
   'demo.reportStep': 'Evaluation Report',
+
+  // Upload Step
+  'upload.title': 'Upload your document',
+  'upload.description': 'The virtual professor will study the content to examine you',
+  'upload.clickToUpload': 'Click to upload or drag here',
+  'upload.onlyPdf': 'Only PDF files (max 10MB)',
+  'upload.professorStudy': 'The professor is studying your document...',
+  'upload.analyzing': 'Analyzing...',
+  'upload.analyzed': 'Document analyzed! Proceed to conversation.',
+
+  // Conversation Step
+  'conversation.title': 'Conversation with the Professor',
+  'conversation.document': 'Document',
+  'conversation.recordVoice': 'Record your voice to respond',
+  'conversation.professor': 'Professor',
+  'conversation.student': 'You',
+  'conversation.processing': 'Processing your response...',
+  'conversation.startRecording': 'Start Recording',
+  'conversation.stopRecording': 'Stop Recording',
+  'conversation.playback': 'Playback',
+  'conversation.recordingInProgress': 'Recording in progress...',
+  'conversation.stopWhenDone': 'Press when done',
+  'conversation.restart': 'Restart Demo',
+  'conversation.generateReport': 'Generate Report',
+
+  // Report Step
+  'report.title': 'Evaluation Report',
+  'report.description': 'Here is your personalized feedback',
+  'report.newInterrogation': 'New Interrogation',
+  'report.downloadReport': 'Download Report',
+  'report.completeDemo': 'Complete Demo',
 };
 
-export const translations = {
+export const translations: Record<Language, TranslationKeys> = {
   it: italianTranslations,
   en: englishTranslations,
 };
