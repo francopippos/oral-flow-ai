@@ -22,7 +22,7 @@ const Header = () => {
           <div className="flex justify-between items-center h-20">
             {/* Enhanced Logo */}
             <div className="flex items-center space-x-3">
-              <div className="p-3 bg-gradient-to-br from-primary to-pink-500 rounded-2xl shadow-lg glow-effect">
+              <div className="p-3 bg-gradient-to-br from-primary to-success-500 rounded-2xl shadow-lg glow-effect">
                 <Brain className="h-7 w-7 text-white" />
               </div>
               <span className="text-2xl font-display font-bold gradient-text">OralMind</span>

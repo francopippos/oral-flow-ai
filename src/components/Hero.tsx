@@ -63,7 +63,7 @@ const Hero = () => {
                 <div className="pt-6">
                   <Button 
                     size="lg" 
-                    className="bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 text-white font-semibold text-lg px-8 py-4 rounded-2xl shadow-xl shadow-violet-500/25 group w-full sm:w-auto pulse-glow"
+                    className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold text-lg px-8 py-4 rounded-2xl shadow-xl shadow-blue-500/25 group w-full sm:w-auto pulse-glow"
                     onClick={() => setIsProfessorDemoOpen(true)}
                   >
                     <BookOpen className="mr-3 h-6 w-6 group-hover:scale-110 transition-transform" />
@@ -77,7 +77,7 @@ const Hero = () => {
                 {/* Enhanced Stats */}
                 <div className="grid grid-cols-3 gap-8 pt-8">
                   <div className="text-center group">
-                    <div className="text-3xl font-bold bg-gradient-to-r from-primary to-pink-500 bg-clip-text text-transparent mb-2">98%</div>
+                    <div className="text-3xl font-bold bg-gradient-to-r from-primary to-blue-500 bg-clip-text text-transparent mb-2">98%</div>
                     <div className="text-sm text-muted-foreground font-medium">Studenti Soddisfatti</div>
                   </div>
                   <div className="text-center group">
@@ -85,7 +85,7 @@ const Hero = () => {
                     <div className="text-sm text-muted-foreground font-medium">Miglioramento Orale</div>
                   </div>
                   <div className="text-center group">
-                    <div className="text-3xl font-bold bg-gradient-to-r from-violet-500 to-purple-500 bg-clip-text text-transparent mb-2">24/7</div>
+                    <div className="text-3xl font-bold bg-gradient-to-r from-blue-500 to-primary bg-clip-text text-transparent mb-2">24/7</div>
                     <div className="text-sm text-muted-foreground font-medium">Sempre Disponibile</div>
                   </div>
                 </div>
@@ -99,8 +99,8 @@ const Hero = () => {
                     <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent"></div>
                     <div className="relative space-y-8">
                       {/* Upload simulation with glow */}
-                      <div className="flex items-center space-x-4 p-6 bg-gradient-to-r from-primary/5 to-violet-500/5 rounded-2xl border border-primary/10 glow-effect">
-                        <div className="w-12 h-12 bg-gradient-to-r from-primary to-pink-500 rounded-2xl flex items-center justify-center">
+                      <div className="flex items-center space-x-4 p-6 bg-gradient-to-r from-primary/5 to-blue-500/5 rounded-2xl border border-primary/10 glow-effect">
+                        <div className="w-12 h-12 bg-gradient-to-r from-primary to-blue-500 rounded-2xl flex items-center justify-center">
                           <Upload className="h-6 w-6 text-white" />
                         </div>
                         <div>
@@ -112,10 +112,10 @@ const Hero = () => {
                       {/* Enhanced conversation simulation */}
                       <div className="space-y-6">
                         <div className="flex items-start space-x-4">
-                          <div className="w-10 h-10 bg-gradient-to-br from-primary to-pink-500 rounded-2xl flex items-center justify-center floating-element">
+                          <div className="w-10 h-10 bg-gradient-to-br from-primary to-blue-500 rounded-2xl flex items-center justify-center floating-element">
                             <MessageCircle className="h-5 w-5 text-white" />
                           </div>
-                          <div className="bg-gradient-to-r from-primary/10 to-pink-500/10 rounded-2xl p-4 max-w-xs border border-primary/20">
+                          <div className="bg-gradient-to-r from-primary/10 to-blue-500/10 rounded-2xl p-4 max-w-xs border border-primary/20">
                             <p className="text-sm font-medium text-foreground">
                               "Parlami delle caratteristiche principali del Rinascimento italiano"
                             </p>
@@ -131,10 +131,10 @@ const Hero = () => {
                         </div>
 
                         <div className="flex items-start space-x-4">
-                          <div className="w-10 h-10 bg-gradient-to-br from-violet-500 to-purple-500 rounded-2xl flex items-center justify-center floating-element" style={{ animationDelay: '1s' }}>
+                          <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-primary rounded-2xl flex items-center justify-center floating-element" style={{ animationDelay: '1s' }}>
                             <TrendingUp className="h-5 w-5 text-white" />
                           </div>
-                          <div className="bg-gradient-to-r from-violet-500/10 to-purple-500/10 rounded-2xl p-4 max-w-xs border border-violet-500/20">
+                          <div className="bg-gradient-to-r from-blue-500/10 to-primary/10 rounded-2xl p-4 max-w-xs border border-blue-500/20">
                             <p className="text-sm font-medium text-foreground">
                               "Ottima esposizione! Potresti approfondire il concetto di umanesimo?"
                             </p>
@@ -145,9 +145,9 @@ const Hero = () => {
                   </div>
 
                   {/* Floating decorative elements */}
-                  <div className="absolute -top-6 -right-6 w-16 h-16 bg-gradient-to-br from-primary to-pink-500 rounded-full floating-element opacity-20"></div>
-                  <div className="absolute -bottom-6 -left-6 w-12 h-12 bg-gradient-to-br from-violet-500 to-purple-500 rounded-full floating-element opacity-20" style={{ animationDelay: '2s' }}></div>
-                  <div className="absolute top-1/2 -right-4 w-8 h-8 bg-gradient-to-br from-success-500 to-emerald-500 rounded-full floating-element opacity-30" style={{ animationDelay: '1.5s' }}></div>
+                  <div className="absolute -top-6 -right-6 w-16 h-16 bg-gradient-to-br from-primary to-blue-500 rounded-full floating-element opacity-20"></div>
+                  <div className="absolute -bottom-6 -left-6 w-12 h-12 bg-gradient-to-br from-success-500 to-emerald-500 rounded-full floating-element opacity-20" style={{ animationDelay: '2s' }}></div>
+                  <div className="absolute top-1/2 -right-4 w-8 h-8 bg-gradient-to-br from-blue-500 to-primary rounded-full floating-element opacity-30" style={{ animationDelay: '1.5s' }}></div>
                 </div>
               </div>
             </div>
