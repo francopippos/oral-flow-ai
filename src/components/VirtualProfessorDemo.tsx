@@ -289,7 +289,7 @@ I can help you explore the document contents if you give me more precise guidanc
           <DialogTitle className="text-2xl font-bold text-primary">
             🎓 AI Professor - Enhanced Document Analysis
           </DialogTitle>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 mr-8">
             <div className="text-xs text-muted-foreground flex items-center gap-1">
               <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
               Powered by OralFlow AI
