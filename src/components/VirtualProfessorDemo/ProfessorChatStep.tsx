@@ -162,46 +162,22 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
 
       {/* ===== REGISTRAZIONE VOCALE REALE ===== */}
       <div className="space-y-4">
-        <div className="flex items-center gap-3 p-4 bg-secondary/50 rounded-lg border">
-          <Mic className="h-5 w-5 text-primary" />
+        <div className="flex items-center gap-3 p-3 bg-secondary/50 rounded-lg border">
+          <Mic className="h-4 w-4 text-primary" />
           <div className="flex-1">
-            <h3 className="font-semibold text-sm">🎤 Practice Oral Explanation</h3>
-            <p className="text-xs text-muted-foreground mt-1">
+            <h3 className="font-medium text-sm">🎤 Practice Oral Explanation</h3>
+            <p className="text-xs text-muted-foreground">
               {props.speechSupported 
-                ? "🌍 Speak in any language (Italian, English, French, Spanish, etc.). The AI will automatically detect your language and respond appropriately."
-                : props.supportMessage || "Voice recognition not supported in this browser"
+                ? "🌍 Speak in any language - AI auto-detects and responds appropriately"
+                : props.supportMessage || "Voice recognition not supported"
               }
             </p>
             {props.voiceCapabilities && (
-              <div className="text-xs mt-2 p-2 bg-blue-50 dark:bg-blue-900/20 rounded border">
-                <div className="flex items-center gap-2 mb-1">
-                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                  <span className="font-medium">🌍 Multi-Language Voice Support:</span>
-                </div>
-                <div className="grid grid-cols-1 gap-1 text-xs mb-2">
-                  <div className="font-medium">
-                    Current Language: {props.detectedLanguage === 'auto' ? 'Auto-detect' : 
-                    props.detectedLanguage?.split('-')[0].toUpperCase() || 'Auto'}
-                    {props.detectedLanguage && props.detectedLanguage !== 'auto' && (
-                      <span className="ml-2 bg-green-100 text-green-800 px-2 py-1 rounded text-xs">
-                        AI will respond in {props.detectedLanguage}
-                      </span>
-                    )}
-                  </div>
-                  <div>
-                    Supported: 🇮🇹 Italian • 🇺🇸 English • 🇫🇷 French • 🇪🇸 Spanish • 🇩🇪 German • 🇧🇷 Portuguese • 🇷🇺 Russian • 🇨🇳 Chinese • 🇯🇵 Japanese • 🇰🇷 Korean
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 gap-2 text-xs border-t pt-2">
-                  <div>Browser Speech: {props.voiceCapabilities.canUseBrowserSpeech ? '✅' : '❌'}</div>
-                  <div>Audio Recording: {props.voiceCapabilities.canRecordAudio ? '✅' : '❌'}</div>
-                  <div>Server Transcription: {props.voiceCapabilities.canUseServerTranscription ? '✅' : '❌'}</div>
-                  <div>Device: {props.voiceCapabilities.isMobile ? '📱 Mobile' : '🖥️ Desktop'}</div>
-                </div>
-                <div className="mt-1 font-medium">
-                  Active Mode: {props.voiceCapabilities.recommendedMode === 'browser-speech' ? '🎤 Real-time Recognition' : 
-                         props.voiceCapabilities.recommendedMode === 'server-transcription' ? '🔄 Server-based Transcription' : '❌ Unavailable'}
-                </div>
+              <div className="text-xs mt-1 text-muted-foreground">
+                🌍 Multi-lang: 🇮🇹 🇺🇸 🇫🇷 🇪🇸 🇩🇪 🇧🇷 🇷🇺 🇨🇳 🇯🇵 🇰🇷 • 
+                {props.detectedLanguage && props.detectedLanguage !== 'auto' && (
+                  <span className="ml-1 text-green-600">Active: {props.detectedLanguage}</span>
+                )}
               </div>
             )}
           </div>
