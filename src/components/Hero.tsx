@@ -42,7 +42,7 @@ const Hero = () => {
                   </p>
                 </div>
 
-                <div className="flex flex-col sm:flex-row gap-4 justify-start items-center">
+                <div className="flex flex-col sm:flex-row gap-4 justify-start items-start">
                   
                   
                   <button className="modern-button group px-8 py-4 text-lg font-semibold flex flex-col items-start" onClick={() => setIsDemoOpen(true)}>
@@ -52,7 +52,7 @@ const Hero = () => {
                 </div>
 
                 {/* Professor Demo Button */}
-                <div className="pt-6 flex flex-col items-center">
+                <div className="pt-6 flex flex-col items-start">
                   <Button size="lg" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold text-lg px-8 py-4 rounded-2xl shadow-lg group w-full sm:w-auto" onClick={() => setIsProfessorDemoOpen(true)}>
                     <BookOpen className="mr-3 h-6 w-6 group-hover:scale-110 transition-transform" />
                     {t('hero.professorDemo')}
