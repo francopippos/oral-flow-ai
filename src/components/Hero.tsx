@@ -1,18 +1,16 @@
-
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Play, Upload, MessageCircle, TrendingUp, BookOpen } from 'lucide-react';
 import DemoModal from './DemoModal';
 import VirtualProfessorDemo from './VirtualProfessorDemo';
 import { useTranslation } from '../hooks/useTranslation';
-
 const Hero = () => {
-  const { t } = useTranslation();
+  const {
+    t
+  } = useTranslation();
   const [isDemoOpen, setIsDemoOpen] = useState(false);
   const [isProfessorDemoOpen, setIsProfessorDemoOpen] = useState(false);
-
-  return (
-    <>
+  return <>
       <section className="relative pt-32 pb-20 overflow-hidden">
         {/* Background with modern gradient */}
         <div className="absolute inset-0 bg-gradient-to-br from-pink-50/50 via-blue-50/30 to-violet-50/50"></div>
@@ -45,15 +43,9 @@ const Hero = () => {
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <button className="modern-button group px-8 py-4 text-lg font-semibold flex flex-col items-center">
-                    {t('hero.tryDemo')}
-                    <ArrowRight className="mt-2 h-6 w-6 group-hover:translate-x-1 transition-transform" />
-                  </button>
                   
-                  <button 
-                    className="modern-button group px-8 py-4 text-lg font-semibold flex flex-col items-center"
-                    onClick={() => setIsDemoOpen(true)}
-                  >
+                  
+                  <button className="modern-button group px-8 py-4 text-lg font-semibold flex flex-col items-center" onClick={() => setIsDemoOpen(true)}>
                     {t('hero.watchVideo')}
                     <Play className="mt-2 h-6 w-6 group-hover:scale-110 transition-transform" />
                   </button>
@@ -61,11 +53,7 @@ const Hero = () => {
 
                 {/* Professor Demo Button */}
                 <div className="pt-6">
-                  <Button 
-                    size="lg" 
-                    className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold text-lg px-8 py-4 rounded-2xl shadow-lg group w-full sm:w-auto"
-                    onClick={() => setIsProfessorDemoOpen(true)}
-                  >
+                  <Button size="lg" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold text-lg px-8 py-4 rounded-2xl shadow-lg group w-full sm:w-auto" onClick={() => setIsProfessorDemoOpen(true)}>
                     <BookOpen className="mr-3 h-6 w-6 group-hover:scale-110 transition-transform" />
                     {t('hero.professorDemo')}
                   </Button>
@@ -157,8 +145,6 @@ const Hero = () => {
 
       <DemoModal isOpen={isDemoOpen} onClose={() => setIsDemoOpen(false)} />
       <VirtualProfessorDemo isOpen={isProfessorDemoOpen} onClose={() => setIsProfessorDemoOpen(false)} />
-    </>
-  );
+    </>;
 };
-
 export default Hero;
