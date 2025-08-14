@@ -45,9 +45,9 @@ const Hero = () => {
                 <div className="flex flex-col sm:flex-row gap-4 justify-start items-start">
                   
                   
-                  <button className="modern-button group px-8 py-4 text-lg font-semibold flex flex-col items-start" onClick={() => setIsDemoOpen(true)}>
-                    {t('hero.watchVideo')}
-                    <Play className="mt-2 h-6 w-6 opacity-0 group-hover:opacity-100 group-focus:opacity-100 group-active:opacity-100 group-hover:scale-110 transition-all duration-300" />
+                  <button className="modern-button group px-8 py-4 text-lg font-semibold relative flex items-center justify-center w-full sm:w-auto" onClick={() => setIsDemoOpen(true)}>
+                    <span className="relative z-10">{t('hero.watchVideo')}</span>
+                    <Play className="absolute inset-0 w-full h-full opacity-0 group-hover:opacity-30 group-focus:opacity-30 group-active:opacity-30 transition-all duration-300 p-6" />
                   </button>
                 </div>
 
