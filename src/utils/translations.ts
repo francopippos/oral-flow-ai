@@ -272,6 +272,10 @@ export interface TranslationKeys {
   'pdfUpload.textAndImages': string;
   'pdfUpload.ai': string;
   'pdfUpload.advancedSemantic': string;
+  'pdfUpload.pdfExtraction': string;
+  'pdfUpload.semanticChunking': string;
+  'pdfUpload.aiEmbeddings': string;
+  'pdfUpload.bistroRag': string;
 
   // Virtual Professor Demo
   'virtualProfessor.title': string;
@@ -617,6 +621,10 @@ export const italianTranslations: TranslationKeys = {
   'pdfUpload.textAndImages': 'Testo + Immagini',
   'pdfUpload.ai': 'AI',
   'pdfUpload.advancedSemantic': 'Comprensione semantica avanzata',
+  'pdfUpload.pdfExtraction': 'Estrazione PDF.js',
+  'pdfUpload.semanticChunking': 'Segmentazione Semantica',
+  'pdfUpload.aiEmbeddings': 'Embedding AI',
+  'pdfUpload.bistroRag': 'Bistro AI RAG',
 
   // Virtual Professor Demo
   'virtualProfessor.title': 'Professore AI - Analisi Documenti Avanzata',
@@ -1033,6 +1041,10 @@ export const englishTranslations: TranslationKeys = {
   'pdfUpload.textAndImages': 'Text + Images',
   'pdfUpload.ai': 'AI',
   'pdfUpload.advancedSemantic': 'Advanced semantic understanding',
+  'pdfUpload.pdfExtraction': 'PDF.js Extraction',
+  'pdfUpload.semanticChunking': 'Semantic Chunking',
+  'pdfUpload.aiEmbeddings': 'AI Embeddings',
+  'pdfUpload.bistroRag': 'Bistro AI RAG',
 };
 
 export const translations: Record<Language, TranslationKeys> = {

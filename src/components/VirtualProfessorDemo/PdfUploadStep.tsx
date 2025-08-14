@@ -36,19 +36,19 @@ const PdfUploadStep = ({
         <div className="flex items-center justify-center space-x-8 text-sm text-primary bg-primary/5 rounded-lg p-4">
           <div className="flex items-center space-x-2">
             <Brain className="h-5 w-5" />
-            <span><strong>PDF.js</strong> Extraction</span>
+            <span>{t('pdfUpload.pdfExtraction')}</span>
           </div>
           <div className="flex items-center space-x-2">
             <Zap className="h-5 w-5" />
-            <span><strong>Semantic</strong> Chunking</span>
+            <span>{t('pdfUpload.semanticChunking')}</span>
           </div>
           <div className="flex items-center space-x-2">
             <BookOpen className="h-5 w-5" />
-            <span><strong>AI</strong> Embeddings</span>
+            <span>{t('pdfUpload.aiEmbeddings')}</span>
           </div>
           <div className="flex items-center space-x-2">
             <CheckCircle className="h-5 w-5" />
-            <span><strong>Bistro AI</strong> RAG</span>
+            <span>{t('pdfUpload.bistroRag')}</span>
           </div>
         </div>
       </div>
