@@ -18,6 +18,7 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [aiTypingStep, setAiTypingStep] = useState(0);
   const [userTypingStep, setUserTypingStep] = useState(0);
+  const [playbackSpeed, setPlaybackSpeed] = useState(1); // 1 = normale, 0.5 = lento, 2 = veloce
 
   const professorModes = {
     severo: {
@@ -148,15 +149,26 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
         <div className="space-y-4">
           <div className="flex justify-between items-center mb-4">
             <h5 className="font-medium text-oralmind-800">{t('demoModal.conversationSimulation')}</h5>
-            <Button
-              size="sm"
-              variant="outline"
-              onClick={() => setIsAutoPlaying(!isAutoPlaying)}
-              className="flex items-center space-x-2"
-            >
-              {isAutoPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
-              <span>{isAutoPlaying ? t('demoModal.pause') : t('demoModal.play')}</span>
-            </Button>
+            <div className="flex items-center space-x-2">
+              <select 
+                value={playbackSpeed} 
+                onChange={(e) => setPlaybackSpeed(Number(e.target.value))}
+                className="text-xs px-2 py-1 border rounded-md bg-white"
+              >
+                <option value={0.5}>0.5x (Lento)</option>
+                <option value={1}>1x (Normale)</option>
+                <option value={1.5}>1.5x (Veloce)</option>
+              </select>
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => setIsAutoPlaying(!isAutoPlaying)}
+                className="flex items-center space-x-2"
+              >
+                {isAutoPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
+                <span>{isAutoPlaying ? t('demoModal.pause') : t('demoModal.play')}</span>
+              </Button>
+            </div>
           </div>
           
           <div className="space-y-4 max-h-80 overflow-y-auto border rounded-lg p-4 bg-gray-50">
@@ -351,29 +363,31 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
   useEffect(() => {
     if (!isOpen || !isAutoPlaying) return;
 
+    const speedMultiplier = 1 / playbackSpeed; // Inverse per rallentare quando speed < 1
+
     if (step === 0) {
-      // Simulazione caricamento file
+      // Simulazione caricamento file - più lenta
       const uploadTimer = setTimeout(() => {
         setUploadProgress(30);
-        setTimeout(() => setUploadProgress(65), 800);
-        setTimeout(() => setUploadProgress(100), 1500);
-        setTimeout(() => setStep(1), 2500);
-      }, 1000);
+        setTimeout(() => setUploadProgress(65), 1200 * speedMultiplier);
+        setTimeout(() => setUploadProgress(100), 2400 * speedMultiplier);
+        setTimeout(() => setStep(1), 4000 * speedMultiplier);
+      }, 1500 * speedMultiplier);
       return () => clearTimeout(uploadTimer);
     }
 
     if (step === 1) {
-      // Configurazione AI - più tempo per leggere
-      const configTimer = setTimeout(() => setStep(2), 4000);
+      // Configurazione AI - molto più tempo per leggere
+      const configTimer = setTimeout(() => setStep(2), 6000 * speedMultiplier);
       return () => clearTimeout(configTimer);
     }
 
     if (step === 2) {
-      // Simulazione conversazione graduale
-      const conversationTimer1 = setTimeout(() => setAiTypingStep(1), 1000);
-      const conversationTimer2 = setTimeout(() => setUserTypingStep(1), 4000);
-      const conversationTimer3 = setTimeout(() => setAiTypingStep(2), 7000);
-      const conversationTimer4 = setTimeout(() => setStep(3), 12000);
+      // Simulazione conversazione graduale - molto più lenta
+      const conversationTimer1 = setTimeout(() => setAiTypingStep(1), 2000 * speedMultiplier);
+      const conversationTimer2 = setTimeout(() => setUserTypingStep(1), 6000 * speedMultiplier);
+      const conversationTimer3 = setTimeout(() => setAiTypingStep(2), 10000 * speedMultiplier);
+      const conversationTimer4 = setTimeout(() => setStep(3), 15000 * speedMultiplier);
       
       return () => {
         clearTimeout(conversationTimer1);
@@ -382,7 +396,7 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
         clearTimeout(conversationTimer4);
       };
     }
-  }, [isOpen, step, isAutoPlaying]);
+  }, [isOpen, step, isAutoPlaying, playbackSpeed]);
 
   const handleNext = () => {
     if (step < demoSteps.length - 1) {
