@@ -276,6 +276,27 @@ export interface TranslationKeys {
   'pdfUpload.semanticChunking': string;
   'pdfUpload.aiEmbeddings': string;
   'pdfUpload.bistroRag': string;
+  
+  // Virtual Professor Modal
+  'virtualProfessor.modalTitle': string;
+  'virtualProfessor.newDocumentLoaded': string;
+  'virtualProfessor.document': string;
+  'virtualProfessor.switchedContext': string;
+  'virtualProfessor.askQuestions': string;
+  'virtualProfessor.comprehensiveAnalysisItem': string;
+  'virtualProfessor.documentReferencesItem': string;
+  'virtualProfessor.relatedConceptsItem': string;
+  'virtualProfessor.followUpSuggestionsItem': string;
+  'virtualProfessor.noInfoFound': string;
+  'virtualProfessor.possibleReasonsTitle': string;
+  'virtualProfessor.topicNotCoveredReason': string;
+  'virtualProfessor.terminologyDiffersReason': string;
+  'virtualProfessor.questionTooGeneralReason': string;
+  'virtualProfessor.suggestionsTitle': string;
+  'virtualProfessor.trySpecificKeywordsItem': string;
+  'virtualProfessor.useDocumentTerminologyItem': string;
+  'virtualProfessor.askDetailedQuestionItem': string;
+  'virtualProfessor.canHelpExploreText': string;
 
   // Virtual Professor Demo
   'virtualProfessor.title': string;
@@ -340,7 +361,6 @@ export interface TranslationKeys {
   'virtualProfessor.canHelpExplore': string;
   'virtualProfessor.responseSource': string;
   'virtualProfessor.newDocumentContext': string;
-  'virtualProfessor.document': string;
   'virtualProfessor.switchedToNewDocument': string;
   'virtualProfessor.askAnything': string;
   'virtualProfessor.comprehensiveAnalysis': string;
@@ -625,6 +645,27 @@ export const italianTranslations: TranslationKeys = {
   'pdfUpload.semanticChunking': 'Segmentazione Semantica',
   'pdfUpload.aiEmbeddings': 'Embedding AI',
   'pdfUpload.bistroRag': 'Bistro AI RAG',
+  
+  // Virtual Professor Modal
+  'virtualProfessor.modalTitle': 'Professore AI - Analisi Documenti Avanzata',
+  'virtualProfessor.newDocumentLoaded': 'Nuovo Contesto Documento Caricato',
+  'virtualProfessor.document': 'Documento',
+  'virtualProfessor.switchedContext': 'Sono passato all\'analisi di questo nuovo documento. Tutto il contesto precedente è stato cancellato, e ora sono pronto a esplorare questo nuovo materiale accademico con te.',
+  'virtualProfessor.askQuestions': 'Chiedimi qualsiasi cosa sul contenuto, e fornirò risposte accademiche strutturate con:',
+  'virtualProfessor.comprehensiveAnalysisItem': '• Analisi completa',
+  'virtualProfessor.documentReferencesItem': '• Riferimenti al documento', 
+  'virtualProfessor.relatedConceptsItem': '• Concetti correlati',
+  'virtualProfessor.followUpSuggestionsItem': '• Suggerimenti di approfondimento',
+  'virtualProfessor.noInfoFound': 'Non sono riuscito a trovare informazioni specifiche nel documento per rispondere a questa domanda.',
+  'virtualProfessor.possibleReasonsTitle': 'Possibili motivi:',
+  'virtualProfessor.topicNotCoveredReason': '• L\'argomento non è trattato nel PDF caricato',
+  'virtualProfessor.terminologyDiffersReason': '• La terminologia usata differisce da quella nel documento',
+  'virtualProfessor.questionTooGeneralReason': '• La domanda è troppo generica',
+  'virtualProfessor.suggestionsTitle': 'Suggerimenti:',
+  'virtualProfessor.trySpecificKeywordsItem': '• Prova con parole chiave più specifiche',
+  'virtualProfessor.useDocumentTerminologyItem': '• Usa terminologia presente nel documento',
+  'virtualProfessor.askDetailedQuestionItem': '• Fai una domanda più dettagliata',
+  'virtualProfessor.canHelpExploreText': 'Posso aiutarti ad esplorare i contenuti del documento se mi dai indicazioni più precise! 📖',
 
   // Virtual Professor Demo
   'virtualProfessor.title': 'Professore AI - Analisi Documenti Avanzata',
@@ -689,7 +730,7 @@ export const italianTranslations: TranslationKeys = {
   'virtualProfessor.canHelpExplore': 'Posso aiutarti a esplorare i contenuti del documento se mi dai indicazioni più precise!',
   'virtualProfessor.responseSource': 'Fonte della Risposta:',
   'virtualProfessor.newDocumentContext': 'Nuovo Contesto Documento Caricato',
-  'virtualProfessor.document': 'Documento:',
+  
   'virtualProfessor.switchedToNewDocument': 'Sono passato all\'analisi di questo nuovo documento. Tutto il contesto precedente è stato cancellato, e ora sono pronto a esplorare questo nuovo materiale accademico con te.',
   'virtualProfessor.askAnything': 'Chiedimi qualsiasi cosa sul contenuto, e fornirò risposte accademiche strutturate con:',
   'virtualProfessor.comprehensiveAnalysis': 'Analisi completa',
@@ -999,7 +1040,7 @@ export const englishTranslations: TranslationKeys = {
   'virtualProfessor.canHelpExplore': 'I can help you explore the document contents if you give me more precise guidance!',
   'virtualProfessor.responseSource': 'Response Source:',
   'virtualProfessor.newDocumentContext': 'New Document Context Loaded',
-  'virtualProfessor.document': 'Document:',
+  
   'virtualProfessor.switchedToNewDocument': 'I\'ve switched to analyzing this new document. All previous context has been cleared, and I\'m now ready to explore this new academic material with you.',
   'virtualProfessor.askAnything': 'Ask me anything about the content, and I\'ll provide structured academic responses with:',
   'virtualProfessor.comprehensiveAnalysis': 'Comprehensive analysis',
@@ -1045,6 +1086,28 @@ export const englishTranslations: TranslationKeys = {
   'pdfUpload.semanticChunking': 'Semantic Chunking',
   'pdfUpload.aiEmbeddings': 'AI Embeddings',
   'pdfUpload.bistroRag': 'Bistro AI RAG',
+  
+  // Virtual Professor Modal  
+  'virtualProfessor.modalTitle': 'AI Professor - Enhanced Document Analysis',
+  'virtualProfessor.newDocumentLoaded': 'New Document Context Loaded',
+  'virtualProfessor.document': 'Document',
+  
+  'virtualProfessor.switchedContext': 'I\'ve switched to analyzing this new document. All previous context has been cleared, and I\'m now ready to explore this new academic material with you.',
+  'virtualProfessor.askQuestions': 'Ask me anything about the content, and I\'ll provide structured academic responses with:',
+  'virtualProfessor.comprehensiveAnalysisItem': '• Comprehensive analysis',
+  'virtualProfessor.documentReferencesItem': '• Document references',
+  'virtualProfessor.relatedConceptsItem': '• Related concepts',
+  'virtualProfessor.followUpSuggestionsItem': '• Follow-up suggestions',
+  'virtualProfessor.noInfoFound': 'I couldn\'t find specific information in the document to answer this question.',
+  'virtualProfessor.possibleReasonsTitle': 'Possible reasons:',
+  'virtualProfessor.topicNotCoveredReason': '• The topic is not covered in the uploaded PDF',
+  'virtualProfessor.terminologyDiffersReason': '• The terminology used differs from what\'s in the document',
+  'virtualProfessor.questionTooGeneralReason': '• The question is too general',
+  'virtualProfessor.suggestionsTitle': 'Suggestions:',
+  'virtualProfessor.trySpecificKeywordsItem': '• Try with more specific keywords',
+  'virtualProfessor.useDocumentTerminologyItem': '• Use terminology present in the document',
+  'virtualProfessor.askDetailedQuestionItem': '• Ask a more detailed question',
+  'virtualProfessor.canHelpExploreText': 'I can help you explore the document contents if you give me more precise guidance! 📖',
 };
 
 export const translations: Record<Language, TranslationKeys> = {
