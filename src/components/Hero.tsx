@@ -44,13 +44,13 @@ const Hero = () => {
 
                 <div className="flex flex-col sm:flex-row gap-4 justify-start items-start">
                   <button 
-                    className="modern-button group relative overflow-hidden h-16 px-8 text-lg font-semibold flex items-center justify-center w-full sm:w-auto" 
+                    className="modern-button group h-16 px-8 text-lg font-semibold flex items-center justify-center gap-3 w-full sm:w-auto" 
                     onClick={() => setIsDemoOpen(true)}
                   >
-                    <span className="relative z-10 text-white">
+                    <span className="text-white">
                       {t('hero.watchVideo')}
                     </span>
-                    <Play className="absolute inset-0 w-full h-full p-4 text-white/0 group-hover:text-white/20 group-focus:text-white/20 transition-all duration-300" />
+                    <Play className="h-6 w-6 text-white opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition-opacity duration-300" />
                   </button>
                 </div>
 
