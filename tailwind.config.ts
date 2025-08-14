@@ -63,7 +63,7 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				oralmind: {
+				oralflow: {
 					50: 'hsl(201, 100%, 95%)',
 					100: 'hsl(201, 93%, 85%)',
 					200: 'hsl(201, 94%, 75%)',

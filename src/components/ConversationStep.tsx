@@ -34,12 +34,12 @@ const ConversationStep = ({
 
   return (
     <div className="space-y-4">
-      <div className="text-center bg-gradient-to-r from-oralmind-50 to-success-50 p-4 rounded-lg">
+      <div className="text-center bg-gradient-to-r from-oralflow-50 to-success-50 p-4 rounded-lg">
         <h3 className="text-xl font-semibold mb-2">{t('conversation.title')}</h3>
         <p className="text-muted-foreground">
           {t('conversation.document')} <strong>{uploadedFile?.name}</strong>
         </p>
-        <p className="text-sm text-oralmind-600 mt-2">
+        <p className="text-sm text-oralflow-600 mt-2">
           {t('conversation.recordVoice')}
         </p>
       </div>
@@ -53,9 +53,9 @@ const ConversationStep = ({
             <div className={`max-w-xs lg:max-w-md px-4 py-3 rounded-lg shadow-sm ${
               msg.role === 'user' 
                 ? 'bg-success-100 text-success-800 border border-success-200' 
-                : 'bg-white text-oralmind-800 border border-oralmind-200'
+                : 'bg-white text-oralflow-800 border border-oralflow-200'
             }`}>
-              {msg.role === 'ai' && <div className="text-xs text-oralmind-600 mb-1">{t('conversation.professor')}</div>}
+              {msg.role === 'ai' && <div className="text-xs text-oralflow-600 mb-1">{t('conversation.professor')}</div>}
               {msg.role === 'user' && <div className="text-xs text-success-600 mb-1">{t('conversation.student')}</div>}
               <div className="text-sm">{msg.message}</div>
             </div>
@@ -63,9 +63,9 @@ const ConversationStep = ({
         ))}
         {isProcessing && (
           <div className="flex justify-start">
-            <div className="bg-white px-4 py-3 rounded-lg border border-oralmind-200 flex items-center space-x-2 shadow-sm">
-              <Loader2 className="h-4 w-4 animate-spin text-oralmind-600" />
-              <span className="text-oralmind-800 text-sm">{t('conversation.processing')}</span>
+             <div className="bg-white px-4 py-3 rounded-lg border border-oralflow-200 flex items-center space-x-2 shadow-sm">
+               <Loader2 className="h-4 w-4 animate-spin text-oralflow-600" />
+               <span className="text-oralflow-800 text-sm">{t('conversation.processing')}</span>
             </div>
           </div>
         )}

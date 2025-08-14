@@ -14,7 +14,7 @@ const Benefits = () => {
         t('benefits.studentsItem3'),
         t('benefits.studentsItem4')
       ],
-      color: "from-oralmind-500 to-oralmind-600"
+      color: "from-oralflow-500 to-oralflow-600"
     },
     {
       icon: Users,
@@ -88,7 +88,7 @@ const Benefits = () => {
                 <ul className="space-y-3">
                   {benefit.items.map((item, itemIndex) => (
                     <li key={itemIndex} className="flex items-start space-x-3">
-                      <div className="w-2 h-2 rounded-full bg-gradient-to-r from-oralmind-400 to-success-400 mt-2 flex-shrink-0"></div>
+                      <div className="w-2 h-2 rounded-full bg-gradient-to-r from-oralflow-400 to-success-400 mt-2 flex-shrink-0"></div>
                       <span className="text-muted-foreground">{item}</span>
                     </li>
                   ))}
@@ -98,7 +98,7 @@ const Benefits = () => {
           </div>
 
           {/* Achievements */}
-          <div className="bg-gradient-to-br from-oralmind-50 via-white to-success-50 rounded-2xl p-8 md:p-12">
+          <div className="bg-gradient-to-br from-oralflow-50 via-white to-success-50 rounded-2xl p-8 md:p-12">
             <div className="text-center mb-12">
               <h3 className="text-2xl md:text-3xl font-bold mb-4">
                 {t('benefits.achievementsTitle')}
@@ -115,7 +115,7 @@ const Benefits = () => {
                   className="text-center animate-fade-in"
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
-                  <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-oralmind-500 to-success-500 rounded-xl flex items-center justify-center">
+                  <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-oralflow-500 to-success-500 rounded-xl flex items-center justify-center">
                     <achievement.icon className="h-8 w-8 text-white" />
                   </div>
                   <div className="text-2xl md:text-3xl font-bold gradient-text mb-2">

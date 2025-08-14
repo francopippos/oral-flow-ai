@@ -9,7 +9,7 @@ const Features = () => {
       icon: Upload,
       title: t('features.uploadTitle'),
       description: t('features.uploadDesc'),
-      color: "from-oralmind-500 to-oralmind-600"
+      color: "from-oralflow-500 to-oralflow-600"
     },
     {
       icon: MessageCircle,

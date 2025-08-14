@@ -9,7 +9,7 @@ const HowItWorks = () => {
       icon: Upload,
       title: t('howItWorks.step1Title'),
       description: t('howItWorks.step1Desc'),
-      color: "from-oralmind-500 to-oralmind-600"
+      color: "from-oralflow-500 to-oralflow-600"
     },
     {
       icon: Brain,
@@ -70,13 +70,13 @@ const HowItWorks = () => {
                 {/* Visual */}
                 <div className={`${index % 2 === 1 ? 'lg:col-start-1 lg:row-start-1' : ''}`}>
                   <div className="relative">
-                    <div className="bg-white rounded-2xl shadow-xl p-8 border border-oralmind-100">
+                    <div className="bg-white rounded-2xl shadow-xl p-8 border border-oralflow-100">
                       <div className="space-y-4">
                         {/* Dynamic content based on step */}
                         {index === 0 && (
                           <div className="space-y-3">
-                            <div className="flex items-center space-x-3 p-3 bg-oralmind-50 rounded-lg">
-                              <div className="w-10 h-10 bg-oralmind-100 rounded-lg flex items-center justify-center">
+                             <div className="flex items-center space-x-3 p-3 bg-oralflow-50 rounded-lg">
+                               <div className="w-10 h-10 bg-oralflow-100 rounded-lg flex items-center justify-center">
                                 📄
                               </div>
                               <div>
@@ -115,8 +115,8 @@ const HowItWorks = () => {
                             <div className="bg-success-50 rounded-lg p-3">
                               <div className="text-sm font-medium text-success-800">🎤 "{t('howItWorks.question')}"</div>
                             </div>
-                            <div className="bg-oralmind-50 rounded-lg p-3">
-                              <div className="text-sm text-oralmind-800">⚡ {t('howItWorks.responding')}</div>
+                             <div className="bg-oralflow-50 rounded-lg p-3">
+                               <div className="text-sm text-oralflow-800">⚡ {t('howItWorks.responding')}</div>
                             </div>
                           </div>
                         )}
@@ -136,7 +136,7 @@ const HowItWorks = () => {
                     </div>
                     
                     {/* Decorative elements */}
-                    <div className="absolute -top-4 -right-4 w-8 h-8 bg-oralmind-200 rounded-full animate-bounce-gentle"></div>
+                    <div className="absolute -top-4 -right-4 w-8 h-8 bg-oralflow-200 rounded-full animate-bounce-gentle"></div>
                     <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-success-200 rounded-full animate-bounce-gentle" style={{ animationDelay: '0.5s' }}></div>
                   </div>
                 </div>

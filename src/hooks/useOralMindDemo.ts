@@ -1,7 +1,7 @@
 
 import { useState, useRef } from 'react';
 
-export const useOralMindDemo = () => {
+export const useOralFlowDemo = () => {
   const [step, setStep] = useState(0);
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [fileContent, setFileContent] = useState('');

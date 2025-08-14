@@ -1,11 +1,11 @@
 
-export const analyzeWithOralMindAI = async (
+export const analyzeWithOralFlowAI = async (
   userMessage: string, 
   fileContent: string, 
   conversation: Array<{role: 'ai' | 'user', message: string}>
 ) => {
   try {
-    console.log('🤖 OralMind AI sta elaborando...', { userMessage: userMessage.substring(0, 100) });
+    console.log('🤖 OralFlow AI sta elaborando...', { userMessage: userMessage.substring(0, 100) });
     
     // Simulazione intelligente per la demo
     const response = generateAIResponse(userMessage, fileContent, conversation);
@@ -13,10 +13,10 @@ export const analyzeWithOralMindAI = async (
     // Simula tempo di elaborazione realistico
     await new Promise(resolve => setTimeout(resolve, 1500 + Math.random() * 2000));
     
-    console.log('✅ Risposta OralMind AI ricevuta');
+    console.log('✅ Risposta OralFlow AI ricevuta');
     return response;
   } catch (error) {
-    console.error('❌ Errore OralMind AI:', error);
+    console.error('❌ Errore OralFlow AI:', error);
     return "Mi dispiace, c'è stato un problema tecnico. Riprova tra un momento.";
   }
 };
@@ -26,7 +26,7 @@ function generateAIResponse(userMessage: string, fileContent: string, conversati
   
   // Prima risposta di benvenuto
   if (conversation.length === 0) {
-    return `🎓 **Benvenuto all'interrogazione con il Professor OralMind!**
+    return `🎓 **Benvenuto all'interrogazione con il Professor OralFlow!**
 
 Ho analizzato attentamente il documento che hai caricato e sono pronto a condurre un'interrogazione approfondita sui contenuti.
 

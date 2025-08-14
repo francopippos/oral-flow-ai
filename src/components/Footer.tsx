@@ -82,10 +82,10 @@ const Footer = () => {
             {/* Brand Column */}
             <div className="lg:col-span-2 space-y-6">
               <div className="flex items-center space-x-2">
-                <div className="p-2 bg-gradient-to-br from-oralmind-500 to-success-500 rounded-lg">
+                <div className="p-2 bg-gradient-to-br from-oralflow-500 to-success-500 rounded-lg">
                   <Brain className="h-6 w-6 text-white" />
                 </div>
-                <span className="text-xl font-bold">OralMind</span>
+                <span className="text-xl font-bold">OralFlow</span>
               </div>
               <p className="text-slate-400 leading-relaxed">
                 {t('footer.description')}
@@ -93,7 +93,7 @@ const Footer = () => {
               <div className="space-y-3">
                 <div className="flex items-center space-x-3 text-slate-400">
                   <Mail className="h-4 w-4" />
-                  <span>info@oralmind.ai</span>
+                  <span>info@oralflow.ai</span>
                 </div>
                 <div className="flex items-center space-x-3 text-slate-400">
                   <Phone className="h-4 w-4" />
@@ -160,8 +160,8 @@ const Footer = () => {
                 {t('footer.newsletterDesc')}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-                <input type="email" placeholder={t('footer.emailPlaceholder')} className="flex-1 px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-oralmind-500" />
-                <button className="bg-gradient-to-r from-oralmind-500 to-success-500 hover:from-oralmind-600 hover:to-success-600 px-6 py-3 rounded-lg font-semibold transition-all duration-300">
+                 <input type="email" placeholder={t('footer.emailPlaceholder')} className="flex-1 px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-oralflow-500" />
+                 <button className="bg-gradient-to-r from-oralflow-500 to-success-500 hover:from-oralflow-600 hover:to-success-600 px-6 py-3 rounded-lg font-semibold transition-all duration-300">
                   {t('footer.subscribe')}
                 </button>
               </div>

@@ -122,8 +122,8 @@ const ContentLibrary = () => {
                   onClick={() => setSelectedCategory(category.id)}
                   className={`flex items-center space-x-2 px-4 py-2 rounded-full transition-all ${
                     selectedCategory === category.id
-                      ? 'bg-oralmind-500 text-white'
-                      : 'bg-white text-oralmind-700 hover:bg-oralmind-50'
+                      ? 'bg-oralflow-500 text-white'
+                      : 'bg-white text-oralflow-700 hover:bg-oralflow-50'
                   }`}
                 >
                   <Icon className="h-4 w-4" />

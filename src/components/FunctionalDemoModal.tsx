@@ -1,9 +1,9 @@
 
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { useOralMindDemo } from '@/hooks/useOralMindDemo';
+import { useOralFlowDemo } from '@/hooks/useOralMindDemo';
 import { useAudioRecording } from '@/hooks/useAudioRecording';
 import { extractTextFromPDF } from '@/utils/pdfUtils';
-import { analyzeWithOralMindAI, transcribeAudio } from '@/utils/aiUtils';
+import { analyzeWithOralFlowAI, transcribeAudio } from '@/utils/aiUtils';
 import FileUploadStep from './FileUploadStep';
 import ConversationStep from './ConversationStep';
 import ReportStep from './ReportStep';
@@ -32,7 +32,7 @@ const FunctionalDemoModal = ({ isOpen, onClose }: FunctionalDemoModalProps) => {
     fileInputRef,
     audioRef,
     resetDemo
-  } = useOralMindDemo();
+  } = useOralFlowDemo();
 
   const {
     recordedAudio,
@@ -60,7 +60,7 @@ const FunctionalDemoModal = ({ isOpen, onClose }: FunctionalDemoModalProps) => {
       setFileContent(extractedText);
       
       setTimeout(async () => {
-        const initialAnalysis = await analyzeWithOralMindAI(
+        const initialAnalysis = await analyzeWithOralFlowAI(
           `Analizza questo documento PDF per preparare un'interrogazione: "${extractedText}". Presenta brevemente il contenuto e invita lo studente a iniziare la sua esposizione registrando la sua voce.`,
           extractedText,
           []
@@ -93,7 +93,7 @@ const FunctionalDemoModal = ({ isOpen, onClose }: FunctionalDemoModalProps) => {
           
           setConversation(prev => [...prev, { role: 'user', message: transcription }]);
           
-          const aiResponse = await analyzeWithOralMindAI(transcription, fileContent, conversation);
+          const aiResponse = await analyzeWithOralFlowAI(transcription, fileContent, conversation);
           setConversation(prev => [...prev, { role: 'ai', message: aiResponse }]);
           
         } catch (error) {
@@ -114,16 +114,16 @@ const FunctionalDemoModal = ({ isOpen, onClose }: FunctionalDemoModalProps) => {
     }
   };
 
-  const generateOralMindReport = async () => {
+  const generateOralFlowReport = async () => {
     setIsProcessing(true);
     
-    console.log('📊 Generazione report OralMind...');
-    
-    const conversationSummary = conversation
-      .map(msg => `${msg.role === 'user' ? 'Studente' : 'Professor OralMind'}: ${msg.message}`)
-      .join('\n\n');
-    
-    const reportPrompt = `Genera un report di valutazione dettagliato basato su questa interrogazione orale condotta dal Professor OralMind.
+     console.log('📊 Generazione report OralFlow...');
+     
+     const conversationSummary = conversation
+       .map(msg => `${msg.role === 'user' ? 'Studente' : 'Professor OralFlow'}: ${msg.message}`)
+       .join('\n\n');
+     
+     const reportPrompt = `Genera un report di valutazione dettagliato basato su questa interrogazione orale condotta dal Professor OralFlow.
 
 DOCUMENTO STUDIATO: "${uploadedFile?.name}"
 
@@ -131,7 +131,7 @@ CONVERSAZIONE:
 ${conversationSummary}
 
 FORMATO DEL REPORT:
-📋 REPORT DI VALUTAZIONE ORALMIND
+📋 REPORT DI VALUTAZIONE ORALFLOW
 📚 Documento: [nome file]
 📅 Data: [data odierna]
 
@@ -150,25 +150,25 @@ FORMATO DEL REPORT:
 [Raccomandazioni concrete per il proseguimento dello studio]
 
 🏆 COMMENTO FINALE:
-[Commento motivazionale del Professor OralMind]
+[Commento motivazionale del Professor OralFlow]
 
 ---
-Generato da OralMind - Il tuo assistente AI per l'interrogazione orale`;
+Generato da OralFlow - Il tuo assistente AI per l'interrogazione orale`;
 
-    const report = await analyzeWithOralMindAI(reportPrompt, fileContent, conversation);
+    const report = await analyzeWithOralFlowAI(reportPrompt, fileContent, conversation);
     setReport(report);
     setIsProcessing(false);
     setStep(2);
   };
 
   const downloadReport = () => {
-    const reportContent = `${report}\n\n---\nGenerato da OralMind\nData: ${new Date().toLocaleDateString('it-IT')}\nDocumento analizzato: ${uploadedFile?.name}`;
-    
-    const blob = new Blob([reportContent], { type: 'text/plain; charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `OralMind_Report_${new Date().toLocaleDateString('it-IT').replace(/\//g, '_')}.txt`;
+     const reportContent = `${report}\n\n---\nGenerato da OralFlow\nData: ${new Date().toLocaleDateString('it-IT')}\nDocumento analizzato: ${uploadedFile?.name}`;
+     
+     const blob = new Blob([reportContent], { type: 'text/plain; charset=utf-8' });
+     const url = URL.createObjectURL(blob);
+     const a = document.createElement('a');
+     a.href = url;
+     a.download = `OralFlow_Report_${new Date().toLocaleDateString('it-IT').replace(/\//g, '_')}.txt`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -191,7 +191,7 @@ Generato da OralMind - Il tuo assistente AI per l'interrogazione orale`;
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold gradient-text">
-            🧠 OralMind - Demo Funzionale
+            🧠 OralFlow - Demo Funzionale
           </DialogTitle>
         </DialogHeader>
 
@@ -215,7 +215,7 @@ Generato da OralMind - Il tuo assistente AI per l'interrogazione orale`;
             onStopRecording={handleStopRecording}
             onPlayRecording={playRecording}
             onReset={handleReset}
-            onGenerateReport={generateOralMindReport}
+            onGenerateReport={generateOralFlowReport}
             audioRef={audioRef}
           />
         )}

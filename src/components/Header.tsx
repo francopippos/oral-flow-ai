@@ -28,7 +28,7 @@ const Header = () => {
               <div className="p-3 bg-gradient-to-br from-primary to-success-500 rounded-2xl shadow-lg">
                 <Brain className="h-7 w-7 text-white" />
               </div>
-              <span className="text-2xl font-display font-bold gradient-text">OralMind</span>
+              <span className="text-2xl font-display font-bold gradient-text">OralFlow</span>
             </div>
 
             {/* Desktop Navigation with enhanced styling */}
