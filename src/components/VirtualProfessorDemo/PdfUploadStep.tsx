@@ -78,26 +78,26 @@ const PdfUploadStep = ({
             <div className="grid grid-cols-3 gap-4 text-sm text-gray-700">
               <div className="space-y-2">
                 <div className="font-medium text-primary">📚 {t('pdfUpload.educational')}</div>
-                <div>• University materials</div>
-                <div>• Technical manuals</div>
-                <div>• Lecture slides</div>
+                <div>{t('pdfUpload.universityMaterials')}</div>
+                <div>{t('pdfUpload.technicalManuals')}</div>
+                <div>{t('pdfUpload.lectureSlides')}</div>
               </div>
               <div className="space-y-2">
                 <div className="font-medium text-primary">🔬 {t('pdfUpload.scientific')}</div>
-                <div>• Research articles</div>
-                <div>• Academic papers</div>
-                <div>• Dissertations</div>
+                <div>{t('pdfUpload.researchArticles')}</div>
+                <div>{t('pdfUpload.academicPapers')}</div>
+                <div>{t('pdfUpload.dissertations')}</div>
               </div>
               <div className="space-y-2">
                 <div className="font-medium text-primary">📊 {t('pdfUpload.complex')}</div>
-                <div>• Mathematical formulas</div>
-                <div>• Charts and tables</div>
-                <div>• Multilingual content</div>
+                <div>{t('pdfUpload.mathematicalFormulas')}</div>
+                <div>{t('pdfUpload.chartsAndTables')}</div>
+                <div>{t('pdfUpload.multilingualContent')}</div>
               </div>
             </div>
             <div className="mt-4 pt-4 border-t border-gray-200">
               <p className="text-sm text-primary font-medium">
-                📄 <strong>Capacity:</strong> Up to 100 pages • 📊 <strong>Processing:</strong> Text + Images • 🧠 <strong>AI:</strong> Advanced semantic understanding
+                📄 <strong>{t('pdfUpload.capacity')}:</strong> {t('pdfUpload.upTo100Pages')} • 📊 <strong>{t('pdfUpload.processing')}:</strong> {t('pdfUpload.textAndImages')} • 🧠 <strong>{t('pdfUpload.ai')}:</strong> {t('pdfUpload.advancedSemantic')}
               </p>
             </div>
           </div>

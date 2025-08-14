@@ -257,6 +257,21 @@ export interface TranslationKeys {
   'pdfUpload.educational': string;
   'pdfUpload.scientific': string;
   'pdfUpload.complex': string;
+  'pdfUpload.universityMaterials': string;
+  'pdfUpload.technicalManuals': string; 
+  'pdfUpload.lectureSlides': string;
+  'pdfUpload.researchArticles': string;
+  'pdfUpload.academicPapers': string;
+  'pdfUpload.dissertations': string;
+  'pdfUpload.mathematicalFormulas': string;
+  'pdfUpload.chartsAndTables': string;
+  'pdfUpload.multilingualContent': string;
+  'pdfUpload.capacity': string;
+  'pdfUpload.upTo100Pages': string;
+  'pdfUpload.processing': string;
+  'pdfUpload.textAndImages': string;
+  'pdfUpload.ai': string;
+  'pdfUpload.advancedSemantic': string;
 
   // Virtual Professor Demo
   'virtualProfessor.title': string;
@@ -587,6 +602,21 @@ export const italianTranslations: TranslationKeys = {
   'pdfUpload.educational': 'Educativi',
   'pdfUpload.scientific': 'Scientifici',
   'pdfUpload.complex': 'Complessi',
+  'pdfUpload.universityMaterials': '• Materiali universitari',
+  'pdfUpload.technicalManuals': '• Manuali tecnici', 
+  'pdfUpload.lectureSlides': '• Slide delle lezioni',
+  'pdfUpload.researchArticles': '• Articoli di ricerca',
+  'pdfUpload.academicPapers': '• Paper accademici',
+  'pdfUpload.dissertations': '• Tesi di laurea',
+  'pdfUpload.mathematicalFormulas': '• Formule matematiche',
+  'pdfUpload.chartsAndTables': '• Grafici e tabelle',
+  'pdfUpload.multilingualContent': '• Contenuti multilingue',
+  'pdfUpload.capacity': 'Capacità',
+  'pdfUpload.upTo100Pages': 'Fino a 100 pagine',
+  'pdfUpload.processing': 'Elaborazione',
+  'pdfUpload.textAndImages': 'Testo + Immagini',
+  'pdfUpload.ai': 'AI',
+  'pdfUpload.advancedSemantic': 'Comprensione semantica avanzata',
 
   // Virtual Professor Demo
   'virtualProfessor.title': 'Professore AI - Analisi Documenti Avanzata',
@@ -988,6 +1018,21 @@ export const englishTranslations: TranslationKeys = {
   'pdfUpload.educational': 'Educational',
   'pdfUpload.scientific': 'Scientific',
   'pdfUpload.complex': 'Complex',
+  'pdfUpload.universityMaterials': '• University materials',
+  'pdfUpload.technicalManuals': '• Technical manuals', 
+  'pdfUpload.lectureSlides': '• Lecture slides',
+  'pdfUpload.researchArticles': '• Research articles',
+  'pdfUpload.academicPapers': '• Academic papers',
+  'pdfUpload.dissertations': '• Dissertations',
+  'pdfUpload.mathematicalFormulas': '• Mathematical formulas',
+  'pdfUpload.chartsAndTables': '• Charts and tables',
+  'pdfUpload.multilingualContent': '• Multilingual content',
+  'pdfUpload.capacity': 'Capacity',
+  'pdfUpload.upTo100Pages': 'Up to 100 pages',
+  'pdfUpload.processing': 'Processing',
+  'pdfUpload.textAndImages': 'Text + Images',
+  'pdfUpload.ai': 'AI',
+  'pdfUpload.advancedSemantic': 'Advanced semantic understanding',
 };
 
 export const translations: Record<Language, TranslationKeys> = {
