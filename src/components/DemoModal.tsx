@@ -56,23 +56,23 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
            <div className="border-2 border-dashed border-oralflow-300 rounded-lg p-8 text-center">
              <Upload className="h-12 w-12 text-oralflow-500 mx-auto mb-4" />
              <p className="text-oralflow-700">{t('demoModal.dragDrop')}</p>
-            <div className="mt-4 flex items-center justify-center space-x-4 text-sm text-muted-foreground">
-              <div className="flex items-center space-x-1">
-                <Cloud className="h-4 w-4" />
-                <span>Google Drive</span>
-              </div>
-              <div className="flex items-center space-x-1">
-                <Cloud className="h-4 w-4" />
-                <span>Classroom</span>
-              </div>
-            </div>
+             <div className="mt-4 flex items-center justify-center space-x-4 text-sm text-muted-foreground">
+               <div className="flex items-center space-x-1">
+                 <Cloud className="h-4 w-4" />
+                 <span>{t('demoModal.googleDrive')}</span>
+               </div>
+               <div className="flex items-center space-x-1">
+                 <Cloud className="h-4 w-4" />
+                 <span>{t('demoModal.classroom')}</span>
+               </div>
+             </div>
           </div>
           {uploadProgress > 0 && (
             <div className="space-y-2">
                <div className="flex items-center space-x-3 p-3 bg-oralflow-50 rounded-lg">
                  <FileText className="h-6 w-6 text-oralflow-600" />
                 <div className="flex-1">
-                  <div className="font-medium">Storia_Rinascimento.pdf</div>
+                  <div className="font-medium">{t('demoModal.documentName')}</div>
                   <div className="w-full bg-gray-200 rounded-full h-2 mt-1">
                     <div 
                       className="bg-oralflow-500 h-2 rounded-full transition-all duration-1000"

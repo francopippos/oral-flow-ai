@@ -237,6 +237,9 @@ export interface TranslationKeys {
   'demoModal.mobileApps': string;
   'demoModal.cloudSync': string;
   'demoModal.autoBackup': string;
+  'demoModal.googleDrive': string;
+  'demoModal.classroom': string;
+  'demoModal.documentName': string;
 
   // Virtual Professor Demo
   'virtualProfessor.title': string;
@@ -547,6 +550,9 @@ export const italianTranslations: TranslationKeys = {
   'demoModal.mobileApps': '📱 iOS & Android',
   'demoModal.cloudSync': '☁️ Sync Cloud',
   'demoModal.autoBackup': '🔄 Backup automatico',
+  'demoModal.googleDrive': 'Google Drive',
+  'demoModal.classroom': 'Classroom',
+  'demoModal.documentName': 'Storia_Rinascimento.pdf',
 
   // Virtual Professor Demo
   'virtualProfessor.title': 'Professore AI - Analisi Documenti Avanzata',
@@ -927,7 +933,10 @@ export const englishTranslations: TranslationKeys = {
   'virtualProfessor.comprehensiveAnalysis': 'Comprehensive analysis',
   'virtualProfessor.documentReferences': 'Document references',
   'virtualProfessor.relatedConcepts': 'Related concepts',
-  'virtualProfessor.followUpSuggestions': 'Follow-up suggestions'
+  'virtualProfessor.followUpSuggestions': 'Follow-up suggestions',
+  'demoModal.googleDrive': 'Google Drive',
+  'demoModal.classroom': 'Classroom',
+  'demoModal.documentName': 'Renaissance_History.pdf'
 };
 
 export const translations: Record<Language, TranslationKeys> = {
