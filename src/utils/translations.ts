@@ -355,7 +355,7 @@ export const italianTranslations: TranslationKeys = {
 
   // How It Works
   'howItWorks.title': 'Come Funziona',
-  'howItWorks.subtitle': 'Quattro semplici passaggi per trasformare il tuo metodo di studio e migliorare drasticamente le tue performance nelle interrogazioni orali.',
+  'howItWorks.subtitle': 'Quattro semplici passaggi per trasformare il tuo metodo di studio e migliorare notevolmente le tue performance nelle interrogazioni orali.',
   'howItWorks.step1Title': '1. Carica i Materiali',
   'howItWorks.step1Desc': 'Carica i tuoi PDF, slide o appunti. OralFlow analizza i contenuti e crea la tua base di conoscenza personalizzata.',
   'howItWorks.step2Title': '2. L\'AI Impara',
