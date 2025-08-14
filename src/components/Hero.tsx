@@ -42,7 +42,7 @@ const Hero = () => {
                   </p>
                 </div>
 
-                <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <div className="flex flex-col sm:flex-row gap-4 justify-start items-center">
                   
                   
                   <button className="modern-button group px-8 py-4 text-lg font-semibold flex flex-col items-center" onClick={() => setIsDemoOpen(true)}>
