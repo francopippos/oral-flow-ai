@@ -72,7 +72,7 @@ const VirtualProfessorDemo = ({ isOpen, onClose }: VirtualProfessorDemoProps = {
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0];
     if (!selectedFile || selectedFile.type !== "application/pdf") {
-      alert("Per favore seleziona un file PDF valido.");
+      alert(t('error.selectValidPdf'));
       return;
     }
 
@@ -123,7 +123,7 @@ const VirtualProfessorDemo = ({ isOpen, onClose }: VirtualProfessorDemoProps = {
       
     } catch (error) {
       console.error('❌ [PROCESSING] Errore elaborazione:', error);
-      alert(`Errore nell'elaborazione del PDF: ${error}`);
+      alert(`${t('error.pdfProcessing')}: ${error}`);
       resetDocumentContext();
     } finally {
       setIsProcessing(false);
@@ -134,7 +134,7 @@ const VirtualProfessorDemo = ({ isOpen, onClose }: VirtualProfessorDemoProps = {
   
   const handleStartVoiceRecording = () => {
     if (!speechSupported) {
-      alert('Voice recognition not supported in your browser. Please use Chrome, Edge, or Safari.');
+      alert(t('error.voiceNotSupported'));
       return;
     }
     
@@ -170,7 +170,7 @@ const VirtualProfessorDemo = ({ isOpen, onClose }: VirtualProfessorDemoProps = {
   const handleProcessVoiceQuestion = () => {
     const question = transcript.trim();
     if (!question) {
-      alert('Nessuna trascrizione disponibile. Prova a registrare di nuovo.');
+      alert(t('error.noTranscription'));
       return;
     }
     

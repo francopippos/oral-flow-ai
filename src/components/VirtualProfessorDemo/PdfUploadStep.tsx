@@ -2,6 +2,7 @@
 import { Upload, FileText, Loader2, BookOpen, Brain, Zap, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useRef } from "react";
+import { useTranslation } from "../../hooks/useTranslation";
 
 interface PdfUploadStepProps {
   file: File | null;
@@ -16,6 +17,7 @@ const PdfUploadStep = ({
   onFileUpload,
   processingStep
 }: PdfUploadStepProps) => {
+  const { t } = useTranslation();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   return (
@@ -24,11 +26,10 @@ const PdfUploadStep = ({
       <div className="text-center space-y-4">
         <div className="flex items-center justify-center space-x-3">
           <Brain className="h-10 w-10 text-primary" />
-          <h3 className="text-3xl font-bold text-primary">Upload your academic document</h3>
+          <h3 className="text-3xl font-bold text-primary">{t('pdfUpload.title')}</h3>
         </div>
         <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-          <strong>Bistro AI</strong> will analyze your PDF with advanced AI technologies from the OralFlow stack, 
-          creating an intelligent understanding system to answer your academic questions
+          {t('pdfUpload.subtitle')}
         </p>
         
         {/* Technical features */}
@@ -67,31 +68,28 @@ const PdfUploadStep = ({
           
           <div>
             <p className="text-2xl font-bold text-primary mb-3">
-              Drag your academic PDF here
-            </p>
-            <p className="text-lg text-muted-foreground mb-4">
-              or click to select it from your computer
+              {t('pdfUpload.dragDrop')}
             </p>
           </div>
           
           {/* Document support */}
           <div className="bg-white rounded-xl p-6 max-w-2xl mx-auto shadow-sm">
-            <p className="text-lg font-semibold text-gray-800 mb-4">✅ Complete support for academic documents:</p>
+            <p className="text-lg font-semibold text-gray-800 mb-4">{t('pdfUpload.completeSupportTitle')}</p>
             <div className="grid grid-cols-3 gap-4 text-sm text-gray-700">
               <div className="space-y-2">
-                <div className="font-medium text-primary">📚 Educational</div>
+                <div className="font-medium text-primary">📚 {t('pdfUpload.educational')}</div>
                 <div>• University materials</div>
                 <div>• Technical manuals</div>
                 <div>• Lecture slides</div>
               </div>
               <div className="space-y-2">
-                <div className="font-medium text-primary">🔬 Scientific</div>
+                <div className="font-medium text-primary">🔬 {t('pdfUpload.scientific')}</div>
                 <div>• Research articles</div>
                 <div>• Academic papers</div>
                 <div>• Dissertations</div>
               </div>
               <div className="space-y-2">
-                <div className="font-medium text-primary">📊 Complex</div>
+                <div className="font-medium text-primary">📊 {t('pdfUpload.complex')}</div>
                 <div>• Mathematical formulas</div>
                 <div>• Charts and tables</div>
                 <div>• Multilingual content</div>
@@ -132,7 +130,7 @@ const PdfUploadStep = ({
                   <div className="flex items-center space-x-4">
                     <Loader2 className="h-6 w-6 animate-spin text-primary" />
                     <span className="text-lg font-semibold text-primary">
-                      {processingStep || "Bistro AI processing in progress..."}
+                      {processingStep || t('pdfUpload.processingStep')}
                     </span>
                   </div>
                   

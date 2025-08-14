@@ -240,6 +240,23 @@ export interface TranslationKeys {
   'demoModal.googleDrive': string;
   'demoModal.classroom': string;
   'demoModal.documentName': string;
+  
+  // Error messages and alerts
+  'error.selectValidPdf': string;
+  'error.pdfProcessing': string;
+  'error.voiceNotSupported': string;
+  'error.noTranscription': string;
+  
+  // PDF Upload Step
+  'pdfUpload.title': string;
+  'pdfUpload.subtitle': string;
+  'pdfUpload.dragDrop': string;
+  'pdfUpload.analyzing': string;
+  'pdfUpload.processingStep': string;
+  'pdfUpload.completeSupportTitle': string;
+  'pdfUpload.educational': string;
+  'pdfUpload.scientific': string;
+  'pdfUpload.complex': string;
 
   // Virtual Professor Demo
   'virtualProfessor.title': string;
@@ -553,6 +570,23 @@ export const italianTranslations: TranslationKeys = {
   'demoModal.googleDrive': 'Google Drive',
   'demoModal.classroom': 'Classroom',
   'demoModal.documentName': 'Storia_Rinascimento.pdf',
+  
+  // Error messages and alerts
+  'error.selectValidPdf': 'Per favore seleziona un file PDF valido.',
+  'error.pdfProcessing': 'Errore nell\'elaborazione del PDF',
+  'error.voiceNotSupported': 'Il riconoscimento vocale non è supportato nel tuo browser. Usa Chrome, Edge o Safari.',
+  'error.noTranscription': 'Nessuna trascrizione disponibile. Prova a registrare di nuovo.',
+  
+  // PDF Upload Step
+  'pdfUpload.title': 'Carica il tuo documento accademico',
+  'pdfUpload.subtitle': 'Il Professore AI analizzerà in profondità il contenuto per offrire spiegazioni e feedback educativi personalizzati sulla tua esposizione orale.',
+  'pdfUpload.dragDrop': 'Trascina e rilascia il tuo PDF qui o clicca per selezionare',
+  'pdfUpload.analyzing': 'Analizzando il documento...',
+  'pdfUpload.processingStep': 'Bistro AI elaborazione in corso...',
+  'pdfUpload.completeSupportTitle': '✅ Supporto completo per documenti accademici:',
+  'pdfUpload.educational': 'Educativi',
+  'pdfUpload.scientific': 'Scientifici',
+  'pdfUpload.complex': 'Complessi',
 
   // Virtual Professor Demo
   'virtualProfessor.title': 'Professore AI - Analisi Documenti Avanzata',
@@ -936,7 +970,24 @@ export const englishTranslations: TranslationKeys = {
   'virtualProfessor.followUpSuggestions': 'Follow-up suggestions',
   'demoModal.googleDrive': 'Google Drive',
   'demoModal.classroom': 'Classroom',
-  'demoModal.documentName': 'Renaissance_History.pdf'
+  'demoModal.documentName': 'Renaissance_History.pdf',
+  
+  // Error messages and alerts
+  'error.selectValidPdf': 'Please select a valid PDF file.',
+  'error.pdfProcessing': 'Error processing PDF',
+  'error.voiceNotSupported': 'Voice recognition not supported in your browser. Please use Chrome, Edge, or Safari.',
+  'error.noTranscription': 'No transcription available. Try recording again.',
+  
+  // PDF Upload Step
+  'pdfUpload.title': 'Upload your academic document',
+  'pdfUpload.subtitle': 'The AI Professor will deeply analyze the content to offer personalized educational explanations and feedback on your oral presentation.',
+  'pdfUpload.dragDrop': 'Drag and drop your PDF here or click to select',
+  'pdfUpload.analyzing': 'Analyzing document...',
+  'pdfUpload.processingStep': 'Bistro AI processing in progress...',
+  'pdfUpload.completeSupportTitle': '✅ Complete support for academic documents:',
+  'pdfUpload.educational': 'Educational',
+  'pdfUpload.scientific': 'Scientific',
+  'pdfUpload.complex': 'Complex',
 };
 
 export const translations: Record<Language, TranslationKeys> = {
