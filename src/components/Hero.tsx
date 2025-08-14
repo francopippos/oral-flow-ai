@@ -47,7 +47,7 @@ const Hero = () => {
                   
                   <button className="modern-button group px-8 py-4 text-lg font-semibold flex flex-col items-start" onClick={() => setIsDemoOpen(true)}>
                     {t('hero.watchVideo')}
-                    <Play className="mt-2 h-6 w-6 group-hover:scale-110 transition-transform" />
+                    <Play className="mt-2 h-6 w-6 opacity-0 group-hover:opacity-100 group-focus:opacity-100 group-active:opacity-100 group-hover:scale-110 transition-all duration-300" />
                   </button>
                 </div>
 
