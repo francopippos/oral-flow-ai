@@ -57,7 +57,7 @@ const Hero = () => {
                     onClick={() => setIsDemoOpen(true)}
                   >
                     <div className="flex items-center">
-                      <Play className="mr-3 h-6 w-6 group-hover:scale-110 transition-transform" />
+                      <Play className="mr-3 h-6 w-6 group-hover:scale-110 transition-transform fill-current" />
                       {t('hero.watchVideo')}
                     </div>
                   </Button>
