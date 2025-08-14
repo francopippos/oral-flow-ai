@@ -50,17 +50,13 @@ const Hero = () => {
                     <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-1 transition-transform" />
                   </button>
                   
-                  <Button 
-                    size="lg" 
-                    variant="outline" 
-                    className="border-2 border-primary/20 text-primary hover:bg-primary/5 hover:border-primary/40 font-semibold text-lg px-8 py-4 rounded-2xl group neon-border"
+                  <button 
+                    className="modern-button group px-8 py-4 text-lg font-semibold"
                     onClick={() => setIsDemoOpen(true)}
                   >
-                    <div className="flex items-center">
-                      <Play className="mr-3 h-6 w-6 group-hover:scale-110 transition-transform fill-none stroke-current" />
-                      {t('hero.watchVideo')}
-                    </div>
-                  </Button>
+                    <Play className="mr-3 h-6 w-6 group-hover:scale-110 transition-transform" />
+                    {t('hero.watchVideo')}
+                  </button>
                 </div>
 
                 {/* Professor Demo Button */}
