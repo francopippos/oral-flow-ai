@@ -23,6 +23,11 @@ export interface TranslationKeys {
   'hero.stat1': string;
   'hero.stat2': string;
   'hero.stat3': string;
+  'hero.demoFileName': string;
+  'hero.demoFileUploaded': string;
+  'hero.demoQuestion': string;
+  'hero.demoResponse': string;
+  'hero.demoFollowUp': string;
 
   // Features
   'features.title': string;
@@ -435,6 +440,11 @@ export const italianTranslations: TranslationKeys = {
   'hero.stat1': 'Studenti Soddisfatti',
   'hero.stat2': 'Miglioramento Orale',
   'hero.stat3': 'Sempre Disponibile',
+  'hero.demoFileName': 'Storia_Rinascimento.pdf',
+  'hero.demoFileUploaded': 'Caricato con successo ✓',
+  'hero.demoQuestion': 'Parlami delle caratteristiche principali del Rinascimento italiano',
+  'hero.demoResponse': 'Il Rinascimento italiano si caratterizza per...',
+  'hero.demoFollowUp': 'Ottima esposizione! Potresti approfondire il concetto di umanesimo?',
 
   // Features
   'features.title': 'Funzionalità',
@@ -848,6 +858,11 @@ export const englishTranslations: TranslationKeys = {
   'hero.stat1': 'Satisfied Students',
   'hero.stat2': 'Oral Improvement',
   'hero.stat3': 'Always Available',
+  'hero.demoFileName': 'Renaissance_History.pdf',
+  'hero.demoFileUploaded': 'Successfully uploaded ✓',
+  'hero.demoQuestion': 'Tell me about the main characteristics of the Italian Renaissance',
+  'hero.demoResponse': 'The Italian Renaissance is characterized by...',
+  'hero.demoFollowUp': 'Excellent presentation! Could you elaborate on the concept of humanism?',
 
   // Features
   'features.title': 'Features',

@@ -95,8 +95,8 @@ const Hero = () => {
                           <Upload className="h-6 w-6 text-white" />
                         </div>
                         <div>
-                          <div className="font-semibold text-lg text-foreground">Storia_Rinascimento.pdf</div>
-                          <div className="text-sm text-primary font-medium">Caricato con successo ✓</div>
+                          <div className="font-semibold text-lg text-foreground">{t('hero.demoFileName')}</div>
+                          <div className="text-sm text-primary font-medium">{t('hero.demoFileUploaded')}</div>
                         </div>
                       </div>
 
@@ -108,7 +108,7 @@ const Hero = () => {
                           </div>
                           <div className="bg-gradient-to-r from-primary/10 to-blue-500/10 rounded-2xl p-4 max-w-xs border border-primary/20">
                             <p className="text-sm font-medium text-foreground">
-                              "Parlami delle caratteristiche principali del Rinascimento italiano"
+                              "{t('hero.demoQuestion')}"
                             </p>
                           </div>
                         </div>
@@ -116,7 +116,7 @@ const Hero = () => {
                         <div className="flex justify-end">
                           <div className="bg-gradient-to-r from-success-500/10 to-emerald-500/10 rounded-2xl p-4 max-w-xs border border-success-500/20">
                             <p className="text-sm font-medium text-foreground">
-                              "Il Rinascimento italiano si caratterizza per..."
+                              "{t('hero.demoResponse')}"
                             </p>
                           </div>
                         </div>
@@ -127,7 +127,7 @@ const Hero = () => {
                           </div>
                           <div className="bg-gradient-to-r from-blue-500/10 to-primary/10 rounded-2xl p-4 max-w-xs border border-blue-500/20">
                             <p className="text-sm font-medium text-foreground">
-                              "Ottima esposizione! Potresti approfondire il concetto di umanesimo?"
+                              "{t('hero.demoFollowUp')}"
                             </p>
                           </div>
                         </div>
