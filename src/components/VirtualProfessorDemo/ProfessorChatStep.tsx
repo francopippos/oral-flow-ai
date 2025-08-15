@@ -45,7 +45,7 @@ interface ProfessorChatStepProps {
 }
 
 const ProfessorChatStep = (props: ProfessorChatStepProps) => {
-  const { language } = useTranslation();
+  const { language, t } = useTranslation();
   
   const suggestedExplanations = [
     "Explain electric charge and electron movement as if teaching it to a study group",
@@ -69,10 +69,10 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
           <Brain className="h-8 w-8 text-primary" />
           <div className="flex-1">
             <h3 className="text-xl font-bold">
-              🎓 {language === 'it' ? 'Coach di Presentazione Orale - Feedback Accademico' : 'Oral Presentation Coach - Academic Feedback'}
+              🎓 {t('professorChat.title')}
             </h3>
             <p className="text-muted-foreground">
-              {language === 'it' ? 'Valutando Spiegazioni' : 'Evaluating Explanations'} • <strong>{props.file?.name}</strong> • {props.chunks.length} {language === 'it' ? 'sezioni di riferimento' : 'reference sections'}
+              {t('professorChat.evaluatingExplanations')} • <strong>{props.file?.name}</strong> • {props.chunks.length} {t('professorChat.referenceSection')}
             </p>
           </div>
           <div className="flex items-center gap-3">
@@ -83,12 +83,12 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
               className="flex items-center gap-2"
             >
               <Upload className="h-4 w-4" />
-              Switch Document
+              {t('professorChat.switchDocument')}
             </Button>
             <div className="text-right">
               <div className="bg-green-100 text-green-800 px-4 py-2 rounded-lg dark:bg-green-900 dark:text-green-200">
-                <div className="font-semibold">✅ Coach Active</div>
-                <div className="text-xs">Evaluation ready</div>
+                <div className="font-semibold">✅ {t('professorChat.coachActive')}</div>
+                <div className="text-xs">{t('professorChat.evaluationReady')}</div>
               </div>
             </div>
           </div>
@@ -99,15 +99,15 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
             <div className="flex items-center gap-2">
               <BookOpen className="h-4 w-4 text-primary" />
-              <span><strong>Accuracy Check:</strong> Compare against document content</span>
+              <span><strong>{t('professorChat.accuracyCheck')}:</strong> {t('professorChat.compareAgainstDocument')}</span>
             </div>
             <div className="flex items-center gap-2">
               <MessageCircle className="h-4 w-4 text-primary" />
-              <span><strong>Presentation Skills:</strong> Evaluate clarity and terminology</span>
+              <span><strong>{t('professorChat.presentationSkills')}:</strong> {t('professorChat.evaluateClarity')}</span>
             </div>
             <div className="flex items-center gap-2">
               <Lightbulb className="h-4 w-4 text-primary" />
-              <span><strong>Constructive Feedback:</strong> Improve your explanations</span>
+              <span><strong>{t('professorChat.constructiveFeedback')}:</strong> {t('professorChat.improveExplanations')}</span>
             </div>
           </div>
         </div>
@@ -118,8 +118,8 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
         {props.messages.length === 0 ? (
           <div className="text-center py-8 text-muted-foreground">
             <Brain className="h-12 w-12 mx-auto mb-4 text-primary/50" />
-            <p>Oral Presentation Coach is ready to evaluate your explanations and provide feedback!</p>
-            <p className="text-xs mt-2">🔄 Switch documents anytime • 💡 Explain concepts for evaluation • 📋 Get structured coaching feedback</p>
+            <p>{t('professorChat.coachReadyToEvaluate')}</p>
+            <p className="text-xs mt-2">🔄 {t('professorChat.switchDocumentsInfo')}</p>
           </div>
         ) : (
           props.messages.map((message, index) => (
@@ -153,7 +153,7 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
                   <div className="w-2 h-2 bg-primary rounded-full animate-pulse delay-75"></div>
                   <div className="w-2 h-2 bg-primary rounded-full animate-pulse delay-150"></div>
                 </div>
-                <span className="text-sm">🎓 Coach is evaluating your explanation...</span>
+                <span className="text-sm">🎓 {t('professorChat.coachEvaluatingExplanation')}</span>
               </div>
             </div>
           </div>
@@ -165,18 +165,18 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
         <div className="flex items-center gap-3 p-3 bg-secondary/50 rounded-lg border">
           <Mic className="h-4 w-4 text-primary" />
           <div className="flex-1">
-            <h3 className="font-medium text-sm">🎤 Practice Oral Explanation</h3>
+            <h3 className="font-medium text-sm">🎤 {t('professorChat.practiceOralExplanation')}</h3>
             <p className="text-xs text-muted-foreground">
               {props.speechSupported 
-                ? "🌍 Speak in any language - AI auto-detects and responds appropriately"
-                : props.supportMessage || "Voice recognition not supported"
+                ? `🌍 ${t('professorChat.speakAnyLanguage')}`
+                : props.supportMessage || t('professorChat.voiceNotSupported')
               }
             </p>
             {props.voiceCapabilities && (
               <div className="text-xs mt-1 text-muted-foreground">
-                🌍 Multi-lang: 🇮🇹 🇺🇸 🇫🇷 🇪🇸 🇩🇪 🇧🇷 🇷🇺 🇨🇳 🇯🇵 🇰🇷 • 
+                🌍 {t('professorChat.multiLanguageSupport')} • 
                 {props.detectedLanguage && props.detectedLanguage !== 'auto' && (
-                  <span className="ml-1 text-green-600">Active: {props.detectedLanguage}</span>
+                  <span className="ml-1 text-green-600">{t('professorChat.activeLanguage')}: {props.detectedLanguage}</span>
                 )}
               </div>
             )}
@@ -200,7 +200,7 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
               variant="default"
             >
               <Mic className="h-4 w-4" />
-              Start Oral Practice
+              {t('professorChat.startOralPractice')}
             </Button>
           ) : (
             <Button
@@ -209,7 +209,7 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
               className="flex items-center gap-2"
             >
               <Square className="h-4 w-4" />
-              Stop Explanation
+              {t('professorChat.stopExplanation')}
             </Button>
           )}
 
@@ -234,11 +234,11 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
                 <div className="w-2 h-2 bg-primary rounded-full animate-pulse delay-150"></div>
               </div>
               <span className="text-sm font-medium text-primary">
-                🎤 Recording your explanation...
+                🎤 {t('professorChat.recordingExplanation')}
               </span>
             </div>
             <p className="text-xs text-muted-foreground">
-              🌍 Speak naturally in your preferred language. The system will automatically detect and process your speech, whether you're speaking Italian, English, or any other supported language.
+              🌍 {t('professorChat.speakNaturally')}
             </p>
           </div>
         )}
@@ -249,7 +249,7 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
             <div className="p-3 bg-accent/20 border border-accent/30 rounded-lg">
               <h4 className="text-sm font-medium mb-2 flex items-center gap-2">
                 <MessageSquare className="h-4 w-4" />
-                📝 Your Oral Explanation:
+                📝 {t('professorChat.yourOralExplanation')}
               </h4>
               <p className="text-sm">
                 {props.voiceTranscription}
@@ -267,7 +267,7 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
                 className="w-full flex items-center gap-2"
               >
                 <Send className="h-4 w-4" />
-                {props.isProcessing ? "Getting Feedback..." : "✅ Submit for Analysis"}
+                {props.isProcessing ? t('professorChat.gettingFeedback') : `✅ ${t('professorChat.submitForAnalysis')}`}
               </Button>
             )}
           </div>
@@ -279,9 +279,9 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
         <div className="flex items-center gap-3 p-4 bg-secondary/50 rounded-lg border">
           <MessageCircle className="h-5 w-5 text-primary" />
           <div className="flex-1">
-            <h3 className="font-semibold text-sm">💬 Type your explanation</h3>
+            <h3 className="font-semibold text-sm">💬 {t('professorChat.typeExplanation')}</h3>
             <p className="text-xs text-muted-foreground mt-1">
-              Alternatively, write out your explanation as if you were speaking it aloud
+              {t('professorChat.typeAlternatively')}
             </p>
           </div>
         </div>
@@ -290,7 +290,7 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
           <Textarea
             value={props.currentQuestion}
             onChange={(e) => props.setCurrentQuestion(e.target.value)}
-            placeholder="Type your explanation as if speaking to an audience..."
+            placeholder={t('professorChat.typeAsIfSpeaking')}
             disabled={props.isProcessing}
             className="min-h-[100px]"
           />
@@ -301,7 +301,7 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
             className="w-full flex items-center gap-2"
           >
             <Send className="h-4 w-4" />
-            {props.isProcessing ? "Analyzing..." : "Get Coaching Feedback"}
+            {props.isProcessing ? t('professorChat.analyzing') : t('professorChat.getCoachingFeedback')}
           </Button>
         </form>
 
@@ -309,7 +309,7 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
         <div className="space-y-3">
           <h4 className="text-sm font-medium flex items-center gap-2">
             <Lightbulb className="h-4 w-4" />
-            💡 Practice explanations to try:
+            💡 {t('professorChat.practiceExplanationsToTry')}
           </h4>
           
            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
@@ -333,8 +333,7 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
           <div className="flex items-center gap-2">
             <div className="text-blue-600 dark:text-blue-400">🎓</div>
             <div className="text-sm">
-              <strong>Oral Presentation Coach:</strong> Evaluates your explanations against document content and academic standards. 
-              Provides structured feedback to improve your academic communication skills.
+              {t('professorChat.oralPresentationCoachInfo')}
             </div>
           </div>
         </div>

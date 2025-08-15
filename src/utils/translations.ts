@@ -154,6 +154,13 @@ export interface TranslationKeys {
   'demo.uploadStep': string;
   'demo.conversationStep': string;
   'demo.reportStep': string;
+  'demo.unsupportedFormat': string;
+  'demo.extractingText': string;
+  'demo.pdfError': string;
+  'demo.transcriptionError': string;
+  'demo.generating': string;
+  'demo.generated': string;
+  'demo.reportGenerated': string;
 
   // Upload Step
   'upload.title': string;
@@ -367,6 +374,42 @@ export interface TranslationKeys {
   'virtualProfessor.documentReferences': string;
   'virtualProfessor.relatedConcepts': string;
   'virtualProfessor.followUpSuggestions': string;
+
+  // Professor Chat Step
+  'professorChat.title': string;
+  'professorChat.evaluatingExplanations': string;
+  'professorChat.referenceSection': string;
+  'professorChat.switchDocument': string;
+  'professorChat.coachActive': string;
+  'professorChat.evaluationReady': string;
+  'professorChat.accuracyCheck': string;
+  'professorChat.compareAgainstDocument': string;
+  'professorChat.presentationSkills': string;
+  'professorChat.evaluateClarity': string;
+  'professorChat.constructiveFeedback': string;
+  'professorChat.improveExplanations': string;
+  'professorChat.coachReadyToEvaluate': string;
+  'professorChat.switchDocumentsInfo': string;
+  'professorChat.coachEvaluatingExplanation': string;
+  'professorChat.practiceOralExplanation': string;
+  'professorChat.speakAnyLanguage': string;
+  'professorChat.voiceNotSupported': string;
+  'professorChat.multiLanguageSupport': string;
+  'professorChat.activeLanguage': string;
+  'professorChat.startOralPractice': string;
+  'professorChat.stopExplanation': string;
+  'professorChat.recordingExplanation': string;
+  'professorChat.speakNaturally': string;
+  'professorChat.yourOralExplanation': string;
+  'professorChat.gettingFeedback': string;
+  'professorChat.submitForAnalysis': string;
+  'professorChat.typeExplanation': string;
+  'professorChat.typeAlternatively': string;
+  'professorChat.typeAsIfSpeaking': string;
+  'professorChat.getCoachingFeedback': string;
+  'professorChat.analyzing': string;
+  'professorChat.practiceExplanationsToTry': string;
+  'professorChat.oralPresentationCoachInfo': string;
 }
 
 // Italian translations (default)
@@ -518,11 +561,18 @@ export const italianTranslations: TranslationKeys = {
   'common.finish': 'Termina',
 
   // Demo Modal
-  'demo.title': 'Prova OralFlow Gratis',
+  'demo.title': '🧠 OralFlow - Demo Funzionale',
   'demo.description': 'Scopri come funziona con una demo interattiva',
   'demo.uploadStep': 'Carica Documento',
   'demo.conversationStep': 'Conversazione AI',
   'demo.reportStep': 'Report Valutazione',
+  'demo.unsupportedFormat': 'Formato non supportato. Carica solo file PDF.',
+  'demo.extractingText': 'Estrazione testo dal PDF...',
+  'demo.pdfError': 'Errore nell\'elaborazione del PDF. Riprova con un altro file.',
+  'demo.transcriptionError': 'Errore nella trascrizione audio. Riprova.',
+  'demo.generating': 'Generazione report OralFlow...',
+  'demo.generated': 'Generato da OralFlow',
+  'demo.reportGenerated': 'Report generato con successo',
 
   // Upload Step
   'upload.title': 'Carica il tuo documento',
@@ -736,7 +786,43 @@ export const italianTranslations: TranslationKeys = {
   'virtualProfessor.comprehensiveAnalysis': 'Analisi completa',
   'virtualProfessor.documentReferences': 'Riferimenti al documento',
   'virtualProfessor.relatedConcepts': 'Concetti correlati',
-  'virtualProfessor.followUpSuggestions': 'Suggerimenti di approfondimento'
+  'virtualProfessor.followUpSuggestions': 'Suggerimenti di approfondimento',
+
+  // Professor Chat Step
+  'professorChat.title': 'Coach di Presentazione Orale - Feedback Accademico',
+  'professorChat.evaluatingExplanations': 'Valutando Spiegazioni',
+  'professorChat.referenceSection': 'sezioni di riferimento',
+  'professorChat.switchDocument': 'Cambia Documento',
+  'professorChat.coachActive': 'Coach Attivo',
+  'professorChat.evaluationReady': 'Valutazione pronta',
+  'professorChat.accuracyCheck': 'Controllo Accuratezza',
+  'professorChat.compareAgainstDocument': 'Confronta con il contenuto del documento',
+  'professorChat.presentationSkills': 'Competenze di Presentazione',
+  'professorChat.evaluateClarity': 'Valuta chiarezza e terminologia',
+  'professorChat.constructiveFeedback': 'Feedback Costruttivo',
+  'professorChat.improveExplanations': 'Migliora le tue spiegazioni',
+  'professorChat.coachReadyToEvaluate': 'Il Coach di Presentazione Orale è pronto a valutare le tue spiegazioni e fornire feedback!',
+  'professorChat.switchDocumentsInfo': 'Cambia documenti in qualsiasi momento • Spiega concetti per la valutazione • Ricevi feedback strutturato di coaching',
+  'professorChat.coachEvaluatingExplanation': 'Il coach sta valutando la tua spiegazione...',
+  'professorChat.practiceOralExplanation': 'Pratica Spiegazione Orale',
+  'professorChat.speakAnyLanguage': 'Parla in qualsiasi lingua - l\'AI rileva automaticamente e risponde appropriatamente',
+  'professorChat.voiceNotSupported': 'Riconoscimento vocale non supportato',
+  'professorChat.multiLanguageSupport': 'Multi-lingua: 🇮🇹 🇺🇸 🇫🇷 🇪🇸 🇩🇪 🇧🇷 🇷🇺 🇨🇳 🇯🇵 🇰🇷',
+  'professorChat.activeLanguage': 'Attivo',
+  'professorChat.startOralPractice': 'Inizia Pratica Orale',
+  'professorChat.stopExplanation': 'Ferma Spiegazione',
+  'professorChat.recordingExplanation': 'Registrando la tua spiegazione...',
+  'professorChat.speakNaturally': 'Parla naturalmente nella tua lingua preferita. Il sistema rileverà e processerà automaticamente il tuo discorso, che tu stia parlando in italiano, inglese o qualsiasi altra lingua supportata.',
+  'professorChat.yourOralExplanation': 'La Tua Spiegazione Orale:',
+  'professorChat.gettingFeedback': 'Ricevendo Feedback...',
+  'professorChat.submitForAnalysis': 'Invia per Analisi',
+  'professorChat.typeExplanation': 'Scrivi la tua spiegazione',
+  'professorChat.typeAlternatively': 'In alternativa, scrivi la tua spiegazione come se la stessi dicendo ad alta voce',
+  'professorChat.typeAsIfSpeaking': 'Scrivi la tua spiegazione come se stessi parlando a un pubblico...',
+  'professorChat.getCoachingFeedback': 'Ricevi Feedback di Coaching',
+  'professorChat.analyzing': 'Analizzando...',
+  'professorChat.practiceExplanationsToTry': 'Spiegazioni di pratica da provare:',
+  'professorChat.oralPresentationCoachInfo': 'Coach di Presentazione Orale: Valuta le tue spiegazioni contro il contenuto del documento e gli standard accademici. Fornisce feedback strutturato per migliorare le tue competenze di comunicazione accademica.'
 };
 
 // English translations
@@ -888,11 +974,18 @@ export const englishTranslations: TranslationKeys = {
   'common.finish': 'Finish',
 
   // Demo Modal
-  'demo.title': 'Try OralFlow Free',
+  'demo.title': '🧠 OralFlow - Functional Demo',
   'demo.description': 'Discover how it works with an interactive demo',
   'demo.uploadStep': 'Upload Document',
   'demo.conversationStep': 'AI Conversation',
   'demo.reportStep': 'Evaluation Report',
+  'demo.unsupportedFormat': 'Unsupported format. Please upload PDF files only.',
+  'demo.extractingText': 'Extracting text from PDF...',
+  'demo.pdfError': 'Error processing PDF. Please try with another file.',
+  'demo.transcriptionError': 'Audio transcription error. Please try again.',
+  'demo.generating': 'Generating OralFlow report...',
+  'demo.generated': 'Generated by OralFlow',
+  'demo.reportGenerated': 'Report generated successfully',
 
   // Upload Step
   'upload.title': 'Upload your document',
@@ -1108,6 +1201,42 @@ export const englishTranslations: TranslationKeys = {
   'virtualProfessor.useDocumentTerminologyItem': '• Use terminology present in the document',
   'virtualProfessor.askDetailedQuestionItem': '• Ask a more detailed question',
   'virtualProfessor.canHelpExploreText': 'I can help you explore the document contents if you give me more precise guidance! 📖',
+
+  // Professor Chat Step
+  'professorChat.title': 'Oral Presentation Coach - Academic Feedback',
+  'professorChat.evaluatingExplanations': 'Evaluating Explanations',
+  'professorChat.referenceSection': 'reference sections',
+  'professorChat.switchDocument': 'Switch Document',
+  'professorChat.coachActive': 'Coach Active',
+  'professorChat.evaluationReady': 'Evaluation ready',
+  'professorChat.accuracyCheck': 'Accuracy Check',
+  'professorChat.compareAgainstDocument': 'Compare against document content',
+  'professorChat.presentationSkills': 'Presentation Skills',
+  'professorChat.evaluateClarity': 'Evaluate clarity and terminology',
+  'professorChat.constructiveFeedback': 'Constructive Feedback',
+  'professorChat.improveExplanations': 'Improve your explanations',
+  'professorChat.coachReadyToEvaluate': 'Oral Presentation Coach is ready to evaluate your explanations and provide feedback!',
+  'professorChat.switchDocumentsInfo': 'Switch documents anytime • Explain concepts for evaluation • Get structured coaching feedback',
+  'professorChat.coachEvaluatingExplanation': 'Coach is evaluating your explanation...',
+  'professorChat.practiceOralExplanation': 'Practice Oral Explanation',
+  'professorChat.speakAnyLanguage': 'Speak in any language - AI auto-detects and responds appropriately',
+  'professorChat.voiceNotSupported': 'Voice recognition not supported',
+  'professorChat.multiLanguageSupport': 'Multi-lang: 🇮🇹 🇺🇸 🇫🇷 🇪🇸 🇩🇪 🇧🇷 🇷🇺 🇨🇳 🇯🇵 🇰🇷',
+  'professorChat.activeLanguage': 'Active',
+  'professorChat.startOralPractice': 'Start Oral Practice',
+  'professorChat.stopExplanation': 'Stop Explanation',
+  'professorChat.recordingExplanation': 'Recording your explanation...',
+  'professorChat.speakNaturally': 'Speak naturally in your preferred language. The system will automatically detect and process your speech, whether you\'re speaking Italian, English, or any other supported language.',
+  'professorChat.yourOralExplanation': 'Your Oral Explanation:',
+  'professorChat.gettingFeedback': 'Getting Feedback...',
+  'professorChat.submitForAnalysis': 'Submit for Analysis',
+  'professorChat.typeExplanation': 'Type your explanation',
+  'professorChat.typeAlternatively': 'Alternatively, write out your explanation as if you were speaking it aloud',
+  'professorChat.typeAsIfSpeaking': 'Type your explanation as if speaking to an audience...',
+  'professorChat.getCoachingFeedback': 'Get Coaching Feedback',
+  'professorChat.analyzing': 'Analyzing...',
+  'professorChat.practiceExplanationsToTry': 'Practice explanations to try:',
+  'professorChat.oralPresentationCoachInfo': 'Oral Presentation Coach: Evaluates your explanations against document content and academic standards. Provides structured feedback to improve your academic communication skills.'
 };
 
 export const translations: Record<Language, TranslationKeys> = {

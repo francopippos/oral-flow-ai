@@ -4,6 +4,7 @@ import { useOralFlowDemo } from '@/hooks/useOralMindDemo';
 import { useAudioRecording } from '@/hooks/useAudioRecording';
 import { extractTextFromPDF } from '@/utils/pdfUtils';
 import { analyzeWithOralFlowAI, transcribeAudio } from '@/utils/aiUtils';
+import { useTranslation } from '@/hooks/useTranslation';
 import FileUploadStep from './FileUploadStep';
 import ConversationStep from './ConversationStep';
 import ReportStep from './ReportStep';
@@ -14,6 +15,7 @@ interface FunctionalDemoModalProps {
 }
 
 const FunctionalDemoModal = ({ isOpen, onClose }: FunctionalDemoModalProps) => {
+  const { t } = useTranslation();
   const {
     step,
     setStep,
@@ -47,7 +49,7 @@ const FunctionalDemoModal = ({ isOpen, onClose }: FunctionalDemoModalProps) => {
     if (!file) return;
 
     if (file.type !== 'application/pdf') {
-      alert('Formato non supportato. Carica solo file PDF.');
+      alert(t('demo.unsupportedFormat'));
       return;
     }
 
@@ -55,7 +57,7 @@ const FunctionalDemoModal = ({ isOpen, onClose }: FunctionalDemoModalProps) => {
     setIsAnalyzing(true);
 
     try {
-      console.log('📄 Estrazione testo dal PDF...', file.name);
+      console.log(`📄 ${t('demo.extractingText')}`, file.name);
       const extractedText = await extractTextFromPDF(file);
       setFileContent(extractedText);
       
@@ -76,7 +78,7 @@ const FunctionalDemoModal = ({ isOpen, onClose }: FunctionalDemoModalProps) => {
     } catch (error) {
       console.error('Errore nell\'elaborazione del PDF:', error);
       setIsAnalyzing(false);
-      alert('Errore nell\'elaborazione del PDF. Riprova con un altro file.');
+      alert(t('demo.pdfError'));
     }
   };
 
@@ -98,7 +100,7 @@ const FunctionalDemoModal = ({ isOpen, onClose }: FunctionalDemoModalProps) => {
           
         } catch (error) {
           console.error('❌ Errore nella trascrizione:', error);
-          alert('Errore nella trascrizione audio. Riprova.');
+          alert(t('demo.transcriptionError'));
         } finally {
           setIsProcessing(false);
         }
@@ -117,7 +119,7 @@ const FunctionalDemoModal = ({ isOpen, onClose }: FunctionalDemoModalProps) => {
   const generateOralFlowReport = async () => {
     setIsProcessing(true);
     
-     console.log('📊 Generazione report OralFlow...');
+     console.log(`📊 ${t('demo.generating')}`);
      
      const conversationSummary = conversation
        .map(msg => `${msg.role === 'user' ? 'Studente' : 'Professor OralFlow'}: ${msg.message}`)
@@ -162,13 +164,13 @@ Generato da OralFlow - Il tuo assistente AI per l'interrogazione orale`;
   };
 
   const downloadReport = () => {
-     const reportContent = `${report}\n\n---\nGenerato da OralFlow\nData: ${new Date().toLocaleDateString('it-IT')}\nDocumento analizzato: ${uploadedFile?.name}`;
+     const reportContent = `${report}\n\n---\n${t('demo.generated')}\nData: ${new Date().toLocaleDateString()}\nDocumento analizzato: ${uploadedFile?.name}`;
      
      const blob = new Blob([reportContent], { type: 'text/plain; charset=utf-8' });
      const url = URL.createObjectURL(blob);
      const a = document.createElement('a');
      a.href = url;
-     a.download = `OralFlow_Report_${new Date().toLocaleDateString('it-IT').replace(/\//g, '_')}.txt`;
+     a.download = `OralFlow_Report_${new Date().toLocaleDateString().replace(/\//g, '_')}.txt`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -191,7 +193,7 @@ Generato da OralFlow - Il tuo assistente AI per l'interrogazione orale`;
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold gradient-text">
-            🧠 OralFlow - Demo Funzionale
+            {t('demo.title')}
           </DialogTitle>
         </DialogHeader>
 
