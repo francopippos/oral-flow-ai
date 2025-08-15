@@ -305,29 +305,6 @@ const ProfessorChatStep = (props: ProfessorChatStepProps) => {
           </Button>
         </form>
 
-        {/* Domande suggerite */}
-        <div className="space-y-3">
-          <h4 className="text-sm font-medium flex items-center gap-2">
-            <Lightbulb className="h-4 w-4" />
-            💡 {t('professorChat.practiceExplanationsToTry')}
-          </h4>
-          
-           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-            {suggestedExplanations.map((explanation, index) => (
-              <Button
-                key={index}
-                variant="outline"
-                size="sm"
-                onClick={() => props.setCurrentQuestion(explanation)}
-                disabled={props.isProcessing}
-                className="text-left justify-start h-auto p-3 text-xs"
-              >
-                {explanation}
-              </Button>
-            ))}
-          </div>
-        </div>
-
         {/* Info about Bistro AI */}
         <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg dark:bg-blue-900/20 dark:border-blue-800">
           <div className="flex items-center gap-2">
