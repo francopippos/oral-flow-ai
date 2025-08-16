@@ -63,7 +63,7 @@ const FunctionalDemoModal = ({ isOpen, onClose }: FunctionalDemoModalProps) => {
       
       setTimeout(async () => {
         const initialAnalysis = await analyzeWithOralFlowAI(
-          `Analizza questo documento PDF per preparare un'interrogazione: "${extractedText}". Presenta brevemente il contenuto e invita lo studente a iniziare la sua esposizione registrando la sua voce.`,
+          `Analizza questo documento PDF: "${extractedText}". Sono il professore virtuale e sono pronto ad ascoltare la spiegazione dello studente sui contenuti di questo documento. Invita lo studente a iniziare la sua esposizione su un argomento del documento registrando la sua voce.`,
           extractedText,
           []
         );
