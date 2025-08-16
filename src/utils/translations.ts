@@ -252,6 +252,13 @@ export interface TranslationKeys {
   'demoModal.googleDrive': string;
   'demoModal.classroom': string;
   'demoModal.documentName': string;
+  'demoModal.professorSevereInvitation': string;
+  'demoModal.professorSevereFeedback': string;
+  'demoModal.professorUnderstandingInvitation': string;
+  'demoModal.professorUnderstandingFeedback': string;
+  'demoModal.professorTechnicalInvitation': string;
+  'demoModal.professorTechnicalFeedback': string;
+  'demoModal.studentResponse': string;
   
   // Error messages and alerts
   'error.selectValidPdf': string;
@@ -669,6 +676,13 @@ export const italianTranslations: TranslationKeys = {
   'demoModal.googleDrive': 'Google Drive',
   'demoModal.classroom': 'Classroom',
   'demoModal.documentName': 'Storia_Rinascimento.pdf',
+  'demoModal.professorSevereInvitation': 'Sono pronto ad ascoltare la tua spiegazione sul Rinascimento. Procedi quando vuoi.',
+  'demoModal.professorSevereFeedback': 'La tua spiegazione contiene alcune imprecisioni. Il Rinascimento non ha una data di inizio univoca. Devi essere più specifico sui fattori scatenanti.',
+  'demoModal.professorUnderstandingInvitation': 'Ti ascolto, racconta quello che sai sul Rinascimento. Prenditi il tempo che ti serve.',
+  'demoModal.professorUnderstandingFeedback': 'Molto bene! Hai colto i punti principali. Potresti approfondire il ruolo dell\'umanesimo? Hai usato terminologia appropriata e la tua esposizione è stata chiara e ben strutturata.',
+  'demoModal.professorTechnicalInvitation': 'Procedi con la spiegazione dell\'umanesimo quattrocentesco e delle trasformazioni socio-economiche. Ti ascolto.',
+  'demoModal.professorTechnicalFeedback': 'Interessante approccio metodologico. Considera anche l\'impatto delle innovazioni tecniche sulla diffusione culturale.',
+  'demoModal.studentResponse': 'Il Rinascimento è un movimento culturale che nasce in Italia nel XIV secolo, caratterizzato dalla rinascita dell\'interesse per l\'arte classica, l\'umanesimo e le scienze...',
   
   // Error messages and alerts
   'error.selectValidPdf': 'Per favore seleziona un file PDF valido.',
@@ -1084,6 +1098,16 @@ export const englishTranslations: TranslationKeys = {
   'demoModal.mobileApps': '📱 iOS & Android',
   'demoModal.cloudSync': '☁️ Cloud Sync',
   'demoModal.autoBackup': '🔄 Automatic backup',
+  'demoModal.googleDrive': 'Google Drive',
+  'demoModal.classroom': 'Classroom',
+  'demoModal.documentName': 'Renaissance_History_Notes.pdf',
+  'demoModal.professorSevereInvitation': 'I\'m ready to listen to your explanation about the Renaissance. Proceed when you\'re ready.',
+  'demoModal.professorSevereFeedback': 'Your explanation contains some inaccuracies. The Renaissance doesn\'t have a single starting date. You need to be more specific about the triggering factors.',
+  'demoModal.professorUnderstandingInvitation': 'I\'m listening, tell me what you know about the Renaissance. Take the time you need.',
+  'demoModal.professorUnderstandingFeedback': 'Very good! You\'ve grasped the main points. Could you elaborate on the role of humanism? You used appropriate terminology and your presentation was clear and well-structured.',
+  'demoModal.professorTechnicalInvitation': 'Proceed with the explanation of 15th-century humanism and socio-economic transformations. I\'m listening.',
+  'demoModal.professorTechnicalFeedback': 'Interesting methodological approach. Also consider the impact of technical innovations on cultural diffusion.',
+  'demoModal.studentResponse': 'The Renaissance is a cultural movement that originated in Italy in the 14th century, characterized by the revival of interest in classical art, humanism and sciences...',
 
   // Virtual Professor Demo
   'virtualProfessor.title': 'AI Professor - Enhanced Document Analysis',
@@ -1155,9 +1179,6 @@ export const englishTranslations: TranslationKeys = {
   'virtualProfessor.documentReferences': 'Document references',
   'virtualProfessor.relatedConcepts': 'Related concepts',
   'virtualProfessor.followUpSuggestions': 'Follow-up suggestions',
-  'demoModal.googleDrive': 'Google Drive',
-  'demoModal.classroom': 'Classroom',
-  'demoModal.documentName': 'Renaissance_History.pdf',
   
   // Error messages and alerts
   'error.selectValidPdf': 'Please select a valid PDF file.',

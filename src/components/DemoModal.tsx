@@ -26,24 +26,24 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
       description: t('demoModal.professorSevereDesc'),
       color: "text-red-700",
       bgColor: "bg-red-50",
-      invitation: "Sono pronto ad ascoltare la tua spiegazione sul Rinascimento. Procedi quando vuoi.",
-      feedback: "La tua spiegazione contiene alcune imprecisioni. Il Rinascimento non ha una data di inizio univoca. Devi essere più specifico sui fattori scatenanti."
+      invitation: t('demoModal.professorSevereInvitation'),
+      feedback: t('demoModal.professorSevereFeedback')
     },
     comprensivo: {
       name: t('demoModal.professorUnderstanding'), 
       description: t('demoModal.professorUnderstandingDesc'),
       color: "text-green-700",
       bgColor: "bg-green-50",
-      invitation: "Ti ascolto, racconta quello che sai sul Rinascimento. Prenditi il tempo che ti serve.",
-      feedback: "Molto bene! Hai colto i punti principali. Potresti approfondire il ruolo dell'umanesimo? Hai usato terminologia appropriata e la tua esposizione è stata chiara e ben strutturata."
+      invitation: t('demoModal.professorUnderstandingInvitation'),
+      feedback: t('demoModal.professorUnderstandingFeedback')
     },
     tecnico: {
       name: t('demoModal.professorTechnical'),
       description: t('demoModal.professorTechnicalDesc'), 
       color: "text-blue-700", 
       bgColor: "bg-blue-50",
-      invitation: "Procedi con la spiegazione dell'umanesimo quattrocentesco e delle trasformazioni socio-economiche. Ti ascolto.",
-      feedback: "Interessante approccio metodologico. Considera anche l'impatto delle innovazioni tecniche sulla diffusione culturale."
+      invitation: t('demoModal.professorTechnicalInvitation'),
+      feedback: t('demoModal.professorTechnicalFeedback')
     }
   };
 
@@ -192,10 +192,10 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
             {/* Risposta dello studente */}
             {step >= 2 && userTypingStep >= 1 && (
               <div className="flex justify-end animate-fade-in">
-                <div className="bg-success-50 rounded-lg p-3 max-w-sm">
-                  <p className="text-sm text-success-800">
-                    "Il Rinascimento è un movimento culturale che nasce in Italia nel XIV secolo, caratterizzato dalla rinascita dell'interesse per l'arte classica, l'umanesimo e le scienze..."
-                  </p>
+                 <div className="bg-success-50 rounded-lg p-3 max-w-sm">
+                   <p className="text-sm text-success-800">
+                     "{t('demoModal.studentResponse')}"
+                   </p>
                   <div className="mt-2 flex items-center space-x-2 text-xs text-success-600">
                     <Mic className="h-3 w-3" />
                     <span>{t('demoModal.voiceTranscription')}</span>
