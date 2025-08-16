@@ -101,8 +101,8 @@ export const extractTextFromPDF = async (file: File): Promise<string> => {
       throw new Error('📄 File PDF danneggiato o non valido.');
     }
     
-    if (file.size > 50 * 1024 * 1024) {
-      throw new Error('📏 File troppo grande (>50MB). Usa un PDF più piccolo.');
+    if (file.size > 100 * 1024 * 1024) {
+      throw new Error('📏 File troppo grande (>100MB). Usa un PDF più piccolo.');
     }
     
     // Errore generico

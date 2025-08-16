@@ -97,7 +97,7 @@ const PdfUploadStep = ({
             </div>
             <div className="mt-4 pt-4 border-t border-gray-200">
               <p className="text-sm text-primary font-medium">
-                📄 <strong>{t('pdfUpload.capacity')}:</strong> {t('pdfUpload.upTo100Pages')} • 📊 <strong>{t('pdfUpload.processing')}:</strong> {t('pdfUpload.textAndImages')} • 🧠 <strong>{t('pdfUpload.ai')}:</strong> {t('pdfUpload.advancedSemantic')}
+                📄 <strong>{t('pdfUpload.capacity')}:</strong> {t('pdfUpload.upTo100MB')} • 📊 <strong>{t('pdfUpload.processing')}:</strong> {t('pdfUpload.textAndImages')} • 🧠 <strong>{t('pdfUpload.ai')}:</strong> {t('pdfUpload.advancedSemantic')}
               </p>
             </div>
           </div>

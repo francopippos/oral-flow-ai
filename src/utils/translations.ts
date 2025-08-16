@@ -279,7 +279,7 @@ export interface TranslationKeys {
   'pdfUpload.chartsAndTables': string;
   'pdfUpload.multilingualContent': string;
   'pdfUpload.capacity': string;
-  'pdfUpload.upTo100Pages': string;
+  'pdfUpload.upTo100MB': string;
   'pdfUpload.processing': string;
   'pdfUpload.textAndImages': string;
   'pdfUpload.ai': string;
@@ -696,7 +696,7 @@ export const italianTranslations: TranslationKeys = {
   'pdfUpload.chartsAndTables': '• Grafici e tabelle',
   'pdfUpload.multilingualContent': '• Contenuti multilingue',
   'pdfUpload.capacity': 'Capacità',
-  'pdfUpload.upTo100Pages': 'Fino a 100 pagine',
+  'pdfUpload.upTo100MB': 'Fino a 100MB',
   'pdfUpload.processing': 'Elaborazione',
   'pdfUpload.textAndImages': 'Testo + Immagini',
   'pdfUpload.ai': 'AI',
@@ -1185,7 +1185,7 @@ export const englishTranslations: TranslationKeys = {
   'pdfUpload.chartsAndTables': '• Charts and tables',
   'pdfUpload.multilingualContent': '• Multilingual content',
   'pdfUpload.capacity': 'Capacity',
-  'pdfUpload.upTo100Pages': 'Up to 100 pages',
+  'pdfUpload.upTo100MB': 'Up to 100MB',
   'pdfUpload.processing': 'Processing',
   'pdfUpload.textAndImages': 'Text + Images',
   'pdfUpload.ai': 'AI',
