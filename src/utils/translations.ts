@@ -442,9 +442,9 @@ export const italianTranslations: TranslationKeys = {
   'hero.stat3': 'Sempre Disponibile',
   'hero.demoFileName': 'Storia_Rinascimento.pdf',
   'hero.demoFileUploaded': 'Caricato con successo ✓',
-  'hero.demoQuestion': 'Parlami delle caratteristiche principali del Rinascimento italiano',
-  'hero.demoResponse': 'Il Rinascimento italiano si caratterizza per...',
-  'hero.demoFollowUp': 'Ottima esposizione! Potresti approfondire il concetto di umanesimo?',
+  'hero.demoQuestion': 'Sono pronto ad ascoltare la tua spiegazione sul Rinascimento italiano',
+  'hero.demoResponse': 'Il Rinascimento italiano si caratterizza per la rinascita delle arti, l\'umanesimo e...',
+  'hero.demoFollowUp': 'Ottima esposizione! Terminologia appropriata. Potresti approfondire il concetto di umanesimo?',
 
   // Features
   'features.title': 'Funzionalità',
@@ -860,9 +860,9 @@ export const englishTranslations: TranslationKeys = {
   'hero.stat3': 'Always Available',
   'hero.demoFileName': 'Renaissance_History.pdf',
   'hero.demoFileUploaded': 'Successfully uploaded ✓',
-  'hero.demoQuestion': 'Tell me about the main characteristics of the Italian Renaissance',
-  'hero.demoResponse': 'The Italian Renaissance is characterized by...',
-  'hero.demoFollowUp': 'Excellent presentation! Could you elaborate on the concept of humanism?',
+  'hero.demoQuestion': 'I\'m ready to listen to your explanation about the Italian Renaissance',
+  'hero.demoResponse': 'The Italian Renaissance is characterized by the rebirth of arts, humanism and...',
+  'hero.demoFollowUp': 'Excellent presentation! Appropriate terminology. Could you elaborate on the concept of humanism?',
 
   // Features
   'features.title': 'Features',
