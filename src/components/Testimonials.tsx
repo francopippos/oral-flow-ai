@@ -1,6 +1,11 @@
 
 import { Star, Quote } from 'lucide-react';
 import { useTranslation } from '../hooks/useTranslation';
+import { Avatar, AvatarImage, AvatarFallback } from './ui/avatar';
+import student1 from '../assets/student1.jpg';
+import student2 from '../assets/student2.jpg';
+import student3 from '../assets/student3.jpg';
+import teacher1 from '../assets/teacher1.jpg';
 
 const Testimonials = () => {
   const { t } = useTranslation();
@@ -10,28 +15,32 @@ const Testimonials = () => {
       role: t('testimonials.student1Role'),
       content: t('testimonials.student1Content'),
       rating: 5,
-      subject: t('testimonials.student1Subject')
+      subject: t('testimonials.student1Subject'),
+      avatar: student1
     },
     {
       name: t('testimonials.teacher1Name'),
       role: t('testimonials.teacher1Role'),
       content: t('testimonials.teacher1Content'),
       rating: 5,
-      subject: t('testimonials.teacher1Subject')
+      subject: t('testimonials.teacher1Subject'),
+      avatar: teacher1
     },
     {
       name: t('testimonials.student2Name'),
       role: t('testimonials.student2Role'),
       content: t('testimonials.student2Content'),
       rating: 5,
-      subject: t('testimonials.student2Subject')
+      subject: t('testimonials.student2Subject'),
+      avatar: student2
     },
     {
       name: t('testimonials.student3Name'),
       role: t('testimonials.student3Role'),
       content: t('testimonials.student3Content'),
       rating: 5,
-      subject: t('testimonials.student3Subject')
+      subject: t('testimonials.student3Subject'),
+      avatar: student3
     }
   ];
 
@@ -75,9 +84,12 @@ const Testimonials = () => {
 
                 {/* Author */}
                 <div className="flex items-center space-x-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-oralmind-500 to-success-500 rounded-full flex items-center justify-center text-white font-semibold">
-                    {testimonial.name.split(' ').map(n => n[0]).join('')}
-                  </div>
+                  <Avatar className="w-12 h-12">
+                    <AvatarImage src={testimonial.avatar} alt={`${testimonial.name} profile`} />
+                    <AvatarFallback className="bg-gradient-to-br from-oralmind-500 to-success-500 text-white font-semibold">
+                      {testimonial.name.split(' ').map(n => n[0]).join('')}
+                    </AvatarFallback>
+                  </Avatar>
                   <div>
                     <div className="font-semibold text-foreground">{testimonial.name}</div>
                     <div className="text-sm text-muted-foreground">{testimonial.role}</div>
