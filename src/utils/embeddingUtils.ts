@@ -1,3 +1,4 @@
+import { invokeFunctionWithCache, handleAPIError } from './aiApiClient';
 
 // Utility functions for OpenAI-based embeddings and RAG
 
@@ -6,6 +7,16 @@ export interface ChunkWithEmbedding {
   embedding: number[];
   index: number;
   similarity?: number;
+}
+
+// Create embeddings via Supabase Edge Function (preferred)
+export async function createEmbeddings(texts: string[]): Promise<number[][]> {
+  try {
+    const data = await invokeFunctionWithCache('bistro-embeddings', { texts });
+    return data.embeddings || [];
+  } catch (error: any) {
+    throw handleAPIError(error, 'EMBEDDINGS');
+  }
 }
 
 // Create embeddings for text chunks using OpenAI API
@@ -188,7 +199,7 @@ export function findRelevantChunksTextBased(
 }
 
 // Calculate cosine similarity between two vectors
-function cosineSimilarity(vecA: number[], vecB: number[]): number {
+export function cosineSimilarity(vecA: number[], vecB: number[]): number {
   if (vecA.length !== vecB.length) {
     console.warn('⚠️ Vettori con lunghezze diverse:', vecA.length, 'vs', vecB.length);
     return 0;
@@ -212,4 +223,14 @@ function cosineSimilarity(vecA: number[], vecB: number[]): number {
   }
 
   return dotProduct / (normA * normB);
+}
+
+export function calculateSimilarities(
+  queryEmbedding: number[],
+  candidateEmbeddings: number[][]
+): { index: number; similarity: number }[] {
+  return candidateEmbeddings.map((embedding, index) => ({
+    index,
+    similarity: cosineSimilarity(queryEmbedding, embedding)
+  }));
 }
