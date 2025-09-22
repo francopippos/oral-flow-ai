@@ -56,7 +56,7 @@ const Header = () => {
                 {t('header.login')}
               </Button>
               <button className="modern-button px-6 py-3 text-lg font-semibold">
-                {t('header.tryFree')}
+                {t('header.requestAccess')}
               </button>
             </div>
 
@@ -101,7 +101,7 @@ const Header = () => {
                     {t('header.login')}
                   </Button>
                   <button className="modern-button py-3 text-lg font-semibold">
-                    {t('header.tryFree')}
+                    {t('header.requestAccess')}
                   </button>
                 </div>
               </div>

@@ -8,26 +8,43 @@ export interface TranslationKeys {
   'nav.benefits': string;
   'nav.testimonials': string;
   'header.login': string;
-  'header.tryFree': string;
+  'header.requestAccess': string;
+
+  // Scarcity Counter
+  'scarcity.urgentNotice': string;
+  'scarcity.spotsLeft': string;
+  'scarcity.reservedSpots': string;
+  'scarcity.warningMessage': string;
+
+  // Beta CTA
+  'betaCTA.exclusiveBadge': string;
+  'betaCTA.title': string;
+  'betaCTA.description': string;
+  'betaCTA.benefit1Title': string;
+  'betaCTA.benefit1Desc': string;
+  'betaCTA.benefit2Title': string;
+  'betaCTA.benefit2Desc': string;
+  'betaCTA.benefit3Title': string;
+  'betaCTA.benefit3Desc': string;
+  'betaCTA.requestAccess': string;
+  'betaCTA.watchDemo': string;
+  'betaCTA.smallPrint': string;
 
   // Hero Section
-  'hero.badge': string;
+  'hero.exclusiveBadge': string;
+  'hero.privateBeta': string;
   'hero.title': string;
   'hero.subtitle': string;
   'hero.description': string;
-  'hero.tryDemo': string;
-  'hero.watchVideo': string;
-  'hero.trustedBy': string;
-  'hero.professorDemo': string;
-  'hero.professorDemoDesc': string;
+  'hero.requestAccess': string;
+  'hero.watchDemo': string;
+  'hero.spotsRemaining': string;
+  'hero.inviteOnly': string;
+  'hero.earlyAccess': string;
+  'hero.firstMover': string;
   'hero.stat1': string;
   'hero.stat2': string;
   'hero.stat3': string;
-  'hero.demoFileName': string;
-  'hero.demoFileUploaded': string;
-  'hero.demoQuestion': string;
-  'hero.demoResponse': string;
-  'hero.demoFollowUp': string;
 
   // Features
   'features.title': string;
@@ -432,26 +449,43 @@ export const italianTranslations: TranslationKeys = {
   'nav.benefits': 'Benefici',
   'nav.testimonials': 'Testimonianze',
   'header.login': 'Accedi',
-  'header.tryFree': 'Prova Gratis',
+  'header.requestAccess': 'Richiedi Accesso',
+
+  // Scarcity Counter
+  'scarcity.urgentNotice': 'Beta Privata - Posti Limitati',
+  'scarcity.spotsLeft': 'posti rimanenti',
+  'scarcity.reservedSpots': 'Posti riservati nella beta',
+  'scarcity.warningMessage': 'I posti si stanno esaurendo rapidamente. Richiedi l\'accesso ora per non perdere questa opportunità esclusiva.',
+
+  // Beta CTA
+  'betaCTA.exclusiveBadge': 'Accesso Esclusivo - Solo Su Invito',
+  'betaCTA.title': 'Pronto a Rivoluzionare il Tuo Sviluppo Web?',
+  'betaCTA.description': 'Unisciti ai pionieri che stanno già trasformando le loro idee in applicazioni web complete con l\'AI più avanzata del settore.',
+  'betaCTA.benefit1Title': 'Accesso Prioritario',
+  'betaCTA.benefit1Desc': 'Sii tra i primi a utilizzare tutte le funzionalità avanzate',
+  'betaCTA.benefit2Title': 'Supporto Diretto',
+  'betaCTA.benefit2Desc': 'Assistenza personale del team di sviluppo',
+  'betaCTA.benefit3Title': 'Nessun Costo',
+  'betaCTA.benefit3Desc': 'Accesso gratuito per tutta la durata della beta',
+  'betaCTA.requestAccess': 'Richiedi Accesso Beta',
+  'betaCTA.watchDemo': 'Guarda Demo Prima',
+  'betaCTA.smallPrint': '⚡ Risposta entro 24 ore • 🔒 Nessun impegno • ✨ Cancellazione libera in qualsiasi momento',
 
   // Hero Section
-  'hero.badge': 'Rivoluziona il tuo metodo di studio',
-  'hero.title': 'Trasforma le tue interrogazioni orali con',
-  'hero.subtitle': 'Il primo AI tutor che ti prepara alle interrogazioni con feedback personalizzato',
-  'hero.description': 'Carica i tuoi materiali, esercitati con l\'AI e ricevi valutazioni dettagliate. Migliora la tua esposizione orale e supera ogni interrogazione con sicurezza.',
-  'hero.tryDemo': 'Prova la Demo',
-  'hero.watchVideo': 'Scopri il Funzionamento',
-  'hero.trustedBy': 'Scelto da oltre 10.000 studenti',
-  'hero.professorDemo': 'Spiega al Professore',
-  'hero.professorDemoDesc': '🎓 Carica un PDF e spiega i concetti al Professore Virtuale per ricevere correzioni',
-  'hero.stat1': 'Studenti Soddisfatti',
-  'hero.stat2': 'Miglioramento Orale',
-  'hero.stat3': 'Sempre Disponibile',
-  'hero.demoFileName': 'Storia_Rinascimento.pdf',
-  'hero.demoFileUploaded': 'Caricato con successo ✓',
-  'hero.demoQuestion': 'Sono pronto ad ascoltare la tua spiegazione sul Rinascimento italiano',
-  'hero.demoResponse': 'Il Rinascimento italiano si caratterizza per la rinascita delle arti, l\'umanesimo e...',
-  'hero.demoFollowUp': 'Ottima esposizione! Terminologia appropriata. Potresti approfondire il concetto di umanesimo?',
+  'hero.exclusiveBadge': 'Beta Privata - Solo 30 Posti Disponibili',
+  'hero.privateBeta': 'BETA PRIVATA',
+  'hero.title': 'L\'AI che trasforma idee in applicazioni web complete',
+  'hero.subtitle': 'Lovable è l\'unica piattaforma che ti permette di creare app web professionali parlando semplicemente con l\'AI',
+  'hero.description': 'Accesso esclusivo alla tecnologia più avanzata per sviluppatori, designer e imprenditori che vogliono essere i primi a rivoluzionare il modo di creare software.',
+  'hero.requestAccess': 'Richiedi Accesso Esclusivo',
+  'hero.watchDemo': 'Guarda la Demo',
+  'hero.spotsRemaining': 'Solo 7 posti rimasti',
+  'hero.inviteOnly': 'Solo su Invito',
+  'hero.earlyAccess': 'Accesso Anticipato',
+  'hero.firstMover': 'Vantaggio Pioniere',
+  'hero.stat1': 'Tempo di Sviluppo Ridotto',
+  'hero.stat2': 'Soddisfazione Sviluppatori',
+  'hero.stat3': 'App Completate',
 
   // Features
   'features.title': 'Funzionalità',
@@ -857,26 +891,43 @@ export const englishTranslations: TranslationKeys = {
   'nav.benefits': 'Benefits',
   'nav.testimonials': 'Testimonials',
   'header.login': 'Login',
-  'header.tryFree': 'Try Free',
+  'header.requestAccess': 'Request Access',
+
+  // Scarcity Counter
+  'scarcity.urgentNotice': 'Private Beta - Limited Spots',
+  'scarcity.spotsLeft': 'spots remaining',
+  'scarcity.reservedSpots': 'Beta spots reserved',
+  'scarcity.warningMessage': 'Spots are filling up quickly. Request access now to not miss this exclusive opportunity.',
+
+  // Beta CTA
+  'betaCTA.exclusiveBadge': 'Exclusive Access - Invite Only',
+  'betaCTA.title': 'Ready to Revolutionize Your Web Development?',
+  'betaCTA.description': 'Join the pioneers who are already transforming their ideas into complete web applications with the most advanced AI in the industry.',
+  'betaCTA.benefit1Title': 'Priority Access',
+  'betaCTA.benefit1Desc': 'Be among the first to use all advanced features',
+  'betaCTA.benefit2Title': 'Direct Support',
+  'betaCTA.benefit2Desc': 'Personal assistance from the development team',
+  'betaCTA.benefit3Title': 'No Cost',
+  'betaCTA.benefit3Desc': 'Free access for the entire beta duration',
+  'betaCTA.requestAccess': 'Request Beta Access',
+  'betaCTA.watchDemo': 'Watch Demo First',
+  'betaCTA.smallPrint': '⚡ Response within 24 hours • 🔒 No commitment • ✨ Cancel anytime',
 
   // Hero Section
-  'hero.badge': 'Revolutionize your study method',
-  'hero.title': 'Transform your oral exams with',
-  'hero.subtitle': 'The first AI tutor that prepares you for oral exams with personalized feedback',
-  'hero.description': 'Upload your materials, practice with AI and receive detailed evaluations. Improve your oral presentation and pass every exam with confidence.',
-  'hero.tryDemo': 'Try Demo',
-  'hero.watchVideo': 'Discover How It Works',
-  'hero.trustedBy': 'Trusted by over 10,000 students',
-  'hero.professorDemo': 'Explain to the Professor',
-  'hero.professorDemoDesc': '🎓 Upload a PDF and explain concepts to the Virtual Professor to receive corrections',
-  'hero.stat1': 'Satisfied Students',
-  'hero.stat2': 'Oral Improvement',
-  'hero.stat3': 'Always Available',
-  'hero.demoFileName': 'Renaissance_History.pdf',
-  'hero.demoFileUploaded': 'Successfully uploaded ✓',
-  'hero.demoQuestion': 'I\'m ready to listen to your explanation about the Italian Renaissance',
-  'hero.demoResponse': 'The Italian Renaissance is characterized by the rebirth of arts, humanism and...',
-  'hero.demoFollowUp': 'Excellent presentation! Appropriate terminology. Could you elaborate on the concept of humanism?',
+  'hero.exclusiveBadge': 'Private Beta - Only 30 Spots Available',
+  'hero.privateBeta': 'PRIVATE BETA',
+  'hero.title': 'The AI that transforms ideas into complete web applications',
+  'hero.subtitle': 'Lovable is the only platform that lets you create professional web apps by simply talking to AI',
+  'hero.description': 'Exclusive access to the most advanced technology for developers, designers and entrepreneurs who want to be the first to revolutionize how software is created.',
+  'hero.requestAccess': 'Request Exclusive Access',
+  'hero.watchDemo': 'Watch Demo',
+  'hero.spotsRemaining': 'Only 7 spots left',
+  'hero.inviteOnly': 'Invite Only',
+  'hero.earlyAccess': 'Early Access',
+  'hero.firstMover': 'Pioneer Advantage',
+  'hero.stat1': 'Development Time Reduced',
+  'hero.stat2': 'Developer Satisfaction',
+  'hero.stat3': 'Apps Completed',
 
   // Features
   'features.title': 'Features',
