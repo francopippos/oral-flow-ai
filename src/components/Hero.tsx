@@ -105,29 +105,29 @@ const Hero = () => {
                         </div>
                         <div>
                           <div className="font-semibold text-lg text-foreground">"Carica appunti di Fisica"</div>
-                          <div className="text-sm text-blue-600 font-medium">Analizzando documento...</div>
+                          <div className="text-sm text-blue-600 font-medium">PDF analizzato ✓</div>
                         </div>
                       </div>
 
                       {/* Exam Simulation */}
                       <div className="space-y-6">
-                        <div className="flex items-start space-x-4">
-                          <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-green-500 rounded-2xl flex items-center justify-center text-white font-bold text-sm">
-                            AI
-                          </div>
+                        <div className="flex justify-end">
                           <div className="bg-gradient-to-r from-blue-500/10 to-green-500/10 rounded-2xl p-4 max-w-xs border border-blue-500/20">
                             <p className="text-sm font-medium text-foreground">
-                              "Mi spieghi il principio di conservazione dell'energia?"
+                              "L'energia si conserva sempre perché... ehm... non può essere distrutta, solo trasformata"
                             </p>
+                            <div className="text-xs text-blue-600 mt-2">🎤 Studente registrando</div>
                           </div>
                         </div>
 
-                        <div className="flex justify-end">
+                        <div className="flex items-start space-x-4">
+                          <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center text-white font-bold text-sm">
+                            AI
+                          </div>
                           <div className="bg-gradient-to-r from-green-500/10 to-emerald-500/10 rounded-2xl p-4 max-w-xs border border-green-500/20">
                             <p className="text-sm font-medium text-foreground">
-                              "L'energia totale di un sistema isolato..."
+                              "Corretto! Ma manca la definizione di 'sistema isolato'. Completa con un esempio pratico per migliorare la chiarezza."
                             </p>
-                            <div className="text-xs text-green-600 mt-2">🎤 Registrando risposta</div>
                           </div>
                         </div>
 
@@ -137,7 +137,7 @@ const Hero = () => {
                           </div>
                           <div className="bg-gradient-to-r from-green-500/10 to-emerald-500/10 rounded-2xl p-4 max-w-xs border border-green-500/20">
                             <p className="text-sm font-medium text-foreground">
-                              "✨ Ottima risposta! Chiarezza: 9/10. Suggerimento: aggiungi un esempio pratico"
+                              "✨ Punteggio: 7/10. Tempo di studio ridotto del 65% con questa sessione!"
                             </p>
                           </div>
                         </div>
