@@ -5,7 +5,6 @@ import Hero from '../components/Hero';
 import Features from '../components/Features';
 import HowItWorks from '../components/HowItWorks';
 import Benefits from '../components/Benefits';
-import Testimonials from '../components/Testimonials';
 import BetaCTA from '../components/BetaCTA';
 import Footer from '../components/Footer';
 import DemoModal from '../components/DemoModal';
@@ -27,7 +26,6 @@ const Index = () => {
           <Features />
           <HowItWorks />
           <Benefits />
-          <Testimonials />
           <BetaCTA />
           
           {/* Full Demo Section - Keep the original detailed demo */}
