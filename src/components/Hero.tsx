@@ -96,28 +96,28 @@ const Hero = () => {
                 <div className="relative">
                   {/* Main demo card with glass effect */}
                   <div className="glass-card p-10 relative overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent"></div>
+                    <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-green-500/10"></div>
                     <div className="relative space-y-8">
-                      {/* AI Prompt Simulation */}
-                      <div className="flex items-center space-x-4 p-6 bg-gradient-to-r from-primary/5 to-blue-500/5 rounded-2xl border border-primary/10 glow-effect">
-                        <div className="w-12 h-12 bg-gradient-to-r from-primary to-blue-500 rounded-2xl flex items-center justify-center">
+                      {/* Student Question */}
+                      <div className="flex items-center space-x-4 p-6 bg-gradient-to-r from-blue-500/5 to-green-500/5 rounded-2xl border border-blue-500/10 glow-effect">
+                        <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-green-500 rounded-2xl flex items-center justify-center">
                           <Sparkles className="h-6 w-6 text-white" />
                         </div>
                         <div>
-                          <div className="font-semibold text-lg text-foreground">"Crea un e-commerce completo"</div>
-                          <div className="text-sm text-primary font-medium">AI sta generando l'app...</div>
+                          <div className="font-semibold text-lg text-foreground">"Carica appunti di Fisica"</div>
+                          <div className="text-sm text-blue-600 font-medium">Analizzando documento...</div>
                         </div>
                       </div>
 
-                      {/* Code Generation Simulation */}
+                      {/* Exam Simulation */}
                       <div className="space-y-6">
                         <div className="flex items-start space-x-4">
-                          <div className="w-10 h-10 bg-gradient-to-br from-primary to-blue-500 rounded-2xl flex items-center justify-center">
-                            <Code className="h-5 w-5 text-white" />
+                          <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-green-500 rounded-2xl flex items-center justify-center text-white font-bold text-sm">
+                            AI
                           </div>
-                          <div className="bg-gradient-to-r from-primary/10 to-blue-500/10 rounded-2xl p-4 max-w-xs border border-primary/20">
+                          <div className="bg-gradient-to-r from-blue-500/10 to-green-500/10 rounded-2xl p-4 max-w-xs border border-blue-500/20">
                             <p className="text-sm font-medium text-foreground">
-                              "Sto creando il frontend React, il database e l'autenticazione..."
+                              "Mi spieghi il principio di conservazione dell'energia?"
                             </p>
                           </div>
                         </div>
@@ -125,18 +125,19 @@ const Hero = () => {
                         <div className="flex justify-end">
                           <div className="bg-gradient-to-r from-green-500/10 to-emerald-500/10 rounded-2xl p-4 max-w-xs border border-green-500/20">
                             <p className="text-sm font-medium text-foreground">
-                              "✨ App completa pronta! Deploy automatico in corso..."
+                              "L'energia totale di un sistema isolato..."
                             </p>
+                            <div className="text-xs text-green-600 mt-2">🎤 Registrando risposta</div>
                           </div>
                         </div>
 
                         <div className="flex items-start space-x-4">
-                          <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-primary rounded-2xl flex items-center justify-center">
+                          <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center">
                             <Zap className="h-5 w-5 text-white" />
                           </div>
-                          <div className="bg-gradient-to-r from-blue-500/10 to-primary/10 rounded-2xl p-4 max-w-xs border border-blue-500/20">
+                          <div className="bg-gradient-to-r from-green-500/10 to-emerald-500/10 rounded-2xl p-4 max-w-xs border border-green-500/20">
                             <p className="text-sm font-medium text-foreground">
-                              "🚀 La tua app è live! Vuoi aggiungere il sistema di pagamenti?"
+                              "✨ Ottima risposta! Chiarezza: 9/10. Suggerimento: aggiungi un esempio pratico"
                             </p>
                           </div>
                         </div>
