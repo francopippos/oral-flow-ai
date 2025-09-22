@@ -1,21 +1,21 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Play, Upload, MessageCircle, TrendingUp, BookOpen } from 'lucide-react';
+import { ArrowRight, Lock, Users, Zap, Crown } from 'lucide-react';
 import DemoModal from './DemoModal';
 import VirtualProfessorDemo from './VirtualProfessorDemo';
+import ScarcityCounter from './ScarcityCounter';
 import { useTranslation } from '../hooks/useTranslation';
 const Hero = () => {
-  const {
-    t
-  } = useTranslation();
+  const { t } = useTranslation();
   const [isDemoOpen, setIsDemoOpen] = useState(false);
   const [isProfessorDemoOpen, setIsProfessorDemoOpen] = useState(false);
+  
   return <>
       <section className="relative pt-32 pb-20 overflow-hidden">
-        {/* Background with modern gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-pink-50/50 via-blue-50/30 to-violet-50/50"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,rgba(239,68,68,0.05),transparent_50%)]"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(147,51,234,0.05),transparent_50%)]"></div>
+        {/* Background with exclusive gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-destructive/5"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,rgba(14,165,233,0.08),transparent_50%)]"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(239,68,68,0.08),transparent_50%)]"></div>
         
         <div className="container relative mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
@@ -23,122 +23,115 @@ const Hero = () => {
               {/* Left Content */}
               <div className="space-y-10 animate-slide-in-left">
                 <div className="space-y-6">
-                  <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-primary/10 to-violet-500/10 border border-primary/20 rounded-full text-sm font-medium text-primary">
-                    <span className="animate-pulse mr-2">🚀</span>
+                  <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-destructive/10 to-orange-500/10 border border-destructive/20 rounded-full text-sm font-medium text-destructive">
+                    <Lock className="mr-2 h-4 w-4" />
                     {t('hero.badge')}
                   </div>
                   
-                  <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold leading-tight">
-                    {t('hero.title')}{' '}
-                    <span className="gradient-text">OralFlow</span>
-                  </h1>
+                  <div className="space-y-4">
+                    <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold leading-tight">
+                      {t('hero.title')}
+                    </h1>
+                    
+                    <div className="bg-gradient-to-r from-primary/20 to-destructive/20 border border-primary/30 rounded-2xl p-4 inline-block">
+                      <h2 className="text-2xl md:text-3xl font-bold text-foreground">
+                        {t('hero.subtitle')}
+                      </h2>
+                    </div>
+                  </div>
                   
-                  <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed font-medium">
-                    {t('hero.subtitle')}
+                  <p className="text-xl md:text-2xl text-foreground leading-relaxed font-semibold max-w-2xl">
+                    {t('hero.uvp')}
                   </p>
                   
-                  <p className="text-lg text-muted-foreground/80 leading-relaxed max-w-2xl">
+                  <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl">
                     {t('hero.description')}
                   </p>
                 </div>
 
+                {/* CTA Buttons */}
                 <div className="flex flex-col sm:flex-row gap-4 justify-start items-start">
-                  <button 
-                    className="modern-button group h-16 px-8 text-lg font-semibold flex items-center justify-center gap-3 w-full sm:w-auto" 
+                  <Button 
+                    size="lg"
+                    className="bg-gradient-to-r from-primary to-blue-600 hover:from-primary/90 hover:to-blue-700 text-white font-bold text-lg px-8 py-6 rounded-2xl shadow-lg group w-full sm:w-auto h-auto"
+                  >
+                    <Crown className="mr-3 h-6 w-6 group-hover:scale-110 transition-transform" />
+                    {t('hero.requestAccess')}
+                    <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                  
+                  <Button 
+                    variant="outline"
+                    size="lg"
+                    className="border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground font-semibold text-lg px-8 py-6 rounded-2xl w-full sm:w-auto h-auto"
                     onClick={() => setIsDemoOpen(true)}
                   >
-                    <span className="text-white">
-                      {t('hero.watchVideo')}
-                    </span>
-                    <Play className="h-6 w-6 text-white opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition-opacity duration-300" />
-                  </button>
-                </div>
-
-                {/* Professor Demo Button */}
-                <div className="pt-6 flex flex-col items-start">
-                  <Button size="lg" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold text-lg px-8 py-4 rounded-2xl shadow-lg group w-full sm:w-auto" onClick={() => setIsProfessorDemoOpen(true)}>
-                    <BookOpen className="mr-3 h-6 w-6 group-hover:scale-110 transition-transform" />
-                    {t('hero.professorDemo')}
+                    <Zap className="mr-3 h-6 w-6" />
+                    {t('hero.watchVideo')}
                   </Button>
-                  <p className="text-sm text-muted-foreground mt-3 font-medium">
-                    {t('hero.professorDemoDesc')}
-                  </p>
                 </div>
 
-                {/* Enhanced Stats */}
-                <div className="grid grid-cols-3 gap-8 pt-8">
-                  <div className="text-center group">
-                    <div className="text-3xl font-bold bg-gradient-to-r from-primary to-blue-500 bg-clip-text text-transparent mb-2">98%</div>
-                    <div className="text-sm text-muted-foreground font-medium">{t('hero.stat1')}</div>
+                {/* Exclusivity messaging */}
+                <div className="flex items-center gap-4 pt-4">
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <Users className="h-4 w-4" />
+                    {t('hero.trustedBy')}
                   </div>
-                  <div className="text-center group">
-                    <div className="text-3xl font-bold bg-gradient-to-r from-success-500 to-emerald-500 bg-clip-text text-transparent mb-2">+40%</div>
-                    <div className="text-sm text-muted-foreground font-medium">{t('hero.stat2')}</div>
-                  </div>
-                  <div className="text-center group">
-                    <div className="text-3xl font-bold bg-gradient-to-r from-blue-500 to-primary bg-clip-text text-transparent mb-2">24/7</div>
-                    <div className="text-sm text-muted-foreground font-medium">{t('hero.stat3')}</div>
+                  <div className="text-xs bg-primary/10 text-primary px-3 py-1 rounded-full font-semibold">
+                    {t('hero.firstMover')}
                   </div>
                 </div>
               </div>
 
-              {/* Right Content - Enhanced Visual Demo */}
+              {/* Right Content - Scarcity & Exclusivity */}
               <div className="relative animate-slide-in-right">
-                <div className="relative">
-                  {/* Main demo card with glass effect */}
-                  <div className="glass-card p-10 relative overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent"></div>
-                    <div className="relative space-y-8">
-                      {/* Upload simulation with glow */}
-                      <div className="flex items-center space-x-4 p-6 bg-gradient-to-r from-primary/5 to-blue-500/5 rounded-2xl border border-primary/10 glow-effect">
-                        <div className="w-12 h-12 bg-gradient-to-r from-primary to-blue-500 rounded-2xl flex items-center justify-center">
-                          <Upload className="h-6 w-6 text-white" />
-                        </div>
-                        <div>
-                          <div className="font-semibold text-lg text-foreground">{t('hero.demoFileName')}</div>
-                          <div className="text-sm text-primary font-medium">{t('hero.demoFileUploaded')}</div>
-                        </div>
-                      </div>
-
-                      {/* Enhanced conversation simulation */}
-                      <div className="space-y-6">
-                        <div className="flex items-start space-x-4">
-                          <div className="w-10 h-10 bg-gradient-to-br from-primary to-blue-500 rounded-2xl flex items-center justify-center">
-                            <MessageCircle className="h-5 w-5 text-white" />
+                <div className="relative space-y-8">
+                  {/* Scarcity Counter */}
+                  <ScarcityCounter />
+                  
+                  {/* Exclusivity features */}
+                  <div className="glass-card p-8 relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-destructive/5"></div>
+                    <div className="relative space-y-6">
+                      <h3 className="text-2xl font-bold text-foreground mb-6">{t('hero.earlyAccess')}</h3>
+                      
+                      <div className="space-y-4">
+                        <div className="flex items-center gap-4 p-4 bg-primary/5 rounded-xl border border-primary/10">
+                          <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
+                            <Crown className="h-5 w-5 text-primary-foreground" />
                           </div>
-                          <div className="bg-gradient-to-r from-primary/10 to-blue-500/10 rounded-2xl p-4 max-w-xs border border-primary/20">
-                            <p className="text-sm font-medium text-foreground">
-                              "{t('hero.demoQuestion')}"
-                            </p>
+                          <div>
+                            <div className="font-semibold text-foreground">First-Mover Benefits</div>
+                            <div className="text-sm text-muted-foreground">Shape the future of AI education</div>
                           </div>
                         </div>
-
-                        <div className="flex justify-end">
-                          <div className="bg-gradient-to-r from-success-500/10 to-emerald-500/10 rounded-2xl p-4 max-w-xs border border-success-500/20">
-                            <p className="text-sm font-medium text-foreground">
-                              "{t('hero.demoResponse')}"
-                            </p>
+                        
+                        <div className="flex items-center gap-4 p-4 bg-success-500/5 rounded-xl border border-success-500/10">
+                          <div className="w-10 h-10 bg-success-500 rounded-xl flex items-center justify-center">
+                            <Zap className="h-5 w-5 text-white" />
+                          </div>
+                          <div>
+                            <div className="font-semibold text-foreground">Direct Feedback Channel</div>
+                            <div className="text-sm text-muted-foreground">Influence development priorities</div>
                           </div>
                         </div>
-
-                        <div className="flex items-start space-x-4">
-                          <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-primary rounded-2xl flex items-center justify-center">
-                            <TrendingUp className="h-5 w-5 text-white" />
+                        
+                        <div className="flex items-center gap-4 p-4 bg-destructive/5 rounded-xl border border-destructive/10">
+                          <div className="w-10 h-10 bg-destructive rounded-xl flex items-center justify-center">
+                            <Lock className="h-5 w-5 text-destructive-foreground" />
                           </div>
-                          <div className="bg-gradient-to-r from-blue-500/10 to-primary/10 rounded-2xl p-4 max-w-xs border border-blue-500/20">
-                            <p className="text-sm font-medium text-foreground">
-                              "{t('hero.demoFollowUp')}"
-                            </p>
+                          <div>
+                            <div className="font-semibold text-foreground">Lifetime Premium Access</div>
+                            <div className="text-sm text-muted-foreground">No subscription fees, ever</div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  {/* Decorative elements semplificati */}
-                  <div className="absolute -top-6 -right-6 w-16 h-16 bg-gradient-to-br from-primary to-blue-500 rounded-full opacity-10"></div>
-                  <div className="absolute -bottom-6 -left-6 w-12 h-12 bg-gradient-to-br from-success-500 to-emerald-500 rounded-full opacity-10"></div>
-                  <div className="absolute top-1/2 -right-4 w-8 h-8 bg-gradient-to-br from-blue-500 to-primary rounded-full opacity-15"></div>
+                  {/* Decorative elements */}
+                  <div className="absolute -top-6 -right-6 w-16 h-16 bg-gradient-to-br from-primary to-destructive rounded-full opacity-10"></div>
+                  <div className="absolute -bottom-6 -left-6 w-12 h-12 bg-gradient-to-br from-success-500 to-primary rounded-full opacity-10"></div>
                 </div>
               </div>
             </div>

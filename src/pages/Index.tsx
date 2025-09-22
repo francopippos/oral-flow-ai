@@ -6,6 +6,7 @@ import Features from '../components/Features';
 import HowItWorks from '../components/HowItWorks';
 import Benefits from '../components/Benefits';
 import Testimonials from '../components/Testimonials';
+import FAQ from '../components/FAQ';
 import Footer from '../components/Footer';
 import DemoModal from '../components/DemoModal';
 import LoginModal from '../components/LoginModal';
@@ -25,6 +26,7 @@ const Index = () => {
           <HowItWorks />
           <Benefits />
           <Testimonials />
+          <FAQ />
         </main>
         <Footer />
         
