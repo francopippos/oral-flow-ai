@@ -23,14 +23,6 @@ export interface TranslationKeys {
   'hero.stat1': string;
   'hero.stat2': string;
   'hero.stat3': string;
-  'hero.exclusiveBeta': string;
-  'hero.spotsRemaining': string;
-  'hero.requestAccess': string;
-  'hero.joinWaitlist': string;
-  'hero.earlyAccess': string;
-  'hero.firstMover': string;
-  'hero.inviteOnly': string;
-  'hero.uvp': string;
   'hero.demoFileName': string;
   'hero.demoFileUploaded': string;
   'hero.demoQuestion': string;
@@ -443,26 +435,18 @@ export const italianTranslations: TranslationKeys = {
   'header.tryFree': 'Prova Gratis',
 
   // Hero Section
-  'hero.badge': 'Accesso Anticipato Esclusivo',
-  'hero.title': 'Benvenuto in Lovable',
-  'hero.subtitle': 'Private Beta',
-  'hero.uvp': 'L\'unica piattaforma AI che trasforma le tue idee in bellissime applicazioni web in pochi minuti',
-  'hero.description': 'Unisciti a una cerchia esclusiva di early adopters. Solo 30 posti disponibili per testare il futuro dello sviluppo web.',
-  'hero.tryDemo': 'Guarda la Demo',
-  'hero.watchVideo': 'Scopri Come Funziona',
-  'hero.trustedBy': 'Riservato agli early adopters',
-  'hero.professorDemo': 'Prova Lovable',
-  'hero.professorDemoDesc': '🚀 Trasforma le tue idee in codice con la potenza dell\'AI',
-  'hero.stat1': 'Sviluppatori Soddisfatti',
-  'hero.stat2': 'Tempo di Sviluppo Ridotto',
+  'hero.badge': 'Rivoluziona il tuo metodo di studio',
+  'hero.title': 'Trasforma le tue interrogazioni orali con',
+  'hero.subtitle': 'Il primo AI tutor che ti prepara alle interrogazioni con feedback personalizzato',
+  'hero.description': 'Carica i tuoi materiali, esercitati con l\'AI e ricevi valutazioni dettagliate. Migliora la tua esposizione orale e supera ogni interrogazione con sicurezza.',
+  'hero.tryDemo': 'Prova la Demo',
+  'hero.watchVideo': 'Scopri il Funzionamento',
+  'hero.trustedBy': 'Scelto da oltre 10.000 studenti',
+  'hero.professorDemo': 'Spiega al Professore',
+  'hero.professorDemoDesc': '🎓 Carica un PDF e spiega i concetti al Professore Virtuale per ricevere correzioni',
+  'hero.stat1': 'Studenti Soddisfatti',
+  'hero.stat2': 'Miglioramento Orale',
   'hero.stat3': 'Sempre Disponibile',
-  'hero.exclusiveBeta': 'Private Beta - Solo 30 Posti',
-  'hero.spotsRemaining': 'posti rimanenti',
-  'hero.requestAccess': 'Richiedi Accesso',
-  'hero.joinWaitlist': 'Unisciti alla Lista d\'Attesa',
-  'hero.earlyAccess': 'Accesso Anticipato',
-  'hero.firstMover': 'Vantaggio First-Mover',
-  'hero.inviteOnly': 'Solo su Invito',
   'hero.demoFileName': 'Storia_Rinascimento.pdf',
   'hero.demoFileUploaded': 'Caricato con successo ✓',
   'hero.demoQuestion': 'Sono pronto ad ascoltare la tua spiegazione sul Rinascimento italiano',
@@ -876,26 +860,18 @@ export const englishTranslations: TranslationKeys = {
   'header.tryFree': 'Try Free',
 
   // Hero Section
-  'hero.badge': 'Exclusive Early Access',
-  'hero.title': 'Welcome to Lovable',
-  'hero.subtitle': 'Private Beta',
-  'hero.uvp': 'The only AI platform that transforms your ideas into beautiful web applications in minutes',
-  'hero.description': 'Join an exclusive circle of early adopters. Only 30 spots available to test the future of web development.',
-  'hero.tryDemo': 'Watch Demo',
-  'hero.watchVideo': 'See How It Works',
-  'hero.trustedBy': 'Reserved for early adopters',
-  'hero.professorDemo': 'Try Lovable',
-  'hero.professorDemoDesc': '🚀 Transform your ideas into code with the power of AI',
-  'hero.stat1': 'Satisfied Developers',
-  'hero.stat2': 'Development Time Reduced',
+  'hero.badge': 'Revolutionize your study method',
+  'hero.title': 'Transform your oral exams with',
+  'hero.subtitle': 'The first AI tutor that prepares you for oral exams with personalized feedback',
+  'hero.description': 'Upload your materials, practice with AI and receive detailed evaluations. Improve your oral presentation and pass every exam with confidence.',
+  'hero.tryDemo': 'Try Demo',
+  'hero.watchVideo': 'Discover How It Works',
+  'hero.trustedBy': 'Trusted by over 10,000 students',
+  'hero.professorDemo': 'Explain to the Professor',
+  'hero.professorDemoDesc': '🎓 Upload a PDF and explain concepts to the Virtual Professor to receive corrections',
+  'hero.stat1': 'Satisfied Students',
+  'hero.stat2': 'Oral Improvement',
   'hero.stat3': 'Always Available',
-  'hero.exclusiveBeta': 'Private Beta - Only 30 Spots',
-  'hero.spotsRemaining': 'spots remaining',
-  'hero.requestAccess': 'Request Access',
-  'hero.joinWaitlist': 'Join Waitlist',
-  'hero.earlyAccess': 'Early Access',
-  'hero.firstMover': 'First-Mover Advantage',
-  'hero.inviteOnly': 'Invite Only',
   'hero.demoFileName': 'Renaissance_History.pdf',
   'hero.demoFileUploaded': 'Successfully uploaded ✓',
   'hero.demoQuestion': 'I\'m ready to listen to your explanation about the Italian Renaissance',
