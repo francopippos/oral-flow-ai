@@ -116,7 +116,7 @@ const Hero = () => {
                             <p className="text-sm font-medium text-foreground">
                               "L'energia si conserva sempre perché... ehm... non può essere distrutta, solo trasformata"
                             </p>
-                            <div className="text-xs text-blue-600 mt-2">🎤 Studente registrando</div>
+                            <div className="text-xs text-blue-600 mt-2">🎤 {t('common.studentRecording')}</div>
                           </div>
                         </div>
 

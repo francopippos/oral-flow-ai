@@ -11,67 +11,71 @@ import DemoModal from '../components/DemoModal';
 import LoginModal from '../components/LoginModal';
 import VirtualProfessorDemo from '../components/VirtualProfessorDemo';
 import { TranslationProvider } from '../components/TranslationProvider';
+import { useTranslation } from '../hooks/useTranslation';
 
-const Index = () => {
+const IndexContent = () => {
+  const { t } = useTranslation();
   const [isDemoOpen, setIsDemoOpen] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isProfessorDemoOpen, setIsProfessorDemoOpen] = useState(false);
 
   return (
-    <TranslationProvider>
-      <div className="min-h-screen bg-background">
-        <Header />
-        <main>
-          <Hero />
-          <HowItWorks />
-          <WhyUnique />
-          <WhoIsItFor />
-          <BetaCTA />
-          
-          {/* Full Demo Section - Keep the original detailed demo */}
-          <section id="full-demo" className="py-20 bg-muted/30">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">
-                  Demo Completa della Piattaforma
-                </h2>
-                <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                  Vuoi scoprire come funziona il tuo professore virtuale?<br />
-                  Abbiamo preparato una demo interattiva che ti permette di testare l'esperienza:<br /><br />
-                  📁 Carica un PDF di esempio<br />
-                  🎤 Spiega un concetto come se fossi all'orale<br />
-                  🧑‍🏫 Ricevi un feedback immediato su chiarezza e correttezza
-                </p>
-              </div>
-              
-              <div className="flex justify-center">
-                <button
-                  onClick={() => setIsProfessorDemoOpen(true)}
-                  className="bg-gradient-to-r from-primary to-blue-600 hover:from-primary/90 hover:to-blue-600/90 text-white font-semibold text-lg px-12 py-6 rounded-2xl shadow-xl transition-all duration-300 hover:scale-105"
-                >
-                  🚀 Avvia Demo Completa
-                </button>
-              </div>
+    <div className="min-h-screen bg-background">
+      <Header />
+      <main>
+        <Hero />
+        <HowItWorks />
+        <WhyUnique />
+        <WhoIsItFor />
+        <BetaCTA />
+        
+        {/* Full Demo Section - Keep the original detailed demo */}
+        <section id="full-demo" className="py-20 bg-muted/30">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">
+                {t('demo.fullTitle')}
+              </h2>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto whitespace-pre-line">
+                {t('demo.fullDescription')}
+              </p>
             </div>
-          </section>
-        </main>
-        <Footer />
-        
-        <DemoModal 
-          isOpen={isDemoOpen} 
-          onClose={() => setIsDemoOpen(false)} 
-        />
-        
-        <LoginModal 
-          isOpen={isLoginOpen} 
-          onClose={() => setIsLoginOpen(false)} 
-        />
-        
-        <VirtualProfessorDemo 
-          isOpen={isProfessorDemoOpen} 
-          onClose={() => setIsProfessorDemoOpen(false)} 
-        />
-      </div>
+            
+            <div className="flex justify-center">
+              <button
+                onClick={() => setIsProfessorDemoOpen(true)}
+                className="bg-gradient-to-r from-primary to-blue-600 hover:from-primary/90 hover:to-blue-600/90 text-white font-semibold text-lg px-12 py-6 rounded-2xl shadow-xl transition-all duration-300 hover:scale-105"
+              >
+                {t('demo.startDemo')}
+              </button>
+            </div>
+          </div>
+        </section>
+      </main>
+      <Footer />
+      
+      <DemoModal 
+        isOpen={isDemoOpen} 
+        onClose={() => setIsDemoOpen(false)} 
+      />
+      
+      <LoginModal 
+        isOpen={isLoginOpen} 
+        onClose={() => setIsLoginOpen(false)} 
+      />
+      
+      <VirtualProfessorDemo 
+        isOpen={isProfessorDemoOpen} 
+        onClose={() => setIsProfessorDemoOpen(false)} 
+      />
+    </div>
+  );
+};
+
+const Index = () => {
+  return (
+    <TranslationProvider>
+      <IndexContent />
     </TranslationProvider>
   );
 };

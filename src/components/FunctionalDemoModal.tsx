@@ -121,9 +121,9 @@ const FunctionalDemoModal = ({ isOpen, onClose }: FunctionalDemoModalProps) => {
     
      console.log(`📊 ${t('demo.generating')}`);
      
-     const conversationSummary = conversation
-       .map(msg => `${msg.role === 'user' ? 'Studente' : 'Professor OralFlow'}: ${msg.message}`)
-       .join('\n\n');
+      const conversationSummary = conversation
+        .map(msg => `${msg.role === 'user' ? t('common.student') : t('common.professor')}: ${msg.message}`)
+        .join('\n\n');
      
      const reportPrompt = `Genera un report di valutazione dettagliato basato su questa interrogazione orale condotta dal Professor OralFlow.
 

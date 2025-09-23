@@ -434,7 +434,7 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
       <DialogContent className="max-w-4xl max-h-[85vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold gradient-text">
-            Demo Completa - Esperienza AI Avanzata
+            {t('demoModal.modalTitle')}
           </DialogTitle>
         </DialogHeader>
         

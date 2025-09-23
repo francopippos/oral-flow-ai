@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label';
 import { User, GraduationCap, BookOpen, Users, BarChart3, Settings } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { toast } from '@/hooks/use-toast';
+import { useTranslation } from '@/hooks/useTranslation';
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -50,30 +51,30 @@ const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
           });
         } else if (error.message.includes('Invalid login credentials')) {
           toast({
-            title: "Credenziali non valide",
-            description: "Email o password incorrette. Verifica i tuoi dati.",
+            title: t('auth.invalidCredentials'),
+            description: t('auth.invalidCredentialsDesc'),
             variant: "destructive"
           });
         } else {
           toast({
-            title: "Errore di autenticazione",
+            title: t('auth.authError'),
             description: error.message,
             variant: "destructive"
           });
         }
       } else {
         toast({
-          title: isSignUp ? "Registrazione completata" : "Accesso effettuato",
+          title: isSignUp ? t('auth.registrationComplete') : t('auth.loginComplete'),
           description: isSignUp 
-            ? "Controlla la tua email per confermare l'account."
-            : "Benvenuto su OralMind!",
+            ? t('auth.checkEmail')
+            : t('auth.welcomeMessage'),
         });
         onClose();
       }
     } catch (error) {
       toast({
-        title: "Errore",
-        description: "Si è verificato un errore imprevisto. Riprova.",
+        title: t('auth.unexpectedError'),
+        description: t('auth.unexpectedErrorDesc'),
         variant: "destructive"
       });
     } finally {
@@ -176,7 +177,7 @@ const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
                 <span className={`font-medium ${
                   userType === 'student' ? 'text-oralmind-800' : 'text-success-800'
                 }`}>
-                  {isSignUp ? 'Registrazione' : 'Accesso'} {userType === 'student' ? 'Studente' : 'Professore'}
+                  {isSignUp ? t('auth.registration') : t('auth.login')} {userType === 'student' ? t('auth.student') : t('auth.professor')}
                 </span>
               </div>
             </div>

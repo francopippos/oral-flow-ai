@@ -103,6 +103,11 @@ export interface TranslationKeys {
   'whyUnique.exclusiveTitle': string;
   'whyUnique.exclusiveDesc': string;
 
+  // Demo Section
+  'demo.fullTitle': string;
+  'demo.fullDescription': string;
+  'demo.startDemo': string;
+
   // Benefits
   'benefits.title': string;
   'benefits.subtitle': string;
@@ -189,6 +194,24 @@ export interface TranslationKeys {
   'common.previous': string;
   'common.continue': string;
   'common.finish': string;
+  'common.student': string;
+  'common.professor': string;
+  'common.studentRecording': string;
+
+  // Auth Messages
+  'auth.invalidCredentials': string;
+  'auth.invalidCredentialsDesc': string;
+  'auth.authError': string;
+  'auth.registrationComplete': string;
+  'auth.loginComplete': string;
+  'auth.checkEmail': string;
+  'auth.welcomeMessage': string;
+  'auth.unexpectedError': string;
+  'auth.unexpectedErrorDesc': string;
+  'auth.registration': string;
+  'auth.login': string;
+  'auth.student': string;
+  'auth.professor': string;
 
   // Demo Modal
   'demo.title': string;
@@ -236,6 +259,7 @@ export interface TranslationKeys {
   'report.completeDemo': string;
 
   // Demo Modal Full
+  'demoModal.modalTitle': string;
   'demoModal.step1Title': string;
   'demoModal.step1Subtitle': string;
   'demoModal.step2Title': string;
@@ -565,6 +589,11 @@ export const italianTranslations: TranslationKeys = {
   'whyUnique.exclusiveTitle': '🔒 Esclusività',
   'whyUnique.exclusiveDesc': 'Accesso limitato alla beta privata - solo 30 posti disponibili.',
 
+  // Demo Section
+  'demo.fullTitle': 'Demo Completa della Piattaforma',
+  'demo.fullDescription': 'Vuoi scoprire come funziona il tuo professore virtuale?\nAbbiamo preparato una demo interattiva che ti permette di testare l\'esperienza:\n\n📁 Carica un PDF di esempio\n🎤 Spiega un concetto come se fossi all\'orale\n🧑‍🏫 Ricevi un feedback immediato su chiarezza e correttezza',
+  'demo.startDemo': '🚀 Avvia Demo Completa',
+
   // Benefits
    'benefits.title': 'I Benefici di OralFlow',
    'benefits.subtitle': 'Scopri come OralFlow può trasformare l\'esperienza di apprendimento per studenti e insegnanti, creando un ambiente educativo più efficace e coinvolgente.',
@@ -651,6 +680,24 @@ export const italianTranslations: TranslationKeys = {
   'common.previous': 'Precedente',
   'common.continue': 'Continua',
   'common.finish': 'Termina',
+  'common.student': 'Studente',
+  'common.professor': 'Professor OralFlow',
+  'common.studentRecording': 'Studente registrando',
+
+  // Auth Messages
+  'auth.invalidCredentials': 'Credenziali non valide',
+  'auth.invalidCredentialsDesc': 'Email o password incorrette. Verifica i tuoi dati.',
+  'auth.authError': 'Errore di autenticazione',
+  'auth.registrationComplete': 'Registrazione completata',
+  'auth.loginComplete': 'Accesso effettuato',
+  'auth.checkEmail': 'Controlla la tua email per confermare l\'account.',
+  'auth.welcomeMessage': 'Benvenuto su OralMind!',
+  'auth.unexpectedError': 'Errore',
+  'auth.unexpectedErrorDesc': 'Si è verificato un errore imprevisto. Riprova.',
+  'auth.registration': 'Registrazione',
+  'auth.login': 'Accesso',
+  'auth.student': 'Studente',
+  'auth.professor': 'Professore',
 
   // Demo Modal
   'demo.title': '🧠 OralFlow - Demo Funzionale',
@@ -698,6 +745,7 @@ export const italianTranslations: TranslationKeys = {
   'report.completeDemo': 'Completa Demo',
 
   // Demo Modal Full
+  'demoModal.modalTitle': 'Demo Completa - Esperienza AI Avanzata',
   'demoModal.step1Title': 'Carica i tuoi materiali',
   'demoModal.step1Subtitle': 'L\'AI analizzerà automaticamente i contenuti per personalizzare l\'esperienza',
   'demoModal.step2Title': 'Configurazione AI Personalizzata',
@@ -1008,6 +1056,11 @@ export const englishTranslations: TranslationKeys = {
   'howItWorks.clarity': 'Clarity: 9/10 • Completeness: 8/10',
   'howItWorks.suggestion': 'Suggestion: Deepen the role of Austria-Hungary',
 
+  // Demo Section
+  'demo.fullTitle': 'Complete Platform Demo',
+  'demo.fullDescription': 'Want to discover how your virtual professor works?\nWe\'ve prepared an interactive demo that lets you test the experience:\n\n📁 Upload a sample PDF\n🎤 Explain a concept as if you were in an oral exam\n🧑‍🏫 Receive immediate feedback on clarity and correctness',
+  'demo.startDemo': '🚀 Start Complete Demo',
+
   // Benefits
    'benefits.title': 'Benefits of OralFlow',
    'benefits.subtitle': 'Discover how OralFlow can transform the learning experience for students and teachers, creating a more effective and engaging educational environment.',
@@ -1094,6 +1147,24 @@ export const englishTranslations: TranslationKeys = {
   'common.previous': 'Previous',
   'common.continue': 'Continue',
   'common.finish': 'Finish',
+  'common.student': 'Student',
+  'common.professor': 'Professor OralFlow',
+  'common.studentRecording': 'Student recording',
+
+  // Auth Messages
+  'auth.invalidCredentials': 'Invalid credentials',
+  'auth.invalidCredentialsDesc': 'Incorrect email or password. Please verify your information.',
+  'auth.authError': 'Authentication error',
+  'auth.registrationComplete': 'Registration completed',
+  'auth.loginComplete': 'Login successful',
+  'auth.checkEmail': 'Check your email to confirm your account.',
+  'auth.welcomeMessage': 'Welcome to OralMind!',
+  'auth.unexpectedError': 'Error',
+  'auth.unexpectedErrorDesc': 'An unexpected error occurred. Please try again.',
+  'auth.registration': 'Registration',
+  'auth.login': 'Login',
+  'auth.student': 'Student',
+  'auth.professor': 'Professor',
 
   // Demo Modal
   'demo.title': '🧠 OralFlow - Functional Demo',
@@ -1141,6 +1212,7 @@ export const englishTranslations: TranslationKeys = {
   'report.completeDemo': 'Complete Demo',
 
   // Demo Modal Full
+  'demoModal.modalTitle': 'Complete Demo - Advanced AI Experience',
   'demoModal.step1Title': 'Upload your materials',
   'demoModal.step1Subtitle': 'AI will automatically analyze the content to personalize the experience',
   'demoModal.step2Title': 'Personalized AI Configuration',
