@@ -475,7 +475,7 @@ export const italianTranslations: TranslationKeys = {
   'hero.exclusiveBadge': 'Beta Privata - Solo 30 Posti Disponibili',
   'hero.privateBeta': 'BETA PRIVATA',
   'hero.title': 'Trasforma ogni spiegazione in una performance da 30 e lode',
-  'hero.subtitle': 'Con il primo AI Professor al mondo che perfeziona le tue presentazioni per raggiungere l\'eccellenza accademica.',
+  'hero.subtitle': 'Carica i tuoi appunti o dispense in PDF, spiega a voce come se fossi all\'esame e ricevi un feedback mirato per migliorare chiarezza, linguaggio e contenuti.',
   'hero.description': 'Accesso esclusivo alla tecnologia più avanzata per studenti universitari che vogliono essere i primi a rivoluzionare il loro metodo di studio e preparazione esami.',
   'hero.requestAccess': 'Richiedi Accesso Esclusivo',
   'hero.watchDemo': 'Guarda la Demo',
