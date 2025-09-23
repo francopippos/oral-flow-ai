@@ -25,7 +25,6 @@ const IndexContent = () => {
       <main>
         <Hero />
         <HowItWorks />
-        <WhyUnique />
         <WhoIsItFor />
         <BetaCTA />
         
@@ -51,6 +50,8 @@ const IndexContent = () => {
             </div>
           </div>
         </section>
+        
+        <WhyUnique />
       </main>
       <Footer />
       
