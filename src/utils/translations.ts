@@ -474,8 +474,8 @@ export const italianTranslations: TranslationKeys = {
   // Hero Section
   'hero.exclusiveBadge': 'Beta Privata - Solo 30 Posti Disponibili',
   'hero.privateBeta': 'BETA PRIVATA',
-  'hero.title': 'L\'AI che riduce il tempo di studio del 70%',
-  'hero.subtitle': 'StudyAI è l\'unica piattaforma che aumenta la velocità di apprendimento e ottimizza il tempo di preparazione esami usando l\'intelligenza artificiale più avanzata.',
+  'hero.title': 'Trasforma ogni spiegazione in una performance da 30 e lode',
+  'hero.subtitle': 'Con il primo AI Professor al mondo che perfeziona le tue presentazioni per raggiungere l\'eccellenza accademica.',
   'hero.description': 'Accesso esclusivo alla tecnologia più avanzata per studenti universitari che vogliono essere i primi a rivoluzionare il loro metodo di studio e preparazione esami.',
   'hero.requestAccess': 'Richiedi Accesso Esclusivo',
   'hero.watchDemo': 'Guarda la Demo',
