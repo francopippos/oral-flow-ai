@@ -597,8 +597,8 @@ export const italianTranslations: TranslationKeys = {
   'whyUnique.realisticDesc': 'Simula davvero un\'esposizione orale come se fossi davanti al professore.',
   'whyUnique.intelligentTitle': '📚 Feedback Intelligente',
   'whyUnique.intelligentDesc': 'Basato sui tuoi materiali di studio dei corsi universitari, non su informazioni generiche da internet.',
-  'whyUnique.exclusiveTitle': '🔗 Unificazione Intelligente',
-  'whyUnique.exclusiveDesc': 'La nostra AI studia ed unisce appunti del professore e libri in una unica soluzione personalizzata per il tuo corso.',
+  'whyUnique.exclusiveTitle': '📋 Riorganizzazione Intelligente',
+  'whyUnique.exclusiveDesc': 'L\'AI digitalizza e riorganizza i tuoi appunti per renderli più chiari e facili da seguire, dandogli un flusso strutturato per lo studio.',
 
   // Demo Section
   'demo.fullTitle': 'Demo Completa della Piattaforma',
@@ -1483,8 +1483,8 @@ export const englishTranslations: TranslationKeys = {
   'whyUnique.realisticDesc': 'Really simulates an oral presentation as if you were in front of the professor.',
   'whyUnique.intelligentTitle': '📚 Intelligent Feedback',
   'whyUnique.intelligentDesc': 'Based on your study materials, not on generic information from the internet.',
-  'whyUnique.exclusiveTitle': '🔗 Intelligent Integration',
-  'whyUnique.exclusiveDesc': 'Our AI studies and combines professor\'s notes and books into a single personalized solution for your course.'
+  'whyUnique.exclusiveTitle': '📋 Intelligent Reorganization',
+  'whyUnique.exclusiveDesc': 'The AI digitizes and reorganizes your notes to make them clearer and easier to follow, giving them a structured flow for studying.'
 };
 
 export const translations: Record<Language, TranslationKeys> = {
