@@ -74,7 +74,7 @@ const HowItWorks = () => {
                                 📄
                               </div>
                               <div>
-                                <div className="font-medium">Storia_Medioevo.pdf</div>
+                                <div className="font-medium">Diritto_Privato.pdf</div>
                                 <div className="text-sm text-muted-foreground">2.3 MB</div>
                               </div>
                             </div>
