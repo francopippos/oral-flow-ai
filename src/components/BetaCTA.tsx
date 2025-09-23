@@ -67,11 +67,6 @@ const BetaCTA = () => {
                 {t('betaCTA.watchDemo')}
               </Button>
             </div>
-
-            {/* Small print */}
-            <p className="text-sm text-muted-foreground/80">
-              {t('betaCTA.smallPrint')}
-            </p>
           </div>
         </div>
       </div>
