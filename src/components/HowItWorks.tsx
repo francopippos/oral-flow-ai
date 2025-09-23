@@ -1,5 +1,5 @@
 
-import { Upload, Brain, MessageCircle, TrendingUp } from 'lucide-react';
+import { Upload, Mic, MessageCircle } from 'lucide-react';
 import { useTranslation } from '../hooks/useTranslation';
 
 const HowItWorks = () => {
@@ -9,25 +9,19 @@ const HowItWorks = () => {
       icon: Upload,
       title: t('howItWorks.step1Title'),
       description: t('howItWorks.step1Desc'),
-      color: "from-oralflow-500 to-oralflow-600"
+      color: "from-blue-500 to-blue-600"
     },
     {
-      icon: Brain,
+      icon: Mic,
       title: t('howItWorks.step2Title'),
       description: t('howItWorks.step2Desc'),
-      color: "from-purple-500 to-purple-600"
+      color: "from-green-500 to-green-600"
     },
     {
       icon: MessageCircle,
       title: t('howItWorks.step3Title'),
       description: t('howItWorks.step3Desc'),
-      color: "from-success-500 to-success-600"
-    },
-    {
-      icon: TrendingUp,
-      title: t('howItWorks.step4Title'),
-      description: t('howItWorks.step4Desc'),
-      color: "from-orange-500 to-orange-600"
+      color: "from-purple-500 to-purple-600"
     }
   ];
 
@@ -98,12 +92,12 @@ const HowItWorks = () => {
 
                         {index === 1 && (
                           <div className="space-y-4">
-                            <div className="flex items-center space-x-3">
-                              <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full animate-spin">
-                                <Brain className="h-4 w-4 text-white m-2" />
-                              </div>
-                              <div className="text-sm">{t('howItWorks.analyzing')}</div>
-                            </div>
+                             <div className="flex items-center space-x-3">
+                               <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full animate-spin">
+                                 <Mic className="h-4 w-4 text-white m-2" />
+                               </div>
+                               <div className="text-sm">{t('howItWorks.analyzing')}</div>
+                             </div>
                             <div className="w-full bg-gray-200 rounded-full h-2">
                               <div className="bg-gradient-to-r from-purple-500 to-purple-600 h-2 rounded-full w-3/4 animate-pulse"></div>
                             </div>

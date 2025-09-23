@@ -74,14 +74,31 @@ export interface TranslationKeys {
   'howItWorks.step2Desc': string;
   'howItWorks.step3Title': string;
   'howItWorks.step3Desc': string;
-  'howItWorks.step4Title': string;
-  'howItWorks.step4Desc': string;
   'howItWorks.analyzing': string;
   'howItWorks.question': string;
   'howItWorks.responding': string;
   'howItWorks.excellent': string;
   'howItWorks.clarity': string;
   'howItWorks.suggestion': string;
+
+  'whoIsItFor.title': string;
+  'whoIsItFor.subtitle': string;
+  'whoIsItFor.studentsTitle': string;
+  'whoIsItFor.studentsDesc': string;
+  'whoIsItFor.improvementTitle': string;
+  'whoIsItFor.improvementDesc': string;
+  'whoIsItFor.innovativeTitle': string;
+  'whoIsItFor.innovativeDesc': string;
+
+  // Why Unique
+  'whyUnique.title': string;
+  'whyUnique.subtitle': string;
+  'whyUnique.realisticTitle': string;
+  'whyUnique.realisticDesc': string;
+  'whyUnique.intelligentTitle': string;
+  'whyUnique.intelligentDesc': string;
+  'whyUnique.exclusiveTitle': string;
+  'whyUnique.exclusiveDesc': string;
 
   // Benefits
   'benefits.title': string;
@@ -458,9 +475,9 @@ export const italianTranslations: TranslationKeys = {
   'scarcity.warningMessage': 'I posti si stanno esaurendo rapidamente. Richiedi l\'accesso ora per non perdere questa opportunità esclusiva.',
 
   // Beta CTA
-  'betaCTA.exclusiveBadge': 'Accesso Esclusivo - Solo Su Invito',
-  'betaCTA.title': 'Pronto a Rivoluzionare il Tuo Metodo di Studio?',
-  'betaCTA.description': 'Unisciti agli studenti pionieri che stanno già riducendo il tempo di studio del 70% e aumentando la velocità di apprendimento con l\'AI più avanzata del settore educativo.',
+  'betaCTA.exclusiveBadge': 'Beta Privata - Posti Limitati',
+  'betaCTA.title': 'Prenota subito il tuo posto nella Beta Privata',
+  'betaCTA.description': 'Rimangono meno di 30 accessi disponibili. Non perdere l\'opportunità di essere tra i primi a trasformare le tue spiegazioni in performance da 30 e lode.',
   'betaCTA.benefit1Title': 'Studio Più Efficiente',
   'betaCTA.benefit1Desc': 'Riduci il tempo di preparazione esami e aumenta la comprensione',
   'betaCTA.benefit2Title': 'Feedback Personalizzato',
@@ -508,21 +525,39 @@ export const italianTranslations: TranslationKeys = {
 
   // How It Works
   'howItWorks.title': 'Come Funziona',
-  'howItWorks.subtitle': 'Quattro semplici passaggi per trasformare il tuo metodo di studio e migliorare notevolmente le tue performance nelle interrogazioni orali.',
-  'howItWorks.step1Title': '1. Carica i Materiali',
-  'howItWorks.step1Desc': 'Carica i tuoi PDF, slide o appunti. OralFlow analizza i contenuti per prepararsi a valutare le tue spiegazioni.',
-  'howItWorks.step2Title': '2. L\'AI Studia il Documento',
-  'howItWorks.step2Desc': 'Il professore virtuale memorizza tutti i concetti e le informazioni per valutare accuratamente le tue spiegazioni.',
-  'howItWorks.step3Title': '3. Tu Spieghi, l\'AI Ascolta',
-  'howItWorks.step3Desc': 'Spiega un argomento presente nel documento. Il professore AI ti ascolta e valuta la tua comprensione e esposizione.',
-  'howItWorks.step4Title': '4. Ricevi Correzioni',
-  'howItWorks.step4Desc': 'Ottieni correzioni dettagliate su linguaggio tecnico e contenuto, basate esclusivamente sul documento caricato.',
+  'howItWorks.subtitle': 'Tre semplici passaggi per trasformare le tue spiegazioni in performance da 30 e lode.',
+  'howItWorks.step1Title': 'Carica il tuo PDF',
+  'howItWorks.step1Desc': 'Appunti, dispense, manuali - qualsiasi materiale di studio in formato PDF.',
+  'howItWorks.step2Title': 'Parla a voce',
+  'howItWorks.step2Desc': 'Registra la tua spiegazione come se fossi davanti al professore all\'esame.',
+  'howItWorks.step3Title': 'Ricevi feedback mirato',
+  'howItWorks.step3Desc': 'Come da un vero professore universitario, basato sui tuoi materiali di studio.',
   'howItWorks.analyzing': 'Analizzando contenuti...',
   'howItWorks.question': 'Spiegami le cause della Prima Guerra Mondiale',
   'howItWorks.responding': 'Risposta in corso...',
   'howItWorks.excellent': 'Eccellente esposizione!',
   'howItWorks.clarity': 'Chiarezza: 9/10 • Completezza: 8/10',
   'howItWorks.suggestion': 'Suggerimento: Approfondisci il ruolo dell\'Austria-Ungheria',
+
+  // Who Is It For
+  'whoIsItFor.title': 'A Chi è Rivolto',
+  'whoIsItFor.subtitle': 'Scopri se questo strumento innovativo è perfetto per le tue esigenze di studio e preparazione esami.',
+  'whoIsItFor.studentsTitle': 'Studenti Universitari',
+  'whoIsItFor.studentsDesc': 'Che devono preparare esami orali e vogliono allenarsi in modo realistico.',
+  'whoIsItFor.improvementTitle': 'Chi Vuole Migliorare',
+  'whoIsItFor.improvementDesc': 'Chiarezza, terminologia e sicurezza nelle presentazioni orali.',
+  'whoIsItFor.innovativeTitle': 'Chi Cerca Innovazione',
+  'whoIsItFor.innovativeDesc': 'Un metodo innovativo per allenarsi e perfezionare le proprie competenze.',
+
+  // Why Unique
+  'whyUnique.title': 'Perché è Unico',
+  'whyUnique.subtitle': 'Caratteristiche esclusive che rendono questa piattaforma diversa da qualsiasi altro strumento di studio.',
+  'whyUnique.realisticTitle': '🎤 Allenamento Realistico',
+  'whyUnique.realisticDesc': 'Simula davvero un\'esposizione orale come se fossi davanti al professore.',
+  'whyUnique.intelligentTitle': '📚 Feedback Intelligente',
+  'whyUnique.intelligentDesc': 'Basato sui tuoi materiali di studio, non su informazioni generiche da internet.',
+  'whyUnique.exclusiveTitle': '🔒 Esclusività',
+  'whyUnique.exclusiveDesc': 'Accesso limitato alla beta privata - solo 30 posti disponibili.',
 
   // Benefits
    'benefits.title': 'I Benefici di OralFlow',
@@ -900,9 +935,9 @@ export const englishTranslations: TranslationKeys = {
   'scarcity.warningMessage': 'Spots are filling up quickly. Request access now to not miss this exclusive opportunity.',
 
   // Beta CTA
-  'betaCTA.exclusiveBadge': 'Exclusive Access - Invite Only',
-  'betaCTA.title': 'Ready to Revolutionize Your Study Method?',
-  'betaCTA.description': 'Join pioneer students who are already reducing study time by 70% and increasing learning speed with the most advanced AI in educational technology.',
+  'betaCTA.exclusiveBadge': 'Private Beta - Limited Spots',
+  'betaCTA.title': 'Book your spot in the Private Beta now',
+  'betaCTA.description': 'Less than 30 accesses remain available. Don\'t miss the opportunity to be among the first to transform your explanations into top-grade performances.',
   'betaCTA.benefit1Title': 'More Efficient Study',
   'betaCTA.benefit1Desc': 'Reduce exam preparation time and increase comprehension',
   'betaCTA.benefit2Title': 'Personalized Feedback',
@@ -950,15 +985,13 @@ export const englishTranslations: TranslationKeys = {
 
   // How It Works
   'howItWorks.title': 'How It Works',
-  'howItWorks.subtitle': 'Four simple steps to transform your study method and dramatically improve your performance in oral examinations.',
-  'howItWorks.step1Title': '1. Upload Materials',
-  'howItWorks.step1Desc': 'Upload your PDFs, slides or notes. OralFlow analyzes the content to prepare for evaluating your explanations.',
-  'howItWorks.step2Title': '2. AI Studies the Document',
-  'howItWorks.step2Desc': 'The virtual professor memorizes all concepts and information to accurately evaluate your explanations.',
-  'howItWorks.step3Title': '3. You Explain, AI Listens',
-  'howItWorks.step3Desc': 'Explain a topic from the document. The AI professor listens and evaluates your understanding and presentation.',
-  'howItWorks.step4Title': '4. Receive Corrections',
-  'howItWorks.step4Desc': 'Get detailed corrections on technical language and content, based exclusively on the uploaded document.',
+  'howItWorks.subtitle': 'Three simple steps to transform your explanations into top-grade performances.',
+  'howItWorks.step1Title': 'Upload your PDF',
+  'howItWorks.step1Desc': 'Notes, handouts, manuals - any study material in PDF format.',
+  'howItWorks.step2Title': 'Speak aloud',
+  'howItWorks.step2Desc': 'Record your explanation as if you were in front of the professor during the exam.',
+  'howItWorks.step3Title': 'Get targeted feedback',
+  'howItWorks.step3Desc': 'Like from a real university professor, based on your study materials.',
   'howItWorks.analyzing': 'Analyzing content...',
   'howItWorks.question': 'Explain the causes of World War I',
   'howItWorks.responding': 'Response in progress...',
@@ -1323,7 +1356,27 @@ export const englishTranslations: TranslationKeys = {
   'professorChat.getCoachingFeedback': 'Get Coaching Feedback',
   'professorChat.analyzing': 'Analyzing...',
   'professorChat.practiceExplanationsToTry': 'Practice explanations to try:',
-  'professorChat.oralPresentationCoachInfo': 'Oral Presentation Coach: Evaluates your explanations against document content and academic standards. Provides structured feedback to improve your academic communication skills.'
+  'professorChat.oralPresentationCoachInfo': 'Oral Presentation Coach: Evaluates your explanations against document content and academic standards. Provides structured feedback to improve your academic communication skills.',
+
+  // Who Is It For
+  'whoIsItFor.title': 'Who Is It For',
+  'whoIsItFor.subtitle': 'Discover if this innovative tool is perfect for your study and exam preparation needs.',
+  'whoIsItFor.studentsTitle': 'University Students',
+  'whoIsItFor.studentsDesc': 'Who need to prepare for oral exams and want to train realistically.',
+  'whoIsItFor.improvementTitle': 'Those Wanting Improvement',
+  'whoIsItFor.improvementDesc': 'Clarity, terminology and confidence in oral presentations.',
+  'whoIsItFor.innovativeTitle': 'Those Seeking Innovation',
+  'whoIsItFor.innovativeDesc': 'An innovative method to train and perfect their skills.',
+
+  // Why Unique
+  'whyUnique.title': 'Why It\'s Unique',
+  'whyUnique.subtitle': 'Exclusive features that make this platform different from any other study tool.',
+  'whyUnique.realisticTitle': '🎤 Realistic Training',
+  'whyUnique.realisticDesc': 'Really simulates an oral presentation as if you were in front of the professor.',
+  'whyUnique.intelligentTitle': '📚 Intelligent Feedback',
+  'whyUnique.intelligentDesc': 'Based on your study materials, not on generic information from the internet.',
+  'whyUnique.exclusiveTitle': '🔒 Exclusivity',
+  'whyUnique.exclusiveDesc': 'Limited access to private beta - only 30 spots available.'
 };
 
 export const translations: Record<Language, TranslationKeys> = {
