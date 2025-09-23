@@ -21,7 +21,7 @@ const Hero = () => {
         
         <div className="container relative mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
-            <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className="grid lg:grid-cols-2 gap-20 items-start lg:items-center">
               {/* Left Content */}
               <div className="space-y-8 animate-slide-in-left">
                 {/* Exclusive Badge */}
@@ -36,17 +36,17 @@ const Hero = () => {
                 </div>
                 
                 {/* Main Title */}
-                <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold leading-tight">
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold leading-tight mb-6">
                   {t('hero.title')}
                 </h1>
                 
                 {/* Subtitle */}
-                <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed font-medium">
+                <p className="text-lg md:text-xl text-muted-foreground leading-relaxed font-medium mb-6">
                   {t('hero.subtitle')}
                 </p>
                 
                 {/* Description */}
-                <p className="text-lg text-muted-foreground/80 leading-relaxed max-w-2xl">
+                <p className="text-base text-muted-foreground/80 leading-relaxed max-w-2xl mb-8">
                   {t('hero.description')}
                 </p>
 
@@ -92,8 +92,8 @@ const Hero = () => {
               </div>
 
               {/* Right Content - Lovable Demo */}
-              <div className="relative animate-slide-in-right">
-                <div className="relative">
+              <div className="relative animate-slide-in-right lg:mt-12">
+                <div className="relative max-w-lg mx-auto lg:mx-0">
                   {/* Main demo card with glass effect */}
                   <div className="glass-card p-10 relative overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-green-500/10"></div>
