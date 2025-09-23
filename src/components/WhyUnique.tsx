@@ -38,17 +38,17 @@ const WhyUnique = () => {
             </p>
           </div>
 
-          <div className="flex flex-col items-center gap-8 md:grid md:grid-cols-3">
+          <div className="flex flex-col items-center gap-8 md:grid md:grid-cols-3 md:items-stretch">
             {features.map((feature, index) => (
               <div 
                 key={index}
-                className="group bg-white/70 backdrop-blur-sm border border-white/20 rounded-2xl p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 text-center md:text-left w-full max-w-sm md:max-w-none"
+                className="group bg-white/70 backdrop-blur-sm border border-white/20 rounded-2xl p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 text-center md:text-left w-full max-w-sm md:max-w-none h-full min-h-[280px] flex flex-col"
               >
-                <div className={`w-16 h-16 bg-gradient-to-r ${feature.color} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 mx-auto md:mx-0`}>
+                <div className={`w-16 h-16 bg-gradient-to-r ${feature.color} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 mx-auto md:mx-0 flex-shrink-0`}>
                   <feature.icon className="h-8 w-8 text-white" />
                 </div>
-                <h3 className="text-xl font-bold mb-4">{feature.title}</h3>
-                <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
+                <h3 className="text-xl font-bold mb-4 flex-shrink-0">{feature.title}</h3>
+                <p className="text-muted-foreground leading-relaxed flex-grow">{feature.description}</p>
               </div>
             ))}
           </div>
