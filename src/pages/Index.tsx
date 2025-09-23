@@ -27,6 +27,30 @@ const Index = () => {
           <WhyUnique />
           <WhoIsItFor />
           <BetaCTA />
+          
+          {/* Full Demo Section - Keep the original detailed demo */}
+          <section id="full-demo" className="py-20 bg-muted/30">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="text-center mb-16">
+                <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">
+                  Demo Completa della Piattaforma
+                </h2>
+                <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                  Scopri nel dettaglio come funziona il primo AI Professor al mondo. 
+                  Questa demo ti mostra tutte le funzionalità disponibili nella beta privata.
+                </p>
+              </div>
+              
+              <div className="flex justify-center">
+                <button
+                  onClick={() => setIsProfessorDemoOpen(true)}
+                  className="bg-gradient-to-r from-primary to-blue-600 hover:from-primary/90 hover:to-blue-600/90 text-white font-semibold text-lg px-12 py-6 rounded-2xl shadow-xl transition-all duration-300 hover:scale-105"
+                >
+                  🚀 Avvia Demo Completa
+                </button>
+              </div>
+            </div>
+          </section>
         </main>
         <Footer />
         
