@@ -6,6 +6,12 @@ const WhyUnique = () => {
   
   const features = [
     {
+      icon: Layers,
+      title: t('whyUnique.exclusiveTitle'),
+      description: t('whyUnique.exclusiveDesc'),
+      color: "from-purple-500 to-purple-600"
+    },
+    {
       icon: Mic,
       title: t('whyUnique.realisticTitle'),
       description: t('whyUnique.realisticDesc'),
@@ -16,12 +22,6 @@ const WhyUnique = () => {
       title: t('whyUnique.intelligentTitle'),
       description: t('whyUnique.intelligentDesc'),
       color: "from-green-500 to-green-600"
-    },
-    {
-      icon: Layers,
-      title: t('whyUnique.exclusiveTitle'),
-      description: t('whyUnique.exclusiveDesc'),
-      color: "from-purple-500 to-purple-600"
     }
   ];
 
