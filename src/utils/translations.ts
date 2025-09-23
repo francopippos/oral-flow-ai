@@ -592,7 +592,7 @@ export const italianTranslations: TranslationKeys = {
   'whyUnique.realisticTitle': '🎤 Allenamento Realistico',
   'whyUnique.realisticDesc': 'Simula davvero un\'esposizione orale come se fossi davanti al professore.',
   'whyUnique.intelligentTitle': '📚 Feedback Intelligente',
-  'whyUnique.intelligentDesc': 'Basato sui tuoi materiali di studio, non su informazioni generiche da internet.',
+  'whyUnique.intelligentDesc': 'Basato sui tuoi materiali di studio dei corsi universitari, non su informazioni generiche da internet.',
   'whyUnique.exclusiveTitle': '🔒 Esclusività',
   'whyUnique.exclusiveDesc': 'Accesso limitato alla beta privata - solo 30 posti disponibili.',
 
