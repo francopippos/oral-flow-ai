@@ -521,7 +521,7 @@ export const italianTranslations: TranslationKeys = {
   'betaCTA.benefit2Desc': 'AI professor che valuta le tue conoscenze in tempo reale',
   'betaCTA.benefit3Title': 'Accesso Gratuito',
   'betaCTA.benefit3Desc': 'Utilizza tutte le funzionalità gratuitamente durante la beta',
-  'betaCTA.requestAccess': 'Richiedi Accesso Beta',
+  'betaCTA.requestAccess': 'Inizia Gratis',
   'betaCTA.watchDemo': 'Guarda Demo Prima',
   'betaCTA.smallPrint': '⚡ Risposta entro 24 ore • 🔒 Nessun impegno • ✨ Cancellazione libera in qualsiasi momento',
 
@@ -1015,7 +1015,7 @@ export const englishTranslations: TranslationKeys = {
   'betaCTA.benefit2Desc': 'AI professor that evaluates your knowledge in real-time',
   'betaCTA.benefit3Title': 'Free Access',
   'betaCTA.benefit3Desc': 'Use all features for free during the beta period',
-  'betaCTA.requestAccess': 'Request Beta Access',
+  'betaCTA.requestAccess': 'Start Free',
   'betaCTA.watchDemo': 'Watch Demo First',
   'betaCTA.smallPrint': '⚡ Response within 24 hours • 🔒 No commitment • ✨ Cancel anytime',
 
