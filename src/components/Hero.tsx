@@ -77,15 +77,15 @@ const Hero = () => {
                 {/* Exclusivity Features */}
                 <div className="grid grid-cols-3 gap-6 pt-8">
                   <div className="text-center group">
-                    <div className="text-2xl font-bold bg-gradient-to-r from-primary to-blue-500 bg-clip-text text-transparent mb-2">-90%</div>
+                    <div className="text-2xl font-bold bg-gradient-to-r from-primary to-blue-500 bg-clip-text text-transparent mb-2">-45%</div>
                     <div className="text-sm text-muted-foreground font-medium">{t('hero.stat1')}</div>
                   </div>
                   <div className="text-center group">
-                    <div className="text-2xl font-bold bg-gradient-to-r from-green-500 to-emerald-500 bg-clip-text text-transparent mb-2">99%</div>
+                    <div className="text-2xl font-bold bg-gradient-to-r from-green-500 to-emerald-500 bg-clip-text text-transparent mb-2">+65%</div>
                     <div className="text-sm text-muted-foreground font-medium">{t('hero.stat2')}</div>
                   </div>
                   <div className="text-center group">
-                    <div className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-primary bg-clip-text text-transparent mb-2">500+</div>
+                    <div className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-primary bg-clip-text text-transparent mb-2">87%</div>
                     <div className="text-sm text-muted-foreground font-medium">{t('hero.stat3')}</div>
                   </div>
                 </div>
