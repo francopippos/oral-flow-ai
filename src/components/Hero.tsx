@@ -85,7 +85,7 @@ const Hero = () => {
                     <div className="text-sm text-muted-foreground font-medium">{t('hero.stat2')}</div>
                   </div>
                   <div className="text-center group">
-                    <div className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-primary bg-clip-text text-transparent mb-2">87%</div>
+                    <div className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-primary bg-clip-text text-transparent mb-2">200%</div>
                     <div className="text-sm text-muted-foreground font-medium">{t('hero.stat3')}</div>
                   </div>
                 </div>
