@@ -7,6 +7,9 @@ export interface TranslationKeys {
   'nav.howItWorks': string;
   'nav.benefits': string;
   'nav.testimonials': string;
+  'nav.whyUnique': string;
+  'nav.whoIsItFor': string;
+  'nav.demo': string;
   'header.login': string;
   'header.requestAccess': string;
 
@@ -465,6 +468,9 @@ export const italianTranslations: TranslationKeys = {
   'nav.howItWorks': 'Come Funziona',
   'nav.benefits': 'Benefici',
   'nav.testimonials': 'Testimonianze',
+  'nav.whyUnique': 'Perché è Unico',
+  'nav.whoIsItFor': 'A Chi è Rivolto',
+  'nav.demo': 'Demo',
   'header.login': 'Accedi',
   'header.requestAccess': 'Richiedi Accesso',
 
@@ -925,6 +931,9 @@ export const englishTranslations: TranslationKeys = {
   'nav.howItWorks': 'How It Works',
   'nav.benefits': 'Benefits',
   'nav.testimonials': 'Testimonials',
+  'nav.whyUnique': 'Why It\'s Unique',
+  'nav.whoIsItFor': 'Who Is It For',
+  'nav.demo': 'Demo',
   'header.login': 'Login',
   'header.requestAccess': 'Request Access',
 

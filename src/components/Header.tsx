@@ -10,10 +10,10 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navItems = [
-    { name: t('nav.features'), href: '#features' },
     { name: t('nav.howItWorks'), href: '#how-it-works' },
-    { name: t('nav.benefits'), href: '#benefits' },
-    { name: t('nav.testimonials'), href: '#testimonials' },
+    { name: t('nav.whyUnique'), href: '#why-unique' },
+    { name: t('nav.whoIsItFor'), href: '#who-is-it-for' },
+    { name: t('nav.demo'), href: '#full-demo' },
   ];
 
   return (
