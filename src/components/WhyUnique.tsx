@@ -1,4 +1,4 @@
-import { Mic, Brain, Lock } from 'lucide-react';
+import { Mic, Brain, Layers } from 'lucide-react';
 import { useTranslation } from '../hooks/useTranslation';
 
 const WhyUnique = () => {
@@ -18,10 +18,10 @@ const WhyUnique = () => {
       color: "from-green-500 to-green-600"
     },
     {
-      icon: Lock,
+      icon: Layers,
       title: t('whyUnique.exclusiveTitle'),
       description: t('whyUnique.exclusiveDesc'),
-      color: "from-red-500 to-red-600"
+      color: "from-purple-500 to-purple-600"
     }
   ];
 
