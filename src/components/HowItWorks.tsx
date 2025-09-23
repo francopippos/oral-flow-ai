@@ -1,5 +1,5 @@
 
-import { Upload, Mic, MessageCircle } from 'lucide-react';
+import { Upload, BookOpen, Mic, MessageCircle } from 'lucide-react';
 import { useTranslation } from '../hooks/useTranslation';
 
 const HowItWorks = () => {
@@ -12,15 +12,21 @@ const HowItWorks = () => {
       color: "from-blue-500 to-blue-600"
     },
     {
-      icon: Mic,
+      icon: BookOpen,
       title: t('howItWorks.step2Title'),
       description: t('howItWorks.step2Desc'),
+      color: "from-indigo-500 to-indigo-600"
+    },
+    {
+      icon: Mic,
+      title: t('howItWorks.step3Title'),
+      description: t('howItWorks.step3Desc'),
       color: "from-green-500 to-green-600"
     },
     {
       icon: MessageCircle,
-      title: t('howItWorks.step3Title'),
-      description: t('howItWorks.step3Desc'),
+      title: t('howItWorks.step4Title'),
+      description: t('howItWorks.step4Desc'),
       color: "from-purple-500 to-purple-600"
     }
   ];
@@ -92,19 +98,36 @@ const HowItWorks = () => {
 
                         {index === 1 && (
                           <div className="space-y-4">
-                             <div className="flex items-center space-x-3">
-                               <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full animate-spin">
-                                 <Mic className="h-4 w-4 text-white m-2" />
-                               </div>
-                               <div className="text-sm">{t('howItWorks.analyzing')}</div>
-                             </div>
+                            <div className="flex items-center space-x-3 p-3 bg-indigo-50 rounded-lg">
+                              <div className="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center">
+                                📖
+                              </div>
+                              <div>
+                                <div className="font-medium">AI Analysis</div>
+                                <div className="text-sm text-muted-foreground">Processing content...</div>
+                              </div>
+                            </div>
                             <div className="w-full bg-gray-200 rounded-full h-2">
-                              <div className="bg-gradient-to-r from-purple-500 to-purple-600 h-2 rounded-full w-3/4 animate-pulse"></div>
+                              <div className="bg-gradient-to-r from-indigo-500 to-indigo-600 h-2 rounded-full w-2/3 animate-pulse"></div>
                             </div>
                           </div>
                         )}
 
                         {index === 2 && (
+                          <div className="space-y-4">
+                             <div className="flex items-center space-x-3">
+                               <div className="w-8 h-8 bg-gradient-to-r from-green-500 to-green-600 rounded-full animate-spin">
+                                 <Mic className="h-4 w-4 text-white m-2" />
+                               </div>
+                               <div className="text-sm">{t('howItWorks.analyzing')}</div>
+                             </div>
+                            <div className="w-full bg-gray-200 rounded-full h-2">
+                              <div className="bg-gradient-to-r from-green-500 to-green-600 h-2 rounded-full w-3/4 animate-pulse"></div>
+                            </div>
+                          </div>
+                        )}
+
+                        {index === 3 && (
                           <div className="space-y-3">
                             <div className="bg-success-50 rounded-lg p-3">
                               <div className="text-sm font-medium text-success-800">🎤 "{t('howItWorks.question')}"</div>
@@ -115,7 +138,7 @@ const HowItWorks = () => {
                           </div>
                         )}
 
-                        {index === 3 && (
+                        {index === 4 && (
                           <div className="space-y-3">
                             <div className="bg-success-100 rounded-lg p-3">
                               <div className="text-sm font-medium text-success-800">✨ {t('howItWorks.excellent')}</div>

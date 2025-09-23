@@ -77,6 +77,8 @@ export interface TranslationKeys {
   'howItWorks.step2Desc': string;
   'howItWorks.step3Title': string;
   'howItWorks.step3Desc': string;
+  'howItWorks.step4Title': string;
+  'howItWorks.step4Desc': string;
   'howItWorks.analyzing': string;
   'howItWorks.question': string;
   'howItWorks.responding': string;
@@ -562,13 +564,15 @@ export const italianTranslations: TranslationKeys = {
 
   // How It Works
   'howItWorks.title': 'Come Funziona',
-  'howItWorks.subtitle': 'Tre semplici passaggi per trasformare le tue spiegazioni in performance da 30 e lode.',
+  'howItWorks.subtitle': 'La nostra AI studia ed unisce in una unica soluzione gli appunti del professore e i libri. Ti aiuta a studiare il corso in maniera semplice e veloce.',
   'howItWorks.step1Title': 'Carica il tuo PDF',
   'howItWorks.step1Desc': 'Appunti, dispense, manuali - qualsiasi materiale di studio in formato PDF.',
-  'howItWorks.step2Title': 'Parla a voce',
-  'howItWorks.step2Desc': 'Registra la tua spiegazione come se fossi davanti al professore all\'esame.',
-  'howItWorks.step3Title': 'Ricevi feedback mirato',
-  'howItWorks.step3Desc': 'Come da un vero professore universitario, basato sui tuoi materiali di studio.',
+  'howItWorks.step2Title': 'Studio',
+  'howItWorks.step2Desc': 'L\'AI semplifica il processo di studio spiegando i contenuti del PDF. Digitalizza e riorganizza gli appunti per renderli più chiari e facili da seguire, aiutandoti a dare ai tuoi appunti un flusso strutturato.',
+  'howItWorks.step3Title': 'Parla a voce',
+  'howItWorks.step3Desc': 'Registra la tua spiegazione come se fossi davanti al professore all\'esame.',
+  'howItWorks.step4Title': 'Ricevi feedback mirato',
+  'howItWorks.step4Desc': 'Come da un vero professore universitario, basato sui tuoi materiali di studio.',
   'howItWorks.analyzing': 'Analizzando contenuti...',
   'howItWorks.question': 'Spiega la differenza tra contratto e negozio giuridico',
   'howItWorks.responding': 'Risposta in corso...',
@@ -1056,13 +1060,15 @@ export const englishTranslations: TranslationKeys = {
 
   // How It Works
   'howItWorks.title': 'How It Works',
-  'howItWorks.subtitle': 'Three simple steps to transform your explanations into top-grade performances.',
+  'howItWorks.subtitle': 'Our AI studies and combines the professor\'s notes and books into a single solution. It helps you study the course in a simple and fast way.',
   'howItWorks.step1Title': 'Upload your PDF',
   'howItWorks.step1Desc': 'Notes, handouts, manuals - any study material in PDF format.',
-  'howItWorks.step2Title': 'Speak aloud',
-  'howItWorks.step2Desc': 'Record your explanation as if you were in front of the professor during the exam.',
-  'howItWorks.step3Title': 'Get targeted feedback',
-  'howItWorks.step3Desc': 'Like from a real university professor, based on your study materials.',
+  'howItWorks.step2Title': 'Study',
+  'howItWorks.step2Desc': 'The AI simplifies the study process by explaining the contents of the PDF. It digitizes and reorganizes notes to make them clearer and easier to follow, helping to give your notes a structured flow.',
+  'howItWorks.step3Title': 'Speak aloud',
+  'howItWorks.step3Desc': 'Record your explanation as if you were in front of the professor during the exam.',
+  'howItWorks.step4Title': 'Get targeted feedback',
+  'howItWorks.step4Desc': 'Like from a real university professor, based on your study materials.',
   'howItWorks.analyzing': 'Analyzing content...',
   'howItWorks.question': 'Explain the difference between contract and juridical act',
   'howItWorks.responding': 'Response in progress...',
