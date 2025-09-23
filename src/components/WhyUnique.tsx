@@ -38,13 +38,13 @@ const WhyUnique = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="flex flex-col items-center gap-8 md:grid md:grid-cols-3">
             {features.map((feature, index) => (
               <div 
                 key={index}
-                className="group bg-white/70 backdrop-blur-sm border border-white/20 rounded-2xl p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
+                className="group bg-white/70 backdrop-blur-sm border border-white/20 rounded-2xl p-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 text-center md:text-left w-full max-w-sm md:max-w-none"
               >
-                <div className={`w-16 h-16 bg-gradient-to-r ${feature.color} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                <div className={`w-16 h-16 bg-gradient-to-r ${feature.color} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 mx-auto md:mx-0`}>
                   <feature.icon className="h-8 w-8 text-white" />
                 </div>
                 <h3 className="text-xl font-bold mb-4">{feature.title}</h3>
