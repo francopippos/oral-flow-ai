@@ -105,14 +105,6 @@ const Hero = () => {
                   <div className="glass-card p-6 sm:p-8 lg:p-10 relative overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-green-500/10"></div>
                     <div className="relative space-y-6 lg:space-y-8">
-                      {/* Demo Header - Clearer introduction */}
-                      <div className="text-center lg:text-left mb-6">
-                        <div className="inline-flex items-center px-3 py-1 bg-primary/10 rounded-full text-xs font-semibold text-primary mb-2">
-                          Demo Live
-                        </div>
-                        <h3 className="text-lg font-bold text-foreground">Come Funziona</h3>
-                      </div>
-
                       {/* Student Upload Step */}
                       <div className="flex items-center space-x-3 sm:space-x-4 p-4 sm:p-6 bg-gradient-to-r from-blue-500/5 to-green-500/5 rounded-xl sm:rounded-2xl border border-blue-500/10 glow-effect">
                         <div className="w-10 sm:w-12 h-10 sm:h-12 bg-gradient-to-r from-blue-500 to-green-500 rounded-xl sm:rounded-2xl flex items-center justify-center flex-shrink-0">
