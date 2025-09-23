@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
 import HowItWorks from '../components/HowItWorks';
-
+import WhyUnique from '../components/WhyUnique';
 import WhoIsItFor from '../components/WhoIsItFor';
 import BetaCTA from '../components/BetaCTA';
 import Footer from '../components/Footer';
@@ -25,6 +25,7 @@ const IndexContent = () => {
       <main>
         <Hero />
         <HowItWorks />
+        <WhyUnique />
         <WhoIsItFor />
         <BetaCTA />
         

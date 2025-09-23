@@ -5,7 +5,6 @@ import DemoModal from './DemoModal';
 import VirtualProfessorDemo from './VirtualProfessorDemo';
 import ScarcityCounter from './ScarcityCounter';
 import { useTranslation } from '../hooks/useTranslation';
-import { Mic, Brain, Layers } from 'lucide-react';
 
 const Hero = () => {
   const { t } = useTranslation();
@@ -79,44 +78,6 @@ const Hero = () => {
                       <Play className="mr-2 sm:mr-3 h-5 sm:h-6 w-5 sm:w-6" />
                       {t('hero.watchDemo')}
                     </Button>
-                  </div>
-                </div>
-
-                {/* Why Unique Features */}
-                <div className="space-y-6">
-                  <div className="text-center">
-                    <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-2">
-                      {t('whyUnique.title')}
-                    </h3>
-                    <p className="text-sm sm:text-base text-muted-foreground">
-                      {t('whyUnique.subtitle')}
-                    </p>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    <div className="bg-gradient-to-r from-purple-500/10 to-purple-600/10 border border-purple-500/20 rounded-xl p-4 text-center">
-                      <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mx-auto mb-3">
-                        <Layers className="h-5 w-5 text-white" />
-                      </div>
-                      <h4 className="font-semibold text-sm mb-2">{t('whyUnique.exclusiveTitle')}</h4>
-                      <p className="text-xs text-muted-foreground">{t('whyUnique.exclusiveDesc')}</p>
-                    </div>
-
-                    <div className="bg-gradient-to-r from-blue-500/10 to-blue-600/10 border border-blue-500/20 rounded-xl p-4 text-center">
-                      <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mx-auto mb-3">
-                        <Mic className="h-5 w-5 text-white" />
-                      </div>
-                      <h4 className="font-semibold text-sm mb-2">{t('whyUnique.realisticTitle')}</h4>
-                      <p className="text-xs text-muted-foreground">{t('whyUnique.realisticDesc')}</p>
-                    </div>
-
-                    <div className="bg-gradient-to-r from-green-500/10 to-green-600/10 border border-green-500/20 rounded-xl p-4 text-center">
-                      <div className="w-10 h-10 bg-gradient-to-r from-green-500 to-green-600 rounded-xl flex items-center justify-center mx-auto mb-3">
-                        <Brain className="h-5 w-5 text-white" />
-                      </div>
-                      <h4 className="font-semibold text-sm mb-2">{t('whyUnique.intelligentTitle')}</h4>
-                      <p className="text-xs text-muted-foreground">{t('whyUnique.intelligentDesc')}</p>
-                    </div>
                   </div>
                 </div>
 
