@@ -104,8 +104,8 @@ const Hero = () => {
                           <Sparkles className="h-6 w-6 text-white" />
                         </div>
                         <div>
-                          <div className="font-semibold text-lg text-foreground">"Carica appunti di Fisica"</div>
-                          <div className="text-sm text-blue-600 font-medium">PDF analizzato ✓</div>
+                          <div className="font-semibold text-lg text-foreground">{t('heroDemo.uploadPhysics')}</div>
+                          <div className="text-sm text-blue-600 font-medium">{t('heroDemo.pdfAnalyzed')}</div>
                         </div>
                       </div>
 
@@ -114,7 +114,7 @@ const Hero = () => {
                         <div className="flex justify-end">
                           <div className="bg-gradient-to-r from-blue-500/10 to-green-500/10 rounded-2xl p-4 max-w-xs border border-blue-500/20">
                             <p className="text-sm font-medium text-foreground">
-                              "L'energia si conserva sempre perché... ehm... non può essere distrutta, solo trasformata"
+                              {t('heroDemo.studentExplanation')}
                             </p>
                             <div className="text-xs text-blue-600 mt-2">🎤 {t('common.studentRecording')}</div>
                           </div>
@@ -126,7 +126,7 @@ const Hero = () => {
                           </div>
                           <div className="bg-gradient-to-r from-green-500/10 to-emerald-500/10 rounded-2xl p-4 max-w-xs border border-green-500/20">
                             <p className="text-sm font-medium text-foreground">
-                              "Corretto! Ma manca la definizione di 'sistema isolato'. Completa con un esempio pratico per migliorare la chiarezza."
+                              {t('heroDemo.aiCorrection')}
                             </p>
                           </div>
                         </div>
@@ -137,7 +137,7 @@ const Hero = () => {
                           </div>
                           <div className="bg-gradient-to-r from-green-500/10 to-emerald-500/10 rounded-2xl p-4 max-w-xs border border-green-500/20">
                             <p className="text-sm font-medium text-foreground">
-                              "✨ Punteggio: 7/10. Tempo di studio ridotto del 65% con questa sessione!"
+                              {t('heroDemo.aiScore')}
                             </p>
                           </div>
                         </div>

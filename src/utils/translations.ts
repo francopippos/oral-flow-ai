@@ -103,6 +103,13 @@ export interface TranslationKeys {
   'whyUnique.exclusiveTitle': string;
   'whyUnique.exclusiveDesc': string;
 
+  // Hero Demo
+  'heroDemo.uploadPhysics': string;
+  'heroDemo.pdfAnalyzed': string;
+  'heroDemo.studentExplanation': string;
+  'heroDemo.aiCorrection': string;
+  'heroDemo.aiScore': string;
+
   // Demo Section
   'demo.fullTitle': string;
   'demo.fullDescription': string;
@@ -684,6 +691,13 @@ export const italianTranslations: TranslationKeys = {
   'common.professor': 'Professor OralFlow',
   'common.studentRecording': 'Studente registrando',
 
+  // Hero Demo
+  'heroDemo.uploadPhysics': '"Carica appunti di Fisica"',
+  'heroDemo.pdfAnalyzed': 'PDF analizzato ✓',
+  'heroDemo.studentExplanation': '"L\'energia si conserva sempre perché... ehm... non può essere distrutta, solo trasformata"',
+  'heroDemo.aiCorrection': '"Corretto! Ma manca la definizione di \'sistema isolato\'. Completa con un esempio pratico per migliorare la chiarezza."',
+  'heroDemo.aiScore': '"✨ Punteggio: 7/10. Tempo di studio ridotto del 65% con questa sessione!"',
+
   // Auth Messages
   'auth.invalidCredentials': 'Credenziali non valide',
   'auth.invalidCredentialsDesc': 'Email o password incorrette. Verifica i tuoi dati.',
@@ -1150,6 +1164,13 @@ export const englishTranslations: TranslationKeys = {
   'common.student': 'Student',
   'common.professor': 'Professor OralFlow',
   'common.studentRecording': 'Student recording',
+
+  // Hero Demo
+  'heroDemo.uploadPhysics': '"Upload Physics notes"',
+  'heroDemo.pdfAnalyzed': 'PDF analyzed ✓',
+  'heroDemo.studentExplanation': '"Energy is always conserved because... um... it cannot be destroyed, only transformed"',
+  'heroDemo.aiCorrection': '"Correct! But you\'re missing the definition of \'isolated system\'. Complete with a practical example to improve clarity."',
+  'heroDemo.aiScore': '"✨ Score: 7/10. Study time reduced by 65% with this session!"',
 
   // Auth Messages
   'auth.invalidCredentials': 'Invalid credentials',
