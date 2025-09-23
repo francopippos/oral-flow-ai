@@ -513,7 +513,7 @@ export const italianTranslations: TranslationKeys = {
 
   // Beta CTA
   'betaCTA.exclusiveBadge': 'Beta Privata - Posti Limitati',
-  'betaCTA.title': 'Prenota subito il tuo posto nella Beta Privata',
+  'betaCTA.title': 'Inizia subito il tuo percorso verso voti più alti',
   'betaCTA.description': 'Rimangono meno di 30 accessi disponibili. Non perdere l\'opportunità di essere tra i primi a trasformare le tue spiegazioni in performance da 30 e lode.',
   'betaCTA.benefit1Title': 'Studio Più Efficiente',
   'betaCTA.benefit1Desc': 'Riduci il tempo di preparazione esami e aumenta la comprensione',
@@ -1007,7 +1007,7 @@ export const englishTranslations: TranslationKeys = {
 
   // Beta CTA
   'betaCTA.exclusiveBadge': 'Private Beta - Limited Spots',
-  'betaCTA.title': 'Book your spot in the Private Beta now',
+  'betaCTA.title': 'Start now your journey to higher grades',
   'betaCTA.description': 'Less than 30 accesses remain available. Don\'t miss the opportunity to be among the first to transform your explanations into top-grade performances.',
   'betaCTA.benefit1Title': 'More Efficient Study',
   'betaCTA.benefit1Desc': 'Reduce exam preparation time and increase comprehension',
