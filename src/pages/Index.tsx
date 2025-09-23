@@ -36,8 +36,11 @@ const Index = () => {
                   Demo Completa della Piattaforma
                 </h2>
                 <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                  Scopri nel dettaglio come funziona il primo AI Professor al mondo. 
-                  Questa demo ti mostra tutte le funzionalità disponibili nella beta privata.
+                  Vuoi scoprire come funziona il tuo professore virtuale?<br />
+                  Abbiamo preparato una demo interattiva che ti permette di testare l'esperienza:<br /><br />
+                  📁 Carica un PDF di esempio<br />
+                  🎤 Spiega un concetto come se fossi all'orale<br />
+                  🧑‍🏫 Ricevi un feedback immediato su chiarezza e correttezza
                 </p>
               </div>
               
