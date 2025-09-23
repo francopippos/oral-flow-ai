@@ -22,7 +22,7 @@ const Header = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
             {/* Enhanced Logo */}
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-3 md:space-x-4">
               <div className="p-3 bg-gradient-to-br from-primary to-success-500 rounded-2xl shadow-lg">
                 <Brain className="h-7 w-7 text-white" />
               </div>
