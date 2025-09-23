@@ -15,7 +15,21 @@ interface TranslationProviderProps {
 }
 
 export const TranslationProvider: React.FC<TranslationProviderProps> = ({ children }) => {
-  const [language, setLanguage] = useState<Language>('it'); // Default to Italian
+  // Detect browser language or use saved preference
+  const getBrowserLanguage = (): Language => {
+    const saved = localStorage.getItem('preferred-language') as Language;
+    if (saved && (saved === 'it' || saved === 'en')) return saved;
+    
+    const browserLang = navigator.language.slice(0, 2);
+    return browserLang === 'en' ? 'en' : 'it';
+  };
+
+  const [language, setLanguage] = useState<Language>(getBrowserLanguage());
+
+  const handleSetLanguage = (lang: Language) => {
+    setLanguage(lang);
+    localStorage.setItem('preferred-language', lang);
+  };
 
   const t = (key: keyof TranslationKeys): string => {
     return translations[language][key] || key;
@@ -23,7 +37,7 @@ export const TranslationProvider: React.FC<TranslationProviderProps> = ({ childr
 
   const value = {
     language,
-    setLanguage,
+    setLanguage: handleSetLanguage,
     t,
   };
 
