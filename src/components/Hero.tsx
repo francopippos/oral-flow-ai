@@ -99,7 +99,7 @@ const Hero = () => {
               </div>
 
               {/* Right Content - Demo Showcase */}
-              <div className="relative animate-slide-in-right lg:mt-12 order-first lg:order-last">
+              <div className="relative animate-slide-in-right lg:mt-12 lg:order-last">
                 <div className="relative max-w-lg mx-auto lg:mx-0">
                   {/* Main demo card with improved mobile layout */}
                   <div className="glass-card p-6 sm:p-8 lg:p-10 relative overflow-hidden">
