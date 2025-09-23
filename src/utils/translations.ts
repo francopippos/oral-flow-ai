@@ -528,7 +528,7 @@ export const italianTranslations: TranslationKeys = {
   // Hero Section
   'hero.exclusiveBadge': 'Beta Privata - Solo 30 Posti Disponibili',
   'hero.privateBeta': 'BETA PRIVATA',
-  'hero.title': 'Trasforma ogni spiegazione in una performance da 30 e lode',
+  'hero.title': 'Trasforma tutte le spiegazioni in performance da 30 e lode',
   'hero.subtitle': 'Carica i tuoi appunti o dispense in PDF, spiega a voce come se fossi all\'esame e ricevi un feedback mirato per migliorare chiarezza, linguaggio e contenuti.',
   'hero.description': 'Accesso esclusivo alla tecnologia più avanzata per studenti universitari che vogliono essere i primi a rivoluzionare il loro metodo di studio e preparazione esami.',
   'hero.requestAccess': 'Richiedi Accesso Esclusivo',
