@@ -2,14 +2,12 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Menu, X, Brain } from 'lucide-react';
-import LoginModal from './LoginModal';
 import LanguageSwitcher from './LanguageSwitcher';
 import { useTranslation } from '../hooks/useTranslation';
 
 const Header = () => {
   const { t } = useTranslation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isLoginOpen, setIsLoginOpen] = useState(false);
 
   const navItems = [
     { name: t('nav.features'), href: '#features' },
@@ -45,19 +43,9 @@ const Header = () => {
               ))}
             </nav>
 
-            {/* Enhanced CTA Buttons */}
-            <div className="hidden md:flex items-center space-x-4">
+            {/* Language Switcher */}
+            <div className="hidden md:flex items-center">
               <LanguageSwitcher />
-              <Button 
-                variant="outline" 
-                className="border-2 border-primary/20 text-primary hover:bg-primary/5 hover:border-primary/40 font-semibold px-6 py-2 rounded-xl transition-all duration-300"
-                onClick={() => setIsLoginOpen(true)}
-              >
-                {t('header.login')}
-              </Button>
-              <button className="modern-button px-6 py-3 text-lg font-semibold">
-                {t('header.requestAccess')}
-              </button>
             </div>
 
             {/* Enhanced Mobile menu button */}
@@ -85,32 +73,15 @@ const Header = () => {
                     {item.name}
                   </a>
                 ))}
-                <div className="flex flex-col space-y-3 pt-4 border-t border-primary/10">
-                  <div className="flex items-center justify-between pb-2">
-                    <span className="text-sm text-muted-foreground">Language</span>
-                    <LanguageSwitcher />
-                  </div>
-                  <Button 
-                    variant="outline" 
-                    className="border-2 border-primary/20 text-primary hover:bg-primary/5 hover:border-primary/40 font-semibold py-3 rounded-xl"
-                    onClick={() => {
-                      setIsLoginOpen(true);
-                      setIsMenuOpen(false);
-                    }}
-                  >
-                    {t('header.login')}
-                  </Button>
-                  <button className="modern-button py-3 text-lg font-semibold">
-                    {t('header.requestAccess')}
-                  </button>
+                <div className="flex items-center justify-between pt-4 border-t border-primary/10">
+                  <span className="text-sm text-muted-foreground">Language</span>
+                  <LanguageSwitcher />
                 </div>
               </div>
             </div>
           )}
         </div>
       </header>
-
-      <LoginModal isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} />
     </>
   );
 };
