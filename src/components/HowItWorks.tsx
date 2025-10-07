@@ -89,7 +89,7 @@ const HowItWorks = () => {
                                 📊
                               </div>
                               <div>
-                                <div className="font-medium">Slides_Fisica.pptx</div>
+                                <div className="font-medium">Slides_Fisica.pdf</div>
                                 <div className="text-sm text-muted-foreground">5.1 MB</div>
                               </div>
                             </div>
